@@ -1,0 +1,22 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "noEmit": false,
+    "declaration": true,
+    "declarationMap": true,
+    "declarationDir": "./dist/types",
+    "emitDeclarationOnly": true,
+    "rootDir": "./src",
+    "outDir": "./dist/types"
+  },
+  "include": ["src/**/*"],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "examples",
+    "**/*.test.ts",
+    "**/*.spec.ts",
+    "vitest.config.ts",
+    "vite.config.ts"
+  ]
+}

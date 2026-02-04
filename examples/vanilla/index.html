@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Deskillz Web SDK - Vanilla JS Example</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      color: #e4e4e7;
+      min-height: 100vh;
+      padding: 2rem;
+    }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+      background: linear-gradient(90deg, #06b6d4, #8b5cf6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .subtitle {
+      color: #a1a1aa;
+      margin-bottom: 2rem;
+    }
+    .card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .card h2 {
+      font-size: 1.25rem;
+      margin-bottom: 1rem;
+      color: #f4f4f5;
+    }
+    .form-group {
+      margin-bottom: 1rem;
+    }
+    label {
+      display: block;
+      font-size: 0.875rem;
+      color: #a1a1aa;
+      margin-bottom: 0.5rem;
+    }
+    input {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      color: #fff;
+      font-size: 1rem;
+    }
+    input:focus {
+      outline: none;
+      border-color: #06b6d4;
+    }
+    button {
+      padding: 0.75rem 1.5rem;
+      background: linear-gradient(90deg, #06b6d4, #8b5cf6);
+      border: none;
+      border-radius: 8px;
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    button:hover {
+      opacity: 0.9;
+    }
+    button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.1);
+      margin-left: 0.5rem;
+    }
+    .status {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+    .status-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #ef4444;
+    }
+    .status-dot.connected {
+      background: #22c55e;
+    }
+    .log {
+      background: rgba(0, 0, 0, 0.4);
+      border-radius: 8px;
+      padding: 1rem;
+      font-family: 'Monaco', 'Menlo', monospace;
+      font-size: 0.8125rem;
+      max-height: 300px;
+      overflow-y: auto;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+    .log-entry {
+      margin-bottom: 0.5rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    .log-entry:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+    .log-time {
+      color: #71717a;
+    }
+    .log-info { color: #06b6d4; }
+    .log-success { color: #22c55e; }
+    .log-error { color: #ef4444; }
+    .log-event { color: #8b5cf6; }
+    .games-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    .game-card {
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 8px;
+      padding: 1rem;
+      text-align: center;
+      cursor: pointer;
+      transition: transform 0.2s, background 0.2s;
+    }
+    .game-card:hover {
+      transform: translateY(-2px);
+      background: rgba(0, 0, 0, 0.4);
+    }
+    .game-icon {
+      width: 64px;
+      height: 64px;
+      background: linear-gradient(135deg, #06b6d4, #8b5cf6);
+      border-radius: 12px;
+      margin: 0 auto 0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+    }
+    .game-name {
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+    .game-players {
+      font-size: 0.875rem;
+      color: #a1a1aa;
+    }
+    .hidden {
+      display: none;
+    }
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem;
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 8px;
+    }
+    .user-avatar {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, #06b6d4, #8b5cf6);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 1.25rem;
+    }
+    .user-details h3 {
+      font-size: 1rem;
+      margin-bottom: 0.25rem;
+    }
+    .user-details p {
+      font-size: 0.875rem;
+      color: #a1a1aa;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Deskillz Web SDK</h1>
+    <p class="subtitle">Vanilla JavaScript Example - No Build Tools Required</p>
+
+    <!-- Status -->
+    <div class="card">
+      <div class="status">
+        <div class="status-dot" id="statusDot"></div>
+        <span id="statusText">Disconnected</span>
+      </div>
+      <div id="userSection" class="hidden">
+        <div class="user-info">
+          <div class="user-avatar" id="userAvatar">?</div>
+          <div class="user-details">
+            <h3 id="userName">-</h3>
+            <p id="userEmail">-</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Authentication -->
+    <div class="card" id="authCard">
+      <h2>Authentication</h2>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" placeholder="player@example.com" value="demo@deskillz.games">
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" placeholder="Your password" value="demo123456">
+      </div>
+      <button id="loginBtn" onclick="handleLogin()">Login</button>
+      <button id="registerBtn" class="btn-secondary" onclick="handleRegister()">Register</button>
+    </div>
+
+    <!-- Logged In Actions -->
+    <div class="card hidden" id="actionsCard">
+      <h2>Actions</h2>
+      <button onclick="loadGames()">Load Games</button>
+      <button class="btn-secondary" onclick="connectRealtime()">Connect Real-Time</button>
+      <button class="btn-secondary" onclick="handleLogout()">Logout</button>
+    </div>
+
+    <!-- Games -->
+    <div class="card hidden" id="gamesCard">
+      <h2>Available Games</h2>
+      <div id="gamesGrid" class="games-grid"></div>
+    </div>
+
+    <!-- Event Log -->
+    <div class="card">
+      <h2>Event Log</h2>
+      <div class="log" id="log"></div>
+    </div>
+  </div>
+
+  <!-- SDK Scripts -->
+  <!-- In production, use the CDN bundle: -->
+  <!-- <script src="https://cdn.deskillz.games/sdk/3.0.0/deskillz-sdk.min.js"></script> -->
+  
+  <!-- For this example, we'll use ES modules -->
+  <script type="module">
+    // Import from local build (adjust path as needed)
+    // In production: import { createDeskillzSDK } from 'https://cdn.deskillz.games/sdk/3.0.0/deskillz-sdk.esm.js';
+    
+    // For demo purposes, we'll create a mock SDK
+    // Replace this with actual SDK import in production
+    const createDeskillzSDK = (config) => {
+      console.log('SDK initialized with config:', config);
+      
+      // Mock SDK for demonstration
+      return {
+        config,
+        auth: {
+          login: async ({ email, password }) => {
+            await delay(500);
+            if (email && password) {
+              return { id: '1', username: email.split('@')[0], email };
+            }
+            throw new Error('Invalid credentials');
+          },
+          register: async ({ email, password, username }) => {
+            await delay(500);
+            return { id: '2', username: username || email.split('@')[0], email };
+          },
+          logout: async () => {
+            await delay(200);
+          },
+          isAuthenticated: () => !!localStorage.getItem('demo_token'),
+        },
+        games: {
+          getGames: async () => {
+            await delay(300);
+            return [
+              { id: 'g1', name: 'Puzzle Quest', activePlayers: 1234 },
+              { id: 'g2', name: 'Speed Runner', activePlayers: 567 },
+              { id: 'g3', name: 'Card Masters', activePlayers: 890 },
+              { id: 'g4', name: 'Block Breaker', activePlayers: 432 },
+            ];
+          },
+        },
+        tournaments: {
+          getTournaments: async (gameId) => {
+            await delay(300);
+            return [
+              { id: 't1', name: 'Daily Challenge', entryFee: 5, prizePool: 500 },
+              { id: 't2', name: 'Weekend Special', entryFee: 10, prizePool: 2000 },
+            ];
+          },
+        },
+        realtime: {
+          connect: async () => {
+            await delay(500);
+            return true;
+          },
+          disconnect: () => {},
+          on: (event, callback) => {
+            console.log('Subscribed to:', event);
+          },
+          isConnected: () => true,
+        },
+        scoreSigner: {
+          signScore: async (payload) => {
+            return { ...payload, signature: 'mock-signature-' + Date.now(), nonce: 'mock-nonce' };
+          },
+        },
+        destroy: () => {
+          console.log('SDK destroyed');
+        },
+      };
+    };
+
+    const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
+    // Initialize SDK
+    const sdk = createDeskillzSDK({
+      gameId: 'demo-game-id',
+      gameKey: 'demo-game-key',
+      apiBaseUrl: 'https://api.deskillz.games',
+      debug: true,
+    });
+
+    // Make SDK available globally for button handlers
+    window.sdk = sdk;
+
+    // Logging helper
+    window.log = (message, type = 'info') => {
+      const logEl = document.getElementById('log');
+      const time = new Date().toLocaleTimeString();
+      const entry = document.createElement('div');
+      entry.className = 'log-entry';
+      entry.innerHTML = `<span class="log-time">[${time}]</span> <span class="log-${type}">${message}</span>`;
+      logEl.insertBefore(entry, logEl.firstChild);
+    };
+
+    // Update status
+    window.updateStatus = (connected, text) => {
+      const dot = document.getElementById('statusDot');
+      const statusText = document.getElementById('statusText');
+      dot.classList.toggle('connected', connected);
+      statusText.textContent = text;
+    };
+
+    // Show user info
+    window.showUser = (user) => {
+      document.getElementById('userSection').classList.remove('hidden');
+      document.getElementById('authCard').classList.add('hidden');
+      document.getElementById('actionsCard').classList.remove('hidden');
+      document.getElementById('userAvatar').textContent = user.username.charAt(0).toUpperCase();
+      document.getElementById('userName').textContent = user.username;
+      document.getElementById('userEmail').textContent = user.email;
+      updateStatus(true, 'Authenticated');
+    };
+
+    // Login handler
+    window.handleLogin = async () => {
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      
+      log('Attempting login...', 'info');
+      document.getElementById('loginBtn').disabled = true;
+      
+      try {
+        const user = await sdk.auth.login({ email, password });
+        localStorage.setItem('demo_token', 'demo-token');
+        log(`Login successful! Welcome ${user.username}`, 'success');
+        showUser(user);
+      } catch (error) {
+        log(`Login failed: ${error.message}`, 'error');
+      } finally {
+        document.getElementById('loginBtn').disabled = false;
+      }
+    };
+
+    // Register handler
+    window.handleRegister = async () => {
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      
+      log('Attempting registration...', 'info');
+      document.getElementById('registerBtn').disabled = true;
+      
+      try {
+        const user = await sdk.auth.register({ email, password });
+        localStorage.setItem('demo_token', 'demo-token');
+        log(`Registration successful! Welcome ${user.username}`, 'success');
+        showUser(user);
+      } catch (error) {
+        log(`Registration failed: ${error.message}`, 'error');
+      } finally {
+        document.getElementById('registerBtn').disabled = false;
+      }
+    };
+
+    // Logout handler
+    window.handleLogout = async () => {
+      log('Logging out...', 'info');
+      await sdk.auth.logout();
+      localStorage.removeItem('demo_token');
+      
+      document.getElementById('userSection').classList.add('hidden');
+      document.getElementById('authCard').classList.remove('hidden');
+      document.getElementById('actionsCard').classList.add('hidden');
+      document.getElementById('gamesCard').classList.add('hidden');
+      
+      updateStatus(false, 'Disconnected');
+      log('Logged out successfully', 'success');
+    };
+
+    // Load games
+    window.loadGames = async () => {
+      log('Loading games...', 'info');
+      
+      try {
+        const games = await sdk.games.getGames();
+        const grid = document.getElementById('gamesGrid');
+        grid.innerHTML = '';
+        
+        games.forEach(game => {
+          const card = document.createElement('div');
+          card.className = 'game-card';
+          card.innerHTML = `
+            <div class="game-icon">${game.name.charAt(0)}</div>
+            <div class="game-name">${game.name}</div>
+            <div class="game-players">${game.activePlayers.toLocaleString()} playing</div>
+          `;
+          card.onclick = () => selectGame(game);
+          grid.appendChild(card);
+        });
+        
+        document.getElementById('gamesCard').classList.remove('hidden');
+        log(`Loaded ${games.length} games`, 'success');
+      } catch (error) {
+        log(`Failed to load games: ${error.message}`, 'error');
+      }
+    };
+
+    // Select game
+    window.selectGame = async (game) => {
+      log(`Selected game: ${game.name}`, 'event');
+      
+      try {
+        const tournaments = await sdk.tournaments.getTournaments(game.id);
+        log(`Found ${tournaments.length} tournaments for ${game.name}`, 'info');
+        tournaments.forEach(t => {
+          log(`  - ${t.name}: $${t.entryFee} entry, $${t.prizePool} prize pool`, 'info');
+        });
+      } catch (error) {
+        log(`Failed to load tournaments: ${error.message}`, 'error');
+      }
+    };
+
+    // Connect real-time
+    window.connectRealtime = async () => {
+      log('Connecting to real-time server...', 'info');
+      
+      try {
+        await sdk.realtime.connect();
+        
+        sdk.realtime.on('matchmaking:found', (data) => {
+          log(`Match found! ${JSON.stringify(data)}`, 'event');
+        });
+        
+        sdk.realtime.on('notification', (data) => {
+          log(`Notification: ${data.message}`, 'event');
+        });
+        
+        log('Real-time connected! Listening for events...', 'success');
+      } catch (error) {
+        log(`Real-time connection failed: ${error.message}`, 'error');
+      }
+    };
+
+    // Initial log
+    log('SDK initialized. Ready to authenticate.', 'info');
+    log('This is a demo with mock data. Replace with actual SDK import for production.', 'info');
+  </script>
+</body>
+</html>

@@ -1,0 +1,203 @@
+{
+  "name": "@deskillz/web-sdk",
+  "version": "3.0.0",
+  "description": "Deskillz Web SDK - Framework-agnostic SDK for competitive gaming tournaments with cryptocurrency prizes",
+  "author": "Deskillz Games <developers@deskillz.games>",
+  "license": "MIT",
+  "homepage": "https://deskillz.games",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/deskillz/web-sdk.git"
+  },
+  "bugs": {
+    "url": "https://github.com/deskillz/web-sdk/issues"
+  },
+  "keywords": [
+    "deskillz",
+    "gaming",
+    "esports",
+    "tournament",
+    "sdk",
+    "cryptocurrency",
+    "web3",
+    "competitive-gaming",
+    "real-time",
+    "websocket"
+  ],
+  "type": "module",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/types/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/types/index.d.ts",
+        "default": "./dist/esm/index.js"
+      },
+      "require": {
+        "types": "./dist/types/index.d.ts",
+        "default": "./dist/cjs/index.js"
+      }
+    },
+    "./core": {
+      "import": {
+        "types": "./dist/types/core/index.d.ts",
+        "default": "./dist/esm/core/index.js"
+      },
+      "require": {
+        "types": "./dist/types/core/index.d.ts",
+        "default": "./dist/cjs/core/index.js"
+      }
+    },
+    "./auth": {
+      "import": {
+        "types": "./dist/types/auth/index.d.ts",
+        "default": "./dist/esm/auth/index.js"
+      },
+      "require": {
+        "types": "./dist/types/auth/index.d.ts",
+        "default": "./dist/cjs/auth/index.js"
+      }
+    },
+    "./wallet": {
+      "import": {
+        "types": "./dist/types/wallet/index.d.ts",
+        "default": "./dist/esm/wallet/index.js"
+      },
+      "require": {
+        "types": "./dist/types/wallet/index.d.ts",
+        "default": "./dist/cjs/wallet/index.js"
+      }
+    },
+    "./realtime": {
+      "import": {
+        "types": "./dist/types/realtime/index.d.ts",
+        "default": "./dist/esm/realtime/index.js"
+      },
+      "require": {
+        "types": "./dist/types/realtime/index.d.ts",
+        "default": "./dist/cjs/realtime/index.js"
+      }
+    },
+    "./lobby": {
+      "import": {
+        "types": "./dist/types/lobby/index.d.ts",
+        "default": "./dist/esm/lobby/index.js"
+      },
+      "require": {
+        "types": "./dist/types/lobby/index.d.ts",
+        "default": "./dist/cjs/lobby/index.js"
+      }
+    },
+    "./games": {
+      "import": {
+        "types": "./dist/types/games/index.d.ts",
+        "default": "./dist/esm/games/index.js"
+      },
+      "require": {
+        "types": "./dist/types/games/index.d.ts",
+        "default": "./dist/cjs/games/index.js"
+      }
+    },
+    "./rooms": {
+      "import": {
+        "types": "./dist/types/rooms/index.d.ts",
+        "default": "./dist/esm/rooms/index.js"
+      },
+      "require": {
+        "types": "./dist/types/rooms/index.d.ts",
+        "default": "./dist/cjs/rooms/index.js"
+      }
+    },
+    "./host": {
+      "import": {
+        "types": "./dist/types/host/index.d.ts",
+        "default": "./dist/esm/host/index.js"
+      },
+      "require": {
+        "types": "./dist/types/host/index.d.ts",
+        "default": "./dist/cjs/host/index.js"
+      }
+    },
+    "./developer": {
+      "import": {
+        "types": "./dist/types/developer/index.d.ts",
+        "default": "./dist/esm/developer/index.js"
+      },
+      "require": {
+        "types": "./dist/types/developer/index.d.ts",
+        "default": "./dist/cjs/developer/index.js"
+      }
+    },
+    "./users": {
+      "import": {
+        "types": "./dist/types/users/index.d.ts",
+        "default": "./dist/esm/users/index.js"
+      },
+      "require": {
+        "types": "./dist/types/users/index.d.ts",
+        "default": "./dist/cjs/users/index.js"
+      }
+    },
+    "./security": {
+      "import": {
+        "types": "./dist/types/security/index.d.ts",
+        "default": "./dist/esm/security/index.js"
+      },
+      "require": {
+        "types": "./dist/types/security/index.d.ts",
+        "default": "./dist/cjs/security/index.js"
+      }
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "npm run build:esm && npm run build:cjs && npm run build:types",
+    "build:esm": "vite build --mode esm",
+    "build:cjs": "vite build --mode cjs",
+    "build:types": "tsc -p tsconfig.build.json --emitDeclarationOnly",
+    "build:bundle": "vite build --mode bundle",
+    "dev": "vite build --mode esm --watch",
+    "clean": "rm -rf dist",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src/ --ext .ts",
+    "lint:fix": "eslint src/ --ext .ts --fix",
+    "prepublishOnly": "npm run clean && npm run build && npm run typecheck"
+  },
+  "peerDependencies": {
+    "socket.io-client": "^4.6.0"
+  },
+  "peerDependenciesMeta": {
+    "socket.io-client": {
+      "optional": false
+    }
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "@types/react": "^19.2.10",
+    "@types/react-dom": "^19.2.3",
+    "@typescript-eslint/eslint-plugin": "^6.13.0",
+    "@typescript-eslint/parser": "^6.13.0",
+    "eslint": "^8.55.0",
+    "socket.io-client": "^4.7.0",
+    "typescript": "^5.3.0",
+    "vite": "^5.0.0",
+    "vite-plugin-dts": "^3.6.0",
+    "vitest": "^4.0.18",
+    "vue": "^3.5.27"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "browserslist": [
+    "defaults",
+    "not IE 11",
+    "maintained node versions"
+  ]
+}
