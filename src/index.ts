@@ -9,7 +9,20 @@
 // =============================================================================
 
 export { DeskillzSDK, createDeskillzSDK, SDK_VERSION } from './deskillz-sdk';
+// =============================================================================
+// BRIDGE (Universal Game Wrapper)
+// =============================================================================
 
+export { DeskillzBridge } from './DeskillzBridge';
+export type {
+  BridgeConfig,
+  DeskillzUser,
+  WalletBalance as BridgeWalletBalance,
+  PrivateRoom as BridgePrivateRoom,
+  GameScorePayload,
+  BridgeEventType,
+  BridgeEventCallback,
+} from './DeskillzBridge';
 // =============================================================================
 // CORE
 // =============================================================================
