@@ -1,16 +1,19 @@
 // =============================================================================
-// Deskillz Universal Game Bridge
+// Deskillz Universal Game Bridge (Consolidated)
 // Path: src/sdk/DeskillzBridge.ts
-// Game-agnostic wrapper for @deskillz/web-sdk
-// Reusable across ALL Deskillz games (Big 2, Mahjong, Chinese 13, etc.)
-// =============================================================================
+//
+// SINGLE-FILE SDK + BRIDGE for Deskillz web games.
+// Contains: HTTP client, token manager, auth, wallet, rooms, tournaments,
+// realtime, event system, and guest fallbacks.
+// No external npm dependencies (socket.io-client is optional).
+// All endpoints use /api/v1/ prefix.
 //
 // USAGE:
 //   import { DeskillzBridge } from './sdk/DeskillzBridge';
 //
 //   const bridge = DeskillzBridge.getInstance({
 //     gameId: 'your-game-id',
-//     gameKey: 'your-game-key',
+//     gameKey: 'YOUR_API_KEY',
 //     apiBaseUrl: 'https://api.deskillz.games',
 //     socketUrl: 'wss://ws.deskillz.games/lobby',
 //     debug: true,
@@ -41,6 +44,26 @@ export interface BridgeConfig {
   debug?: boolean;
   /** Force mock/guest mode (no backend calls) */
   forceMock?: boolean;
+}
+
+interface ResolvedConfig {
+  gameId: string;
+  gameKey: string;
+  apiBaseUrl: string;
+  socketUrl: string;
+  debug: boolean;
+  timeout: number;
+}
+
+function resolveConfig(cfg: BridgeConfig): ResolvedConfig {
+  return {
+    gameId: cfg.gameId,
+    gameKey: cfg.gameKey,
+    apiBaseUrl: (cfg.apiBaseUrl || 'https://api.deskillz.games').replace(/\/$/, ''),
+    socketUrl: cfg.socketUrl || 'wss://ws.deskillz.games/lobby',
+    debug: cfg.debug ?? false,
+    timeout: 120_000,
+  };
 }
 
 // =============================================================================
@@ -85,6 +108,45 @@ export interface GameScorePayload {
   metadata?: Record<string, unknown>;
 }
 
+export interface PlayerStats {
+  gamesPlayed: number;
+  gamesWon: number;
+  winRate: number;
+  totalEarnings: number;
+  currentStreak: number;
+  bestStreak: number;
+  avgScore: number;
+  tournamentWins: number;
+}
+
+export interface MatchRecord {
+  id: string;
+  date: string;
+  opponent: string;
+  result: 'win' | 'loss';
+  score: number;
+  earnings: number;
+  currency: string;
+  gameMode: string;
+}
+
+export interface UpdateProfilePayload {
+  username?: string;
+  avatarUrl?: string;
+}
+
+export interface TransactionRequest {
+  currency: string;
+  amount: number;
+  address?: string;
+}
+
+export interface TransactionResult {
+  success: boolean;
+  txHash?: string;
+  message?: string;
+}
+
 // =============================================================================
 // EVENT SYSTEM
 // =============================================================================
@@ -93,6 +155,7 @@ export type BridgeEventType =
   | 'initialized'
   | 'authenticated'
   | 'logout'
+  | 'profileUpdated'
   | 'roomJoined'
   | 'roomLeft'
   | 'matchFound'
@@ -101,98 +164,257 @@ export type BridgeEventType =
   | 'error'
   | 'connectionChanged'
   | 'walletUpdated'
+  | 'walletDisconnected'
+  | 'depositComplete'
+  | 'withdrawComplete'
   | 'playerJoined'
   | 'playerLeft';
 
 export type BridgeEventCallback = (type: BridgeEventType, data: unknown) => void;
 
 // =============================================================================
-// SDK TYPE SHIM
-// SDK is imported dynamically; these types mirror @deskillz/web-sdk exports
-// so the bridge compiles even when the npm package is not yet installed.
-// Once @deskillz/web-sdk is published, replace with direct imports.
+// TOKEN MANAGER (localStorage-based JWT storage)
 // =============================================================================
 
-interface SDKInstance {
-  auth: {
-    loginWithEmail(payload: { email: string; password: string }): Promise<{
-      user: { id: string; username: string; email?: string; avatarUrl?: string };
-      tokens: { accessToken: string; refreshToken: string };
-      isNewUser: boolean;
-    }>;
-    registerWithEmail(payload: {
-      email: string;
-      password: string;
-      username: string;
-    }): Promise<{
-      user: { id: string; username: string; email?: string; avatarUrl?: string };
-      tokens: { accessToken: string; refreshToken: string };
-      isNewUser: boolean;
-    }>;
-    logout(): Promise<void>;
-    getCurrentUser(): Promise<{
-      id: string;
-      username: string;
-      email?: string;
-      avatarUrl?: string;
-      walletAddress?: string;
-    } | null>;
-    getCachedUser(): { id: string; username: string; email?: string } | null;
-  };
-  walletAuth: {
-    authenticate(params: {
-      address: string;
-      chainId: number;
-      signMessage: (message: string) => Promise<string>;
-      domain?: string;
-      uri?: string;
-    }): Promise<{
-      user: { id: string; username: string; walletAddress?: string };
-      tokens: { accessToken: string; refreshToken: string };
-      isNewUser: boolean;
-    }>;
-    getNonce(walletAddress: string): Promise<string>;
-  };
-  wallet: {
-    getAllBalances(): Promise<
-      Array<{ currency: string; balance: number; usdValue: number }>
-    >;
-    getTotalBalanceUSD(): Promise<{ totalUsd: number }>;
-    getBalance(currency: string): Promise<{ currency: string; balance: number; usdValue: number }>;
-  };
-  rooms: {
-    createRoom(data: Record<string, unknown>): Promise<PrivateRoom>;
-    joinByCode(code: string): Promise<PrivateRoom>;
-    leaveRoom(roomId: string): Promise<void>;
-    getRoom(roomId: string): Promise<PrivateRoom>;
-    buyIn(request: {
-      roomId: string;
-      amount: number;
-      currency: string;
-    }): Promise<{ success: boolean; pointBalance: number }>;
-    cashOut(roomId: string): Promise<{ success: boolean; amount: number }>;
-  };
-  tournaments: {
-    submitScore(request: {
-      tournamentId: string;
-      score: number;
-      metadata?: Record<string, unknown>;
-    }): Promise<{ success: boolean }>;
-  };
-  realtime: {
-    connect(): Promise<void>;
-    connectWithToken(token: string): void;
-    disconnect(): void;
-    subscribeRoom(roomId: string): void;
-    unsubscribeRoom(roomId: string): void;
-    on(event: string, handler: (...args: unknown[]) => void): () => void;
-    sendRoomChat(roomId: string, message: string): void;
-    setRoomReady(roomId: string, isReady: boolean): void;
-    readonly isConnected: boolean;
-  };
-  isAuthenticated(): Promise<boolean>;
-  getAccessToken(): Promise<string | null>;
-  destroy(): void;
+const ACCESS_KEY = 'deskillz_access_token';
+const REFRESH_KEY = 'deskillz_refresh_token';
+
+class TokenManager {
+  getAccessToken(): string | null {
+    try { return localStorage.getItem(ACCESS_KEY); } catch { return null; }
+  }
+  getRefreshToken(): string | null {
+    try { return localStorage.getItem(REFRESH_KEY); } catch { return null; }
+  }
+  setTokens(access: string, refresh?: string): void {
+    try {
+      localStorage.setItem(ACCESS_KEY, access);
+      if (refresh) localStorage.setItem(REFRESH_KEY, refresh);
+    } catch { /* storage unavailable */ }
+  }
+  clearTokens(): void {
+    try {
+      localStorage.removeItem(ACCESS_KEY);
+      localStorage.removeItem(REFRESH_KEY);
+    } catch { /* storage unavailable */ }
+  }
+  isAuthenticated(): boolean {
+    return !!this.getAccessToken();
+  }
+}
+
+// =============================================================================
+// HTTP CLIENT (native fetch with 401 auto-refresh interceptor)
+// Replicates the axios interceptor chain from api-client.ts:
+//   - Request: attach Authorization Bearer token
+//   - Response: 401 -> refresh token -> retry once
+//   - Mutex to prevent concurrent refresh attempts
+// =============================================================================
+
+type HttpMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
+
+class HttpClient {
+  private config: ResolvedConfig;
+  private tokens: TokenManager;
+  private refreshPromise: Promise<boolean> | null = null;
+  private onForceLogout?: () => void;
+
+  constructor(config: ResolvedConfig, tokens: TokenManager, onForceLogout?: () => void) {
+    this.config = config;
+    this.tokens = tokens;
+    this.onForceLogout = onForceLogout;
+  }
+
+  async get<T>(path: string, params?: Record<string, string | number | undefined>): Promise<T> {
+    return this.request<T>('GET', this.buildUrl(path, params));
+  }
+
+  async post<T>(path: string, data?: unknown): Promise<T> {
+    return this.request<T>('POST', this.buildUrl(path), data);
+  }
+
+  async put<T>(path: string, data?: unknown): Promise<T> {
+    return this.request<T>('PUT', this.buildUrl(path), data);
+  }
+
+  async patch<T>(path: string, data?: unknown): Promise<T> {
+    return this.request<T>('PATCH', this.buildUrl(path), data);
+  }
+
+  async delete<T>(path: string): Promise<T> {
+    return this.request<T>('DELETE', this.buildUrl(path));
+  }
+
+  private buildUrl(path: string, params?: Record<string, string | number | undefined>): string {
+    const base = `${this.config.apiBaseUrl}${path}`;
+    if (!params) return base;
+    const sp = new URLSearchParams();
+    for (const [k, v] of Object.entries(params)) {
+      if (v !== undefined && v !== null) sp.set(k, String(v));
+    }
+    const qs = sp.toString();
+    return qs ? `${base}?${qs}` : base;
+  }
+
+  private async request<T>(method: HttpMethod, url: string, body?: unknown, isRetry = false): Promise<T> {
+    const headers: Record<string, string> = { 'Content-Type': 'application/json' };
+    const token = this.tokens.getAccessToken();
+    if (token) headers['Authorization'] = `Bearer ${token}`;
+
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), this.config.timeout);
+
+    const opts: RequestInit = { method, headers, signal: controller.signal };
+    if (body !== undefined && method !== 'GET') {
+      opts.body = JSON.stringify(body);
+    }
+
+    if (this.config.debug) {
+      console.log(`[DeskillzBridge] ${method} ${url}`, body ?? '');
+    }
+
+    try {
+      const res = await fetch(url, opts);
+      clearTimeout(timeoutId);
+
+      // 401 auto-refresh (one retry only)
+      if (res.status === 401 && !isRetry) {
+        const refreshed = await this.attemptRefresh();
+        if (refreshed) return this.request<T>(method, url, body, true);
+        this.tokens.clearTokens();
+        this.onForceLogout?.();
+        throw new Error('Session expired. Please log in again.');
+      }
+
+      const json = await res.json().catch(() => null);
+
+      if (!res.ok) {
+        const msg = json?.message || json?.error || `Request failed (${res.status})`;
+        throw new Error(msg);
+      }
+
+      if (this.config.debug) {
+        console.log(`[DeskillzBridge] ${method} ${url} -> ${res.status}`);
+      }
+
+      // Backend may wrap in { data, success } or return raw
+      if (json && typeof json === 'object' && 'data' in json) {
+        return json.data as T;
+      }
+      return json as T;
+    } catch (err) {
+      clearTimeout(timeoutId);
+      if (err instanceof Error && err.name === 'AbortError') {
+        throw new Error('Request timed out.');
+      }
+      throw err;
+    }
+  }
+
+  private async attemptRefresh(): Promise<boolean> {
+    if (this.refreshPromise) return this.refreshPromise;
+    this.refreshPromise = this.doRefresh();
+    try { return await this.refreshPromise; }
+    finally { this.refreshPromise = null; }
+  }
+
+  private async doRefresh(): Promise<boolean> {
+    try {
+      const refreshToken = this.tokens.getRefreshToken();
+      if (!refreshToken) return false;
+
+      if (this.config.debug) console.log('[DeskillzBridge] Attempting token refresh...');
+
+      const res = await fetch(`${this.config.apiBaseUrl}/api/v1/auth/refresh`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ refreshToken }),
+      });
+
+      if (!res.ok) return false;
+      const data = await res.json();
+      this.tokens.setTokens(data.accessToken, data.refreshToken);
+
+      if (this.config.debug) console.log('[DeskillzBridge] Token refresh successful');
+      return true;
+    } catch {
+      return false;
+    }
+  }
+}
+
+// =============================================================================
+// REALTIME SERVICE (Socket.io - dynamically imported, optional)
+// =============================================================================
+
+class RealtimeService {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  private socket: any = null;
+  private _isConnected = false;
+  private config: ResolvedConfig;
+  private tokens: TokenManager;
+
+  constructor(config: ResolvedConfig, tokens: TokenManager) {
+    this.config = config;
+    this.tokens = tokens;
+  }
+
+  async connect(): Promise<void> {
+    try {
+      const { io } = await import('socket.io-client');
+      const token = this.tokens.getAccessToken();
+
+      this.socket = io(this.config.socketUrl, {
+        auth: { token },
+        transports: ['websocket', 'polling'],
+        reconnection: true,
+        reconnectionAttempts: 10,
+        reconnectionDelay: 1000,
+      });
+
+      this.socket.on('connect', () => {
+        this._isConnected = true;
+        if (this.config.debug) console.log('[DeskillzBridge] Socket connected');
+      });
+
+      this.socket.on('disconnect', () => {
+        this._isConnected = false;
+        if (this.config.debug) console.log('[DeskillzBridge] Socket disconnected');
+      });
+    } catch {
+      if (this.config.debug) console.log('[DeskillzBridge] socket.io-client not available, realtime disabled');
+    }
+  }
+
+  disconnect(): void {
+    this.socket?.disconnect();
+    this._isConnected = false;
+  }
+
+  subscribeRoom(roomId: string): void {
+    this.socket?.emit('room:join', { roomId });
+  }
+
+  unsubscribeRoom(roomId: string): void {
+    this.socket?.emit('room:leave', { roomId });
+  }
+
+  on(event: string, handler: (...args: unknown[]) => void): () => void {
+    this.socket?.on(event, handler);
+    return () => { this.socket?.off(event, handler); };
+  }
+
+  sendChat(roomId: string, message: string): void {
+    this.socket?.emit('room:chat', { roomId, message });
+  }
+
+  setReady(roomId: string, isReady: boolean): void {
+    this.socket?.emit('room:ready', { roomId, isReady });
+  }
+
+  get isConnected(): boolean {
+    return this._isConnected;
+  }
 }
 
 // =============================================================================
@@ -202,9 +424,12 @@ interface SDKInstance {
 export class DeskillzBridge {
   private static instance: DeskillzBridge | null = null;
 
-  // -- Core state --
+  // -- Core --
   protected config: BridgeConfig;
-  protected sdk: SDKInstance | null = null;
+  protected resolved: ResolvedConfig;
+  protected http: HttpClient;
+  protected tokens: TokenManager;
+  protected realtime: RealtimeService;
   protected isInitialized = false;
   protected _isAuthenticated = false;
   protected _isGuest = false;
@@ -219,13 +444,21 @@ export class DeskillzBridge {
 
   protected constructor(config: BridgeConfig) {
     this.config = config;
+    this.resolved = resolveConfig(config);
+    this.tokens = new TokenManager();
+    this.http = new HttpClient(this.resolved, this.tokens, () => {
+      this.log('Forced logout - tokens expired');
+      this._isAuthenticated = false;
+      this._isGuest = false;
+      this.currentUser = null;
+      this.emit('logout', {});
+    });
+    this.realtime = new RealtimeService(this.resolved, this.tokens);
   }
 
   static getInstance(config?: BridgeConfig): DeskillzBridge {
     if (!DeskillzBridge.instance) {
-      if (!config) {
-        throw new Error('[DeskillzBridge] Config required on first initialization');
-      }
+      if (!config) throw new Error('[DeskillzBridge] Config required on first initialization');
       DeskillzBridge.instance = new DeskillzBridge(config);
     }
     return DeskillzBridge.instance;
@@ -255,45 +488,16 @@ export class DeskillzBridge {
     }
 
     try {
-      // Dynamic import so the bridge compiles even without the SDK package.
-      // The package name is constructed at runtime to prevent TypeScript from
-      // resolving it at compile time (which fails when the package is missing).
-      // Once @deskillz/web-sdk is published on npm, replace this block with:
-      //   import { DeskillzSDK } from '@deskillz/web-sdk';
-      //   this.sdk = new DeskillzSDK({ ... }) as unknown as SDKInstance;
-      const SDK_PACKAGE = '@deskillz/web-sdk';
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      let sdkModule: any = null;
-      try {
-        sdkModule = await (new Function('pkg', 'return import(pkg)')(SDK_PACKAGE));
-      } catch {
-        sdkModule = null;
-      }
-
-      if (sdkModule?.DeskillzSDK) {
-        this.sdk = new sdkModule.DeskillzSDK({
-          gameId: this.config.gameId,
-          gameKey: this.config.gameKey,
-          apiBaseUrl: this.config.apiBaseUrl,
-          socketUrl: this.config.socketUrl,
-          debug: this.config.debug,
-        }) as SDKInstance;
-
-        this.log('Real SDK initialized');
-
-        // Attempt session restore
-        await this.restoreSession();
-      } else {
-        this.log('SDK package not installed - running in guest/offline mode');
-      }
+      // Attempt session restore from stored tokens
+      await this.restoreSession();
 
       this.isInitialized = true;
-      this.emit('initialized', { success: true, mode: this.sdk ? 'live' : 'offline' });
-      this.log('Bridge ready (mode:', this.sdk ? 'live' : 'offline', ')');
+      this.emit('initialized', { success: true, mode: 'live' });
+      this.log('Bridge ready (live mode)');
     } catch (err) {
-      this.log('SDK init error, falling back to offline mode:', err);
+      this.log('Init error (non-critical):', err);
       this.isInitialized = true;
-      this.emit('initialized', { success: true, mode: 'offline' });
+      this.emit('initialized', { success: true, mode: 'live' });
     }
   }
 
@@ -302,13 +506,13 @@ export class DeskillzBridge {
   // ---------------------------------------------------------------------------
 
   private async restoreSession(): Promise<void> {
-    if (!this.sdk) return;
+    if (!this.tokens.isAuthenticated()) return;
 
     try {
-      const isAuth = await this.sdk.isAuthenticated();
-      if (!isAuth) return;
+      const user = await this.http.get<{
+        id: string; username: string; email?: string; avatarUrl?: string; walletAddress?: string;
+      }>('/api/v1/users/me');
 
-      const user = await this.sdk.auth.getCurrentUser();
       if (user) {
         this.currentUser = {
           id: user.id,
@@ -324,7 +528,6 @@ export class DeskillzBridge {
       }
     } catch (err) {
       this.log('Session restore failed (token may be expired):', err);
-      // Not critical - user will just see the auth screen
     }
   }
 
@@ -334,68 +537,70 @@ export class DeskillzBridge {
 
   async login(email: string, password: string): Promise<DeskillzUser> {
     this.ensureInitialized();
-
-    if (!this.sdk) {
-      return this.loginAsGuest(email.split('@')[0]);
-    }
-
     this.log('Logging in with email:', email);
-    const result = await this.sdk.auth.loginWithEmail({ email, password });
 
-    this.currentUser = {
-      id: result.user.id,
-      username: result.user.username,
-      email: result.user.email,
-      avatarUrl: result.user.avatarUrl,
-      isGuest: false,
-    };
-    this._isAuthenticated = true;
-    this._isGuest = false;
+    try {
+      const result = await this.http.post<{
+        user: { id: string; username: string; email?: string; avatarUrl?: string };
+        tokens: { accessToken: string; refreshToken: string };
+        isNewUser: boolean;
+      }>('/api/v1/auth/login', { email, password });
 
-    this.emit('authenticated', { user: this.currentUser, isNewUser: result.isNewUser });
-    this.log('Login successful:', this.currentUser.username);
+      this.tokens.setTokens(result.tokens.accessToken, result.tokens.refreshToken);
 
-    // Auto-connect realtime after auth
-    this.connectRealtime();
+      this.currentUser = {
+        id: result.user.id,
+        username: result.user.username,
+        email: result.user.email,
+        avatarUrl: result.user.avatarUrl,
+        isGuest: false,
+      };
+      this._isAuthenticated = true;
+      this._isGuest = false;
 
-    return this.currentUser;
+      this.emit('authenticated', { user: this.currentUser, isNewUser: result.isNewUser });
+      this.log('Login successful:', this.currentUser.username);
+
+      this.connectRealtime();
+      return this.currentUser;
+    } catch (err) {
+      this.log('Login failed:', err);
+      throw err;
+    }
   }
 
-  async register(
-    username: string,
-    email: string,
-    password: string
-  ): Promise<DeskillzUser> {
+  async register(username: string, email: string, password: string): Promise<DeskillzUser> {
     this.ensureInitialized();
-
-    if (!this.sdk) {
-      return this.loginAsGuest(username);
-    }
-
     this.log('Registering:', username, email);
-    const result = await this.sdk.auth.registerWithEmail({
-      email,
-      password,
-      username,
-    });
 
-    this.currentUser = {
-      id: result.user.id,
-      username: result.user.username || username,
-      email: result.user.email,
-      avatarUrl: result.user.avatarUrl,
-      isGuest: false,
-    };
-    this._isAuthenticated = true;
-    this._isGuest = false;
+    try {
+      const result = await this.http.post<{
+        user: { id: string; username: string; email?: string; avatarUrl?: string };
+        tokens: { accessToken: string; refreshToken: string };
+        isNewUser: boolean;
+      }>('/api/v1/auth/register', { email, password, username });
 
-    this.emit('authenticated', { user: this.currentUser, isNewUser: true });
-    this.log('Registration successful:', this.currentUser.username);
+      this.tokens.setTokens(result.tokens.accessToken, result.tokens.refreshToken);
 
-    // Auto-connect realtime after auth
-    this.connectRealtime();
+      this.currentUser = {
+        id: result.user.id,
+        username: result.user.username || username,
+        email: result.user.email,
+        avatarUrl: result.user.avatarUrl,
+        isGuest: false,
+      };
+      this._isAuthenticated = true;
+      this._isGuest = false;
 
-    return this.currentUser;
+      this.emit('authenticated', { user: this.currentUser, isNewUser: true });
+      this.log('Registration successful:', this.currentUser.username);
+
+      this.connectRealtime();
+      return this.currentUser;
+    } catch (err) {
+      this.log('Registration failed:', err);
+      throw err;
+    }
   }
 
   // ---------------------------------------------------------------------------
@@ -409,35 +614,68 @@ export class DeskillzBridge {
   ): Promise<DeskillzUser> {
     this.ensureInitialized();
 
-    if (!this.sdk || !signMessage) {
-      // No SDK or no sign function - create guest with wallet display name
+    if (!signMessage) {
+      // No sign function provided - fall back to guest with wallet display name
       const shortAddr = `${address.slice(0, 6)}...${address.slice(-4)}`;
       return this.loginAsGuest(shortAddr, address);
     }
 
     this.log('Authenticating wallet:', address);
-    const result = await this.sdk.walletAuth.authenticate({
-      address,
-      chainId,
-      signMessage,
-    });
 
-    this.currentUser = {
-      id: result.user.id,
-      username: result.user.username,
-      walletAddress: result.user.walletAddress,
-      isGuest: false,
-    };
-    this._isAuthenticated = true;
-    this._isGuest = false;
+    try {
+      // Step 1: Get nonce from backend
+      const { nonce } = await this.http.get<{ nonce: string }>('/api/v1/auth/nonce', {
+        walletAddress: address,
+      });
 
-    this.emit('authenticated', { user: this.currentUser, isNewUser: result.isNewUser });
-    this.log('Wallet auth successful:', this.currentUser.username);
+      // Step 2: Construct SIWE message
+      const domain = window.location.host;
+      const uri = window.location.origin;
+      const issuedAt = new Date().toISOString();
 
-    // Auto-connect realtime after auth
-    this.connectRealtime();
+      const message = [
+        `${domain} wants you to sign in with your Ethereum account:`,
+        address,
+        '',
+        'Sign in to Deskillz.Games to access tournaments and compete for prizes.',
+        '',
+        `URI: ${uri}`,
+        `Version: 1`,
+        `Chain ID: ${chainId}`,
+        `Nonce: ${nonce}`,
+        `Issued At: ${issuedAt}`,
+      ].join('\n');
 
-    return this.currentUser;
+      // Step 3: Sign with wallet
+      const signature = await signMessage(message);
+
+      // Step 4: Verify with backend
+      const result = await this.http.post<{
+        user: { id: string; username: string; walletAddress?: string };
+        tokens: { accessToken: string; refreshToken: string };
+        isNewUser: boolean;
+      }>('/api/v1/auth/wallet/verify', { message, signature, walletAddress: address });
+
+      this.tokens.setTokens(result.tokens.accessToken, result.tokens.refreshToken);
+
+      this.currentUser = {
+        id: result.user.id,
+        username: result.user.username,
+        walletAddress: result.user.walletAddress,
+        isGuest: false,
+      };
+      this._isAuthenticated = true;
+      this._isGuest = false;
+
+      this.emit('authenticated', { user: this.currentUser, isNewUser: result.isNewUser });
+      this.log('Wallet auth successful:', this.currentUser.username);
+
+      this.connectRealtime();
+      return this.currentUser;
+    } catch (err) {
+      this.log('Wallet auth failed:', err);
+      throw err;
+    }
   }
 
   // ---------------------------------------------------------------------------
@@ -467,19 +705,13 @@ export class DeskillzBridge {
   async logout(): Promise<void> {
     this.log('Logging out...');
 
-    // Disconnect realtime first
     this.disconnectRealtime();
 
-    // Server-side logout (best-effort)
-    if (this.sdk && this._isAuthenticated && !this._isGuest) {
-      try {
-        await this.sdk.auth.logout();
-      } catch (err) {
-        this.log('Server logout error (non-critical):', err);
-      }
+    if (this._isAuthenticated && !this._isGuest) {
+      try { await this.http.post('/api/v1/auth/logout'); } catch { /* best effort */ }
     }
 
-    // Clear local state
+    this.tokens.clearTokens();
     this.currentUser = null;
     this._isAuthenticated = false;
     this._isGuest = false;
@@ -494,16 +726,14 @@ export class DeskillzBridge {
   // ---------------------------------------------------------------------------
 
   async getWalletBalance(): Promise<WalletBalance> {
-    if (!this.sdk || this._isGuest) {
+    if (this._isGuest || !this._isAuthenticated) {
       return { total: 0, currency: 'USD', balances: [] };
     }
 
-    this.ensureAuthenticated();
-
     try {
       const [allBalances, totalUsd] = await Promise.all([
-        this.sdk.wallet.getAllBalances(),
-        this.sdk.wallet.getTotalBalanceUSD(),
+        this.http.get<Array<{ currency: string; balance: number; usdValue: number }>>('/api/v1/wallet/balance'),
+        this.http.get<{ totalUsd: number }>('/api/v1/wallet/balance/total'),
       ]);
 
       const result: WalletBalance = {
@@ -525,15 +755,159 @@ export class DeskillzBridge {
   }
 
   async getBalanceForCurrency(currency: string): Promise<number> {
-    if (!this.sdk || this._isGuest) return 0;
-    this.ensureAuthenticated();
+    if (this._isGuest || !this._isAuthenticated) return 0;
 
     try {
-      const balance = await this.sdk.wallet.getBalance(currency);
-      return balance.balance;
+      const result = await this.http.get<{ balance: number }>(`/api/v1/wallet/balance/${currency}`);
+      return result.balance;
     } catch (err) {
       this.log('Balance fetch error for', currency, ':', err);
       return 0;
+    }
+  }
+
+  async deposit(currency: string, amount: number): Promise<TransactionResult> {
+    if (this._isGuest || !this._isAuthenticated) {
+      return { success: false, message: 'Wallet not available in guest mode.' };
+    }
+
+    try {
+      this.log('Depositing:', amount, currency);
+      const result = await this.http.post<TransactionResult>('/api/v1/wallet/deposit', { currency, amount });
+      if (result.success) {
+        const updated = await this.getWalletBalance();
+        this.emit('walletUpdated', updated);
+      }
+      return result;
+    } catch (err) {
+      this.log('Deposit error:', err);
+      return { success: false, message: 'Deposit failed. Please try again.' };
+    }
+  }
+
+  async withdraw(currency: string, amount: number, address?: string): Promise<TransactionResult> {
+    if (this._isGuest || !this._isAuthenticated) {
+      return { success: false, message: 'Wallet not available in guest mode.' };
+    }
+
+    try {
+      this.log('Withdrawing:', amount, currency);
+      const result = await this.http.post<TransactionResult>('/api/v1/wallet/withdraw', { currency, amount, address });
+      if (result.success) {
+        const updated = await this.getWalletBalance();
+        this.emit('walletUpdated', updated);
+      }
+      return result;
+    } catch (err) {
+      this.log('Withdraw error:', err);
+      return { success: false, message: 'Withdrawal failed. Please try again.' };
+    }
+  }
+
+  async disconnectWallet(): Promise<void> {
+    if (this._isGuest || !this._isAuthenticated) return;
+
+    try {
+      this.log('Disconnecting wallet...');
+      await this.http.post('/api/v1/auth/wallet/disconnect');
+      if (this.currentUser) this.currentUser.walletAddress = undefined;
+      this.emit('walletUpdated', { total: 0, currency: 'USD', balances: [] });
+    } catch (err) {
+      this.log('Disconnect wallet error:', err);
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // USER PROFILE
+  // ---------------------------------------------------------------------------
+
+  async getProfile(): Promise<DeskillzUser | null> {
+    if (this._isGuest || !this._isAuthenticated) return this.currentUser;
+
+    try {
+      const profile = await this.http.get<{
+        id: string; username: string; email?: string; avatarUrl?: string; walletAddress?: string;
+      }>('/api/v1/users/me');
+
+      this.currentUser = {
+        id: profile.id,
+        username: profile.username,
+        email: profile.email,
+        avatarUrl: profile.avatarUrl,
+        walletAddress: profile.walletAddress,
+        isGuest: false,
+      };
+      return this.currentUser;
+    } catch (err) {
+      this.log('Get profile error:', err);
+      return this.currentUser;
+    }
+  }
+
+  async updateProfile(data: UpdateProfilePayload): Promise<DeskillzUser | null> {
+    if (this._isGuest || !this._isAuthenticated) {
+      if (this.currentUser) {
+        if (data.username) this.currentUser.username = data.username;
+        if (data.avatarUrl) this.currentUser.avatarUrl = data.avatarUrl;
+      }
+      this.emit('profileUpdated', this.currentUser);
+      return this.currentUser;
+    }
+
+    try {
+      const updated = await this.http.patch<{
+        id: string; username: string; email?: string; avatarUrl?: string;
+      }>('/api/v1/users/me', data);
+
+      if (this.currentUser) {
+        this.currentUser.username = updated.username;
+        this.currentUser.email = updated.email;
+        this.currentUser.avatarUrl = updated.avatarUrl;
+      }
+      this.emit('profileUpdated', this.currentUser);
+      return this.currentUser;
+    } catch (err) {
+      this.log('Update profile error:', err);
+      throw err;
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // PLAYER STATS
+  // ---------------------------------------------------------------------------
+
+  async getPlayerStats(): Promise<PlayerStats> {
+    const empty: PlayerStats = {
+      gamesPlayed: 0, gamesWon: 0, winRate: 0, totalEarnings: 0,
+      currentStreak: 0, bestStreak: 0, avgScore: 0, tournamentWins: 0,
+    };
+
+    if (this._isGuest || !this._isAuthenticated) return empty;
+
+    try {
+      return await this.http.get<PlayerStats>('/api/v1/users/stats');
+    } catch (err) {
+      this.log('Get stats error:', err);
+      return empty;
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // MATCH HISTORY
+  // ---------------------------------------------------------------------------
+
+  async getMatchHistory(page = 1, limit = 20): Promise<MatchRecord[]> {
+    if (this._isGuest || !this._isAuthenticated) return [];
+
+    try {
+      const result = await this.http.get<{
+        matches: MatchRecord[];
+        pagination: { page: number; limit: number; total: number };
+      }>('/api/v1/users/match-history', { page, limit });
+      return result.matches;
+    } catch (err) {
+      this.log('Get match history error:', err);
+      return [];
     }
   }
 
@@ -551,12 +925,10 @@ export class DeskillzBridge {
   }): Promise<PrivateRoom> {
     this.ensureAuthenticated();
 
-    if (!this.sdk || this._isGuest) {
-      return this.createMockRoom(opts);
-    }
+    if (this._isGuest) return this.createMockRoom(opts);
 
     this.log('Creating room:', opts);
-    const room = await this.sdk.rooms.createRoom({
+    const room = await this.http.post<PrivateRoom>('/api/v1/private-rooms', {
       gameId: this.config.gameId,
       name: opts.name || `${this.currentUser?.username}'s Room`,
       maxPlayers: opts.maxPlayers || 4,
@@ -567,12 +939,7 @@ export class DeskillzBridge {
     });
 
     this.currentRoom = room;
-
-    // Auto-subscribe to room events
-    if (this.sdk.realtime.isConnected) {
-      this.sdk.realtime.subscribeRoom(room.id);
-    }
-
+    if (this.realtime.isConnected) this.realtime.subscribeRoom(room.id);
     this.emit('roomJoined', { room });
     return room;
   }
@@ -580,19 +947,12 @@ export class DeskillzBridge {
   async joinRoom(code: string): Promise<PrivateRoom> {
     this.ensureAuthenticated();
 
-    if (!this.sdk || this._isGuest) {
-      return this.joinMockRoom(code);
-    }
+    if (this._isGuest) return this.joinMockRoom(code);
 
     this.log('Joining room:', code);
-    const room = await this.sdk.rooms.joinByCode(code);
+    const room = await this.http.post<PrivateRoom>('/api/v1/private-rooms/join', { joinCode: code });
     this.currentRoom = room;
-
-    // Auto-subscribe to room events
-    if (this.sdk.realtime.isConnected) {
-      this.sdk.realtime.subscribeRoom(room.id);
-    }
-
+    if (this.realtime.isConnected) this.realtime.subscribeRoom(room.id);
     this.emit('roomJoined', { room });
     return room;
   }
@@ -603,46 +963,26 @@ export class DeskillzBridge {
     const roomId = this.currentRoom.id;
     this.log('Leaving room:', roomId);
 
-    // Unsubscribe from room events
-    if (this.sdk?.realtime.isConnected) {
-      this.sdk.realtime.unsubscribeRoom(roomId);
-    }
+    if (this.realtime.isConnected) this.realtime.unsubscribeRoom(roomId);
 
-    if (this.sdk && !this._isGuest) {
-      try {
-        await this.sdk.rooms.leaveRoom(roomId);
-      } catch (err) {
-        this.log('Leave room error (non-critical):', err);
-      }
+    if (!this._isGuest && this._isAuthenticated) {
+      try { await this.http.post(`/api/v1/private-rooms/${roomId}/leave`); } catch { /* non-critical */ }
     }
 
     this.emit('roomLeft', { roomId });
     this.currentRoom = null;
   }
 
-  async roomBuyIn(
-    amount: number,
-    currency: string = 'USDT'
-  ): Promise<{ success: boolean; pointBalance: number }> {
-    if (!this.sdk || this._isGuest || !this.currentRoom) {
-      return { success: true, pointBalance: amount };
-    }
+  async roomBuyIn(amount: number, currency: string = 'USDT'): Promise<{ success: boolean; pointBalance: number }> {
+    if (this._isGuest || !this.currentRoom) return { success: true, pointBalance: amount };
 
-    this.ensureAuthenticated();
-    return this.sdk.rooms.buyIn({
-      roomId: this.currentRoom.id,
-      amount,
-      currency,
-    });
+    return this.http.post(`/api/v1/private-rooms/${this.currentRoom.id}/buy-in`, { amount, currency });
   }
 
   async roomCashOut(): Promise<{ success: boolean; amount: number }> {
-    if (!this.sdk || this._isGuest || !this.currentRoom) {
-      return { success: true, amount: 0 };
-    }
+    if (this._isGuest || !this.currentRoom) return { success: true, amount: 0 };
 
-    this.ensureAuthenticated();
-    return this.sdk.rooms.cashOut(this.currentRoom.id);
+    return this.http.post(`/api/v1/private-rooms/${this.currentRoom.id}/cash-out`);
   }
 
   // ---------------------------------------------------------------------------
@@ -650,24 +990,21 @@ export class DeskillzBridge {
   // ---------------------------------------------------------------------------
 
   async submitScore(payload: GameScorePayload): Promise<{ success: boolean }> {
-    if (!this.sdk || this._isGuest) {
+    if (this._isGuest || !this._isAuthenticated) {
       this.log('Score submitted (local only):', payload);
       return { success: true };
     }
 
-    this.ensureAuthenticated();
     this.log('Submitting score:', payload);
 
     if (payload.tournamentId) {
-      return this.sdk.tournaments.submitScore({
-        tournamentId: payload.tournamentId,
+      return this.http.post(`/api/v1/tournaments/${payload.tournamentId}/score`, {
         score: payload.score,
         metadata: payload.metadata,
       });
     }
 
-    // For non-tournament games, log and return success
-    // (room-based scoring is handled server-side via socket events)
+    // Non-tournament scoring handled server-side via socket events
     this.log('Score recorded (non-tournament):', payload.score);
     return { success: true };
   }
@@ -677,89 +1014,63 @@ export class DeskillzBridge {
   // ---------------------------------------------------------------------------
 
   connectRealtime(): void {
-    if (!this.sdk || this._isGuest) {
-      this.log('Realtime: skipped (no SDK or guest mode)');
+    if (this._isGuest) {
+      this.log('Realtime: skipped (guest mode)');
       return;
     }
 
     this.log('Connecting realtime...');
-    this.sdk.realtime.connect().catch((err: unknown) => {
+    this.realtime.connect().catch((err: unknown) => {
       this.log('Realtime connect error:', err);
     });
   }
 
   disconnectRealtime(): void {
-    // Cleanup all subscriptions
     this.realtimeCleanups.forEach((cleanup) => cleanup());
     this.realtimeCleanups = [];
-
-    if (this.sdk) {
-      this.sdk.realtime.disconnect();
-      this.log('Realtime disconnected');
-    }
+    this.realtime.disconnect();
+    this.log('Realtime disconnected');
   }
 
   onRealtimeEvent(event: string, handler: (...args: unknown[]) => void): () => void {
-    if (!this.sdk) {
-      return () => {}; // No-op unsubscribe for offline mode
-    }
-
-    const cleanup = this.sdk.realtime.on(event, handler);
+    const cleanup = this.realtime.on(event, handler);
     this.realtimeCleanups.push(cleanup);
     return cleanup;
   }
 
   sendRealtimeMessage(event: string, data: unknown): void {
-    if (!this.sdk || !this.sdk.realtime.isConnected) {
+    if (!this.realtime.isConnected) {
       this.log('Realtime send skipped (not connected):', event);
       return;
     }
 
-    // Route to appropriate SDK method based on event prefix
     if (event === 'room:chat' && this.currentRoom) {
-      this.sdk.realtime.sendRoomChat(this.currentRoom.id, data as string);
+      this.realtime.sendChat(this.currentRoom.id, data as string);
     } else if (event === 'room:ready' && this.currentRoom) {
-      this.sdk.realtime.setRoomReady(this.currentRoom.id, data as boolean);
+      this.realtime.setReady(this.currentRoom.id, data as boolean);
     } else {
       this.log('Unhandled realtime event:', event);
     }
   }
 
   get isRealtimeConnected(): boolean {
-    return this.sdk?.realtime.isConnected ?? false;
+    return this.realtime.isConnected;
   }
 
   // ---------------------------------------------------------------------------
   // STATE ACCESSORS
   // ---------------------------------------------------------------------------
 
-  getCurrentUser(): DeskillzUser | null {
-    return this.currentUser;
-  }
-
-  getIsAuthenticated(): boolean {
-    return this._isAuthenticated;
-  }
-
-  getIsGuest(): boolean {
-    return this._isGuest;
-  }
-
-  getCurrentRoom(): PrivateRoom | null {
-    return this.currentRoom;
-  }
-
-  isReady(): boolean {
-    return this.isInitialized;
-  }
-
-  getConfig(): BridgeConfig {
-    return { ...this.config };
-  }
+  getCurrentUser(): DeskillzUser | null { return this.currentUser; }
+  getIsAuthenticated(): boolean { return this._isAuthenticated; }
+  getIsGuest(): boolean { return this._isGuest; }
+  getCurrentRoom(): PrivateRoom | null { return this.currentRoom; }
+  isReady(): boolean { return this.isInitialized; }
+  getConfig(): BridgeConfig { return { ...this.config }; }
 
   /** True when connected to real backend (not guest/offline) */
   get isLive(): boolean {
-    return this.sdk !== null && this._isAuthenticated && !this._isGuest;
+    return this._isAuthenticated && !this._isGuest;
   }
 
   // ---------------------------------------------------------------------------
@@ -768,23 +1079,18 @@ export class DeskillzBridge {
 
   on(callback: BridgeEventCallback): () => void {
     this.listeners.push(callback);
-    return () => {
-      this.listeners = this.listeners.filter((l) => l !== callback);
-    };
+    return () => { this.listeners = this.listeners.filter((l) => l !== callback); };
   }
 
   protected emit(type: BridgeEventType, data: unknown): void {
     for (const cb of this.listeners) {
-      try {
-        cb(type, data);
-      } catch (err) {
-        console.error('[DeskillzBridge] Event listener error:', err);
-      }
+      try { cb(type, data); }
+      catch (err) { console.error('[DeskillzBridge] Event listener error:', err); }
     }
   }
 
   // ---------------------------------------------------------------------------
-  // MOCK FALLBACKS (guest/offline mode)
+  // MOCK FALLBACKS (guest mode only)
   // ---------------------------------------------------------------------------
 
   private createMockRoom(opts: Record<string, unknown>): PrivateRoom {
@@ -847,17 +1153,8 @@ export class DeskillzBridge {
 
   protected cleanup(): void {
     this.disconnectRealtime();
-
-    if (this.sdk) {
-      try {
-        this.sdk.destroy();
-      } catch (err) {
-        this.log('SDK destroy error:', err);
-      }
-    }
-
     this.listeners = [];
-    this.sdk = null;
+    this.tokens.clearTokens();
     this.isInitialized = false;
     this._isAuthenticated = false;
     this._isGuest = false;
@@ -866,7 +1163,7 @@ export class DeskillzBridge {
   }
 
   protected log(...args: unknown[]): void {
-    if (this.config.debug) {
+    if (this.config.debug || this.resolved.debug) {
       console.log('[DeskillzBridge]', ...args);
     }
   }

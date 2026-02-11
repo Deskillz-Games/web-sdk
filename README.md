@@ -2,7 +2,6 @@
 
 Framework-agnostic SDK for integrating competitive gaming tournaments with cryptocurrency prizes into web applications.
 
-[![npm version](https://img.shields.io/npm/v/@deskillz/web-sdk.svg)](https://www.npmjs.com/package/@deskillz/web-sdk)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.3+-blue.svg)](https://www.typescriptlang.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
@@ -14,123 +13,155 @@ Framework-agnostic SDK for integrating competitive gaming tournaments with crypt
 - **Cryptocurrency Payments** - Support for BNB, USDT, USDC on BSC and TRON networks
 - **Anti-Cheat Protection** - HMAC-SHA256 score signing built-in
 - **Tree-Shakeable** - Only bundle what you use
-- **Dual Module Format** - ESM and CommonJS builds included
+- **Two Integration Modes** - Full SDK or simplified Bridge pattern
 
-## Installation
+## Two Ways to Integrate
 
-```bash
-npm install @deskillz/web-sdk socket.io-client
+| Approach | Best For | Files Needed |
+|----------|----------|-------------|
+| **DeskillzBridge** (Recommended) | Game developers building standalone web games | 1 file: `DeskillzBridge.ts` (1,172 lines) |
+| **Full DeskillzSDK** | Advanced integrations needing individual service access | Full `src/` folder (~13,500 lines across 45 files) |
+
+Most game developers should use the **DeskillzBridge** approach. It bundles everything into a single file with zero npm dependencies (socket.io-client is optional for realtime).
+
+---
+
+## Quick Start: DeskillzBridge (Recommended for Games)
+
+### 1. Copy Files
+
+Copy `DeskillzBridge.ts` from `src/` into your game project:
+
+```
+your-game/
+  src/
+    sdk/
+      DeskillzBridge.ts      # Copy from deskillz-web-sdk/src/
+      YourGameBridge.ts      # You create this (extends DeskillzBridge)
 ```
 
-Or with yarn:
+### 2. Optional: Install socket.io-client
 
 ```bash
-yarn add @deskillz/web-sdk socket.io-client
+npm install socket.io-client
 ```
 
-## Quick Start
+This is only needed if your game uses realtime multiplayer features. The bridge degrades gracefully without it.
 
-### 1. Initialize the SDK
+### 3. Initialize
 
 ```typescript
-import { createDeskillzSDK } from '@deskillz/web-sdk';
+import { DeskillzBridge } from './sdk/DeskillzBridge';
 
-const sdk = createDeskillzSDK({
-  gameId: 'your-game-id',      // From developer portal
-  gameKey: 'your-game-key',    // From developer portal
+const bridge = DeskillzBridge.getInstance({
+  gameId: 'YOUR_GAME_ID',       // From developer portal
+  gameKey: 'YOUR_API_KEY',      // From developer portal (Cloud Build auto-injects)
   apiBaseUrl: 'https://api.deskillz.games',
-  debug: true,                 // Enable console logging
+  socketUrl: 'wss://ws.deskillz.games/lobby',
+  debug: true,
 });
+
+await bridge.initialize();
 ```
 
-### 2. Authenticate User
+### 4. Authenticate
 
 ```typescript
 // Email/password login
-const user = await sdk.auth.login({
-  email: 'player@example.com',
-  password: 'securepassword',
-});
-
+const user = await bridge.login('player@example.com', 'password');
 console.log('Logged in as:', user.username);
 
-// Or register a new user
-const newUser = await sdk.auth.register({
-  email: 'newplayer@example.com',
-  password: 'securepassword',
-  username: 'ProGamer123',
-});
+// Register new account
+const newUser = await bridge.register('ProGamer', 'player@example.com', 'password');
+
+// Wallet connect (SIWE)
+const ethereum = (window as any).ethereum;
+const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
+const signMessage = async (msg: string) =>
+  ethereum.request({ method: 'personal_sign', params: [msg, accounts[0]] });
+const walletUser = await bridge.loginWithWallet(accounts[0], 56, signMessage);
 ```
 
-### 3. Browse Games and Tournaments
+### 5. Use Platform Features
 
 ```typescript
-// Get available games
-const games = await sdk.games.getGames();
+// Wallet
+const balance = await bridge.getWalletBalance();
+await bridge.deposit('USDT', 50);
+await bridge.withdraw('USDT', 25);
 
-// Get tournaments for a game
-const tournaments = await sdk.tournaments.getTournaments(games[0].id);
+// Profile
+const stats = await bridge.getPlayerStats();
+const history = await bridge.getMatchHistory();
 
-// Join a tournament
-await sdk.tournaments.join(tournaments[0].id);
+// Private Rooms
+const room = await bridge.createRoom({ entryFee: 5, maxPlayers: 4, isSocialGame: true });
+await bridge.joinRoom('ABC123');
+await bridge.roomBuyIn(100, 'USDT');
+
+// Score Submission
+await bridge.submitScore({ gameId: 'your-game', tournamentId: 't-123', score: 15000 });
+
+// Realtime Events
+bridge.connectRealtime();
+bridge.onRealtimeEvent('match:found', (data) => console.log('Match!', data));
 ```
 
-### 4. Connect to Real-Time Events
+### 6. Extend for Your Game
 
 ```typescript
-// Connect to WebSocket
-await sdk.realtime.connect();
+import { DeskillzBridge, type BridgeConfig } from './DeskillzBridge';
 
-// Listen for match found
-sdk.realtime.on('matchmaking:found', (data) => {
-  console.log('Match found!', data);
-});
+export class MahjongBridge extends DeskillzBridge {
+  private static mahjongInstance: MahjongBridge | null = null;
 
-// Join matchmaking queue
-sdk.realtime.joinQueue(gameId, tournamentId);
+  protected constructor(config: BridgeConfig) { super(config); }
+
+  static override getInstance(config?: BridgeConfig): MahjongBridge {
+    if (!MahjongBridge.mahjongInstance) {
+      if (!config) throw new Error('Config required on first init');
+      MahjongBridge.mahjongInstance = new MahjongBridge(config);
+    }
+    return MahjongBridge.mahjongInstance;
+  }
+
+  // Game-specific methods
+  async submitGameResults(winnerId: string, scores: Record<string, number>) {
+    return this.submitScore({
+      gameId: this.getConfig().gameId,
+      roomId: this.getCurrentRoom()?.id,
+      score: scores[winnerId],
+      metadata: { scores, winnerId },
+    });
+  }
+}
 ```
 
-### 5. Submit Score with Anti-Cheat
+---
+
+## Alternative: Full DeskillzSDK (Advanced)
+
+For integrations that need fine-grained control over individual services:
 
 ```typescript
-import { getTimestamp } from '@deskillz/web-sdk';
+import { DeskillzSDK } from '@deskillz/web-sdk';
 
-// Sign the score
-const signedScore = await sdk.scoreSigner.signScore({
+const sdk = new DeskillzSDK({
   gameId: 'your-game-id',
-  matchId: 'current-match-id',
-  score: 15000,
-  duration: 120.5,
-  timestamp: getTimestamp(),
+  gameKey: 'your-game-key',
+  apiBaseUrl: 'https://api.deskillz.games',
+  debug: true,
 });
 
-// Submit to tournament
-await sdk.tournaments.submitScore(tournamentId, {
-  score: signedScore.score,
-  signature: signedScore.signature,
-  matchId: signedScore.matchId,
-  timestamp: signedScore.timestamp,
-  nonce: signedScore.nonce,
-});
+// Individual service access
+const user = await sdk.auth.loginWithEmail({ email, password });
+const games = await sdk.games.getGames();
+const balances = await sdk.wallet.getBalances();
+await sdk.realtime.connect();
+sdk.destroy();
 ```
 
-## Configuration Options
-
-| Option | Type | Default | Description |
-|--------|------|---------|-------------|
-| `gameId` | `string` | Required | Your game ID from the developer portal |
-| `gameKey` | `string` | Required | Your game API key (used for score signing) |
-| `apiBaseUrl` | `string` | `'https://api.deskillz.games'` | Backend API URL |
-| `socketUrl` | `string` | `'wss://ws.deskillz.games'` | WebSocket server URL |
-| `timeout` | `number` | `120000` | HTTP request timeout (ms) |
-| `debug` | `boolean` | `false` | Enable debug logging |
-| `storage` | `StorageAdapter` | `LocalStorageAdapter` | Token storage adapter |
-| `autoReconnect` | `boolean` | `true` | Auto-reconnect WebSocket |
-| `maxReconnectAttempts` | `number` | `10` | Max reconnection attempts |
-
-## API Reference
-
-### SDK Modules
+### Full SDK Modules
 
 | Module | Access | Description |
 |--------|--------|-------------|
@@ -151,155 +182,163 @@ await sdk.tournaments.submitScore(tournamentId, {
 | `realtime` | `sdk.realtime` | WebSocket connection and events |
 | `scoreSigner` | `sdk.scoreSigner` | HMAC-SHA256 score signing |
 
-### Authentication
+---
+
+## Configuration Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `gameId` | `string` | Required | Your game ID from the developer portal |
+| `gameKey` | `string` | Required | Your game API key (used for score signing) |
+| `apiBaseUrl` | `string` | `'https://api.deskillz.games'` | Backend API URL |
+| `socketUrl` | `string` | `'wss://ws.deskillz.games/lobby'` | WebSocket server URL |
+| `timeout` | `number` | `120000` | HTTP request timeout (ms) |
+| `debug` | `boolean` | `false` | Enable debug logging |
+| `storage` | `StorageAdapter` | `LocalStorageAdapter` | Token storage adapter (full SDK only) |
+| `autoReconnect` | `boolean` | `true` | Auto-reconnect WebSocket |
+| `maxReconnectAttempts` | `number` | `10` | Max reconnection attempts |
+
+---
+
+## Cloud Build Credential Injection
+
+When your web game is built via the Cloud Build service, the build worker automatically injects your real credentials by replacing these exact placeholder strings in the compiled JavaScript:
 
 ```typescript
-// Login
-const user = await sdk.auth.login({ email, password });
-
-// Register
-const user = await sdk.auth.register({ email, password, username });
-
-// Logout
-await sdk.auth.logout();
-
-// Get current user
-const me = await sdk.auth.getMe();
-
-// Check authentication status
-const isLoggedIn = sdk.auth.isAuthenticated();
+// Use EXACTLY these placeholders in your source:
+gameId: 'YOUR_GAME_ID',
+gameKey: 'YOUR_API_KEY',
 ```
 
-### Wallet
+Cloud Build will **NOT** detect or replace custom strings like `'demo-key'`, `'my-api-key'`, or `process.env.API_KEY`.
+
+---
+
+## Critical Integration Rules (Lessons from Big 2)
+
+These rules were discovered during the Big 2 web game integration and apply to ALL web games:
+
+### 1. Never Use Dynamic Import for the SDK
 
 ```typescript
-// Get balances
-const balances = await sdk.wallet.getBalances();
+// WRONG - silently fails, game runs in guest mode with no error:
+const sdkModule = await import('@deskillz/web-sdk');
 
-// Get deposit address
-const address = await sdk.wallet.getDepositAddress('BNB');
-
-// Request withdrawal
-await sdk.wallet.withdraw({
-  currency: 'USDT',
-  amount: 100,
-  toAddress: '0x...',
-});
-
-// Get transaction history
-const transactions = await sdk.wallet.getTransactions({ page: 1, limit: 20 });
+// CORRECT - use static import of DeskillzBridge.ts:
+import { DeskillzBridge } from './sdk/DeskillzBridge';
 ```
 
-### Tournaments
+### 2. Wallet Connect Requires a Real Signer
 
 ```typescript
-// List tournaments
-const tournaments = await sdk.tournaments.getTournaments(gameId);
+// WRONG - falls back to guest mode silently:
+await bridge.loginWithWallet('0x1234...demo');
 
-// Get tournament details
-const tournament = await sdk.tournaments.getTournament(tournamentId);
-
-// Join tournament
-await sdk.tournaments.join(tournamentId);
-
-// Submit score
-await sdk.tournaments.submitScore(tournamentId, scoreData);
-
-// Get leaderboard
-const leaderboard = await sdk.tournaments.getLeaderboard(tournamentId);
+// CORRECT - use window.ethereum for real wallet:
+const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
+const signMessage = async (msg: string) =>
+  ethereum.request({ method: 'personal_sign', params: [msg, accounts[0]] });
+await bridge.loginWithWallet(accounts[0], 56, signMessage);
 ```
 
-### Private Rooms
+### 3. Use register() for Registration, login() for Login
 
 ```typescript
-// Create a private room
-const room = await sdk.rooms.createRoom({
-  gameId: 'game-123',
-  name: 'Friday Night Gaming',
-  maxPlayers: 8,
-  entryFee: 5,
-  currency: 'USDT',
-});
+// WRONG - creates no account, username is lost:
+await bridge.login(email, password);
 
-// Join with code
-await sdk.rooms.joinByCode('ABC123');
-
-// Ready up
-await sdk.rooms.setReady(roomId, true);
-
-// Start match (host only)
-await sdk.rooms.startMatch(roomId);
+// CORRECT:
+await bridge.register(username, email, password);
 ```
 
-### Real-Time Events
+### 4. Initialize Wallet Balance to Zero
 
 ```typescript
-// Connect
-await sdk.realtime.connect();
+// WRONG - fake balance before any API call:
+const [state, setState] = useState({ walletBalance: 1000 });
 
-// Subscribe to events
-sdk.realtime.on('matchmaking:found', (match) => { /* ... */ });
-sdk.realtime.on('tournament:started', (data) => { /* ... */ });
-sdk.realtime.on('room:player-joined', (player) => { /* ... */ });
-sdk.realtime.on('notification', (notif) => { /* ... */ });
-
-// Join queue
-sdk.realtime.joinQueue(gameId, tournamentId);
-
-// Leave queue
-sdk.realtime.leaveQueue();
-
-// Disconnect
-sdk.realtime.disconnect();
+// CORRECT - fetch after auth:
+const [state, setState] = useState({ walletBalance: 0 });
+// After login:
+const balance = await bridge.getWalletBalance();
 ```
 
-## Custom Storage Adapter
+### 5. Wire All Handlers to Real Bridge Methods
 
-For environments without `localStorage` (e.g., React Native WebView):
+Every UI button (deposit, withdraw, stats, history, wallet connect) must call the corresponding bridge method. Toast-only stubs are not acceptable even for MVP.
+
+### 6. Verify Live Mode After Login
 
 ```typescript
-import { createDeskillzSDK, MemoryStorageAdapter } from '@deskillz/web-sdk';
-
-// Use in-memory storage
-const sdk = createDeskillzSDK({
-  gameId: 'your-game-id',
-  gameKey: 'your-game-key',
-  storage: new MemoryStorageAdapter(),
-});
-
-// Or create a custom adapter
-const customStorage = {
-  async getItem(key: string): Promise<string | null> {
-    return await AsyncStorage.getItem(key);
-  },
-  async setItem(key: string, value: string): Promise<void> {
-    await AsyncStorage.setItem(key, value);
-  },
-  async removeItem(key: string): Promise<void> {
-    await AsyncStorage.removeItem(key);
-  },
-};
-
-const sdk = createDeskillzSDK({
-  gameId: 'your-game-id',
-  gameKey: 'your-game-key',
-  storage: customStorage,
-});
+const bridge = DeskillzBridge.getInstance();
+console.log('Live:', bridge.isLive);                    // Should be: true
+console.log('User:', bridge.getCurrentUser()?.id);      // Should NOT start with 'guest_'
+console.log('Guest:', bridge.getIsGuest());             // Should be: false
 ```
 
-## Subpath Imports
+---
 
-Import only what you need for smaller bundles:
+## API Endpoints Reference
+
+All endpoints use the `/api/v1/` prefix.
+
+| Action | Method | Endpoint |
+|--------|--------|----------|
+| Login | POST | `/api/v1/auth/login` |
+| Register | POST | `/api/v1/auth/register` |
+| Logout | POST | `/api/v1/auth/logout` |
+| Token Refresh | POST | `/api/v1/auth/refresh` |
+| Wallet Nonce | GET | `/api/v1/auth/nonce?walletAddress=0x...` |
+| Wallet Verify (SIWE) | POST | `/api/v1/auth/wallet/verify` |
+| User Profile | GET | `/api/v1/users/me` |
+| Update Profile | PATCH | `/api/v1/users/me` |
+| Player Stats | GET | `/api/v1/users/stats` |
+| Match History | GET | `/api/v1/users/match-history` |
+| Wallet Balances | GET | `/api/v1/wallet/balance` |
+| Balance Total | GET | `/api/v1/wallet/balance/total` |
+| Balance by Currency | GET | `/api/v1/wallet/balance/{currency}` |
+| Deposit | POST | `/api/v1/wallet/deposit` |
+| Withdraw | POST | `/api/v1/wallet/withdraw` |
+| Create Room | POST | `/api/v1/private-rooms` |
+| Join Room | POST | `/api/v1/private-rooms/join` |
+| Leave Room | POST | `/api/v1/private-rooms/{id}/leave` |
+| Room Buy-In | POST | `/api/v1/private-rooms/{id}/buy-in` |
+| Room Cash-Out | POST | `/api/v1/private-rooms/{id}/cash-out` |
+| Submit Score | POST | `/api/v1/tournaments/{id}/score` |
+
+---
+
+## Error Handling
+
+### DeskillzBridge
+
+The bridge catches all errors internally and returns safe defaults for guest mode. For live mode, errors are thrown and should be caught:
 
 ```typescript
-// Import specific modules
-import { AuthService } from '@deskillz/web-sdk/auth';
-import { WalletService } from '@deskillz/web-sdk/wallet';
-import { ScoreSigner } from '@deskillz/web-sdk/security';
-
-// Import types only
-import type { Tournament, Game, UserProfile } from '@deskillz/web-sdk';
+try {
+  await bridge.login(email, password);
+} catch (error) {
+  console.error('Login failed:', error.message);
+}
 ```
+
+### Full DeskillzSDK
+
+```typescript
+import { DeskillzError, AuthError, NetworkError } from '@deskillz/web-sdk';
+
+try {
+  await sdk.auth.loginWithEmail({ email, password });
+} catch (error) {
+  if (error instanceof AuthError) {
+    console.error('Auth failed:', error.message);
+  } else if (error instanceof NetworkError) {
+    console.error('Network error:', error.message);
+  }
+}
+```
+
+---
 
 ## Browser Support
 
@@ -308,58 +347,28 @@ import type { Tournament, Game, UserProfile } from '@deskillz/web-sdk';
 - Safari 13.1+
 - Edge 80+
 
-Requires Web Crypto API for score signing.
+Requires Web Crypto API for score signing (Full SDK only).
 
-## TypeScript
-
-Full TypeScript support with exported types:
-
-```typescript
-import type {
-  DeskillzConfig,
-  UserProfile,
-  Tournament,
-  Game,
-  WalletBalance,
-  PrivateRoom,
-  ScorePayload,
-  SignedScore,
-} from '@deskillz/web-sdk';
-```
-
-## Error Handling
-
-```typescript
-import { DeskillzError, AuthError, NetworkError } from '@deskillz/web-sdk';
-
-try {
-  await sdk.auth.login({ email, password });
-} catch (error) {
-  if (error instanceof AuthError) {
-    console.error('Authentication failed:', error.message);
-  } else if (error instanceof NetworkError) {
-    console.error('Network error:', error.message);
-  } else if (error instanceof DeskillzError) {
-    console.error('API error:', error.code, error.message);
-  }
-}
-```
+---
 
 ## Cleanup
 
-Always destroy the SDK when done:
-
 ```typescript
-// Disconnects WebSocket, clears event listeners
+// DeskillzBridge
+DeskillzBridge.destroy();
+
+// Full DeskillzSDK
 sdk.destroy();
 ```
 
+---
+
 ## Links
 
-- [Developer Portal](https://developers.deskillz.games)
-- [API Documentation](https://docs.deskillz.games)
-- [Discord Community](https://discord.gg/deskillz)
-- [GitHub Issues](https://github.com/deskillz/web-sdk/issues)
+- **Developer Portal:** https://deskillz.games/developer
+- **Platform:** https://deskillz.games
+- **Developer Guide:** See `DESKILLZ_WEB_GAME_DEVELOPER_GUIDELINE.md`
+- **Architecture:** See `DESKILLZ_SELF_SUFFICIENT_ARCHITECTURE_FINAL_HANDOFF_v5.md`
 
 ## License
 

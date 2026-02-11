@@ -22,6 +22,10 @@ export type {
   GameScorePayload,
   BridgeEventType,
   BridgeEventCallback,
+  PlayerStats,
+  MatchRecord,
+  UpdateProfilePayload,
+  TransactionResult,
 } from './DeskillzBridge';
 // =============================================================================
 // CORE
