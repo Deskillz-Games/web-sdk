@@ -93,10 +93,52 @@ export interface PrivateRoom {
   status: string;
   entryFee: number;
   maxPlayers: number;
+  minPlayers: number;
   currentPlayers: number;
+  /** ESPORTS or SOCIAL */
+  gameCategory: 'ESPORTS' | 'SOCIAL';
+  /** Kept for backward compat; derived from gameCategory === 'SOCIAL' */
   isSocialGame: boolean;
+  // Social game settings (present when gameCategory === 'SOCIAL')
   pointValue?: number;
   rakePercent?: number;
+  rakeCap?: number;
+  minBuyIn?: number;
+  maxBuyIn?: number;
+  defaultBuyIn?: number;
+  turnTimerSeconds?: number;
+  // Room metadata
+  visibility?: string;
+  roomCode?: string;
+  name?: string;
+  description?: string;
+}
+
+/** Options for creating an esports private room */
+export interface CreateEsportRoomOpts {
+  name?: string;
+  entryFee: number;
+  currency?: string;
+  maxPlayers?: number;
+  minPlayers?: number;
+  format?: string;
+  visibility?: 'PUBLIC_LISTED' | 'PRIVATE_CODE';
+}
+
+/** Options for creating a social game room */
+export interface CreateSocialRoomOpts {
+  name?: string;
+  currency?: string;
+  maxPlayers?: number;
+  minPlayers?: number;
+  pointValue: number;
+  rakePercent?: number;
+  rakeCap?: number;
+  minBuyIn?: number;
+  maxBuyIn?: number;
+  turnTimerSeconds?: number;
+  gameType?: 'MAHJONG' | 'BIG_TWO' | 'CHINESE_POKER_13';
+  visibility?: 'PUBLIC_LISTED' | 'PRIVATE_CODE';
 }
 
 export interface GameScorePayload {
@@ -147,6 +189,113 @@ export interface TransactionResult {
   message?: string;
 }
 
+export interface TournamentListing {
+  id: string;
+  name: string;
+  description?: string;
+  entryFee: number;
+  currency: string;
+  prizePool: number;
+  currentPlayers: number;
+  maxPlayers: number;
+  minPlayers: number;
+  format: string;
+  mode: string;
+  status: string;
+  gameMode?: string;
+  startsAt?: string;
+  minimumFan?: number;
+  prizeDistribution?: Array<{ place: number; percentage: number }>;
+}
+
+export interface QuickPlayJoinParams {
+  /** Game ID to join Quick Play for */
+  gameId: string;
+  /** Entry fee (esport) or point value (social) in USD */
+  entryFee: number;
+  /** Number of players (2 = 1v1, 3 = FFA-3, 4 = FFA-4 or social table) */
+  playerCount: number;
+  /** Payment currency (e.g., 'BNB', 'USDT_BSC', 'USDC_TRON') */
+  currency: string;
+}
+
+export interface QuickPlayJoinResult {
+  success: boolean;
+  queueKey: string;
+  gameId: string;
+  entryFee: number;
+  playerCount: number;
+  currency: string;
+  position: number;
+  estimatedWait: number;
+  playersInQueue: number;
+  matchId?: string;
+}
+
+export interface QuickPlayStatus {
+  inQueue: boolean;
+  queues: Array<{
+    queueKey: string;
+    gameId: string;
+    entryFee: number;
+    playerCount: number;
+    currency: string;
+    position: number;
+    estimatedWait: number;
+    playersInQueue: number;
+    joinedAt: string;
+  }>;
+}
+
+export interface QuickPlayLaunchData {
+  matchId: string;
+  matchSessionId: string;
+  gameId: string;
+  deepLink: string;
+  token: string;
+  entryFee: number;
+  currency: string;
+  prizePool: number;
+  players: Array<{ id: string; username: string; isNPC: boolean }>;
+  matchDurationSecs: number | null;
+}
+
+export interface QuickPlayScoreResult {
+  success: boolean;
+  matchId: string;
+  playerId: string;
+  score: number;
+  allScoresSubmitted: boolean;
+}
+
+export interface QuickPlayMatchResult {
+  matchId: string;
+  gameId: string;
+  status: string;
+  entryFee: number;
+  currency: string;
+  prizePool: number;
+  platformFee: number;
+  players: Array<{
+    id: string;
+    username: string;
+    score: number | null;
+    rank: number | null;
+    prizeWon: number;
+    isNPC: boolean;
+  }>;
+  winnerId: string | null;
+  completedAt: string | null;
+}
+
+export interface QuickPlayMatchData {
+  matchId: string;
+  gameId: string;
+  entryFee: number;
+  currency: string;
+  players: Array<{ id: string; rating: number }>;
+  npcCount?: number;
+}
 // =============================================================================
 // EVENT SYSTEM
 // =============================================================================
@@ -168,7 +317,15 @@ export type BridgeEventType =
   | 'depositComplete'
   | 'withdrawComplete'
   | 'playerJoined'
-  | 'playerLeft';
+  | 'playerLeft'
+  | 'quickPlaySearching'
+  | 'quickPlayFound'
+  | 'quickPlayNPCFilling'
+  | 'quickPlayStarting'
+  | 'quickPlayLeft'
+  | 'quickPlayMatchLaunched'
+  | 'quickPlayScoreSubmitted'
+  | 'quickPlayMatchCompleted';
 
 export type BridgeEventCallback = (type: BridgeEventType, data: unknown) => void;
 
@@ -381,6 +538,36 @@ class RealtimeService {
         this._isConnected = false;
         if (this.config.debug) console.log('[DeskillzBridge] Socket disconnected');
       });
+      // --- Quick Play socket event listeners ---
+
+  this.socket.on('quick-play:searching', (data: unknown) => {
+    if (this.config.debug) console.log('[DeskillzBridge] QP: Searching', data);
+  });
+
+  this.socket.on('quick-play:found', (data: unknown) => {
+    if (this.config.debug) console.log('[DeskillzBridge] QP: Match Found', data);
+  });
+
+  this.socket.on('quick-play:npc-filling', (data: unknown) => {
+    if (this.config.debug) console.log('[DeskillzBridge] QP: NPC Filling', data);
+  });
+
+  this.socket.on('quick-play:starting', (data: unknown) => {
+    if (this.config.debug) console.log('[DeskillzBridge] QP: Match Starting', data);
+  });
+   // --- Quick Play Match socket event listeners (Phase 4) ---
+
+      this.socket.on('quick-play:match-launched', (data: unknown) => {
+        if (this.config.debug) console.log('[DeskillzBridge] QP Match: Launched', data);
+      });
+
+      this.socket.on('quick-play:score-submitted', (data: unknown) => {
+        if (this.config.debug) console.log('[DeskillzBridge] QP Match: Score Submitted', data);
+      });
+
+      this.socket.on('quick-play:match-completed', (data: unknown) => {
+        if (this.config.debug) console.log('[DeskillzBridge] QP Match: Completed', data);
+      });
     } catch {
       if (this.config.debug) console.log('[DeskillzBridge] socket.io-client not available, realtime disabled');
     }
@@ -469,6 +656,11 @@ export class DeskillzBridge {
       DeskillzBridge.instance.cleanup();
       DeskillzBridge.instance = null;
     }
+  }
+
+  /** Instance-level cleanup for subclass override */
+  destroy(): void {
+    this.cleanup();
   }
 
   // ---------------------------------------------------------------------------
@@ -732,8 +924,8 @@ export class DeskillzBridge {
 
     try {
       const [allBalances, totalUsd] = await Promise.all([
-        this.http.get<Array<{ currency: string; balance: number; usdValue: number }>>('/api/v1/wallet/balance'),
-        this.http.get<{ totalUsd: number }>('/api/v1/wallet/balance/total'),
+        this.http.get<Array<{ currency: string; balance: number; usdValue: number }>>('/api/v1/wallet/balances'),
+        this.http.get<{ totalUsd: number }>('/api/v1/wallet/total'),
       ]);
 
       const result: WalletBalance = {
@@ -758,7 +950,7 @@ export class DeskillzBridge {
     if (this._isGuest || !this._isAuthenticated) return 0;
 
     try {
-      const result = await this.http.get<{ balance: number }>(`/api/v1/wallet/balance/${currency}`);
+      const result = await this.http.get<{ balance: number }>(`/api/v1/wallet/balances/${currency}`);
       return result.balance;
     } catch (err) {
       this.log('Balance fetch error for', currency, ':', err);
@@ -855,7 +1047,7 @@ export class DeskillzBridge {
     }
 
     try {
-      const updated = await this.http.patch<{
+      const updated = await this.http.put<{
         id: string; username: string; email?: string; avatarUrl?: string;
       }>('/api/v1/users/me', data);
 
@@ -912,36 +1104,200 @@ export class DeskillzBridge {
   }
 
   // ---------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
+  // TOURNAMENTS
+  // ---------------------------------------------------------------------------
+
+  async getTournaments(filters?: Record<string, string>): Promise<TournamentListing[]> {
+    if (this._isGuest || !this._isAuthenticated) return [];
+
+    try {
+      const params: Record<string, string> = { ...filters };
+      if (!params.gameId) params.gameId = this.config.gameId;
+      const result = await this.http.get<{
+        tournaments: TournamentListing[];
+      }>('/api/v1/tournaments', params);
+      return result.tournaments || [];
+    } catch (err) {
+      this.log('Get tournaments error:', err);
+      return [];
+    }
+  }
+
+  async joinTournament(tournamentId: string): Promise<{ success: boolean }> {
+    this.ensureAuthenticated();
+    if (this._isGuest) return { success: false };
+    return this.http.post(`/api/v1/tournaments/${tournamentId}/join`);
+  }
+
+  // ---------------------------------------------------------------------------
+  // HOST DASHBOARD
+  // ---------------------------------------------------------------------------
+
+  async getHostDashboard(): Promise<{
+    profile: {
+      id: string; username: string; avatarUrl?: string; tier: string; level: number;
+      isVerified: boolean; totalEarnings: number; monthlyEarnings: number; weeklyEarnings: number;
+      pendingSettlement: number; roomsHosted: number; totalPlayersHosted: number; revenueSharePercent: number;
+    };
+    tierInfo: {
+      tier: string; icon: string; currentValue: number; minThreshold: number; maxThreshold: number | null;
+      progressPercent: number; nextTier: string | null; valueToNextTier: number | null;
+      hostShare: number; platformShare: number; developerShare: number;
+    };
+    activeRooms: Array<{
+      id: string; roomCode: string; name: string; gameName: string; currentPlayers: number;
+      maxPlayers: number; status: string; entryFee: number; entryCurrency: string; createdAt: string;
+    }>;
+    recentSettlements: Array<{
+      id: string; roomName: string; totalRake: number; hostShare: number;
+      platformShare: number; developerShare: number; settledAt: string;
+    }>;
+    badges: Array<{ id: string; name: string; description: string; icon: string; earnedAt: string }>;
+  }> {
+    const defaultDashboard = {
+      profile: {
+        id: this.currentUser?.id || 'offline', username: this.currentUser?.username || 'Host',
+        tier: 'bronze', level: 1, isVerified: false,
+        totalEarnings: 0, monthlyEarnings: 0, weeklyEarnings: 0, pendingSettlement: 0,
+        roomsHosted: 0, totalPlayersHosted: 0, revenueSharePercent: 40,
+      },
+      tierInfo: {
+        tier: 'bronze', icon: '\uD83E\uDD49', currentValue: 0, minThreshold: 0,
+        maxThreshold: 500, progressPercent: 0, nextTier: 'silver', valueToNextTier: 500,
+        hostShare: 40, platformShare: 30, developerShare: 30,
+      },
+      activeRooms: [] as Array<any>,
+      recentSettlements: [] as Array<any>,
+      badges: [] as Array<any>,
+    };
+
+    if (this._isGuest || !this._isAuthenticated) return defaultDashboard;
+
+    try {
+      const result = await this.http.get<any>('/api/v1/host/dashboard');
+      // Normalize: backend may return flat or nested structure
+      if (result && result.profile) return result;
+      // If backend returns flat shape, wrap it
+      return {
+        ...defaultDashboard,
+        profile: { ...defaultDashboard.profile, ...result },
+      };
+    } catch (err) {
+      this.log('Get host dashboard error:', err);
+      return defaultDashboard;
+    }
+  }
+
+  async withdrawHostEarnings(): Promise<boolean> {
+    if (this._isGuest || !this._isAuthenticated) return false;
+
+    try {
+      await this.http.post('/api/v1/host/earnings/withdraw');
+      const updated = await this.getWalletBalance();
+      this.emit('walletUpdated', updated);
+      return true;
+    } catch (err) {
+      this.log('Withdraw host earnings error:', err);
+      return false;
+    }
+  }
+
+  // ---------------------------------------------------------------------------
   // PRIVATE ROOMS
   // ---------------------------------------------------------------------------
 
-  async createRoom(opts: {
-    name?: string;
-    isSocialGame?: boolean;
-    entryFee?: number;
-    maxPlayers?: number;
-    pointValue?: number;
-    currency?: string;
-  }): Promise<PrivateRoom> {
+  /**
+   * Create an esports private room.
+   * Endpoint: POST /api/v1/private-rooms
+   */
+  async createRoom(opts: CreateEsportRoomOpts): Promise<PrivateRoom> {
     this.ensureAuthenticated();
 
-    if (this._isGuest) return this.createMockRoom(opts);
+    if (this._isGuest) return this.createMockRoom({ ...opts, isSocialGame: false });
 
-    this.log('Creating room:', opts);
-    const room = await this.http.post<PrivateRoom>('/api/v1/private-rooms', {
+    this.log('Creating esport room:', opts);
+    const res = await this.http.post<any>('/api/v1/private-rooms', {
       gameId: this.config.gameId,
       name: opts.name || `${this.currentUser?.username}'s Room`,
       maxPlayers: opts.maxPlayers || 4,
-      isSocialGame: opts.isSocialGame || false,
+      minPlayers: opts.minPlayers || 2,
       entryFee: opts.entryFee || 0,
-      pointValue: opts.pointValue,
-      currency: opts.currency || 'USDT',
+      entryCurrency: opts.currency || 'USDT',
+      visibility: opts.visibility || 'PUBLIC_LISTED',
+      gameCategory: 'ESPORTS',
     });
 
+    const room = this.normalizeRoom(res, false);
     this.currentRoom = room;
     if (this.realtime.isConnected) this.realtime.subscribeRoom(room.id);
     this.emit('roomJoined', { room });
     return room;
+  }
+
+  /**
+   * Create a social game room with rake/buy-in settings.
+   * Endpoint: POST /api/v1/private-rooms/social
+   */
+  async createSocialRoom(opts: CreateSocialRoomOpts): Promise<PrivateRoom> {
+    this.ensureAuthenticated();
+
+    if (this._isGuest) return this.createMockRoom({ ...opts, isSocialGame: true });
+
+    this.log('Creating social room:', opts);
+    const res = await this.http.post<any>('/api/v1/private-rooms/social', {
+      gameId: this.config.gameId,
+      name: opts.name || `${this.currentUser?.username}'s Social Room`,
+      maxPlayers: opts.maxPlayers || 4,
+      minPlayers: opts.minPlayers || 2,
+      entryCurrency: opts.currency || 'USDT',
+      visibility: opts.visibility || 'PUBLIC_LISTED',
+      gameCategory: 'SOCIAL',
+      gameType: opts.gameType || 'MAHJONG',
+      pointValueUsd: opts.pointValue,
+      rakePercentage: opts.rakePercent ?? 5,
+      rakeCapPerRound: opts.rakeCap ?? 50,
+      minBuyIn: opts.minBuyIn ?? opts.pointValue * 100,
+      maxBuyIn: opts.maxBuyIn,
+      turnTimerSeconds: opts.turnTimerSeconds ?? 60,
+    });
+
+    const room = this.normalizeRoom(res, true);
+    this.currentRoom = room;
+    if (this.realtime.isConnected) this.realtime.subscribeRoom(room.id);
+    this.emit('roomJoined', { room });
+    return room;
+  }
+
+  /**
+   * Normalize backend room response to PrivateRoom interface.
+   * Backend uses roomCode/pointValueUsd, client uses code/pointValue.
+   */
+  private normalizeRoom(raw: any, isSocial: boolean): PrivateRoom {
+    return {
+      id: raw.id,
+      code: raw.roomCode || raw.code || '',
+      hostId: raw.hostId || raw.host?.id || '',
+      gameId: raw.gameId || raw.game?.id || '',
+      status: raw.status || 'WAITING',
+      entryFee: Number(raw.entryFee ?? 0),
+      maxPlayers: raw.maxPlayers || 4,
+      minPlayers: raw.minPlayers || 2,
+      currentPlayers: raw.currentPlayers || 1,
+      gameCategory: isSocial ? 'SOCIAL' : 'ESPORTS',
+      isSocialGame: isSocial,
+      pointValue: raw.pointValueUsd != null ? Number(raw.pointValueUsd) : raw.pointValue,
+      rakePercent: raw.rakePercentage != null ? Number(raw.rakePercentage) : raw.rakePercent,
+      rakeCap: raw.rakeCapPerRound != null ? Number(raw.rakeCapPerRound) : raw.rakeCap,
+      minBuyIn: raw.minBuyIn != null ? Number(raw.minBuyIn) : undefined,
+      maxBuyIn: raw.maxBuyIn != null ? Number(raw.maxBuyIn) : undefined,
+      defaultBuyIn: raw.defaultBuyIn != null ? Number(raw.defaultBuyIn) : undefined,
+      turnTimerSeconds: raw.turnTimerSeconds,
+      visibility: raw.visibility,
+      roomCode: raw.roomCode,
+      name: raw.name,
+      description: raw.description,
+    };
   }
 
   async joinRoom(code: string): Promise<PrivateRoom> {
@@ -1009,6 +1365,295 @@ export class DeskillzBridge {
     return { success: true };
   }
 
+   // ---------------------------------------------------------------------------
+  // QUICK PLAY (Phase 3 - Instant Matchmaking)
+  // ---------------------------------------------------------------------------
+
+  private _quickPlayCleanups: Array<() => void> = [];
+
+  async joinQuickPlay(params: QuickPlayJoinParams): Promise<QuickPlayJoinResult> {
+    this.ensureAuthenticated();
+
+    if (this._isGuest) {
+      this.log('Quick Play: simulating join (guest mode)');
+      const mockResult: QuickPlayJoinResult = {
+        success: true,
+        queueKey: `qp:mock:${params.entryFee}:${params.playerCount}`,
+        gameId: params.gameId || this.config.gameId,
+        entryFee: params.entryFee,
+        playerCount: params.playerCount,
+        currency: params.currency,
+        position: 1,
+        estimatedWait: 5,
+        playersInQueue: 1,
+      };
+      this.emit('quickPlaySearching', mockResult);
+
+      // Simulate match found after 3 seconds in guest mode
+      setTimeout(() => {
+        this.emit('quickPlayFound', {
+          matchId: `mock_match_${Date.now()}`,
+          gameId: params.gameId || this.config.gameId,
+          entryFee: params.entryFee,
+          currency: params.currency,
+          players: [{ id: this.currentUser?.id || 'guest', rating: 1000 }],
+        });
+      }, 3000);
+
+      return mockResult;
+    }
+
+    this.log('Quick Play: joining queue', params);
+
+    // Set up socket listeners for this session
+    this.cleanupQuickPlayListeners();
+    this.setupQuickPlayListeners();
+
+    const result = await this.http.post<QuickPlayJoinResult>(
+      '/api/v1/lobby/quick-play/join',
+      {
+        gameId: params.gameId || this.config.gameId,
+        entryFee: params.entryFee,
+        playerCount: params.playerCount,
+        currency: params.currency,
+      },
+    );
+
+    this.emit('quickPlaySearching', result);
+
+    // If match was created immediately, emit found event
+    if (result.matchId) {
+      this.emit('quickPlayFound', {
+        matchId: result.matchId,
+        gameId: result.gameId,
+        entryFee: result.entryFee,
+        currency: result.currency,
+        players: [],
+      });
+    }
+
+    return result;
+  }
+
+  async leaveQuickPlay(): Promise<{ success: boolean }> {
+    this.ensureAuthenticated();
+
+    if (this._isGuest) {
+      this.log('Quick Play: leaving queue (guest mode)');
+      this.cleanupQuickPlayListeners();
+      this.emit('quickPlayLeft', {});
+      return { success: true };
+    }
+
+    this.log('Quick Play: leaving queue');
+
+    try {
+      const result = await this.http.post<{ success: boolean }>(
+        '/api/v1/lobby/quick-play/leave',
+      );
+      this.cleanupQuickPlayListeners();
+      this.emit('quickPlayLeft', {});
+      return result;
+    } catch (err) {
+      this.log('Quick Play leave error:', err);
+      this.cleanupQuickPlayListeners();
+      return { success: false };
+    }
+  }
+
+  async getQuickPlayStatus(): Promise<QuickPlayStatus> {
+    this.ensureAuthenticated();
+
+    if (this._isGuest) {
+      return { inQueue: false, queues: [] };
+    }
+
+    try {
+      return await this.http.get<QuickPlayStatus>('/api/v1/lobby/quick-play/status');
+    } catch (err) {
+      this.log('Quick Play status error:', err);
+      return { inQueue: false, queues: [] };
+    }
+  }
+ 
+  // ---------------------------------------------------------------------------
+  // QUICK PLAY MATCH LIFECYCLE (Phase 4)
+  // ---------------------------------------------------------------------------
+
+  private _currentQuickPlayMatch: QuickPlayLaunchData | null = null;
+
+  async launchQuickPlayMatch(matchSessionId: string): Promise<QuickPlayLaunchData> {
+    this.ensureAuthenticated();
+
+    if (this._isGuest) {
+      this.log('Quick Play Match: simulating launch (guest mode)');
+      const mock: QuickPlayLaunchData = {
+        matchId: `mock_match_${Date.now()}`,
+        matchSessionId,
+        gameId: this.config.gameId,
+        deepLink: `deskillz://quick-play?matchId=mock&token=mock`,
+        token: 'mock-token',
+        entryFee: 1,
+        currency: 'USDT_BSC',
+        prizePool: 1.80,
+        players: [
+          { id: this.currentUser?.id || 'guest', username: this.currentUser?.username || 'Guest', isNPC: false },
+          { id: 'npc-1', username: 'BotPlayer', isNPC: true },
+        ],
+        matchDurationSecs: 120,
+      };
+      this._currentQuickPlayMatch = mock;
+      this.emit('quickPlayMatchLaunched', mock);
+      return mock;
+    }
+
+    this.log('Quick Play Match: launching', matchSessionId);
+
+    const result = await this.http.post<QuickPlayLaunchData>(
+      '/api/v1/lobby/quick-play/match/launch',
+      { matchSessionId },
+    );
+
+    this._currentQuickPlayMatch = result;
+    this.emit('quickPlayMatchLaunched', result);
+    return result;
+  }
+
+  async submitQuickPlayScore(matchId: string, score: number): Promise<QuickPlayScoreResult> {
+    this.ensureAuthenticated();
+
+    if (this._isGuest) {
+      this.log('Quick Play Score: simulated (guest mode)', score);
+      const mock: QuickPlayScoreResult = {
+        success: true,
+        matchId,
+        playerId: this.currentUser?.id || 'guest',
+        score,
+        allScoresSubmitted: true,
+      };
+      this.emit('quickPlayScoreSubmitted', mock);
+
+      // Simulate match completion in guest mode
+      setTimeout(() => {
+        this.emit('quickPlayMatchCompleted', {
+          matchId,
+          gameId: this.config.gameId,
+          status: 'COMPLETED',
+          entryFee: 1,
+          currency: 'USDT_BSC',
+          prizePool: 1.80,
+          platformFee: 0.20,
+          players: [
+            { id: 'guest', username: 'Guest', score, rank: 1, prizeWon: 1.80, isNPC: false },
+            { id: 'npc-1', username: 'BotPlayer', score: score - 50, rank: 2, prizeWon: 0, isNPC: true },
+          ],
+          winnerId: 'guest',
+          completedAt: new Date().toISOString(),
+        });
+      }, 1000);
+
+      return mock;
+    }
+
+    this.log('Quick Play Score: submitting', matchId, score);
+
+    const result = await this.http.post<QuickPlayScoreResult>(
+      `/api/v1/lobby/quick-play/match/${matchId}/score`,
+      { score },
+    );
+
+    this.emit('quickPlayScoreSubmitted', result);
+    return result;
+  }
+
+  async getQuickPlayMatchResults(matchId: string): Promise<QuickPlayMatchResult> {
+    this.ensureAuthenticated();
+
+    if (this._isGuest) {
+      return {
+        matchId,
+        gameId: this.config.gameId,
+        status: 'COMPLETED',
+        entryFee: 1,
+        currency: 'USDT_BSC',
+        prizePool: 1.80,
+        platformFee: 0.20,
+        players: [],
+        winnerId: null,
+        completedAt: null,
+      };
+    }
+
+    return await this.http.get<QuickPlayMatchResult>(
+      `/api/v1/lobby/quick-play/match/${matchId}/results`,
+    );
+  }
+
+  async forceCompleteQuickPlayMatch(matchId: string): Promise<QuickPlayMatchResult> {
+    this.ensureAuthenticated();
+
+    if (this._isGuest) return this.getQuickPlayMatchResults(matchId);
+
+    this.log('Quick Play Match: force completing', matchId);
+
+    const result = await this.http.post<QuickPlayMatchResult>(
+      `/api/v1/lobby/quick-play/match/${matchId}/complete`,
+    );
+
+    this._currentQuickPlayMatch = null;
+    this.emit('quickPlayMatchCompleted', result);
+    return result;
+  }
+
+  getCurrentQuickPlayMatch(): QuickPlayLaunchData | null {
+    return this._currentQuickPlayMatch;
+  }
+
+  private setupQuickPlayListeners(): void {
+    const onSearching = this.onRealtimeEvent('quick-play:searching', (data) => {
+      this.emit('quickPlaySearching', data);
+    });
+
+    const onFound = this.onRealtimeEvent('quick-play:found', (data) => {
+      this.emit('quickPlayFound', data);
+      // Auto-cleanup after match found
+      this.cleanupQuickPlayListeners();
+    });
+
+    const onNPCFilling = this.onRealtimeEvent('quick-play:npc-filling', (data) => {
+      this.emit('quickPlayNPCFilling', data);
+    });
+
+    const onStarting = this.onRealtimeEvent('quick-play:starting', (data) => {
+      this.emit('quickPlayStarting', data);
+      // Auto-cleanup after match starts
+      this.cleanupQuickPlayListeners();
+    });
+   
+    const onMatchLaunched = this.onRealtimeEvent('quick-play:match-launched', (data) => {
+      this._currentQuickPlayMatch = data as QuickPlayLaunchData;
+      this.emit('quickPlayMatchLaunched', data);
+    });
+
+    const onScoreSubmitted = this.onRealtimeEvent('quick-play:score-submitted', (data) => {
+      this.emit('quickPlayScoreSubmitted', data);
+    });
+
+    const onMatchCompleted = this.onRealtimeEvent('quick-play:match-completed', (data) => {
+      this._currentQuickPlayMatch = null;
+      this.emit('quickPlayMatchCompleted', data);
+    });
+    
+    this._quickPlayCleanups = [
+      onSearching, onFound, onNPCFilling, onStarting,
+      onMatchLaunched, onScoreSubmitted, onMatchCompleted,
+    ];
+  }
+
+  private cleanupQuickPlayListeners(): void {
+    this._quickPlayCleanups.forEach((cleanup) => cleanup());
+    this._quickPlayCleanups = [];
+  }
   // ---------------------------------------------------------------------------
   // REALTIME / SOCKET
   // ---------------------------------------------------------------------------
@@ -1094,6 +1739,8 @@ export class DeskillzBridge {
   // ---------------------------------------------------------------------------
 
   private createMockRoom(opts: Record<string, unknown>): PrivateRoom {
+    const isSocial = (opts.isSocialGame as boolean) || false;
+    const pointValue = (opts.pointValue as number) || 0.10;
     const room: PrivateRoom = {
       id: `mock_room_${Date.now()}`,
       code: this.generateRoomCode(),
@@ -1102,10 +1749,18 @@ export class DeskillzBridge {
       status: 'WAITING',
       entryFee: (opts.entryFee as number) || 0,
       maxPlayers: (opts.maxPlayers as number) || 4,
+      minPlayers: (opts.minPlayers as number) || 2,
       currentPlayers: 1,
-      isSocialGame: (opts.isSocialGame as boolean) || false,
-      pointValue: opts.pointValue as number | undefined,
-      rakePercent: 5,
+      gameCategory: isSocial ? 'SOCIAL' : 'ESPORTS',
+      isSocialGame: isSocial,
+      pointValue: isSocial ? pointValue : undefined,
+      rakePercent: isSocial ? ((opts.rakePercent as number) ?? 5) : undefined,
+      rakeCap: isSocial ? ((opts.rakeCap as number) ?? 50) : undefined,
+      minBuyIn: isSocial ? ((opts.minBuyIn as number) ?? pointValue * 100) : undefined,
+      maxBuyIn: isSocial ? (opts.maxBuyIn as number) : undefined,
+      defaultBuyIn: isSocial ? pointValue * 500 : undefined,
+      turnTimerSeconds: isSocial ? ((opts.turnTimerSeconds as number) ?? 60) : undefined,
+      name: (opts.name as string) || `${this.currentUser?.username}'s Room`,
     };
     this.currentRoom = room;
     return room;
@@ -1120,7 +1775,9 @@ export class DeskillzBridge {
       status: 'WAITING',
       entryFee: 0,
       maxPlayers: 4,
+      minPlayers: 2,
       currentPlayers: 2,
+      gameCategory: 'ESPORTS',
       isSocialGame: false,
     };
     this.currentRoom = room;
@@ -1152,6 +1809,7 @@ export class DeskillzBridge {
   }
 
   protected cleanup(): void {
+    this.cleanupQuickPlayListeners();
     this.disconnectRealtime();
     this.listeners = [];
     this.tokens.clearTokens();
