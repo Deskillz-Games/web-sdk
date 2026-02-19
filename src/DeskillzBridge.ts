@@ -595,8 +595,13 @@ class RealtimeService {
     this.socket?.emit('room:chat', { roomId, message });
   }
 
-  setReady(roomId: string, isReady: boolean): void {
+ setReady(roomId: string, isReady: boolean): void {
     this.socket?.emit('room:ready', { roomId, isReady });
+  }
+
+  /** Generic emit for any event */
+  emit(event: string, data: unknown): void {
+    this.socket?.emit(event, data);
   }
 
   get isConnected(): boolean {
@@ -732,13 +737,11 @@ export class DeskillzBridge {
     this.log('Logging in with email:', email);
 
     try {
-      const result = await this.http.post<{
-        user: { id: string; username: string; email?: string; avatarUrl?: string };
-        tokens: { accessToken: string; refreshToken: string };
-        isNewUser: boolean;
-      }>('/api/v1/auth/login', { email, password });
+      const result = await this.http.post<any>('/api/v1/auth/login', { email, password });
 
-      this.tokens.setTokens(result.tokens.accessToken, result.tokens.refreshToken);
+      const accessToken = result.tokens?.accessToken ?? result.accessToken;
+      const refreshToken = result.tokens?.refreshToken ?? result.refreshToken;
+      this.tokens.setTokens(accessToken, refreshToken);
 
       this.currentUser = {
         id: result.user.id,
@@ -766,13 +769,11 @@ export class DeskillzBridge {
     this.log('Registering:', username, email);
 
     try {
-      const result = await this.http.post<{
-        user: { id: string; username: string; email?: string; avatarUrl?: string };
-        tokens: { accessToken: string; refreshToken: string };
-        isNewUser: boolean;
-      }>('/api/v1/auth/register', { email, password, username });
+     const result = await this.http.post<any>('/api/v1/auth/register', { email, password, username });
 
-      this.tokens.setTokens(result.tokens.accessToken, result.tokens.refreshToken);
+      const accessToken = result.tokens?.accessToken ?? result.accessToken;
+      const refreshToken = result.tokens?.refreshToken ?? result.refreshToken;
+      this.tokens.setTokens(accessToken, refreshToken);
 
       this.currentUser = {
         id: result.user.id,
@@ -842,13 +843,11 @@ export class DeskillzBridge {
       const signature = await signMessage(message);
 
       // Step 4: Verify with backend
-      const result = await this.http.post<{
-        user: { id: string; username: string; walletAddress?: string };
-        tokens: { accessToken: string; refreshToken: string };
-        isNewUser: boolean;
-      }>('/api/v1/auth/wallet/verify', { message, signature, walletAddress: address });
+     const result = await this.http.post<any>('/api/v1/auth/wallet/verify', { message, signature, walletAddress: address });
 
-      this.tokens.setTokens(result.tokens.accessToken, result.tokens.refreshToken);
+      const accessToken = result.tokens?.accessToken ?? result.accessToken;
+      const refreshToken = result.tokens?.refreshToken ?? result.refreshToken;
+      this.tokens.setTokens(accessToken, refreshToken);
 
       this.currentUser = {
         id: result.user.id,
@@ -1252,7 +1251,6 @@ export class DeskillzBridge {
       minPlayers: opts.minPlayers || 2,
       entryCurrency: opts.currency || 'USDT',
       visibility: opts.visibility || 'PUBLIC_LISTED',
-      gameCategory: 'SOCIAL',
       gameType: opts.gameType || 'MAHJONG',
       pointValueUsd: opts.pointValue,
       rakePercentage: opts.rakePercent ?? 5,
@@ -1693,9 +1691,9 @@ export class DeskillzBridge {
       this.realtime.sendChat(this.currentRoom.id, data as string);
     } else if (event === 'room:ready' && this.currentRoom) {
       this.realtime.setReady(this.currentRoom.id, data as boolean);
-    } else {
-      this.log('Unhandled realtime event:', event);
-    }
+   } else {
+    this.realtime.emit(event, data);
+  }
   }
 
   get isRealtimeConnected(): boolean {
