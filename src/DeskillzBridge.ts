@@ -922,13 +922,15 @@ export class DeskillzBridge {
     }
 
     try {
-      const [allBalances, totalUsd] = await Promise.all([
-        this.http.get<Array<{ currency: string; balance: number; usdValue: number }>>('/api/v1/wallet/balances'),
-        this.http.get<{ totalUsd: number }>('/api/v1/wallet/total'),
-      ]);
+      const allBalances = await this.http.get<
+        Array<{ currency: string; balance: number; usdValue: number }>
+      >('/api/v1/wallet/balances');
+
+      // Compute total from balances (wallet/total endpoint returns 404)
+      const totalUsd = allBalances.reduce((sum, b) => sum + (b.usdValue || 0), 0);
 
       const result: WalletBalance = {
-        total: totalUsd.totalUsd,
+        total: totalUsd,
         currency: 'USD',
         balances: allBalances.map((b) => ({
           currency: b.currency,
@@ -1076,7 +1078,9 @@ export class DeskillzBridge {
     if (this._isGuest || !this._isAuthenticated) return empty;
 
     try {
-      return await this.http.get<PlayerStats>('/api/v1/users/stats');
+      const userId = this.currentUser?.id;
+      if (!userId) return empty;
+      return await this.http.get<PlayerStats>(`/api/v1/users/${userId}/stats`);
     } catch (err) {
       this.log('Get stats error:', err);
       return empty;
@@ -1099,6 +1103,54 @@ export class DeskillzBridge {
     } catch (err) {
       this.log('Get match history error:', err);
       return [];
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // LEADERBOARD
+  // ---------------------------------------------------------------------------
+
+  async getLeaderboard(limit = 20): Promise<
+    Array<{ rank: number; username: string; wins: number; totalEarnings: number; isCurrentUser?: boolean }>
+  > {
+    try {
+      const params: Record<string, string> = {
+        gameId: this.config.gameId,
+        limit: String(limit),
+      };
+      const result = await this.http.get<
+        Array<{ rank: number; username: string; wins: number; totalEarnings: number; userId?: string }>
+      >('/api/v1/leaderboard/global', params);
+
+      const myId = this.currentUser?.id;
+      return (result || []).map((entry) => ({
+        ...entry,
+        isCurrentUser: myId ? entry.userId === myId : false,
+      }));
+    } catch (err) {
+      this.log('Get leaderboard error:', err);
+      return [];
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // PUBLIC ROOMS
+  // ---------------------------------------------------------------------------
+
+  async getPublicRooms(): Promise<any[]> {
+    try {
+      const params: Record<string, string> = { gameId: this.config.gameId };
+      const result = await this.http.get<{ rooms: any[] }>('/api/v1/private-rooms/public', params);
+      return result.rooms || [];
+    } catch (err) {
+      this.log('Get public rooms error:', err);
+      // Fallback: try listing all rooms
+      try {
+        const result = await this.http.get<any[]>('/api/v1/private-rooms', { gameId: this.config.gameId });
+        return Array.isArray(result) ? result : [];
+      } catch {
+        return [];
+      }
     }
   }
 
@@ -1154,18 +1206,22 @@ export class DeskillzBridge {
     }>;
     badges: Array<{ id: string; name: string; description: string; icon: string; earnedAt: string }>;
   }> {
+    const defaultProfile = {
+      id: this.currentUser?.id || 'offline', username: this.currentUser?.username || 'Host',
+      avatarUrl: undefined as string | undefined,
+      tier: 'bronze', level: 1, isVerified: false,
+      totalEarnings: 0, monthlyEarnings: 0, weeklyEarnings: 0, pendingSettlement: 0,
+      roomsHosted: 0, totalPlayersHosted: 0, revenueSharePercent: 40,
+    };
+    const defaultTierInfo = {
+      tier: 'bronze', icon: '', currentValue: 0, minThreshold: 0,
+      maxThreshold: 500 as number | null, progressPercent: 0,
+      nextTier: 'silver' as string | null, valueToNextTier: 500 as number | null,
+      hostShare: 40, platformShare: 30, developerShare: 30,
+    };
     const defaultDashboard = {
-      profile: {
-        id: this.currentUser?.id || 'offline', username: this.currentUser?.username || 'Host',
-        tier: 'bronze', level: 1, isVerified: false,
-        totalEarnings: 0, monthlyEarnings: 0, weeklyEarnings: 0, pendingSettlement: 0,
-        roomsHosted: 0, totalPlayersHosted: 0, revenueSharePercent: 40,
-      },
-      tierInfo: {
-        tier: 'bronze', icon: '\uD83E\uDD49', currentValue: 0, minThreshold: 0,
-        maxThreshold: 500, progressPercent: 0, nextTier: 'silver', valueToNextTier: 500,
-        hostShare: 40, platformShare: 30, developerShare: 30,
-      },
+      profile: defaultProfile,
+      tierInfo: defaultTierInfo,
       activeRooms: [] as Array<any>,
       recentSettlements: [] as Array<any>,
       badges: [] as Array<any>,
@@ -1174,13 +1230,50 @@ export class DeskillzBridge {
     if (this._isGuest || !this._isAuthenticated) return defaultDashboard;
 
     try {
-      const result = await this.http.get<any>('/api/v1/host/dashboard');
-      // Normalize: backend may return flat or nested structure
-      if (result && result.profile) return result;
-      // If backend returns flat shape, wrap it
+      const d = await this.http.get<any>('/api/v1/host/dashboard');
+      if (!d) return defaultDashboard;
+
+      // Backend returns esportsTierInfo/socialTierInfo (NOT tierInfo)
+      // and earnings as a separate object (NOT inside profile)
+      const t = (d.esportsTierInfo ?? d.socialTierInfo ?? {}) as Record<string, unknown>;
+      const e = (d.earnings ?? {}) as Record<string, unknown>;
+      const p = (d.profile ?? {}) as Record<string, unknown>;
+      const lvl = (d.levelInfo ?? {}) as Record<string, unknown>;
+
       return {
-        ...defaultDashboard,
-        profile: { ...defaultDashboard.profile, ...result },
+        profile: {
+          ...defaultProfile,
+          id: String(p.id ?? p.odid ?? defaultProfile.id),
+          username: String(p.username ?? defaultProfile.username),
+          avatarUrl: p.avatarUrl as string | undefined,
+          tier: String(t.tier ?? p.currentSocialTier ?? p.currentEsportsTier ?? 'bronze').toLowerCase(),
+          level: Number(lvl.level ?? p.hostLevel ?? 1),
+          isVerified: Boolean(p.isVerified ?? false),
+          totalEarnings: Number(e.total ?? 0),
+          monthlyEarnings: Number(e.monthly ?? 0),
+          weeklyEarnings: Number(e.weekly ?? 0),
+          pendingSettlement: Number(e.pending ?? 0),
+          roomsHosted: Number(p.totalRoomsCompleted ?? 0),
+          totalPlayersHosted: Number(p.totalPlayersHosted ?? 0),
+          revenueSharePercent: Number(t.revenueSharePercent ?? 40),
+        },
+        tierInfo: {
+          tier: String(t.tier ?? 'bronze').toLowerCase(),
+          icon: String(t.icon ?? ''),
+          currentValue: Number(t.currentValue ?? t.progress ?? 0),
+          minThreshold: Number(t.minThreshold ?? 0),
+          maxThreshold: t.maxThreshold != null ? Number(t.maxThreshold) : null,
+          progressPercent: Number(t.progress ?? t.progressPercent ?? 0),
+          nextTier: t.nextTier ? String(t.nextTier).toLowerCase() : null,
+          valueToNextTier: t.valueToNextTier != null ? Number(t.valueToNextTier)
+            : t.requirements ? Number((t.requirements as any).earningsRequired ?? 0) : null,
+          hostShare: Number(t.revenueSharePercent ?? t.hostShare ?? 40),
+          platformShare: Number(t.platformShare ?? 30),
+          developerShare: Number(t.developerShare ?? 30),
+        },
+        activeRooms: Array.isArray(d.activeRooms) ? d.activeRooms : [],
+        recentSettlements: Array.isArray(d.recentSettlements) ? d.recentSettlements : [],
+        badges: Array.isArray(d.badges) ? d.badges : [],
       };
     } catch (err) {
       this.log('Get host dashboard error:', err);
