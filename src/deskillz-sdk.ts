@@ -2,7 +2,8 @@
 // Deskillz Web SDK - Main SDK Entry Point
 // Path: src/deskillz-sdk.ts
 // Orchestrates all services: auth, wallet, lobby, games, tournaments,
-// private rooms, spectator, and real-time socket
+// private rooms, spectator, host, quick-play, leaderboard, users,
+// score signing, and real-time socket
 // Replicates: api-client.ts (init pattern), socket.ts (connect pattern),
 //   index.ts (hooks barrel export pattern)
 // =============================================================================
@@ -23,13 +24,18 @@ import { LobbyService } from './lobby/lobby-service';
 import { GameService, TournamentService } from './games/game-service';
 import { PrivateRoomService, SpectatorService } from './rooms/room-service';
 import { SocketClient } from './realtime/socket-client';
+import { HostService } from './host/host-service';
+import { QuickPlayService } from './quick-play/quick-play-service';
+import { LeaderboardService } from './users/leaderboard-service';
+import { UserService } from './users/user-service';
+import { ScoreSigner } from './security/score-signer';
 
 // =============================================================================
 // SDK VERSION
 // =============================================================================
 
 /** Semantic version of the Deskillz Web SDK. */
-export const SDK_VERSION = '1.0.0';
+export const SDK_VERSION = '1.1.0';
 
 // =============================================================================
 // MAIN SDK CLASS
@@ -54,8 +60,21 @@ export const SDK_VERSION = '1.0.0';
  * // Authentication
  * const result = await sdk.auth.loginWithEmail({ email, password });
  *
- * // Browse games
- * const games = await sdk.games.getGames();
+ * // Host dashboard (social games)
+ * const dashboard = await sdk.host.getDashboard();
+ *
+ * // Quick Play matchmaking
+ * const result = await sdk.quickPlay.joinQuickPlay({ gameId, entryFee, playerCount, currency });
+ *
+ * // Leaderboard
+ * const board = await sdk.leaderboard.getGameLeaderboard(gameId);
+ *
+ * // User profile + stats
+ * const profile = await sdk.users.getMyProfile();
+ * const stats = await sdk.users.getUserStats(userId);
+ *
+ * // Score signing (esport anti-cheat)
+ * const signed = await sdk.scoreSigner.signScore({ score: 1500, gameId, matchId });
  *
  * // Real-time
  * sdk.realtime.connect();
@@ -91,6 +110,11 @@ export class DeskillzSDK {
   private _rooms: PrivateRoomService | null = null;
   private _spectator: SpectatorService | null = null;
   private _realtime: SocketClient | null = null;
+  private _host: HostService | null = null;
+  private _quickPlay: QuickPlayService | null = null;
+  private _leaderboard: LeaderboardService | null = null;
+  private _users: UserService | null = null;
+  private _scoreSigner: ScoreSigner | null = null;
 
   // ---------------------------------------------------------------------------
   // Lifecycle state
@@ -291,6 +315,153 @@ export class DeskillzSDK {
   }
 
   // ===========================================================================
+  // NEW SERVICE ACCESSORS (v1.1.0)
+  // ===========================================================================
+
+  /**
+   * Host dashboard service.
+   * Handles host profile, tier progression (Bronze-Elite), badges, earnings,
+   * settlements, active rooms, room history, leaderboard, notifications,
+   * withdrawal requests, and age verification.
+   *
+   * Required for social games where players become hosts to earn revenue.
+   * All endpoints use /api/v1/host/ prefix. Auth required.
+   * 20 endpoints total.
+   *
+   * @example
+   * ```ts
+   * const dashboard = await sdk.host.getDashboard();
+   * const profile = await sdk.host.getProfile();
+   * const earnings = await sdk.host.getEarnings();
+   * const badges = await sdk.host.getBadges();
+   * await sdk.host.requestWithdrawal({ amount: 50, currency: 'USDT_BSC' });
+   * ```
+   */
+  get host(): HostService {
+    this.assertNotDestroyed();
+    if (!this._host) {
+      this._host = new HostService(this._http, this.config.debug);
+      this.log('HostService initialized');
+    }
+    return this._host;
+  }
+
+  /**
+   * Quick Play matchmaking service.
+   * Handles joining/leaving the instant matchmaking queue and status polling.
+   *
+   * Esport games: entry-fee queue with NPC fill on timeout.
+   * Social games: create/join board with point values and rake.
+   * All endpoints use /api/v1/lobby/quick-play/ prefix. Auth required.
+   * 3 endpoints total (join, leave, status).
+   *
+   * Note: QuickPlay config is fetched via GET /api/v1/quick-play/games/:gameId
+   * (public, no auth). The useQuickPlayQueue hook handles this automatically
+   * via window.DeskillzBridge.getInstance().getQuickPlayConfig().
+   *
+   * @example
+   * ```ts
+   * const result = await sdk.quickPlay.joinQuickPlay({
+   *   gameId: 'abc-123',
+   *   entryFee: 5,
+   *   playerCount: 2,
+   *   currency: 'USDT_BSC',
+   * });
+   * const status = await sdk.quickPlay.getQuickPlayStatus();
+   * await sdk.quickPlay.leaveQuickPlay();
+   * ```
+   */
+  get quickPlay(): QuickPlayService {
+    this.assertNotDestroyed();
+    if (!this._quickPlay) {
+      this._quickPlay = new QuickPlayService(this._http, this.config.debug);
+      this.log('QuickPlayService initialized');
+    }
+    return this._quickPlay;
+  }
+
+  /**
+   * Leaderboard service.
+   * Handles global leaderboard, per-game leaderboard, user rank queries,
+   * and game/platform statistics.
+   *
+   * All endpoints use /api/v1/leaderboard/ prefix.
+   * 7 endpoints total.
+   *
+   * @example
+   * ```ts
+   * const global = await sdk.leaderboard.getGlobalLeaderboard({ limit: 50 });
+   * const gameBoard = await sdk.leaderboard.getGameLeaderboard(gameId);
+   * const myRank = await sdk.leaderboard.getMyRank();
+   * const myGameRank = await sdk.leaderboard.getMyGameRank(gameId);
+   * ```
+   */
+  get leaderboard(): LeaderboardService {
+    this.assertNotDestroyed();
+    if (!this._leaderboard) {
+      this._leaderboard = new LeaderboardService(this._http, this.config.debug);
+      this.log('LeaderboardService initialized');
+    }
+    return this._leaderboard;
+  }
+
+  /**
+   * User profile and stats service.
+   * Handles user profile CRUD, stats retrieval, transaction history,
+   * and wallet management.
+   *
+   * All endpoints use /api/v1/users/ prefix. Auth required.
+   * 6 endpoints total.
+   *
+   * @example
+   * ```ts
+   * const me = await sdk.users.getMyProfile();
+   * const stats = await sdk.users.getUserStats(userId);
+   * const txns = await sdk.users.getTransactions({ limit: 20 });
+   * await sdk.users.updateProfile({ username: 'NewName' });
+   * ```
+   */
+  get users(): UserService {
+    this.assertNotDestroyed();
+    if (!this._users) {
+      this._users = new UserService(this._http, this.config.debug);
+      this.log('UserService initialized');
+    }
+    return this._users;
+  }
+
+  /**
+   * Score signing service (esport anti-cheat).
+   * Provides HMAC-SHA256 signing and verification of game scores.
+   * Uses the gameKey from SDK config as the signing secret.
+   *
+   * Esport games MUST sign scores before submission to prevent tampering.
+   * The backend verifies the HMAC before accepting any score.
+   *
+   * @example
+   * ```ts
+   * const signed = await sdk.scoreSigner.signScore({
+   *   score: 1500,
+   *   gameId: sdk.config.gameId,
+   *   matchId: 'match-uuid',
+   *   playerId: 'player-uuid',
+   *   timestamp: Date.now(),
+   * });
+   * // Submit signed.signature along with score to backend
+   *
+   * const valid = await sdk.scoreSigner.verifyScore(signed);
+   * ```
+   */
+  get scoreSigner(): ScoreSigner {
+    this.assertNotDestroyed();
+    if (!this._scoreSigner) {
+      this._scoreSigner = new ScoreSigner(this.config.gameKey);
+      this.log('ScoreSigner initialized');
+    }
+    return this._scoreSigner;
+  }
+
+  // ===========================================================================
   // CONVENIENCE ACCESSORS
   // ===========================================================================
 
@@ -346,6 +517,11 @@ export class DeskillzSDK {
     this._rooms = null;
     this._spectator = null;
     this._realtime = null;
+    this._host = null;
+    this._quickPlay = null;
+    this._leaderboard = null;
+    this._users = null;
+    this._scoreSigner = null;
 
     // Remove all event listeners
     this.events.removeAllListeners();

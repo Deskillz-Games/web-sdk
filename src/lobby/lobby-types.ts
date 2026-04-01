@@ -73,6 +73,26 @@ export interface TournamentInfo {
   minPlayers: number;
   maxPlayers: number;
   matchDuration: number;
+  // Extended fields for social game & advanced tournament support
+  description?: string;
+  currentPlayers?: number;
+  scheduledStart?: string;
+  scheduledEnd?: string;
+  status?: string;
+  prizePoolType?: 'DYNAMIC' | 'GUARANTEED';
+  platformFeePercent?: number;
+  gameCategory?: 'ESPORTS' | 'SOCIAL';
+  socialGameType?: 'BIG_TWO' | 'MAHJONG' | 'CHINESE_POKER_13';
+  mahjongVariant?: 'HONG_KONG' | 'TAIWANESE' | 'RIICHI' | 'MCR' | 'CANTONESE';
+  pointValueUsd?: number;
+  pointTarget?: number;
+  rakePercentage?: number;
+  rakeCapPerRound?: number;
+  turnTimerSeconds?: number;
+  minBuyIn?: number;
+  maxBuyIn?: number;
+  matchQueueWindowMinutes?: number;
+  roundsCount?: number;
 }
 
 // -----------------------------------------------------------------------------
