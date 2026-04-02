@@ -92,11 +92,11 @@ const ROUNDS_OPTIONS = [
   { value: 5, label: 'Best of 5', description: 'First to 3 wins' },
 ]
 
-const PRESET_PRIZE_SPLITS: { label: string; distribution: Record<string, number> }[] = [
-  { label: 'Winner Takes All', distribution: { '1': 100 } as Record<string, number> },
-  { label: 'Top 2 Split', distribution: { '1': 70, '2': 30 } as Record<string, number> },
-  { label: 'Top 3 Split', distribution: { '1': 60, '2': 30, '3': 10 } as Record<string, number> },
-  { label: 'Even Top 3', distribution: { '1': 50, '2': 30, '3': 20 } as Record<string, number> },
+const PRESET_PRIZE_SPLITS: { label: string; distribution: PrizeDistribution }[] = [
+  { label: 'Winner Takes All', distribution: { '1': 100 } },
+  { label: 'Top 2 Split', distribution: { '1': 70, '2': 30 } },
+  { label: 'Top 3 Split', distribution: { '1': 60, '2': 30, '3': 10 } },
+  { label: 'Even Top 3', distribution: { '1': 50, '2': 30, '3': 20 } },
 ]
 
 // =============================================================================

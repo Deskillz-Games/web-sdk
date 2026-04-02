@@ -1620,6 +1620,16 @@ export class DeskillzBridge {
       progressPercent: number; nextTier: string | null; valueToNextTier: number | null;
       hostShare: number; platformShare: number; developerShare: number;
     };
+    earnings: {
+      totalAllTime: number;
+      totalThisMonth: number;
+      totalThisWeek: number;
+      pendingSettlement: number;
+      availableWithdrawal: number;
+      esportsEarnings: number;
+      socialEarnings: number;
+      bonusEarnings: number;
+    };
     activeRooms: Array<{
       id: string; roomCode: string; name: string; gameName: string; currentPlayers: number;
       maxPlayers: number; status: string; entryFee: number; entryCurrency: string; createdAt: string;
@@ -1646,6 +1656,11 @@ export class DeskillzBridge {
     const defaultDashboard = {
       profile: defaultProfile,
       tierInfo: defaultTierInfo,
+      earnings: {
+        totalAllTime: 0, totalThisMonth: 0, totalThisWeek: 0,
+        pendingSettlement: 0, availableWithdrawal: 0,
+        esportsEarnings: 0, socialEarnings: 0, bonusEarnings: 0,
+      },
       activeRooms: [] as Array<any>,
       recentSettlements: [] as Array<any>,
       badges: [] as Array<any>,
@@ -1679,7 +1694,7 @@ export class DeskillzBridge {
           pendingSettlement: Number(e.pending ?? 0),
           roomsHosted: Number(p.totalRoomsCompleted ?? 0),
           totalPlayersHosted: Number(p.totalPlayersHosted ?? 0),
-          revenueSharePercent: Number(t.revenueSharePercent ?? 40),
+          revenueSharePercent: Number(t.hostShare ?? 15),
         },
         tierInfo: {
           tier: String(t.tier ?? 'bronze').toLowerCase(),
@@ -1691,9 +1706,21 @@ export class DeskillzBridge {
           nextTier: t.nextTier ? String(t.nextTier).toLowerCase() : null,
           valueToNextTier: t.valueToNextTier != null ? Number(t.valueToNextTier)
             : t.requirements ? Number((t.requirements as any).earningsRequired ?? 0) : null,
-          hostShare: Number(t.revenueSharePercent ?? t.hostShare ?? 40),
+          hostShare: Number(t.hostShare ?? 15),
           platformShare: Number(t.platformShare ?? 30),
           developerShare: Number(t.developerShare ?? 30),
+        },
+        // Esport games  → use esportsEarnings + pendingEarnings
+        // Social games  → use socialEarnings  + pendingEarnings
+        earnings: {
+          totalAllTime:        Number(e.totalAllTime     ?? e.total   ?? 0),
+          totalThisMonth:      Number(e.totalThisMonth   ?? e.monthly ?? 0),
+          totalThisWeek:       Number(e.totalThisWeek    ?? e.weekly  ?? 0),
+          pendingSettlement:   Number(e.pendingSettlement ?? e.pending ?? 0),
+          availableWithdrawal: Number(e.availableWithdrawal ?? e.pending ?? 0),
+          esportsEarnings:     Number(e.esportsEarnings  ?? 0),
+          socialEarnings:      Number(e.socialEarnings   ?? 0),
+          bonusEarnings:       Number(e.bonusEarnings    ?? 0),
         },
         activeRooms: Array.isArray(d.activeRooms) ? d.activeRooms : [],
         recentSettlements: Array.isArray(d.recentSettlements) ? d.recentSettlements : [],
