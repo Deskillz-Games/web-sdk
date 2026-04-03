@@ -1,9 +1,10 @@
 // =============================================================================
 // useHostDashboard -- packages/game-ui/src/hooks/useHostDashboard.ts
 //
-// Drives the Host Dashboard screen in standalone game apps.
-// Uses DeskillzBridge for all API calls -- no direct HTTP imports.
-// Follows same getBridge() pattern as useEnrollmentStatus and useQuickPlayQueue.
+// v3.3 changes:
+//   - Added ActiveTable interface (per-table data for multi-table cash games)
+//   - Added tables?: ActiveTable[] to ActiveRoom interface
+//   - safeActiveRoom() helper maps raw API response to typed ActiveRoom
 //
 // Bridge methods used:
 //   bridge.getHostDashboard()  -> GET /api/v1/host/dashboard
@@ -23,7 +24,7 @@ import { useState, useEffect, useCallback, useRef } from 'react'
 import toast from 'react-hot-toast'
 
 // =============================================================================
-// TYPES (inline -- no import from host-types to keep game-ui dependency-free)
+// TYPES
 // =============================================================================
 
 export type HostTier = 'BRONZE' | 'SILVER' | 'GOLD' | 'PLATINUM' | 'DIAMOND' | 'ELITE'
@@ -113,6 +114,37 @@ export interface ActiveRoomPlayer {
   currentBalance?: number
 }
 
+// =============================================================================
+// ACTIVE TABLE (v3.3 -- per-table data for multi-table cash games)
+// Returned inside ActiveRoom.tables[] when numberOfTables > 1.
+// =============================================================================
+
+export interface ActiveTablePlayer {
+  userId: string
+  username: string
+  avatarUrl: string | null
+  seatNumber: number
+  currentBalance?: number
+  status: string
+}
+
+export interface ActiveTable {
+  /** RoundTable.id */
+  tableId: string
+  /** Display number (1, 2, 3...) */
+  tableNumber: number
+  /** Seats in this table */
+  seats: number
+  /** Players currently seated */
+  filledSeats: number
+  /** Table status: WAITING | FILLING | READY | LIVE | COMPLETED | CANCELLED */
+  status: string
+  /** Rake accumulated at this table (subset of room total) */
+  accumulatedRake: number
+  /** Players at this table */
+  players: ActiveTablePlayer[]
+}
+
 export interface ActiveRoom {
   id: string
   roomCode: string
@@ -132,6 +164,10 @@ export interface ActiveRoom {
   totalRounds?: number
   createdAt: string
   players: ActiveRoomPlayer[]
+  /** Multi-table cash game tables (v3.3). Present when numberOfTables > 1. */
+  tables?: ActiveTable[]
+  /** Total number of tables configured for this room (v3.3) */
+  numberOfTables?: number
 }
 
 export interface SettlementRecord {
@@ -151,7 +187,6 @@ export interface SettlementRecord {
 
 // =============================================================================
 // SAFE NUMBER HELPER
-// Backend returns Prisma Decimal fields as strings.
 // =============================================================================
 
 const toNum = (v: unknown): number => {
@@ -186,60 +221,92 @@ export function getTierDisplay(tier: HostTier): TierDisplayInfo {
 }
 
 // =============================================================================
+// SAFE ACTIVE ROOM MAPPER (v3.3)
+// Maps raw API response to typed ActiveRoom including tables[]
+// =============================================================================
+
+function safeActiveRoom(raw: any): ActiveRoom {
+  const tables: ActiveTable[] = Array.isArray(raw.tables)
+    ? raw.tables.map((t: any): ActiveTable => ({
+        tableId:         t.tableId ?? t.id ?? '',
+        tableNumber:     t.tableNumber ?? 0,
+        seats:           t.seats ?? t.maxPlayers ?? 4,
+        filledSeats:     t.filledSeats ?? t.currentPlayers ?? 0,
+        status:          t.status ?? 'WAITING',
+        accumulatedRake: toNum(t.accumulatedRake ?? t.rake ?? 0),
+        players: Array.isArray(t.players)
+          ? t.players.map((p: any): ActiveTablePlayer => ({
+              userId:         p.userId ?? p.odid ?? '',
+              username:       p.username ?? 'Player',
+              avatarUrl:      p.avatarUrl ?? null,
+              seatNumber:     p.seatNumber ?? 0,
+              currentBalance: p.currentBalance != null ? toNum(p.currentBalance) : undefined,
+              status:         p.status ?? 'SEATED',
+            }))
+          : [],
+      }))
+    : []
+
+  return {
+    id:             raw.id ?? '',
+    roomCode:       raw.roomCode ?? '',
+    name:           raw.name ?? '',
+    gameId:         raw.gameId ?? '',
+    gameName:       raw.gameName ?? '',
+    gameIcon:       raw.gameIcon ?? null,
+    gameCategory:   raw.gameCategory ?? 'SOCIAL',
+    gameType:       raw.gameType ?? undefined,
+    currentPlayers: raw.currentPlayers ?? 0,
+    maxPlayers:     raw.maxPlayers ?? 0,
+    status:         raw.status ?? '',
+    entryFee:       toNum(raw.entryFee),
+    entryCurrency:  raw.entryCurrency ?? '',
+    pointValueUsd:  raw.pointValueUsd != null ? toNum(raw.pointValueUsd) : undefined,
+    accumulatedRake:raw.accumulatedRake != null ? toNum(raw.accumulatedRake) : undefined,
+    totalRounds:    raw.totalRounds ?? undefined,
+    createdAt:      raw.createdAt ?? new Date().toISOString(),
+    players:        Array.isArray(raw.players) ? raw.players : [],
+    tables:         tables.length > 0 ? tables : undefined,
+    numberOfTables: raw.numberOfTables ?? (tables.length > 0 ? tables.length : undefined),
+  }
+}
+
+// =============================================================================
 // HOOK OPTIONS & RESULT
 // =============================================================================
 
 export interface UseHostDashboardOptions {
-  /** Whether to fetch data on mount (default: true) */
   enabled?: boolean
-  /** Auto-refresh interval in ms (default: 60000; 0 = disabled) */
   pollIntervalMs?: number
 }
 
 export interface HostDashboardState {
-  // Profile
   profile: HostProfile | null
-  // Tiers
   esportsTier: TierInfo | null
   socialTier: TierInfo | null
-  // Level
   levelInfo: LevelInfo | null
-  // Earnings
   earnings: EarningsSummary | null
-  // Badges
   badges: HostBadge[]
-  // Rooms
   activeRooms: ActiveRoom[]
-  // Settlements
   recentSettlements: SettlementRecord[]
-  // Age verification
   isAgeVerified: boolean
-  // Loading / Error
   isLoading: boolean
   error: string | null
 }
 
 export interface UseHostDashboardResult extends HostDashboardState {
-  /** Re-fetch all dashboard data */
   refresh: () => Promise<void>
-  /** Request age verification (must be 21+) */
   verifyAge: () => Promise<boolean>
-  /** Request earnings withdrawal */
   requestWithdrawal: (amount: number, currency: string, walletAddress: string) => Promise<boolean>
-  /** Computed: active tier for the current game's category */
   activeTier: TierInfo | null
-  /** Computed: tier display info */
   activeTierDisplay: TierDisplayInfo
-  /** Computed: total earnings (safe number) */
   totalEarnings: number
-  /** Computed: monthly earnings (safe number) */
   monthlyEarnings: number
-  /** Computed: pending settlement (safe number) */
   pendingSettlement: number
 }
 
 // =============================================================================
-// getBridge() -- same pattern as useEnrollmentStatus
+// getBridge
 // =============================================================================
 
 function getBridge(): any {
@@ -251,8 +318,7 @@ function getBridge(): any {
 }
 
 // =============================================================================
-// SAFE DEFAULTS -- merges partial API response to avoid undefined access
-// Replicates: DESKILLZ_STANDALONE_GAME_UI_BUILD_HANDOFF_v2.9.md Section 13
+// SAFE DEFAULTS
 // =============================================================================
 
 function safeProfile(raw: any): HostProfile | null {
@@ -303,15 +369,15 @@ function safeTier(raw: any): TierInfo | null {
 function safeEarnings(raw: any): EarningsSummary | null {
   if (!raw) return null
   return {
-    totalAllTime:       toNum(raw.totalAllTime ?? raw.total),
-    totalThisMonth:     toNum(raw.totalThisMonth ?? raw.monthly),
-    totalThisWeek:      toNum(raw.totalThisWeek),
-    totalToday:         toNum(raw.totalToday),
-    pendingSettlement:  toNum(raw.pendingSettlement ?? raw.pending),
-    availableWithdrawal:toNum(raw.availableWithdrawal),
-    esportsEarnings:    toNum(raw.esportsEarnings),
-    socialEarnings:     toNum(raw.socialEarnings),
-    bonusEarnings:      toNum(raw.bonusEarnings),
+    totalAllTime:        toNum(raw.totalAllTime ?? raw.total),
+    totalThisMonth:      toNum(raw.totalThisMonth ?? raw.monthly),
+    totalThisWeek:       toNum(raw.totalThisWeek),
+    totalToday:          toNum(raw.totalToday),
+    pendingSettlement:   toNum(raw.pendingSettlement ?? raw.pending),
+    availableWithdrawal: toNum(raw.availableWithdrawal),
+    esportsEarnings:     toNum(raw.esportsEarnings),
+    socialEarnings:      toNum(raw.socialEarnings),
+    bonusEarnings:       toNum(raw.bonusEarnings),
   }
 }
 
@@ -339,10 +405,6 @@ export function useHostDashboard(
     error: null,
   })
 
-  // --------------------------------------------------------------------------
-  // Fetch full dashboard (single-request aggregate endpoint)
-  // Falls back to individual endpoints if aggregate fails
-  // --------------------------------------------------------------------------
   const fetchDashboard = useCallback(async () => {
     if (!enabled) return
     const bridge = getBridge()
@@ -351,17 +413,17 @@ export function useHostDashboard(
     setState(prev => ({ ...prev, isLoading: true, error: null }))
 
     try {
-      // Primary: single aggregate endpoint GET /api/v1/host/dashboard
       const data = await bridge.getHostDashboard()
 
-      // Apply safe defaults per handoff doc Section 13
-      // The endpoint returns: { profile, esportsTierInfo, socialTierInfo,
-      //   levelInfo, earnings, badges, activeRooms, recentSettlements }
-      // But any field can be null or partial.
       const profile = safeProfile(data.profile ?? data)
       const esportsTier = safeTier(data.esportsTierInfo ?? null)
       const socialTier = safeTier(data.socialTierInfo ?? null)
       const earnings = safeEarnings(data.earnings ?? null)
+
+      // Map activeRooms using safeActiveRoom to pick up tables[]
+      const activeRooms = Array.isArray(data.activeRooms)
+        ? data.activeRooms.map(safeActiveRoom)
+        : []
 
       setState({
         profile,
@@ -370,14 +432,13 @@ export function useHostDashboard(
         levelInfo: data.levelInfo ?? null,
         earnings,
         badges: Array.isArray(data.badges) ? data.badges : [],
-        activeRooms: Array.isArray(data.activeRooms) ? data.activeRooms : [],
+        activeRooms,
         recentSettlements: Array.isArray(data.recentSettlements) ? data.recentSettlements : [],
         isAgeVerified: profile?.isVerified ?? false,
         isLoading: false,
         error: null,
       })
     } catch (dashErr: any) {
-      // Fallback: try individual endpoints
       try {
         const [profileRes, earningsRes, badgesRes, roomsRes] = await Promise.allSettled([
           bridge.getHostProfile?.(),
@@ -395,7 +456,7 @@ export function useHostDashboard(
         const badges = badgesRes.status === 'fulfilled' && Array.isArray(badgesRes.value)
           ? badgesRes.value : []
         const activeRooms = roomsRes.status === 'fulfilled' && Array.isArray(roomsRes.value)
-          ? roomsRes.value : []
+          ? (roomsRes.value as any[]).map(safeActiveRoom) : []
 
         setState({
           profile,
@@ -420,9 +481,6 @@ export function useHostDashboard(
     }
   }, [enabled])
 
-  // --------------------------------------------------------------------------
-  // Polling
-  // --------------------------------------------------------------------------
   useEffect(() => {
     if (!enabled) return
     fetchDashboard()
@@ -434,9 +492,6 @@ export function useHostDashboard(
     }
   }, [enabled, fetchDashboard, pollIntervalMs])
 
-  // --------------------------------------------------------------------------
-  // Actions
-  // --------------------------------------------------------------------------
   const verifyAge = useCallback(async (): Promise<boolean> => {
     const bridge = getBridge()
     if (!bridge) { toast.error('Bridge not initialized'); return false }
@@ -446,8 +501,7 @@ export function useHostDashboard(
       toast.success('Age verified. You can now host rooms.')
       return true
     } catch (err: any) {
-      const msg = err?.message ?? 'Age verification failed'
-      toast.error(msg)
+      toast.error(err?.message ?? 'Age verification failed')
       return false
     }
   }, [])
@@ -462,24 +516,16 @@ export function useHostDashboard(
     try {
       await bridge.requestHostWithdrawal({ amount, currency, walletAddress })
       toast.success(`Withdrawal of $${amount.toFixed(2)} requested.`)
-      // Refresh earnings after withdrawal
       fetchDashboard()
       return true
     } catch (err: any) {
-      const msg = err?.message ?? 'Withdrawal failed'
-      toast.error(msg)
+      toast.error(err?.message ?? 'Withdrawal failed')
       return false
     }
   }, [fetchDashboard])
 
-  // --------------------------------------------------------------------------
-  // Computed values
-  // --------------------------------------------------------------------------
   const { profile, esportsTier, socialTier, earnings } = state
 
-  // Determine active tier based on game category
-  // Social games use socialTier; esport games use esportsTier
-  // Default to social (most host dashboard users are social game hosts)
   const activeTier = socialTier ?? esportsTier ?? null
   const activeTierName: HostTier = activeTier?.tier
     ?? profile?.currentSocialTier

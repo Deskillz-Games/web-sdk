@@ -1,18 +1,25 @@
 // =============================================================================
 // EsportGameSettings.tsx -- packages/game-ui/src/components/rooms/EsportGameSettings.tsx
 //
-// Configures esport game room parameters: entry fee, currency, player count,
-// game mode, match duration, rounds, prize split, visibility.
-// Used inside CreateRoomScreen when creating an esport private room.
-// No bridge dependency -- pure props-in/JSX-out.
+// v3.3.3 changes:
+//   - Added GameCapabilities prop -- hides/disables unsupported options
+//   - Single Elimination card hidden if !capabilities.supportsSingleElimination
+//   - FFA card hidden if !capabilities.supportsFFA
+//   - Sync mode hidden if !capabilities.supportsSync
+//   - Async mode hidden if !capabilities.supportsAsync
+//   - Duration clamped to capabilities.min/maxMatchDurationSeconds
+//   - Player count clamped to capabilities.min/maxPlayers
+//   - createDefaultEsportGameConfig accepts capabilities for valid defaults
 // =============================================================================
 
 import { useState, useCallback } from 'react'
 import {
   DollarSign, Users, Timer, Trophy, Eye, EyeOff,
   Swords, Clock, AlertCircle, ChevronDown, Info,
+  HelpCircle, Lock, Zap,
 } from 'lucide-react'
 import { cn } from '../../utils'
+import { GameCapabilities, DEFAULT_CAPABILITIES } from '../../types/GameCapabilities'
 
 // =============================================================================
 // TYPES
@@ -20,9 +27,10 @@ import { cn } from '../../utils'
 
 export type GameMode = 'SYNC' | 'ASYNC'
 export type RoomVisibility = 'PUBLIC_LISTED' | 'UNLISTED'
+export type TournamentFormat = 'SINGLE_ELIMINATION' | 'FFA'
 
 export interface PrizeDistribution {
-  [position: string]: number // e.g. { '1': 60, '2': 30, '3': 10 }
+  [position: string]: number
 }
 
 export interface EsportGameConfig {
@@ -35,14 +43,16 @@ export interface EsportGameConfig {
   roundsCount: number
   prizeDistribution: PrizeDistribution
   visibility: RoomVisibility
+  tournamentFormat: TournamentFormat
 }
 
 export interface EsportGameSettingsProps {
   config: EsportGameConfig
   onChange: (config: EsportGameConfig) => void
+  /** Game capabilities from GET /api/v1/games/:gameId -- filters available options */
+  capabilities?: GameCapabilities
   disabled?: boolean
   className?: string
-  /** Available currencies from wallet */
   currencies?: string[]
 }
 
@@ -50,132 +60,208 @@ export interface EsportGameSettingsProps {
 // CONSTANTS
 // =============================================================================
 
-const ENTRY_FEE_OPTIONS = [
-  { value: 1, label: '$1', tier: 'Casual' },
-  { value: 5, label: '$5', tier: 'Standard' },
-  { value: 10, label: '$10', tier: 'Competitive' },
-  { value: 25, label: '$25', tier: 'High Stakes' },
-  { value: 50, label: '$50', tier: 'Premium' },
-  { value: 100, label: '$100', tier: 'Elite' },
+const ENTRY_FEE_PRESETS = [1, 5, 10, 25, 50, 100, 250, 500]
+const DURATION_PRESETS  = [
+  { value: 60,   label: '1 min' },
+  { value: 120,  label: '2 min' },
+  { value: 180,  label: '3 min' },
+  { value: 300,  label: '5 min' },
+  { value: 600,  label: '10 min' },
+  { value: 900,  label: '15 min' },
+  { value: 1800, label: '30 min' },
 ]
-
-const DEFAULT_CURRENCIES = ['USDT_BSC', 'USDC_BSC', 'BNB', 'USDT_TRON', 'USDC_TRON']
-
+const ROUNDS_PRESETS = [
+  { value: 1, label: '1 Round',   description: 'Single' },
+  { value: 3, label: 'Best of 3', description: '2 to win' },
+  { value: 5, label: 'Best of 5', description: '3 to win' },
+  { value: 7, label: 'Best of 7', description: '4 to win' },
+]
+const FFA_PLAYER_PRESETS    = [2, 3, 4, 6, 8, 10, 16, 32, 64]
+const DEFAULT_CURRENCIES    = ['USDT_BSC', 'USDC_BSC', 'BNB', 'USDT_TRON', 'USDC_TRON']
 const CURRENCY_LABELS: Record<string, string> = {
-  BNB: 'BNB',
-  USDT_BSC: 'USDT (BSC)',
-  USDT_TRON: 'USDT (TRC20)',
-  USDC_BSC: 'USDC (BSC)',
-  USDC_TRON: 'USDC (TRC20)',
+  BNB: 'BNB', USDT_BSC: 'USDT (BSC)', USDT_TRON: 'USDT (TRC20)',
+  USDC_BSC: 'USDC (BSC)', USDC_TRON: 'USDC (TRC20)',
 }
-
-const PLAYER_COUNT_OPTIONS = [
-  { value: 2, label: '1v1' },
-  { value: 3, label: '3 Players' },
-  { value: 4, label: '4 Players' },
-  { value: 6, label: '6 Players' },
-  { value: 8, label: '8 Players' },
-  { value: 10, label: '10 Players' },
-]
-
-const DURATION_OPTIONS = [
-  { value: 60, label: '1 min', description: 'Sprint' },
-  { value: 120, label: '2 min', description: 'Quick' },
-  { value: 180, label: '3 min', description: 'Standard' },
-  { value: 300, label: '5 min', description: 'Extended' },
-  { value: 600, label: '10 min', description: 'Marathon' },
-]
-
-const ROUNDS_OPTIONS = [
-  { value: 1, label: '1 Round', description: 'Single elimination' },
-  { value: 3, label: 'Best of 3', description: 'First to 2 wins' },
-  { value: 5, label: 'Best of 5', description: 'First to 3 wins' },
-]
-
 const PRESET_PRIZE_SPLITS: { label: string; distribution: PrizeDistribution }[] = [
   { label: 'Winner Takes All', distribution: { '1': 100 } },
-  { label: 'Top 2 Split', distribution: { '1': 70, '2': 30 } },
-  { label: 'Top 3 Split', distribution: { '1': 60, '2': 30, '3': 10 } },
-  { label: 'Even Top 3', distribution: { '1': 50, '2': 30, '3': 20 } },
+  { label: 'Top 2 Split',      distribution: { '1': 70, '2': 30 } },
+  { label: 'Top 3 Split',      distribution: { '1': 60, '2': 30, '3': 10 } },
+  { label: 'Even Top 3',       distribution: { '1': 50, '2': 30, '3': 20 } },
+  { label: 'Top 5',            distribution: { '1': 40, '2': 25, '3': 15, '4': 12, '5': 8 } },
 ]
+const MIN_SE_SIZE = 8
 
 // =============================================================================
-// STYLES (inline — no Tailwind config dependency in standalone games)
+// POWER-OF-2 HELPERS
+// =============================================================================
+
+function isPowerOf2(n: number): boolean { return n > 0 && (n & (n - 1)) === 0 }
+function nextPowerOf2(n: number): number {
+  if (n <= MIN_SE_SIZE) return MIN_SE_SIZE
+  let p = MIN_SE_SIZE; while (p < n) p *= 2; return p
+}
+function prevPowerOf2(n: number): number {
+  if (n <= MIN_SE_SIZE) return MIN_SE_SIZE
+  const safe = isPowerOf2(n) ? n : nextPowerOf2(n)
+  return Math.max(MIN_SE_SIZE, safe / 2)
+}
+function deriveSEMeta(players: number) {
+  const safeP = isPowerOf2(players) ? players : nextPowerOf2(players)
+  return { players: safeP, rounds: Math.log2(safeP) }
+}
+
+// =============================================================================
+// STYLES
 // =============================================================================
 
 const S = {
-  container: 'space-y-5',
-  section: 'space-y-2',
-  label: 'flex items-center gap-2 text-sm font-medium text-gray-300',
-  chipGrid: 'grid gap-2',
-  chip: 'p-3 rounded-lg border text-center transition-all cursor-pointer',
-  chipActive: 'bg-cyan-500/20 border-cyan-500',
-  chipInactive: 'bg-[#1a1a2e] border-gray-700 hover:border-gray-600',
+  container:    'space-y-5',
+  section:      'space-y-2',
+  label:        'flex items-center gap-2 text-sm font-medium text-gray-300',
+  chipGrid:     'flex flex-wrap gap-2',
+  chip:         'px-4 py-2 rounded-lg border text-center transition-all cursor-pointer text-sm font-medium',
+  chipActive:   'bg-cyan-500/20 border-cyan-500 text-white',
+  chipInactive: 'bg-[#1a1a2e] border-gray-700 text-gray-300 hover:border-gray-600',
   chipDisabled: 'opacity-50 cursor-not-allowed',
-  selectWrapper: 'relative',
-  select: 'w-full p-3 bg-[#1a1a2e] border border-gray-700 rounded-lg text-white text-sm appearance-none pr-10 focus:border-cyan-500 focus:outline-none',
-  infoBox: 'flex items-start gap-3 p-3 bg-[#1a1a2e] rounded-lg',
-  infoText: 'text-xs text-gray-500',
+  selectWrap:   'relative',
+  select:       'w-full p-3 bg-[#1a1a2e] border border-gray-700 rounded-lg text-white text-sm appearance-none pr-10 focus:border-cyan-500 focus:outline-none',
+  freeInput:    'px-3 py-2 bg-[#1a1a2e] border border-gray-700 rounded-lg text-white text-sm focus:border-cyan-500 focus:outline-none',
+  infoBox:      'flex items-start gap-3 p-3 bg-[#1a1a2e] rounded-lg',
+  infoText:     'text-xs text-gray-500',
+  stepBtn:      'w-10 h-10 rounded-lg border text-lg font-bold transition-all bg-[#1a1a2e] border-gray-700 text-white hover:border-cyan-500 disabled:opacity-40 disabled:cursor-not-allowed',
+  readOnly:     'flex items-center gap-2 px-3 py-2 bg-gray-900/50 border border-gray-800 rounded-lg text-gray-400 text-sm',
+  unavailable:  'opacity-30 cursor-not-allowed pointer-events-none',
 }
 
 // =============================================================================
-// SUB-COMPONENTS
+// TOOLTIP
 // =============================================================================
 
-function ChipButton({
-  selected,
-  disabled,
-  onClick,
-  children,
-  className,
-}: {
-  selected: boolean
-  disabled?: boolean
-  onClick: () => void
-  children: React.ReactNode
-  className?: string
+function Tooltip({ children, content }: { children: React.ReactNode; content: string }) {
+  const [visible, setVisible] = useState(false)
+  return (
+    <div className="relative inline-flex items-center"
+      onMouseEnter={() => setVisible(true)}
+      onMouseLeave={() => setVisible(false)}
+    >
+      {children}
+      {visible && (
+        <div className="absolute z-30 bottom-full left-0 mb-2 w-64 p-3 bg-gray-900 border border-gray-700 rounded-lg shadow-xl text-xs text-gray-300 leading-relaxed">
+          {content}
+        </div>
+      )}
+    </div>
+  )
+}
+
+function LabelWithTooltip({ icon: Icon, iconClass, label, tooltip }: {
+  icon: React.ElementType; iconClass: string; label: string; tooltip: string
 }) {
   return (
-    <button
-      type="button"
-      onClick={onClick}
-      disabled={disabled}
-      className={cn(
-        S.chip,
-        selected ? S.chipActive : S.chipInactive,
-        disabled && S.chipDisabled,
-        className,
-      )}
-    >
+    <div className="flex items-center gap-2">
+      <Icon className={cn('w-4 h-4', iconClass)} />
+      <span className="text-sm font-medium text-gray-300">{label}</span>
+      <Tooltip content={tooltip}>
+        <HelpCircle className="w-3.5 h-3.5 text-gray-600 hover:text-gray-400 cursor-help transition-colors" />
+      </Tooltip>
+    </div>
+  )
+}
+
+// =============================================================================
+// CHIP + FREE INPUT
+// =============================================================================
+
+function Chip({ selected, disabled, onClick, children, className }: {
+  selected: boolean; disabled?: boolean; onClick: () => void;
+  children: React.ReactNode; className?: string;
+}) {
+  return (
+    <button type="button" onClick={onClick} disabled={disabled}
+      className={cn(S.chip, selected ? S.chipActive : S.chipInactive, disabled && S.chipDisabled, className)}>
       {children}
     </button>
   )
 }
 
-function SelectDropdown({
-  value,
-  options,
-  onChange,
-  disabled,
-}: {
-  value: string
-  options: { value: string; label: string }[]
-  onChange: (value: string) => void
-  disabled?: boolean
+function ChipPlusFreeInput({ presets, value, disabled, onSelect, inputMin, inputMax,
+  inputStep, inputPrefix, inputSuffix, placeholder, formatPreset }: {
+  presets: number[]; value: number; disabled?: boolean; onSelect: (v: number) => void
+  inputMin?: number; inputMax?: number; inputStep?: number
+  inputPrefix?: string; inputSuffix?: string; placeholder?: string
+  formatPreset?: (v: number) => string
 }) {
+  const validPresets = presets.filter((p) =>
+    (inputMin === undefined || p >= inputMin) &&
+    (inputMax === undefined || inputMax === 0 || p <= inputMax)
+  )
+  const isCustom = !validPresets.includes(value)
   return (
-    <div className={S.selectWrapper}>
-      <select
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        disabled={disabled}
-        className={S.select}
-      >
-        {options.map((opt) => (
-          <option key={opt.value} value={opt.value}>{opt.label}</option>
+    <div className="space-y-2">
+      <div className={S.chipGrid}>
+        {validPresets.map((p) => (
+          <Chip key={p} selected={value === p} disabled={disabled} onClick={() => onSelect(p)}>
+            {formatPreset ? formatPreset(p) : String(p)}
+          </Chip>
         ))}
-      </select>
-      <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500 pointer-events-none" />
+        <Chip selected={isCustom} disabled={disabled} onClick={() => {}}>Custom</Chip>
+      </div>
+      {isCustom && (
+        <div className="flex items-center gap-2">
+          {inputPrefix && <span className="text-gray-500 text-sm">{inputPrefix}</span>}
+          <input type="number" min={inputMin ?? 0} max={inputMax || undefined}
+            step={inputStep ?? 1} value={value}
+            onChange={(e) => {
+              let v = parseFloat(e.target.value)
+              if (isNaN(v)) return
+              if (inputMin !== undefined) v = Math.max(inputMin, v)
+              if (inputMax !== undefined && inputMax > 0) v = Math.min(inputMax, v)
+              onSelect(v)
+            }}
+            disabled={disabled} placeholder={placeholder}
+            className={cn(S.freeInput, 'w-32')}
+          />
+          {inputSuffix && <span className="text-gray-500 text-sm">{inputSuffix}</span>}
+        </div>
+      )}
+    </div>
+  )
+}
+
+// =============================================================================
+// SE PLAYER STEPPER
+// =============================================================================
+
+function SEPlayerStepper({ value, disabled, onChange, capMin, capMax }: {
+  value: number; disabled?: boolean
+  onChange: (players: number, rounds: number) => void
+  capMin: number; capMax: number
+}) {
+  const meta   = deriveSEMeta(Math.max(value, capMin))
+  const canDec = meta.players > Math.max(MIN_SE_SIZE, capMin)
+  const canInc = capMax === 0 || meta.players * 2 <= capMax
+
+  return (
+    <div className="space-y-3">
+      <div className="flex items-center gap-3">
+        <button type="button" disabled={disabled || !canDec}
+          onClick={() => { const n = prevPowerOf2(meta.players); const m = deriveSEMeta(n); onChange(m.players, m.rounds) }}
+          className={S.stepBtn}>−</button>
+        <div className="flex-1 text-center py-2 bg-[#1a1a2e] border border-gray-700 rounded-lg">
+          <span className="text-white text-xl font-bold">{meta.players}</span>
+          <span className="text-gray-500 text-sm ml-2">players</span>
+        </div>
+        <button type="button" disabled={disabled || !canInc}
+          onClick={() => { const n = meta.players * 2; const m = deriveSEMeta(n); onChange(m.players, m.rounds) }}
+          className={S.stepBtn}>+</button>
+      </div>
+      <div className="grid grid-cols-2 gap-2">
+        <div className={S.readOnly}><Lock className="w-3 h-3 flex-shrink-0" /><span className="text-xs">{meta.rounds} rounds (auto)</span></div>
+        <div className={S.readOnly}><Lock className="w-3 h-3 flex-shrink-0" /><span className="text-xs">{meta.players} → {meta.players / 2} → 1 winner</span></div>
+      </div>
+      <p className="text-xs text-gray-500">
+        Must be a power of 2. Steps: {meta.players} → {canInc ? meta.players * 2 : '—'}
+      </p>
     </div>
   )
 }
@@ -185,269 +271,368 @@ function SelectDropdown({
 // =============================================================================
 
 export default function EsportGameSettings({
-  config,
-  onChange,
-  disabled = false,
-  className,
-  currencies,
+  config, onChange, capabilities, disabled = false, className, currencies,
 }: EsportGameSettingsProps) {
-  const [prizeSplitOpen, setPrizeSplitOpen] = useState(false)
-
+  const cap  = capabilities || DEFAULT_CAPABILITIES
+  const isSE = config.tournamentFormat === 'SINGLE_ELIMINATION'
+  const isFFA = config.tournamentFormat === 'FFA'
   const availableCurrencies = currencies || DEFAULT_CURRENCIES
 
+  // How many format options are available
+  const formatCount = [cap.supportsSingleElimination, cap.supportsFFA].filter(Boolean).length
+
   const update = useCallback(
-    (partial: Partial<EsportGameConfig>) => {
-      onChange({ ...config, ...partial })
-    },
+    (partial: Partial<EsportGameConfig>) => onChange({ ...config, ...partial }),
     [config, onChange],
   )
 
-  // Calculate total prize pool (entry fee * max players minus platform rake)
-  const grossPool = config.entryFee * config.maxPlayers
+  const grossPool    = config.entryFee * config.maxPlayers
   const platformRake = grossPool * 0.10
-  const netPool = grossPool - platformRake
-
-  // Validate prize distribution sums to 100
-  const prizeTotal = Object.values(config.prizeDistribution).reduce((sum, v) => sum + v, 0)
+  const netPool      = grossPool - platformRake
+  const prizeTotal   = Object.values(config.prizeDistribution).reduce((s, v) => s + v, 0)
   const isPrizeValid = Math.abs(prizeTotal - 100) < 0.01
+
+  const formatDuration = (secs: number) => {
+    if (secs < 60) return `${secs}s`
+    const m = Math.floor(secs / 60); const s = secs % 60
+    return s > 0 ? `${m}m ${s}s` : `${m} min`
+  }
+
+  // Duration presets filtered by capabilities
+  const validDurations = DURATION_PRESETS.filter((d) =>
+    (cap.minMatchDurationSeconds === 0 || d.value >= cap.minMatchDurationSeconds) &&
+    (cap.maxMatchDurationSeconds === 0 || d.value <= cap.maxMatchDurationSeconds)
+  )
 
   return (
     <div className={cn(S.container, className)}>
-      {/* Entry Fee */}
-      <div className={S.section}>
-        <label className={S.label}>
-          <DollarSign className="w-4 h-4 text-cyan-400" />
-          Entry Fee
-        </label>
-        <div className={cn(S.chipGrid, 'grid-cols-3')}>
-          {ENTRY_FEE_OPTIONS.map((opt) => (
-            <ChipButton
-              key={opt.value}
-              selected={config.entryFee === opt.value}
-              disabled={disabled}
-              onClick={() => update({ entryFee: opt.value })}
-            >
-              <p className="text-sm font-bold text-white">{opt.label}</p>
-              <p className="text-xs text-gray-500">{opt.tier}</p>
-            </ChipButton>
-          ))}
-        </div>
-      </div>
 
-      {/* Currency */}
+      {/* ── TOURNAMENT FORMAT ── */}
+      {formatCount > 0 && (
+        <div className={S.section}>
+          <LabelWithTooltip icon={Trophy} iconClass="text-yellow-400" label="Tournament Format"
+            tooltip="Choose how players compete. Single Elimination pairs players head-to-head — lose once and you're out. FFA puts all players in one session simultaneously and ranks them by score." />
+          <div className={cn('grid gap-3', formatCount === 2 ? 'grid-cols-2' : 'grid-cols-1')}>
+
+            {/* Single Elimination */}
+            {cap.supportsSingleElimination && (
+              <button type="button" disabled={disabled}
+                onClick={() => {
+                  const safe = isPowerOf2(config.maxPlayers) ? config.maxPlayers : nextPowerOf2(Math.max(config.maxPlayers, cap.minPlayers))
+                  const m = deriveSEMeta(safe)
+                  update({ tournamentFormat: 'SINGLE_ELIMINATION', maxPlayers: m.players, minPlayers: m.players, roundsCount: 1 })
+                }}
+                className={cn('w-full p-4 rounded-xl border-2 transition-all text-left',
+                  isSE ? 'border-cyan-500 bg-cyan-500/10' : 'border-gray-700 bg-[#1a1a2e] hover:border-gray-600',
+                  disabled && S.chipDisabled)}
+              >
+                <div className="flex items-center gap-2 mb-2">
+                  <Swords className={cn('w-5 h-5', isSE ? 'text-cyan-400' : 'text-gray-500')} />
+                  <span className="font-bold text-white text-sm">Single Elimination</span>
+                  <Tooltip content="Players are paired 1v1 each round. Winner advances, loser is eliminated. Continues until one player remains. Requires power-of-2 player count (8, 16, 32...) for a balanced bracket.">
+                    <HelpCircle className="w-3.5 h-3.5 text-gray-600 hover:text-gray-400 cursor-help" />
+                  </Tooltip>
+                </div>
+                <p className="text-xs text-gray-500">1v1 per round. Lose once = eliminated.</p>
+                <div className="mt-2 flex flex-wrap gap-1">
+                  <span className="text-xs px-2 py-0.5 rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">Bracket</span>
+                  <span className="text-xs px-2 py-0.5 rounded-full bg-gray-800 text-gray-500 border border-gray-700">Power of 2</span>
+                </div>
+              </button>
+            )}
+
+            {/* FFA */}
+            {cap.supportsFFA && (
+              <button type="button" disabled={disabled}
+                onClick={() => update({ tournamentFormat: 'FFA', roundsCount: 1 })}
+                className={cn('w-full p-4 rounded-xl border-2 transition-all text-left',
+                  isFFA ? 'border-cyan-500 bg-cyan-500/10' : 'border-gray-700 bg-[#1a1a2e] hover:border-gray-600',
+                  disabled && S.chipDisabled)}
+              >
+                <div className="flex items-center gap-2 mb-2">
+                  <Zap className={cn('w-5 h-5', isFFA ? 'text-yellow-400' : 'text-gray-500')} />
+                  <span className="font-bold text-white text-sm">FFA</span>
+                  <Tooltip content="Free For All — all players compete in the same session simultaneously. No head-to-head pairing. Players are ranked by score at the end. FFA-3 means 3 players, FFA-4 means 4 players, etc.">
+                    <HelpCircle className="w-3.5 h-3.5 text-gray-600 hover:text-gray-400 cursor-help" />
+                  </Tooltip>
+                </div>
+                <p className="text-xs text-gray-500">All players compete simultaneously. Ranked by score.</p>
+                <div className="mt-2 flex flex-wrap gap-1">
+                  <span className="text-xs px-2 py-0.5 rounded-full bg-yellow-500/10 text-yellow-400 border border-yellow-500/20">Score-based</span>
+                  <span className="text-xs px-2 py-0.5 rounded-full bg-gray-800 text-gray-500 border border-gray-700">
+                    {cap.minPlayers === cap.maxPlayers ? `${cap.minPlayers} players` : `${cap.minPlayers}-${cap.maxPlayers || '∞'} players`}
+                  </span>
+                </div>
+              </button>
+            )}
+          </div>
+
+          {/* Warning if game doesn't support any format */}
+          {formatCount === 0 && (
+            <div className={S.infoBox}>
+              <AlertCircle className="w-4 h-4 text-yellow-500 flex-shrink-0" />
+              <p className="text-xs text-yellow-400">This game does not support any tournament format. Contact the developer to update game capabilities.</p>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* ── ENTRY FEE ── */}
       <div className={S.section}>
-        <label className={S.label}>
-          <DollarSign className="w-4 h-4 text-green-400" />
-          Currency
-        </label>
-        <SelectDropdown
-          value={config.entryCurrency}
-          options={availableCurrencies.map((c) => ({
-            value: c,
-            label: CURRENCY_LABELS[c] || c,
-          }))}
-          onChange={(v) => update({ entryCurrency: v })}
-          disabled={disabled}
+        <LabelWithTooltip icon={DollarSign} iconClass="text-cyan-400" label="Entry Fee"
+          tooltip="Amount each player pays to enter. All fees go into the prize pool. 10% platform fee is deducted before prize distribution." />
+        <ChipPlusFreeInput
+          presets={ENTRY_FEE_PRESETS} value={config.entryFee} disabled={disabled}
+          onSelect={(v) => update({ entryFee: v })}
+          inputMin={0.01} inputStep={0.01} inputPrefix="$" placeholder="5.00"
+          formatPreset={(v) => `$${v}`}
         />
       </div>
 
-      {/* Player Count */}
+      {/* ── CURRENCY ── */}
       <div className={S.section}>
-        <label className={S.label}>
-          <Users className="w-4 h-4 text-purple-400" />
-          Players
-        </label>
-        <div className={cn(S.chipGrid, 'grid-cols-3')}>
-          {PLAYER_COUNT_OPTIONS.map((opt) => (
-            <ChipButton
-              key={opt.value}
-              selected={config.maxPlayers === opt.value}
-              disabled={disabled}
-              onClick={() => update({ maxPlayers: opt.value, minPlayers: opt.value })}
-            >
-              <p className="text-sm font-bold text-white">{opt.label}</p>
-            </ChipButton>
+        <label className={S.label}><DollarSign className="w-4 h-4 text-green-400" />Currency</label>
+        <div className={S.selectWrap}>
+          <select value={config.entryCurrency} onChange={(e) => update({ entryCurrency: e.target.value })}
+            disabled={disabled} className={S.select}>
+            {availableCurrencies.map((c) => (
+              <option key={c} value={c}>{CURRENCY_LABELS[c] || c}</option>
+            ))}
+          </select>
+          <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500 pointer-events-none" />
+        </div>
+      </div>
+
+      {/* ── PLAYER COUNT ── */}
+      <div className={S.section}>
+        <LabelWithTooltip icon={Users} iconClass="text-purple-400"
+          label={isSE ? 'Bracket Size' : 'Player Count'}
+          tooltip={isSE
+            ? `Single Elimination requires a power of 2 for a balanced bracket. Min: ${cap.minPlayers}${cap.maxPlayers ? `, max: ${cap.maxPlayers}` : ''}.`
+            : `FFA supports ${cap.minPlayers === cap.maxPlayers ? `exactly ${cap.minPlayers}` : `${cap.minPlayers} to ${cap.maxPlayers || '∞'}`} players. All compete simultaneously.`
+          }
+        />
+        {isSE ? (
+          <SEPlayerStepper
+            value={config.maxPlayers} disabled={disabled}
+            capMin={Math.max(cap.minPlayers, MIN_SE_SIZE)} capMax={cap.maxPlayers}
+            onChange={(players, rounds) => update({ maxPlayers: players, minPlayers: players })}
+          />
+        ) : (
+          <ChipPlusFreeInput
+            presets={FFA_PLAYER_PRESETS} value={config.maxPlayers} disabled={disabled}
+            onSelect={(v) => update({ maxPlayers: v, minPlayers: v })}
+            inputMin={cap.minPlayers} inputMax={cap.maxPlayers}
+            inputStep={1} placeholder={String(cap.minPlayers)}
+            formatPreset={(v) => v === 2 ? '1v1' : `FFA-${v}`}
+          />
+        )}
+      </div>
+
+      {/* ── GAME MODE ── */}
+      {(cap.supportsSync || cap.supportsAsync) && (
+        <div className={S.section}>
+          <LabelWithTooltip icon={Swords} iconClass="text-amber-400" label="Game Mode"
+            tooltip="Synchronous: all players play at the exact same time in a live session. Asynchronous: players complete their run before a deadline and scores are compared at the end." />
+          <div className={cn('grid gap-2', (cap.supportsSync && cap.supportsAsync) ? 'grid-cols-2' : 'grid-cols-1')}>
+            {cap.supportsSync && (
+              <button type="button" disabled={disabled} onClick={() => update({ mode: 'SYNC' })}
+                className={cn('p-3 rounded-lg border-2 transition-all text-center',
+                  config.mode === 'SYNC' ? 'border-cyan-500 bg-cyan-500/10' : 'border-gray-700 bg-[#1a1a2e] hover:border-gray-600',
+                  disabled && S.chipDisabled)}>
+                <Swords className="w-5 h-5 text-amber-400 mx-auto mb-1" />
+                <p className="text-sm font-bold text-white">Synchronous</p>
+                <p className="text-xs text-gray-500">Real-time multiplayer</p>
+              </button>
+            )}
+            {cap.supportsAsync && (
+              <button type="button" disabled={disabled} onClick={() => update({ mode: 'ASYNC' })}
+                className={cn('p-3 rounded-lg border-2 transition-all text-center',
+                  config.mode === 'ASYNC' ? 'border-cyan-500 bg-cyan-500/10' : 'border-gray-700 bg-[#1a1a2e] hover:border-gray-600',
+                  disabled && S.chipDisabled)}>
+                <Clock className="w-5 h-5 text-blue-400 mx-auto mb-1" />
+                <p className="text-sm font-bold text-white">Asynchronous</p>
+                <p className="text-xs text-gray-500">Play before deadline</p>
+              </button>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* ── MATCH DURATION ── */}
+      <div className={S.section}>
+        <LabelWithTooltip icon={Timer} iconClass="text-cyan-400" label="Match Duration"
+          tooltip={`How long each individual match lasts.${cap.minMatchDurationSeconds > 0 ? ` Min: ${formatDuration(cap.minMatchDurationSeconds)}.` : ''}${cap.maxMatchDurationSeconds > 0 ? ` Max: ${formatDuration(cap.maxMatchDurationSeconds)}.` : ''}`}
+        />
+        <div className={S.chipGrid}>
+          {validDurations.map((opt) => (
+            <Chip key={opt.value} selected={config.matchDurationSeconds === opt.value} disabled={disabled}
+              onClick={() => update({ matchDurationSeconds: opt.value })}>
+              {opt.label}
+            </Chip>
           ))}
+          <Chip selected={!validDurations.find((d) => d.value === config.matchDurationSeconds)} disabled={disabled} onClick={() => {}}>
+            Custom
+          </Chip>
         </div>
+        {!validDurations.find((d) => d.value === config.matchDurationSeconds) && (
+          <div className="flex items-center gap-2 mt-1">
+            <input type="number"
+              min={cap.minMatchDurationSeconds || 10}
+              max={cap.maxMatchDurationSeconds || undefined}
+              step={10} value={config.matchDurationSeconds}
+              onChange={(e) => {
+                let v = Math.max(cap.minMatchDurationSeconds || 10, parseInt(e.target.value) || 10)
+                if (cap.maxMatchDurationSeconds > 0) v = Math.min(cap.maxMatchDurationSeconds, v)
+                update({ matchDurationSeconds: v })
+              }}
+              disabled={disabled} className={cn(S.freeInput, 'w-28')} />
+            <span className="text-gray-500 text-sm">
+              seconds ({formatDuration(config.matchDurationSeconds)})
+            </span>
+          </div>
+        )}
       </div>
 
-      {/* Game Mode */}
-      <div className={S.section}>
-        <label className={S.label}>
-          <Swords className="w-4 h-4 text-amber-400" />
-          Game Mode
-        </label>
-        <div className="grid grid-cols-2 gap-2">
-          <ChipButton
-            selected={config.mode === 'SYNC'}
-            disabled={disabled}
-            onClick={() => update({ mode: 'SYNC' })}
-          >
-            <Swords className="w-5 h-5 text-amber-400 mx-auto mb-1" />
-            <p className="text-sm font-bold text-white">Synchronous</p>
-            <p className="text-xs text-gray-500">Real-time multiplayer</p>
-          </ChipButton>
-          <ChipButton
-            selected={config.mode === 'ASYNC'}
-            disabled={disabled}
-            onClick={() => update({ mode: 'ASYNC' })}
-          >
-            <Clock className="w-5 h-5 text-blue-400 mx-auto mb-1" />
-            <p className="text-sm font-bold text-white">Asynchronous</p>
-            <p className="text-xs text-gray-500">Play before deadline</p>
-          </ChipButton>
+      {/* ── ROUNDS PER MATCH (SE only) ── */}
+      {isSE && (
+        <div className={S.section}>
+          <LabelWithTooltip icon={Trophy} iconClass="text-yellow-400" label="Rounds Per Match"
+            tooltip="How many games are played within each 1v1 matchup. Best of 3 = first to win 2 games advances. Always odd so there is always a winner." />
+          <div className={S.chipGrid}>
+            {ROUNDS_PRESETS.map((opt) => (
+              <Chip key={opt.value} selected={config.roundsCount === opt.value} disabled={disabled}
+                onClick={() => update({ roundsCount: opt.value })}>
+                <span className="block font-bold">{opt.label}</span>
+                <span className="block text-xs text-gray-500">{opt.description}</span>
+              </Chip>
+            ))}
+            <Chip selected={!ROUNDS_PRESETS.find((r) => r.value === config.roundsCount)} disabled={disabled} onClick={() => {}}>
+              Custom
+            </Chip>
+          </div>
+          {!ROUNDS_PRESETS.find((r) => r.value === config.roundsCount) && (
+            <div className="flex items-center gap-2 mt-1">
+              <input type="number" min={1} step={2} value={config.roundsCount}
+                onChange={(e) => {
+                  let v = Math.max(1, parseInt(e.target.value) || 1)
+                  if (v % 2 === 0) v = v + 1
+                  update({ roundsCount: v })
+                }}
+                disabled={disabled} className={cn(S.freeInput, 'w-24')} />
+              <span className="text-gray-500 text-sm">
+                rounds (first to {Math.ceil(config.roundsCount / 2)} wins) — must be odd
+              </span>
+            </div>
+          )}
         </div>
-      </div>
+      )}
 
-      {/* Match Duration */}
+      {/* ── PRIZE DISTRIBUTION ── */}
       <div className={S.section}>
-        <label className={S.label}>
-          <Timer className="w-4 h-4 text-cyan-400" />
-          Match Duration
-        </label>
-        <div className={cn(S.chipGrid, 'grid-cols-5')}>
-          {DURATION_OPTIONS.map((opt) => (
-            <ChipButton
-              key={opt.value}
-              selected={config.matchDurationSeconds === opt.value}
-              disabled={disabled}
-              onClick={() => update({ matchDurationSeconds: opt.value })}
-            >
-              <p className="text-sm font-bold text-white">{opt.label}</p>
-              <p className="text-xs text-gray-500">{opt.description}</p>
-            </ChipButton>
-          ))}
-        </div>
-      </div>
-
-      {/* Rounds */}
-      <div className={S.section}>
-        <label className={S.label}>
-          <Trophy className="w-4 h-4 text-yellow-400" />
-          Rounds
-        </label>
-        <div className="grid grid-cols-3 gap-2">
-          {ROUNDS_OPTIONS.map((opt) => (
-            <ChipButton
-              key={opt.value}
-              selected={config.roundsCount === opt.value}
-              disabled={disabled}
-              onClick={() => update({ roundsCount: opt.value })}
-            >
-              <p className="text-sm font-bold text-white">{opt.label}</p>
-              <p className="text-xs text-gray-500">{opt.description}</p>
-            </ChipButton>
-          ))}
-        </div>
-      </div>
-
-      {/* Prize Distribution */}
-      <div className={S.section}>
-        <label className={S.label}>
-          <Trophy className="w-4 h-4 text-green-400" />
-          Prize Split
-        </label>
-        <div className="grid grid-cols-2 gap-2">
+        <LabelWithTooltip icon={Trophy} iconClass="text-green-400" label="Prize Split"
+          tooltip="How the net prize pool is distributed. Must total 100%. For FFA you can pay multiple positions. For Single Elimination, Winner Takes All is most common." />
+        <div className={S.chipGrid}>
           {PRESET_PRIZE_SPLITS.map((preset) => {
-            const isSelected =
-              JSON.stringify(config.prizeDistribution) === JSON.stringify(preset.distribution)
+            const isSelected = JSON.stringify(config.prizeDistribution) === JSON.stringify(preset.distribution)
             return (
-              <ChipButton
-                key={preset.label}
-                selected={isSelected}
-                disabled={disabled}
-                onClick={() => update({ prizeDistribution: preset.distribution })}
-              >
-                <p className="text-sm font-bold text-white">{preset.label}</p>
-                <p className="text-xs text-gray-500">
-                  {Object.entries(preset.distribution)
-                    .map(([pos, pct]) => `#${pos}: ${pct}%`)
-                    .join(' / ')}
-                </p>
-              </ChipButton>
+              <Chip key={preset.label} selected={isSelected} disabled={disabled}
+                onClick={() => update({ prizeDistribution: preset.distribution })}>
+                {preset.label}
+              </Chip>
             )
           })}
         </div>
-
+        <div className="space-y-2 mt-2">
+          {Object.entries(config.prizeDistribution).map(([pos, pct]) => (
+            <div key={pos} className="flex items-center gap-2">
+              <span className="text-xs text-gray-500 w-8 text-right">#{pos}</span>
+              <input type="number" min={0} max={100} step={0.1} value={pct}
+                onChange={(e) => update({ prizeDistribution: { ...config.prizeDistribution, [pos]: parseFloat(e.target.value) || 0 } })}
+                disabled={disabled} className={cn(S.freeInput, 'w-20')} />
+              <span className="text-xs text-gray-500">%</span>
+              {Object.keys(config.prizeDistribution).length > 1 && (
+                <button type="button" disabled={disabled}
+                  onClick={() => { const d = { ...config.prizeDistribution }; delete d[pos]; update({ prizeDistribution: d }) }}
+                  className="text-red-400 hover:text-red-300 text-xs px-1">✕</button>
+              )}
+            </div>
+          ))}
+        </div>
+        <button type="button" disabled={disabled}
+          onClick={() => {
+            const positions = Object.keys(config.prizeDistribution)
+            const nextPos = positions.length > 0 ? String(Math.max(...positions.map(Number)) + 1) : '1'
+            update({ prizeDistribution: { ...config.prizeDistribution, [nextPos]: 0 } })
+          }}
+          className={cn('mt-2 px-4 py-1.5 rounded-lg border text-xs font-medium transition-all bg-[#1a1a2e] border-gray-700 text-gray-400 hover:border-green-500 hover:text-green-400', disabled && 'opacity-50 cursor-not-allowed')}>
+          + Add Position
+        </button>
         {!isPrizeValid && (
-          <div className="flex items-center gap-2 mt-2 text-xs text-red-400">
+          <div className="flex items-center gap-2 mt-1 text-xs text-red-400">
             <AlertCircle className="w-3 h-3 flex-shrink-0" />
-            Prize distribution must total 100% (currently {prizeTotal}%)
+            Prize split must total 100% (currently {prizeTotal.toFixed(1)}%)
           </div>
         )}
+        {isPrizeValid && <p className="text-xs text-green-400 mt-1">Total: 100% ✓</p>}
       </div>
 
-      {/* Visibility */}
+      {/* ── VISIBILITY ── */}
       <div className={S.section}>
-        <label className={S.label}>
-          <Eye className="w-4 h-4 text-gray-400" />
-          Room Visibility
-        </label>
+        <LabelWithTooltip icon={Eye} iconClass="text-gray-400" label="Room Visibility"
+          tooltip="Public rooms appear in the room browser. Unlisted rooms require an invite code to join." />
         <div className="grid grid-cols-2 gap-2">
-          <ChipButton
-            selected={config.visibility === 'PUBLIC_LISTED'}
-            disabled={disabled}
-            onClick={() => update({ visibility: 'PUBLIC_LISTED' })}
-          >
-            <Eye className="w-5 h-5 text-green-400 mx-auto mb-1" />
-            <p className="text-sm font-bold text-white">Public</p>
-            <p className="text-xs text-gray-500">Listed in room browser</p>
-          </ChipButton>
-          <ChipButton
-            selected={config.visibility === 'UNLISTED'}
-            disabled={disabled}
-            onClick={() => update({ visibility: 'UNLISTED' })}
-          >
-            <EyeOff className="w-5 h-5 text-gray-400 mx-auto mb-1" />
-            <p className="text-sm font-bold text-white">Unlisted</p>
-            <p className="text-xs text-gray-500">Invite code only</p>
-          </ChipButton>
+          {([
+            { vis: 'PUBLIC_LISTED' as RoomVisibility, icon: Eye,    color: 'text-green-400', title: 'Public',   sub: 'Listed in room browser' },
+            { vis: 'UNLISTED' as RoomVisibility,      icon: EyeOff, color: 'text-gray-400',  title: 'Unlisted', sub: 'Invite code only' },
+          ]).map(({ vis, icon: Icon, color, title, sub }) => (
+            <button key={vis} type="button" disabled={disabled} onClick={() => update({ visibility: vis })}
+              className={cn('p-3 rounded-lg border-2 transition-all text-center',
+                config.visibility === vis ? 'border-cyan-500 bg-cyan-500/10' : 'border-gray-700 bg-[#1a1a2e] hover:border-gray-600',
+                disabled && S.chipDisabled)}>
+              <Icon className={cn('w-5 h-5 mx-auto mb-1', color)} />
+              <p className="text-sm font-bold text-white">{title}</p>
+              <p className="text-xs text-gray-500">{sub}</p>
+            </button>
+          ))}
         </div>
       </div>
 
-      {/* Prize Pool Preview */}
+      {/* ── PRIZE POOL PREVIEW ── */}
       <div className="p-4 bg-gradient-to-r from-cyan-500/10 to-purple-500/10 rounded-lg border border-cyan-500/20">
         <div className="flex items-center gap-2 mb-3">
           <Info className="w-4 h-4 text-cyan-400" />
-          <span className="text-sm font-medium text-white">Prize Pool Preview</span>
+          <span className="text-sm font-medium text-white">{isSE ? 'Bracket Preview' : 'FFA Preview'}</span>
         </div>
-        <div className="grid grid-cols-3 gap-3 text-center">
+        <div className="grid grid-cols-4 gap-3 text-center">
+          <div><p className="text-xs text-gray-500">Entry Fee</p><p className="text-lg font-bold text-white">${config.entryFee}</p></div>
+          <div><p className="text-xs text-gray-500">Players</p><p className="text-lg font-bold text-white">{config.maxPlayers}</p></div>
           <div>
-            <p className="text-xs text-gray-500">Gross Pool</p>
-            <p className="text-lg font-bold text-white">${grossPool.toFixed(2)}</p>
+            <p className="text-xs text-gray-500">{isSE ? 'Bracket Rounds' : 'Session'}</p>
+            <p className="text-lg font-bold text-white">{isSE ? deriveSEMeta(config.maxPlayers).rounds : '1'}</p>
           </div>
-          <div>
-            <p className="text-xs text-gray-500">Platform (10%)</p>
-            <p className="text-lg font-bold text-red-400">-${platformRake.toFixed(2)}</p>
-          </div>
-          <div>
-            <p className="text-xs text-gray-500">Net Prizes</p>
-            <p className="text-lg font-bold text-green-400">${netPool.toFixed(2)}</p>
-          </div>
+          <div><p className="text-xs text-gray-500">Net Prize</p><p className="text-lg font-bold text-green-400">${netPool.toFixed(2)}</p></div>
         </div>
         {isPrizeValid && config.maxPlayers >= 2 && (
-          <div className="mt-3 pt-3 border-t border-gray-700/50">
-            <div className="flex flex-wrap gap-3">
-              {Object.entries(config.prizeDistribution).map(([pos, pct]) => (
-                <div key={pos} className="text-center">
-                  <p className="text-xs text-gray-500">#{pos}</p>
-                  <p className="text-sm font-bold text-cyan-400">
-                    ${((netPool * pct) / 100).toFixed(2)}
-                  </p>
-                </div>
-              ))}
-            </div>
+          <div className="mt-3 pt-3 border-t border-gray-700/50 flex flex-wrap gap-3">
+            {Object.entries(config.prizeDistribution).map(([pos, pct]) => (
+              <div key={pos} className="text-center">
+                <p className="text-xs text-gray-500">#{pos}</p>
+                <p className="text-sm font-bold text-cyan-400">${((netPool * pct) / 100).toFixed(2)}</p>
+              </div>
+            ))}
           </div>
         )}
       </div>
 
-      {/* Platform Fee Info */}
+      {/* ── INFO ── */}
       <div className={S.infoBox}>
         <AlertCircle className="w-4 h-4 text-gray-500 flex-shrink-0 mt-0.5" />
         <p className={S.infoText}>
-          A 10% platform fee is deducted from the prize pool. The remaining {90}% is distributed
-          to winners based on the prize split above. Entry fees are held in escrow until the
-          match completes.
+          {isSE
+            ? `Single Elimination bracket — ${config.maxPlayers} players, ${deriveSEMeta(config.maxPlayers).rounds} bracket rounds, Best of ${config.roundsCount} per match. `
+            : `FFA — all ${config.maxPlayers} players compete simultaneously, ranked by score. `}
+          10% platform fee deducted from gross pool. Entry fees held in escrow until match completes.
         </p>
       </div>
     </div>
@@ -455,19 +640,32 @@ export default function EsportGameSettings({
 }
 
 // =============================================================================
-// HELPER: Default esport game config
+// DEFAULT CONFIG -- accepts capabilities for valid defaults
 // =============================================================================
 
-export function createDefaultEsportGameConfig(): EsportGameConfig {
+export function createDefaultEsportGameConfig(
+  capabilities?: GameCapabilities,
+): EsportGameConfig {
+  const cap    = capabilities || DEFAULT_CAPABILITIES
+  const format: TournamentFormat = cap.supportsSingleElimination
+    ? 'SINGLE_ELIMINATION'
+    : cap.supportsFFA ? 'FFA' : 'SINGLE_ELIMINATION'
+  const players = format === 'SINGLE_ELIMINATION'
+    ? Math.max(MIN_SE_SIZE, isPowerOf2(cap.minPlayers) ? cap.minPlayers : nextPowerOf2(cap.minPlayers))
+    : cap.minPlayers
+  const mode: GameMode = cap.supportsSync ? 'SYNC' : 'ASYNC'
+  const duration = cap.minMatchDurationSeconds > 0 ? cap.minMatchDurationSeconds : 180
+
   return {
-    entryFee: 5,
-    entryCurrency: 'USDT_BSC',
-    minPlayers: 2,
-    maxPlayers: 2,
-    mode: 'SYNC',
-    matchDurationSeconds: 180,
-    roundsCount: 1,
-    prizeDistribution: { '1': 100 },
-    visibility: 'PUBLIC_LISTED',
+    entryFee:             5,
+    entryCurrency:        'USDT_BSC',
+    minPlayers:           players,
+    maxPlayers:           players,
+    mode,
+    matchDurationSeconds: duration,
+    roundsCount:          1,
+    prizeDistribution:    { '1': 100 },
+    visibility:           'PUBLIC_LISTED',
+    tournamentFormat:     format,
   }
 }

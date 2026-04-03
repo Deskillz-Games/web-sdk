@@ -709,6 +709,26 @@ class RealtimeService {
         this.emit('tournamentStarting', data);
       });
 
+      // --- Cash game table assignment events (v3.3) ---
+
+      this.socket.on('room:table-assigned', (data: {
+        tableId: string;
+        seatNumber: number;
+        tableName: string;
+      }) => {
+        if (this.config.debug) console.log('[DeskillzBridge] Room: Table Assigned', data);
+        // NOTE: currentTableAssignment and callbacks are on DeskillzBridge instance,
+        // not on RealtimeService. Bridge wires these up via onRealtimeEvent().
+      });
+
+      this.socket.on('room:table-closed', (data: {
+        tableId: string;
+        reason: string;
+        tournamentId: string;
+      }) => {
+        if (this.config.debug) console.log('[DeskillzBridge] Room: Table Closed', data);
+      });
+
     } catch {
       if (this.config.debug) console.log('[DeskillzBridge] socket.io-client not available, realtime disabled');
     }
@@ -770,6 +790,9 @@ export class DeskillzBridge {
   protected currentRoom: PrivateRoom | null = null;
   protected listeners: BridgeEventCallback[] = [];
   protected realtimeCleanups: Array<() => void> = [];
+  protected currentTableAssignment: { tableId: string; seatNumber: number; tableName: string } | null = null;
+  onTableAssigned: ((data: { tableId: string; seatNumber: number; tableName: string }) => void) | null = null;
+  onTableClosed: ((data: { tableId: string; reason: string; tournamentId: string }) => void) | null = null;
 
   // ---------------------------------------------------------------------------
   // SINGLETON
@@ -1864,6 +1887,27 @@ export class DeskillzBridge {
     this.getWalletBalance().then((updated) => this.emit('walletUpdated', updated)).catch(() => {});
     return result;
   }
+  /** GET /api/v1/tournaments/:tournamentId/my-seat
+   * Returns the player's current cash game table assignment, or null if not yet seated.
+   */
+  async getMyTableAssignment(tournamentId: string): Promise<{
+    tableId: string;
+    seatNumber: number;
+    tableName: string;
+  } | null> {
+    if (this._isGuest || !this._isAuthenticated) return null;
+    try {
+      const res = await this.http.get<{ tableId: string; seatNumber: number; tableName: string } | null>(
+        `/api/v1/tournaments/${tournamentId}/my-seat`,
+      );
+      if (res) {
+        this.currentTableAssignment = res;
+      }
+      return res ?? null;
+    } catch {
+      return null;
+    }
+  }
 
   // ---------------------------------------------------------------------------
   // PRIVATE ROOMS
@@ -2349,8 +2393,21 @@ export class DeskillzBridge {
     this.realtime.connect().catch((err: unknown) => {
       this.log('Realtime connect error:', err);
     });
-  }
+    // Wire table assignment events to instance callbacks
+    this.onRealtimeEvent('room:table-assigned', (data: any) => {
+      this.currentTableAssignment = data;
+      if (typeof this.onTableAssigned === 'function') {
+        this.onTableAssigned(data);
+      }
+    });
 
+    this.onRealtimeEvent('room:table-closed', (data: any) => {
+      if (typeof this.onTableClosed === 'function') {
+        this.onTableClosed(data);
+      }
+    });
+  }
+  
   disconnectRealtime(): void {
     this.realtimeCleanups.forEach((cleanup) => cleanup());
     this.realtimeCleanups = [];
@@ -2393,6 +2450,46 @@ export class DeskillzBridge {
   getCurrentRoom(): PrivateRoom | null { return this.currentRoom; }
   isReady(): boolean { return this.isInitialized; }
   getConfig(): BridgeConfig { return { ...this.config }; }
+
+  /** Fetch game capabilities from the API. Used by standalone game CreateRoomScreen. */
+  async getGameCapabilities(gameId?: string): Promise<{
+    supports1v1: boolean;
+    supportsFFA: boolean;
+    supportsSinglePlayer: boolean;
+    supportsSync: boolean;
+    supportsAsync: boolean;
+    supportsSingleElimination: boolean;
+    minPlayers: number;
+    maxPlayers: number;
+    minMatchDurationSeconds: number;
+    maxMatchDurationSeconds: number;
+  }> {
+    const id = gameId || this.config.gameId;
+    const fallback = {
+      supports1v1: true, supportsFFA: true, supportsSinglePlayer: true,
+      supportsSync: true, supportsAsync: true, supportsSingleElimination: true,
+      minPlayers: 2, maxPlayers: 32, minMatchDurationSeconds: 0, maxMatchDurationSeconds: 0,
+    };
+    if (!id) return fallback;
+    try {
+      const game = await this.http.get<any>(`/api/v1/games/${id}`);
+      const g = game?.data ?? game;
+      return {
+        supports1v1:               g.supports1v1 ?? false,
+        supportsFFA:               g.supportsFFA ?? false,
+        supportsSinglePlayer:      g.supportsSinglePlayer ?? false,
+        supportsSync:              g.supportsSync ?? true,
+        supportsAsync:             g.supportsAsync ?? true,
+        supportsSingleElimination: g.supportsSingleElimination ?? true,
+        minPlayers:                g.minPlayers ?? 2,
+        maxPlayers:                g.maxPlayers ?? 32,
+        minMatchDurationSeconds:   g.minMatchDurationSeconds ?? 0,
+        maxMatchDurationSeconds:   g.maxMatchDurationSeconds ?? 0,
+      };
+    } catch {
+      return fallback;
+    }
+  }
 
   /** True when connected to real backend (not guest/offline) */
   get isLive(): boolean {
