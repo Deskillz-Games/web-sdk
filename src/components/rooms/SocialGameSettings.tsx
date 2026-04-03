@@ -78,10 +78,10 @@ export interface SocialGameSettingsProps {
 // CONSTANTS
 // =============================================================================
 
-const SOCIAL_GAMES: { value: SocialGameType; label: string; description: string }[] = [
-  { value: 'BIG_TWO',          label: 'Big 2',        description: 'Classic card climbing game' },
-  { value: 'MAHJONG',          label: 'Mahjong',       description: 'Traditional tile-matching game' },
-  { value: 'CHINESE_POKER_13', label: '13-Card Poker', description: 'Arrange 13 cards into 3 hands' },
+export const SOCIAL_GAMES: { value: SocialGameType; label: string; description: string; icon?: string }[] = [
+  { value: 'BIG_TWO',          label: 'Big 2',        description: 'Classic card climbing game', icon: '\u{1F0CF}' },
+  { value: 'MAHJONG',          label: 'Mahjong',       description: 'Traditional tile-matching game', icon: '\u{1F004}' },
+  { value: 'CHINESE_POKER_13', label: '13-Card Poker', description: 'Arrange 13 cards into 3 hands', icon: '\u{1F0A1}' },
 ]
 
 const MAHJONG_VARIANTS = [
@@ -260,7 +260,7 @@ function ChipPlusFreeInput({ presets, value, disabled, onSelect, inputMin, input
             {formatPreset ? formatPreset(p) : String(p)}
           </Chip>
         ))}
-        <Chip selected={isCustom} disabled={disabled} onClick={() => {}}>Custom</Chip>
+        <Chip selected={isCustom} disabled={disabled} onClick={() => { if (!isCustom) onSelect(presets[presets.length - 1] * 1.5) }}>Custom</Chip>
       </div>
       {isCustom && (
         <div className="flex items-center gap-2">
