@@ -1,19 +1,26 @@
 // =============================================================================
 // GameCapabilities.ts -- packages/game-ui/src/types/GameCapabilities.ts
 //
-// Describes what a game supports. Set by the developer in the Developer Portal.
-// Fetched from GET /api/v1/games/:gameId and passed to EsportGameSettings
-// and SocialGameSettings to filter options the game cannot support.
+// Describes what a game supports. Capabilities are set by the developer in the
+// Developer Portal (My Games > Edit > Gameplay tab) and stored in the database.
 //
-// Examples:
-//   Bubble Battle: supports1v1=false, supportsFFA=true, supportsAsync=false
-//   Candy Duel:    supports1v1=false, supportsFFA=true, supportsAsync=false
-//   Big 2:         minPlayers=4, maxPlayers=4, supportsSuddenDeath=false
-//   Mahjong:       minPlayers=4, maxPlayers=4, supportsSuddenDeath=false
+// At runtime, standalone games fetch capabilities via:
+//   bridge.getGameCapabilities()  ->  GET /api/v1/games/:gameId
+//
+// The response is passed to SocialGameSettings or EsportGameSettings as the
+// capabilities prop. The component then hides/disables options the game
+// does not support.
+//
+// DEFAULT_CAPABILITIES is used as a fallback when the API call fails
+// (offline, guest mode, network error). It is permissive -- all options
+// enabled -- so the host sees every option until the real config loads.
+//
+// Developers do NOT hardcode capability values in their game code.
+// All capability values come from the Developer Portal via the API.
 // =============================================================================
 
 export interface GameCapabilities {
-  // ── Player modes ──────────────────────────────────────────────────────────
+  // -- Player modes ----------------------------------------------------------
 
   /** Supports 1v1 head-to-head matches */
   supports1v1: boolean
@@ -24,7 +31,7 @@ export interface GameCapabilities {
   /** Supports single-player score attack (async solo run) */
   supportsSinglePlayer: boolean
 
-  // ── Match modes ───────────────────────────────────────────────────────────
+  // -- Match modes -----------------------------------------------------------
 
   /** Supports synchronous (real-time) multiplayer */
   supportsSync: boolean
@@ -32,12 +39,12 @@ export interface GameCapabilities {
   /** Supports asynchronous (play before deadline) matches */
   supportsAsync: boolean
 
-  // ── Tournament formats ────────────────────────────────────────────────────
+  // -- Tournament formats ----------------------------------------------------
 
   /** Supports single elimination bracket structure */
   supportsSingleElimination: boolean
 
-  // ── Player count ──────────────────────────────────────────────────────────
+  // -- Player count ----------------------------------------------------------
 
   /** Minimum number of players required to start a match */
   minPlayers: number
@@ -45,7 +52,7 @@ export interface GameCapabilities {
   /** Maximum number of players allowed in a single match */
   maxPlayers: number
 
-  // ── Duration constraints ──────────────────────────────────────────────────
+  // -- Duration constraints --------------------------------------------------
 
   /** Minimum match duration in seconds (0 = no minimum) */
   minMatchDurationSeconds: number
@@ -55,84 +62,20 @@ export interface GameCapabilities {
 }
 
 // =============================================================================
-// PRESET CAPABILITIES for known Deskillz games
-// Used as defaults when capabilities are not yet fetched from the API.
+// DEFAULT CAPABILITIES -- fallback when API has not yet responded.
+// Permissive: all modes enabled, wide player range, no duration limits.
+// This ensures the settings UI shows all options until the real config loads.
 // =============================================================================
 
 export const DEFAULT_CAPABILITIES: GameCapabilities = {
-  supports1v1:              true,
-  supportsFFA:              true,
-  supportsSinglePlayer:     true,
-  supportsSync:             true,
-  supportsAsync:            true,
-  supportsSingleElimination:true,
-  minPlayers:               2,
-  maxPlayers:               32,
-  minMatchDurationSeconds:  30,
-  maxMatchDurationSeconds:  0,
-}
-
-export const BUBBLE_BATTLE_CAPABILITIES: GameCapabilities = {
-  supports1v1:              false,
-  supportsFFA:              true,
-  supportsSinglePlayer:     false,
-  supportsSync:             true,
-  supportsAsync:            false,
-  supportsSingleElimination:false,
-  minPlayers:               2,
-  maxPlayers:               8,
-  minMatchDurationSeconds:  60,
-  maxMatchDurationSeconds:  600,
-}
-
-export const CANDY_DUEL_CAPABILITIES: GameCapabilities = {
-  supports1v1:              false,
-  supportsFFA:              true,
-  supportsSinglePlayer:     false,
-  supportsSync:             true,
-  supportsAsync:            false,
-  supportsSingleElimination:false,
-  minPlayers:               2,
-  maxPlayers:               8,
-  minMatchDurationSeconds:  60,
-  maxMatchDurationSeconds:  600,
-}
-
-export const BIG_TWO_CAPABILITIES: GameCapabilities = {
-  supports1v1:              false,
-  supportsFFA:              true,
-  supportsSinglePlayer:     false,
-  supportsSync:             true,
-  supportsAsync:            false,
-  supportsSingleElimination:true,
-  minPlayers:               4,
-  maxPlayers:               4,
-  minMatchDurationSeconds:  0,
-  maxMatchDurationSeconds:  0,
-}
-
-export const MAHJONG_CAPABILITIES: GameCapabilities = {
-  supports1v1:              false,
-  supportsFFA:              true,
-  supportsSinglePlayer:     false,
-  supportsSync:             true,
-  supportsAsync:            false,
-  supportsSingleElimination:true,
-  minPlayers:               4,
-  maxPlayers:               4,
-  minMatchDurationSeconds:  0,
-  maxMatchDurationSeconds:  0,
-}
-
-export const CHINESE_POKER_13_CAPABILITIES: GameCapabilities = {
-  supports1v1:              true,
-  supportsFFA:              true,
-  supportsSinglePlayer:     false,
-  supportsSync:             true,
-  supportsAsync:            false,
-  supportsSingleElimination:true,
-  minPlayers:               2,
-  maxPlayers:               4,
-  minMatchDurationSeconds:  0,
-  maxMatchDurationSeconds:  0,
+  supports1v1:               true,
+  supportsFFA:               true,
+  supportsSinglePlayer:      true,
+  supportsSync:              true,
+  supportsAsync:             true,
+  supportsSingleElimination: true,
+  minPlayers:                2,
+  maxPlayers:                32,
+  minMatchDurationSeconds:   0,
+  maxMatchDurationSeconds:   0,
 }
