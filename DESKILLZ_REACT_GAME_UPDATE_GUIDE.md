@@ -2,12 +2,24 @@
 
 ## Big 2 | Mahjong | Thirteen Cards (Chinese Poker)
 
-**Version:** 1.3
+**Version:** 1.5
 **Date:** March 30, 2026
 **Applies to:** All three React/Vite standalone games
 **SDK:** DeskillzBridge v3.2 + @deskillz/game-ui v3.2.0
 
-**Changelog v1.3 (current):**
+**Changelog v1.5 (current):**
+- Added Step 11: PWA Cache-Bust Setup (deskillz-sw.js + vite-plugin-sw-version)
+- Added maxTournamentSize to GameCapabilities interface
+- Updated index.html SW registration: ./deskillz-sw.js replaces ./sw.js
+- Removed confirm() dialog from SW update handler -- auto-reloads now
+- Updated build command: manual hash stamp for deskillz-sw.js after npm run build
+
+**Changelog v1.4:**
+- Added Step 10: Game Capabilities integration
+- Updated Step 0 file table with GameCapabilities.ts + deskillz-sw.js
+- Updated game-specific notes with capabilities values
+
+**Changelog v1.3:**
 - DeskillzBridge updated to v3.2 (2,483 lines, 50 methods -- 20 new)
 - Added Step 7: Room Components for social games (8 shared UI components)
 - Added Step 8: Host Dashboard screen using useHostDashboard hook
@@ -967,7 +979,87 @@ Compress-Archive -Path .\dist\* -DestinationPath .\game-cloud-build.zip -Force
 
 ---
 
-*React Game Update Guide v1.3 -- March 30, 2026*
+---
+
+## Step 11 -- PWA Cache-Bust Setup (deskillz-sw.js)
+
+Cloud Build Docker worker runs `workbox generateSW` which creates a `sw.js` file.
+To prevent it from overwriting your custom service worker, we use `deskillz-sw.js`.
+
+### 11a. Drop these files into your game:
+
+| File | Location | Source |
+|------|----------|--------|
+| `deskillz-sw.js` | `public/deskillz-sw.js` | From SDK `public/` |
+| `vite-plugin-sw-version.ts` | `src/plugins/vite-plugin-sw-version.ts` | From SDK `src/plugins/` |
+
+Delete any old `public/sw.js` or `public/sw.js.bak`.
+
+### 11b. Add plugin to vite.config.ts:
+
+```typescript
+import { swVersionPlugin } from './src/plugins/vite-plugin-sw-version';
+
+export default defineConfig({
+  plugins: [react(), swVersionPlugin()],
+  // ... rest unchanged
+});
+```
+
+### 11c. Update index.html SW registration:
+
+Replace the service worker registration script in your index.html:
+
+```html
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function() {
+      var scope = new URL('./', window.location.href).pathname;
+      navigator.serviceWorker.register('./deskillz-sw.js', { scope: scope })
+        .then(function(reg) {
+          console.log('[SW] Registered:', reg.scope);
+          reg.addEventListener('updatefound', function() {
+            var nw = reg.installing;
+            if (nw) {
+              nw.addEventListener('statechange', function() {
+                if (nw.state === 'installed' && navigator.serviceWorker.controller) {
+                  nw.postMessage({ type: 'SKIP_WAITING' });
+                  window.location.reload();
+                }
+              });
+            }
+          });
+        })
+        .catch(function(err) { console.warn('[SW] Failed:', err); });
+    });
+  }
+</script>
+```
+
+IMPORTANT: No `confirm()` dialog -- auto-reloads immediately on update.
+
+### 11d. Build command (with manual hash stamp):
+
+```powershell
+npm run build
+$hash = "{0}-{1}" -f ([System.DateTimeOffset]::Now.ToUnixTimeSeconds().ToString("x")), (Get-Random -Maximum 99999999).ToString("x8")
+(Get-Content .\dist\deskillz-sw.js -Raw) -replace '__BUILD_HASH__', $hash | Set-Content .\dist\deskillz-sw.js -Encoding UTF8 -NoNewline
+Write-Host "[sw-version] Stamped deskillz-sw.js with build hash: $hash" -ForegroundColor Green
+Compress-Archive -Path .\dist\* -DestinationPath .\game-cloud-build.zip -Force
+```
+
+The hash stamp is done manually because Vite plugin caching can prevent the
+`closeBundle` hook from running the updated code. The PowerShell command is reliable.
+
+### Why deskillz-sw.js (not sw.js)?
+
+Cloud Build Docker worker always runs `workbox generateSW` which creates `sw.js`.
+By naming our file `deskillz-sw.js`, Workbox never touches it. Both files exist
+on R2 but `index.html` registers `deskillz-sw.js` (ours), not `sw.js` (Workbox).
+
+---
+
+*React Game Update Guide v1.5 -- April 4, 2026*
 *Applies to: Big 2, Mahjong, Thirteen Cards (Chinese Poker)*
 *For non-React migration (Dou Dizhu, Bubble Battle, Candy Duel):*
 *see DESKILLZ_NON_REACT_MIGRATION_GUIDE.md v1.4*

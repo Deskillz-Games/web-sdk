@@ -1,7 +1,7 @@
 # DESKILLZ STANDALONE GAME UI BUILD HANDOFF
 ## Universal UI Guide for Self-Sufficient Game Apps
 
-**Version:** 3.0
+**Version:** 3.2
 **Date:** March 30, 2026
 **SDK Version:** Deskillz SDK v3.2 + @deskillz/game-ui v3.2.0
 **Architecture:** Self-Sufficient (No External App Dependency)
@@ -11,6 +11,26 @@
 ---
 
 ## CHANGELOG
+
+### v3.2 (April 4, 2026)
+- PWA Cache-Bust: deskillz-sw.js replaces sw.js to avoid Workbox generateSW overwrite
+- New shared files: public/deskillz-sw.js, src/plugins/vite-plugin-sw-version.ts
+- index.html template updated: registers deskillz-sw.js, removed confirm() dialog
+- maxTournamentSize added to GameCapabilities interface + DEFAULT_CAPABILITIES
+- Developer Portal Gameplay tab reorganized with tooltips and label fixes
+- Build command updated: manual hash stamp for deskillz-sw.js after npm run build
+- Cloud Build confirmed: Docker worker deploys PWA files to hosted/{gameId}/pwa/ on R2
+- Game Builds tab confirmed: updates live hosted game (not just downloadable artifacts)
+
+### v3.1 (April 3, 2026)
+- GameCapabilities feature wired end-to-end (database -> API -> frontend -> standalone)
+- 6 new fields on Game model: supports1v1, supportsFFA, supportsSinglePlayer,
+  supportsSingleElimination, minMatchDurationSeconds, maxMatchDurationSeconds
+- DeveloperPortal Edit Game modal: Gameplay tab with capability toggles
+- NewGamePage: Game Capabilities section in Step 4 (Tournament Settings)
+- DeskillzBridge v3.3: getGameCapabilities() method
+- SocialGameSettings v3.3.3: accepts capabilities prop
+- SDK v3.3 released with GameCapabilities.ts + updated guides
 
 ### v3.0 (March 30, 2026)
 - DeskillzBridge updated to v3.2 (2,483 lines, 50 methods -- 20 new)
@@ -1072,9 +1092,11 @@ Section 14 for the complete table (50+ endpoints).
 ### vite.config.ts
 
 ```typescript
+import { swVersionPlugin } from './src/plugins/vite-plugin-sw-version';
+
 export default defineConfig({
   base: './',           // CRITICAL: top-level, NOT inside build: {}
-  plugins: [react()],
+  plugins: [react(), swVersionPlugin()],
   build: {
     outDir: 'dist',
     sourcemap: false,
@@ -1099,13 +1121,27 @@ VITE_APP_VERSION=1.0.0
 Cloud Build replaces `YOUR_GAME_ID` and `YOUR_API_KEY` automatically.
 Delete `.env.local` before running `npm run build` for Cloud Build submission.
 
-### ZIP Command
+### ZIP Command (with deskillz-sw.js hash stamp)
 
 ```powershell
 npm run build
 Remove-Item .env.local -ErrorAction SilentlyContinue
+$hash = "{0}-{1}" -f ([System.DateTimeOffset]::Now.ToUnixTimeSeconds().ToString("x")), (Get-Random -Maximum 99999999).ToString("x8")
+(Get-Content .\dist\deskillz-sw.js -Raw) -replace '__BUILD_HASH__', $hash | Set-Content .\dist\deskillz-sw.js -Encoding UTF8 -NoNewline
+Write-Host "[sw-version] Stamped deskillz-sw.js with build hash: $hash" -ForegroundColor Green
 Compress-Archive -Path .\dist\* -DestinationPath .\game-cloud-build.zip -Force
 ```
+
+> IMPORTANT: The hash stamp is done manually because the Vite plugin cache can
+> prevent the closeBundle hook from running updated code. The PowerShell stamp
+> is reliable and produces the same result.
+
+### Why deskillz-sw.js (not sw.js)?
+
+Cloud Build Docker worker always runs `workbox generateSW` which creates `sw.js`.
+By naming our service worker `deskillz-sw.js`, Workbox never touches it.
+Both files exist on R2 but `index.html` registers `deskillz-sw.js` (ours).
+The Workbox `sw.js` is ignored by the browser.
 
 ---
 
@@ -1545,10 +1581,15 @@ new-game/
         Card.tsx              <- From @deskillz/game-ui
     sdk/
       DeskillzBridge.ts       <- DO NOT MODIFY
+    plugins/
+      vite-plugin-sw-version.ts  <- Stamps build hash into deskillz-sw.js
+    types/
+      GameCapabilities.ts     <- Interface + DEFAULT_CAPABILITIES
   public/
-    index.html                <- base: './' required
+    index.html                <- base: './' required, registers deskillz-sw.js
     manifest.json             <- start_url: './' required
-  vite.config.ts              <- base: './' at top level required
+    deskillz-sw.js            <- Universal SW template (NOT sw.js -- avoids Workbox overwrite)
+  vite.config.ts              <- base: './' at top level + swVersionPlugin()
 ```
 
 ### GameScreen Pattern (Canvas/PixiJS inside React)

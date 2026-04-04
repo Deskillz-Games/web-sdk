@@ -2,10 +2,20 @@
 
 ## Complete Integration Reference for HTML5/JavaScript Game Developers
 
-**Version:** 5.3
+**Version:** 5.4
 **Date:** March 30, 2026
 **SDK Version:** DeskillzBridge v3.2 + @deskillz/game-ui ES module v3.2.0
 **Web Engine:** React/Vite only — all standalone web games
+
+**Changelog v5.4:** PWA service worker renamed from sw.js to deskillz-sw.js to avoid
+Cloud Build Docker worker Workbox generateSW overwrite. Updated Section 4 file structure,
+Section 8 files to include, Section 9 build command with hash stamp, index.html template.
+Added Section 24.12 PWA Cache-Bust pitfalls. Added maxTournamentSize to GameCapabilities.
+Developer Portal Gameplay tab reorganized with tooltips and maxTournamentSize field.
+
+**Changelog v5.3.3:** GameCapabilities feature wired end-to-end. SocialGameSettings v3.3.3
+accepts capabilities prop. DeskillzBridge v3.3 getGameCapabilities() method. Updated file
+structure with src/types/GameCapabilities.ts.
 
 **Changelog v5.2:** Updated Section 23 to @deskillz/game-ui v3.2.0 — QuickPlayCard
 and useQuickPlayQueue rebuilt for esport and social flows. Social QuickPlay now has
@@ -202,7 +212,7 @@ DeskillzUI.js has been retired. @deskillz/game-ui is imported as an ES module.
 game-source.zip
   index.html          <- REQUIRED: Entry point at ZIP root
   manifest.json       <- RECOMMENDED: PWA manifest
-  sw.js               <- RECOMMENDED: Service worker
+  deskillz-sw.js      <- REQUIRED: Service worker (NOT sw.js -- avoids Workbox overwrite)
   src/
     main.tsx          <- React entry point + DeskillzBridge.init()
     App.tsx           <- React router shell
@@ -298,8 +308,9 @@ game-source.zip
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         const scope = new URL('./', window.location.href).pathname;
-        navigator.serviceWorker.register('./sw.js', { scope })
+        navigator.serviceWorker.register('./deskillz-sw.js', { scope })
           .then(reg => {
+            console.log('[SW] Registered:', reg.scope);
             reg.addEventListener('updatefound', () => {
               const nw = reg.installing;
               if (nw) {
@@ -312,7 +323,7 @@ game-source.zip
               }
             });
           })
-          .catch(err => console.warn('[PWA] SW failed:', err));
+          .catch(err => console.warn('[SW] Failed:', err));
       });
     }
   </script>
@@ -865,7 +876,7 @@ window.location.href = `deskillz://results?matchId=${matchData.matchId}`;
 |-------------|----------|-------|
 | `index.html` | YES | Entry point at root |
 | `manifest.json` | Recommended | PWA manifest with relative paths |
-| `sw.js` | Recommended | Service worker |
+| `deskillz-sw.js` | YES | Service worker (NOT sw.js -- avoids Workbox overwrite) |
 | `src/**/*.js` | YES | Bundled game code (Vite output) |
 | `assets/` | YES | Images, audio, fonts |
 | `assets/icons/` | Recommended | PWA icons (192, 512) |
@@ -960,6 +971,10 @@ export default defineConfig({
 ```powershell
 npm run build
 Remove-Item .env.local -ErrorAction SilentlyContinue  # Remove local creds
+# Stamp deskillz-sw.js with unique build hash (manual -- Vite plugin cache workaround)
+$hash = "{0}-{1}" -f ([System.DateTimeOffset]::Now.ToUnixTimeSeconds().ToString("x")), (Get-Random -Maximum 99999999).ToString("x8")
+(Get-Content .\dist\deskillz-sw.js -Raw) -replace '__BUILD_HASH__', $hash | Set-Content .\dist\deskillz-sw.js -Encoding UTF8 -NoNewline
+Write-Host "[sw-version] Stamped deskillz-sw.js with build hash: $hash" -ForegroundColor Green
 Compress-Archive -Path .\dist\* -DestinationPath .\game-cloud-build.zip -Force
 ```
 
@@ -967,6 +982,9 @@ Compress-Archive -Path .\dist\* -DestinationPath .\game-cloud-build.zip -Force
 ```bash
 npm run build
 rm -f .env.local
+HASH="$(date +%s | base64 | head -c8)-$(openssl rand -hex 4)"
+sed -i "s/__BUILD_HASH__/$HASH/g" dist/deskillz-sw.js
+echo "[sw-version] Stamped deskillz-sw.js with build hash: $HASH"
 cd dist && zip -r ../game-cloud-build.zip . -x '*.map' && cd ..
 ```
 
@@ -1312,7 +1330,7 @@ toNum(wallet.total).toFixed(2)
 | Host dashboard blank screen | `profile.tier` undefined | Use spread-merge safe defaults |
 | Scores show 0 after wins | Payments calculated not applied | Apply `scoreResult.payments` to `player.totalScore` |
 | `require is not defined` | ESM project | Use `import/export`, or rename `.cjs` |
-| Old cached page after deploy | Stale service worker | Versioned cache + `SKIP_WAITING` |
+| Old cached page after deploy | Stale Workbox service worker | Use `deskillz-sw.js` (not `sw.js`) + hash stamp on every build |
 | `.env` not loading | BOM encoding or no restart | Create without BOM; restart Vite |
 | `gameId must be UUID` | Slug used instead of UUID | Register game via Developer Portal, use returned UUID |
 | iOS PWA "Failed to Download" | Absolute `start_url: "/"` | Use `start_url: "./"` and `scope: "./"` |
@@ -2361,21 +2379,35 @@ This section distills all lessons learned into actionable tables. No narrative.
 
 ### 24.8 Service Worker Best Practices
 
-```javascript
-// 1. Skip non-HTTP requests (FIRST LINE of fetch handler)
-self.addEventListener('fetch', (event) => {
-  const url = new URL(event.request.url);
-  if (!url.protocol.startsWith('http')) return;  // Skip chrome-extension://, data:, blob:
+Use `deskillz-sw.js` (NOT `sw.js`) to avoid Cloud Build Workbox overwrite:
 
-  // 2. Only cache 200 responses (not 206 partial)
-  if (response && response.status === 200) {
-    caches.open(CACHE_NAME).then(c => c.put(request, response.clone()));
-  }
-});
-
-// 3. Version cache on every deploy
-const CACHE_NAME = 'your-game-v1.2.3';  // Bump this on changes
 ```
+public/deskillz-sw.js      <- Universal SW template from SDK (has __BUILD_HASH__ placeholder)
+src/plugins/vite-plugin-sw-version.ts  <- Vite plugin stamps hash at build time
+```
+
+Build command (manual hash stamp -- Vite plugin cache workaround):
+```powershell
+npm run build
+$hash = "{0}-{1}" -f ([System.DateTimeOffset]::Now.ToUnixTimeSeconds().ToString("x")), (Get-Random -Maximum 99999999).ToString("x8")
+(Get-Content .\dist\deskillz-sw.js -Raw) -replace '__BUILD_HASH__', $hash | Set-Content .\dist\deskillz-sw.js -Encoding UTF8 -NoNewline
+Compress-Archive -Path .\dist\* -DestinationPath .\game-cloud-build.zip -Force
+```
+
+index.html registers `./deskillz-sw.js` (not `./sw.js`). No `confirm()` dialog.
+Workbox generates `sw.js` separately -- the browser ignores it.
+
+### 24.12 PWA Cache-Bust (v3.4.2)
+
+| # | Pitfall | Fix |
+|---|---------|-----|
+| 58 | `sw.js` overwritten by Workbox generateSW | Name your SW `deskillz-sw.js` -- Workbox only generates `sw.js` |
+| 59 | Old Workbox SW serves stale cached files | `deskillz-sw.js` with unique build hash purges old caches on activate |
+| 60 | `confirm()` dialog blocks SW update | Remove confirm -- auto-reload on `updatefound` |
+| 61 | Vite plugin `closeBundle` runs old cached code | Use PowerShell manual hash stamp after `npm run build` |
+| 62 | `workbox-config.js` injectManifest ignored | Docker worker hardcodes `generateSW` -- rename approach is only fix |
+| 63 | Browser disk cache serves old `index.html` | Network-first strategy in `deskillz-sw.js` for navigation requests |
+| 64 | First-time fix for existing users | Clear site data or wait 24h for browser auto-update check |
 
 ### 24.9 Quick Play NPC Fill (Public UI Policy)
 

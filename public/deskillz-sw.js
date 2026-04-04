@@ -1,16 +1,14 @@
 // =============================================================================
 // Deskillz Universal Service Worker
-// Path: public/sw.js
+// Path: public/deskillz-sw.js
+//
+// IMPORTANT: Named deskillz-sw.js (NOT sw.js) to prevent Cloud Build Docker
+// worker from overwriting it with Workbox generateSW. The Docker worker
+// generates sw.js -- this file is untouched because the name is different.
 //
 // Shared across ALL standalone games (social + esport).
 // The __BUILD_HASH__ placeholder is replaced by vite-plugin-sw-version
 // during `npm run build`. Every build gets a unique cache name.
-//
-// WORKBOX COMPATIBILITY:
-// Cloud Build Docker worker may run `workbox injectManifest` which injects
-// a precache list into self.__WB_MANIFEST. If it runs `workbox generateSW`
-// instead, it will OVERWRITE this file entirely -- the workbox-config.js
-// in the project root prevents that by specifying injectManifest mode.
 //
 // Strategy:
 //   - Navigation (HTML): Network-first (always fresh index.html)
@@ -19,23 +17,15 @@
 //   - API + WebSocket: Bypass cache entirely
 // =============================================================================
 
-const BUILD_HASH = '__BUILD_HASH__';
-const CACHE_STATIC  = 'dsk-static-'  + BUILD_HASH;
-const CACHE_DYNAMIC = 'dsk-dynamic-' + BUILD_HASH;
+var BUILD_HASH = '__BUILD_HASH__';
+var CACHE_STATIC  = 'dsk-static-'  + BUILD_HASH;
+var CACHE_DYNAMIC = 'dsk-dynamic-' + BUILD_HASH;
 
-// Workbox injectManifest will replace this with the precache list.
-// If Workbox does NOT run, this is just an empty array and our
-// manual caching strategies handle everything.
-const WB_MANIFEST = self.__WB_MANIFEST || [];
-
-// Pre-cache: shell files + any Workbox-injected assets
-const PRECACHE_URLS = [
+// Pre-cache shell files
+var PRECACHE_URLS = [
   './',
   './index.html',
   './manifest.json',
-  ...WB_MANIFEST.map(function(entry) {
-    return typeof entry === 'string' ? entry : entry.url;
-  }),
 ];
 
 // ---------------------------------------------------------------------------

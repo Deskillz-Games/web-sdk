@@ -2,10 +2,21 @@
 
 ## Dou Dizhu | Bubble Battle | Candy Duel
 
-**Version:** 1.4
+**Version:** 1.6
 **Date:** March 30, 2026
 **For:** Developers of existing non-React standalone games
 **Applies to:** Dou Dizhu (PixiJS), Bubble Battle (Canvas/TypeScript), Candy Duel (Canvas/TypeScript)
+
+**Changelog v1.6 (current):**
+- Added Step 11: PWA Cache-Bust Setup (deskillz-sw.js + vite-plugin-sw-version)
+- Added maxTournamentSize to GameCapabilities
+- Updated index.html template: deskillz-sw.js registration, no confirm() dialog
+- Updated build command with manual hash stamp
+
+**Changelog v1.5:**
+- Added Step 10 (after Step 9): Game Capabilities integration
+- Updated Step 7 file list with GameCapabilities.ts + deskillz-sw.js
+- Updated file count summary table
 
 **Changelog v1.4 (current):**
 - DeskillzBridge updated to v3.2 (2,483 lines, 50 methods -- 20 new)
@@ -579,7 +590,35 @@ Set explicit pixel dimensions in useEffect, not CSS percentages.
 
 ---
 
-*Migration Guide v1.4 -- March 30, 2026*
+---
+
+### Step 11 -- PWA Cache-Bust Setup (deskillz-sw.js)
+
+Same as React Game Update Guide v1.5 Step 11. Drop these files:
+
+| File | Location |
+|------|----------|
+| `deskillz-sw.js` | `public/deskillz-sw.js` |
+| `vite-plugin-sw-version.ts` | `src/plugins/vite-plugin-sw-version.ts` |
+
+Add `swVersionPlugin()` to `vite.config.ts` plugins array.
+Update `index.html` to register `./deskillz-sw.js` (not `./sw.js`).
+Remove any `confirm()` dialog in the SW update handler.
+Delete old `public/sw.js` or `public/sw.js.bak`.
+
+Build command:
+```powershell
+npm run build
+$hash = "{0}-{1}" -f ([System.DateTimeOffset]::Now.ToUnixTimeSeconds().ToString("x")), (Get-Random -Maximum 99999999).ToString("x8")
+(Get-Content .\dist\deskillz-sw.js -Raw) -replace '__BUILD_HASH__', $hash | Set-Content .\dist\deskillz-sw.js -Encoding UTF8 -NoNewline
+Compress-Archive -Path .\dist\* -DestinationPath .\game-cloud-build.zip -Force
+```
+
+See React Game Update Guide v1.5 Step 11 for full details and rationale.
+
+---
+
+*Migration Guide v1.6 -- April 4, 2026*
 *Applies to: Dou Dizhu, Bubble Battle, Candy Duel*
 *For React game updates (Big 2, Mahjong, Thirteen Cards):*
 *see DESKILLZ_REACT_GAME_UPDATE_GUIDE.md v1.3*
