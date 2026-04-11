@@ -39,10 +39,25 @@ export interface GameCapabilities {
   /** Supports asynchronous (play before deadline) matches */
   supportsAsync: boolean
 
+  /** Supports Blitz 1v1 (short burst real-time duel, e.g. 60s Candy Duel) */
+  supportsBlitz1v1: boolean
+
+  /** Supports Duel 1v1 (full-length real-time head-to-head, e.g. Bubble Battle) */
+  supportsDuel1v1: boolean
+
+  /** Supports single-player mode (solo score attack, no opponent) */
+  supportsSinglePlayerMode: boolean
+
+  /** Supports turn-based multiplayer (players take turns, not real-time) */
+  supportsTurnBased: boolean
+
   // -- Tournament formats ----------------------------------------------------
 
   /** Supports single elimination bracket structure */
   supportsSingleElimination: boolean
+
+  /** Maximum players in a single elimination bracket (e.g. 32, 64, 128, 256) */
+  maxTournamentSize: number
 
   // -- Player count ----------------------------------------------------------
 
@@ -73,7 +88,12 @@ export const DEFAULT_CAPABILITIES: GameCapabilities = {
   supportsSinglePlayer:      true,
   supportsSync:              true,
   supportsAsync:             true,
+  supportsBlitz1v1:          false,
+  supportsDuel1v1:           false,
+  supportsSinglePlayerMode:  false,
+  supportsTurnBased:         false,
   supportsSingleElimination: true,
+  maxTournamentSize:         256,
   minPlayers:                2,
   maxPlayers:                32,
   minMatchDurationSeconds:   0,

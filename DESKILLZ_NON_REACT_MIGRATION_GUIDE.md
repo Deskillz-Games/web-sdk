@@ -599,7 +599,7 @@ Same as React Game Update Guide v1.5 Step 11. Drop these files:
 | File | Location |
 |------|----------|
 | `deskillz-sw.js` | `public/deskillz-sw.js` |
-| `vite-plugin-sw-version.ts` | `src/plugins/vite-plugin-sw-version.ts` |
+| `vite-plugin-sw-version.mjs` | `src/plugins/vite-plugin-sw-version.mjs` |
 
 Add `swVersionPlugin()` to `vite.config.ts` plugins array.
 Update `index.html` to register `./deskillz-sw.js` (not `./sw.js`).

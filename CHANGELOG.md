@@ -1,10 +1,19 @@
-# Changelog
+﻿# Changelog
 
 All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+
+## [3.4.3] - 2026-04-11
+
+### Changed
+- Game mode capabilities, DDZ support, timer future-proofing, empty state UI, blitz/duel/single-player/turn-based modes
+- Synced components, hooks, types from packages/game-ui
+- Plugin: vite-plugin-sw-version.mjs (retired .ts)
+- Service worker: deskillz-sw.js (retired sw.js)
+- workbox-config.js retired
 ## [3.0.0] - 2026-02-03
 
 ### Added
@@ -102,6 +111,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Constant-time comparison for signature verification
 - Secure nonce generation using Web Crypto API
 
+
+## [3.4.3] - 2026-04-11
+
+### Changed
+- Game mode capabilities, DDZ support, timer future-proofing, empty state UI, blitz/duel/single-player/turn-based modes
+- Synced components, hooks, types from packages/game-ui
+- Plugin: vite-plugin-sw-version.mjs (retired .ts)
+- Service worker: deskillz-sw.js (retired sw.js)
+- workbox-config.js retired
 ## [2.x.x] - Previous Versions
 
 Previous versions were platform-specific SDKs (Unity, Unreal Engine).

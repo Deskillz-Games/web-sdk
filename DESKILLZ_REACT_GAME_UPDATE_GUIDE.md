@@ -991,7 +991,7 @@ To prevent it from overwriting your custom service worker, we use `deskillz-sw.j
 | File | Location | Source |
 |------|----------|--------|
 | `deskillz-sw.js` | `public/deskillz-sw.js` | From SDK `public/` |
-| `vite-plugin-sw-version.ts` | `src/plugins/vite-plugin-sw-version.ts` | From SDK `src/plugins/` |
+| `vite-plugin-sw-version.mjs` | `src/plugins/vite-plugin-sw-version.mjs` | From SDK `src/plugins/` |
 
 Delete any old `public/sw.js` or `public/sw.js.bak`.
 

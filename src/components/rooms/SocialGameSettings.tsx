@@ -23,7 +23,7 @@ import { GameCapabilities, DEFAULT_CAPABILITIES } from '../../types/GameCapabili
 // TYPES
 // =============================================================================
 
-export type SocialGameType    = 'BIG_TWO' | 'MAHJONG' | 'CHINESE_POKER_13'
+export type SocialGameType    = 'BIG_TWO' | 'MAHJONG' | 'CHINESE_POKER_13' | 'DOU_DIZHU'
 export type SocialMode        = 'CASH_GAME' | 'TOURNAMENT'
 export type RoomVisibility    = 'PUBLIC_LISTED' | 'PRIVATE_CODE'
 export type HostRole          = 'PLAYER' | 'MONITOR'
@@ -82,6 +82,7 @@ export const SOCIAL_GAMES: { value: SocialGameType; label: string; description: 
   { value: 'BIG_TWO',          label: 'Big 2',        description: 'Classic card climbing game', icon: '\u{1F0CF}' },
   { value: 'MAHJONG',          label: 'Mahjong',       description: 'Traditional tile-matching game', icon: '\u{1F004}' },
   { value: 'CHINESE_POKER_13', label: '13-Card Poker', description: 'Arrange 13 cards into 3 hands', icon: '\u{1F0A1}' },
+  { value: 'DOU_DIZHU',        label: 'Dou Dizhu',    description: 'Landlord vs Farmers card game',  icon: '\u{1F0CF}' },
 ]
 
 const MAHJONG_VARIANTS = [
@@ -99,6 +100,7 @@ const GAME_DEFAULTS: Record<SocialGameType, {
   BIG_TWO:           { pointTarget: 100, minPlayers: 4, maxPlayers: 4, turnTimer: 30, maxBid: 3 },
   CHINESE_POKER_13:  { pointTarget: 52,  minPlayers: 2, maxPlayers: 4, turnTimer: 45, maxBid: 1 },
   MAHJONG:           { pointTarget: 0,   minPlayers: 4, maxPlayers: 4, turnTimer: 60, maxBid: 1 },
+  DOU_DIZHU:         { pointTarget: 0,   minPlayers: 3, maxPlayers: 3, turnTimer: 30, maxBid: 3 },
 }
 
 const POINT_TARGET_OPTIONS: Record<SocialGameType, { value: number; label: string }[]> = {
@@ -120,21 +122,20 @@ const POINT_TARGET_OPTIONS: Record<SocialGameType, { value: number; label: strin
     { value: 8,  label: '2 Winds (8 rounds)' },
     { value: 16, label: 'Full Game (16 rounds)' },
   ],
+  DOU_DIZHU: [
+    { value: 0,   label: 'Open-Ended' },
+    { value: 10,  label: '10 rounds' },
+    { value: 20,  label: '20 rounds' },
+    { value: 50,  label: '50 rounds' },
+  ],
 }
 
-const RAKE_PERCENT_OPTIONS = [5, 6, 7, 8, 9, 10]
+const RAKE_PERCENT_PRESETS = [3, 5, 7, 10, 15, 20]
 const RAKE_CAP_PRESETS     = [1, 2, 5, 10, 25, 50]
 const POINT_VALUE_PRESETS  = [0.01, 0.05, 0.10, 0.25, 0.50, 1.00]
 const ENTRY_FEE_PRESETS    = [1, 5, 10, 25, 50, 100]
 
-const TIMER_OPTIONS = [
-  { value: 15,  label: '15s' },
-  { value: 30,  label: '30s' },
-  { value: 45,  label: '45s' },
-  { value: 60,  label: '60s' },
-  { value: 90,  label: '90s' },
-  { value: 120, label: '120s' },
-]
+const TIMER_PRESETS = [15, 30, 45, 60, 90, 120]
 
 const CURRENCIES = [
   { value: 'USDT_BSC',  label: 'USDT (BEP-20)' },
@@ -495,17 +496,9 @@ export default function SocialGameSettings({
           {/* Rake Percentage */}
           <div className={S.section}>
             <label className={S.label}><Percent className="w-4 h-4 text-pink-400" />Rake Percentage</label>
-            <div className={S.chipGrid}>
-              {RAKE_PERCENT_OPTIONS.map((pct) => (
-                <Chip key={pct} selected={config.rakePercentage === pct} disabled={disabled} onClick={() => update({ rakePercentage: pct })}>{pct}%</Chip>
-              ))}
-            </div>
-            <div className="flex items-center gap-2 mt-1">
-              <input type="number" min={1} max={50} step={0.5} value={config.rakePercentage}
-                onChange={(e) => { const v = parseFloat(e.target.value); if (!isNaN(v) && v >= 1) update({ rakePercentage: v }) }}
-                disabled={disabled} className={cn(S.freeInput, 'w-24')} />
-              <span className="text-gray-500 text-sm">% custom</span>
-            </div>
+            <ChipPlusFreeInput presets={RAKE_PERCENT_PRESETS} value={config.rakePercentage} disabled={disabled}
+              onSelect={(v) => update({ rakePercentage: v })} inputMin={0} inputStep={0.5}
+              inputSuffix="%" placeholder="5" formatPreset={(v) => `${v}%`} />
           </div>
 
           {/* Rake Cap */}
@@ -523,7 +516,17 @@ export default function SocialGameSettings({
               {pointTargetOptions.map((opt) => (
                 <Chip key={opt.value} selected={config.pointTarget === opt.value} disabled={disabled} onClick={() => update({ pointTarget: opt.value })}>{opt.label}</Chip>
               ))}
+              <Chip selected={!pointTargetOptions.some(o => o.value === config.pointTarget)} disabled={disabled}
+                onClick={() => { if (pointTargetOptions.some(o => o.value === config.pointTarget)) update({ pointTarget: 25 }) }}>Custom</Chip>
             </div>
+            {!pointTargetOptions.some(o => o.value === config.pointTarget) && (
+              <div className="flex items-center gap-2 mt-2">
+                <input type="number" min={0} step={1} value={config.pointTarget}
+                  onChange={(e) => { const v = parseInt(e.target.value, 10); if (!isNaN(v) && v >= 0) update({ pointTarget: v }) }}
+                  disabled={disabled} className={cn(S.freeInput, 'w-28')} />
+                <span className="text-gray-500 text-sm">{config.gameType === 'MAHJONG' ? 'rounds' : 'points'}</span>
+              </div>
+            )}
           </div>
         </>
       )}
@@ -680,14 +683,13 @@ export default function SocialGameSettings({
             </div>
           )}
 
+
           {/* Turn Timer */}
           <div className={S.section}>
             <label className={S.label}><Timer className="w-4 h-4 text-cyan-400" />Turn Timer</label>
-            <div className={S.chipGrid}>
-              {TIMER_OPTIONS.map((opt) => (
-                <Chip key={opt.value} selected={config.turnTimerSeconds === opt.value} disabled={disabled} onClick={() => update({ turnTimerSeconds: opt.value })}>{opt.label}</Chip>
-              ))}
-            </div>
+            <ChipPlusFreeInput presets={TIMER_PRESETS} value={config.turnTimerSeconds} disabled={disabled}
+              onSelect={(v) => update({ turnTimerSeconds: v })} inputMin={5} inputStep={5}
+              inputSuffix="seconds" placeholder="30" formatPreset={(v) => `${v}s`} />
           </div>
         </>
       )}
@@ -708,11 +710,9 @@ export default function SocialGameSettings({
       {isCashGame && (
         <div className={S.section}>
           <label className={S.label}><Timer className="w-4 h-4 text-cyan-400" />Turn Timer</label>
-          <div className={S.chipGrid}>
-            {TIMER_OPTIONS.map((opt) => (
-              <Chip key={opt.value} selected={config.turnTimerSeconds === opt.value} disabled={disabled} onClick={() => update({ turnTimerSeconds: opt.value })}>{opt.label}</Chip>
-            ))}
-          </div>
+          <ChipPlusFreeInput presets={TIMER_PRESETS} value={config.turnTimerSeconds} disabled={disabled}
+            onSelect={(v) => update({ turnTimerSeconds: v })} inputMin={5} inputStep={5}
+            inputSuffix="seconds" placeholder="30" formatPreset={(v) => `${v}s`} />
         </div>
       )}
 

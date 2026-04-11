@@ -2046,6 +2046,39 @@ export class DeskillzBridge {
     return this.http.post(`/api/v1/private-rooms/${this.currentRoom.id}/cash-out`);
   }
 
+  /** POST /api/v1/private-rooms/:roomId/rebuy -- rebuy chips when balance is 0 */
+  async roomRebuy(amount: number, currency: string = 'USDT'): Promise<{ success: boolean; pointBalance: number }> {
+    if (this._isGuest || !this.currentRoom) return { success: true, pointBalance: amount };
+
+    return this.http.post(`/api/v1/private-rooms/${this.currentRoom.id}/rebuy`, { amount, currency });
+  }
+
+  // ---------------------------------------------------------------------------
+  // ROUND & SETTLEMENT (Social Games)
+  // ---------------------------------------------------------------------------
+
+  /** POST /api/v1/private-rooms/rounds/submit -- submit round results from game */
+  async submitRound(payload: {
+    roomId: string;
+    roundNumber: number;
+    playerResults: Array<{ playerId: string; score: number; pointsWon: number }>;
+  }): Promise<{ success: boolean; roundId: string }> {
+    if (this._isGuest) {
+      this.log('Round submitted (local only):', payload);
+      return { success: true, roundId: `mock_round_${Date.now()}` };
+    }
+
+    return this.http.post('/api/v1/private-rooms/rounds/submit', payload);
+  }
+
+  /** POST /api/v1/private-rooms/:roomId/settlement/trigger -- host triggers manual settlement */
+  async triggerSettlement(roomId?: string): Promise<{ success: boolean }> {
+    const id = roomId || this.currentRoom?.id;
+    if (this._isGuest || !id) return { success: true };
+
+    return this.http.post(`/api/v1/private-rooms/${id}/settlement/trigger`);
+  }
+
   // ---------------------------------------------------------------------------
   // SCORE SUBMISSION
   // ---------------------------------------------------------------------------
@@ -2326,6 +2359,60 @@ export class DeskillzBridge {
     return result;
   }
 
+  // ---------------------------------------------------------------------------
+  // QUICK PLAY SOCIAL (Cash game rooms via QuickPlay)
+  // ---------------------------------------------------------------------------
+
+  /** POST /api/v1/lobby/quick-play/social/create -- create a social quick-play room */
+  async createSocialQuickPlay(params: {
+    gameId?: string;
+    pointValueUsd: number;
+    currency: string;
+    seatsPerTable?: number;
+  }): Promise<{ success: boolean; roomId: string; roomCode: string }> {
+    this.ensureAuthenticated();
+
+    if (this._isGuest) {
+      return { success: true, roomId: `mock_room_${Date.now()}`, roomCode: 'MOCK-0000' };
+    }
+
+    return this.http.post('/api/v1/lobby/quick-play/social/create', {
+      gameId: params.gameId || this.config.gameId,
+      ...params,
+    });
+  }
+
+  /** POST /api/v1/lobby/quick-play/social/:roomId/round -- submit social QP round */
+  async submitSocialQuickPlayRound(roomId: string, payload: {
+    roundNumber: number;
+    playerResults: Array<{ playerId: string; score: number; pointsWon: number }>;
+  }): Promise<{ success: boolean }> {
+    if (this._isGuest) return { success: true };
+
+    return this.http.post(`/api/v1/lobby/quick-play/social/${roomId}/round`, payload);
+  }
+
+  /** POST /api/v1/lobby/quick-play/social/:roomId/rebuy -- rebuy in social QP */
+  async socialQuickPlayRebuy(roomId: string, amount: number): Promise<{ success: boolean; pointBalance: number }> {
+    if (this._isGuest) return { success: true, pointBalance: amount };
+
+    return this.http.post(`/api/v1/lobby/quick-play/social/${roomId}/rebuy`, { amount });
+  }
+
+  /** POST /api/v1/lobby/quick-play/social/:roomId/cashout -- cash out of social QP */
+  async socialQuickPlayCashout(roomId: string): Promise<{ success: boolean; amount: number }> {
+    if (this._isGuest) return { success: true, amount: 0 };
+
+    return this.http.post(`/api/v1/lobby/quick-play/social/${roomId}/cashout`);
+  }
+
+  /** POST /api/v1/lobby/quick-play/social/:roomId/end -- end social QP game */
+  async endSocialQuickPlay(roomId: string): Promise<{ success: boolean }> {
+    if (this._isGuest) return { success: true };
+
+    return this.http.post(`/api/v1/lobby/quick-play/social/${roomId}/end`);
+  }
+
   getCurrentQuickPlayMatch(): QuickPlayLaunchData | null {
     return this._currentQuickPlayMatch;
   }
@@ -2458,7 +2545,12 @@ export class DeskillzBridge {
     supportsSinglePlayer: boolean;
     supportsSync: boolean;
     supportsAsync: boolean;
+    supportsBlitz1v1: boolean;
+    supportsDuel1v1: boolean;
+    supportsSinglePlayerMode: boolean;
+    supportsTurnBased: boolean;
     supportsSingleElimination: boolean;
+    maxTournamentSize: number;
     minPlayers: number;
     maxPlayers: number;
     minMatchDurationSeconds: number;
@@ -2467,7 +2559,10 @@ export class DeskillzBridge {
     const id = gameId || this.config.gameId;
     const fallback = {
       supports1v1: true, supportsFFA: true, supportsSinglePlayer: true,
-      supportsSync: true, supportsAsync: true, supportsSingleElimination: true,
+      supportsSync: true, supportsAsync: true,
+      supportsBlitz1v1: false, supportsDuel1v1: false,
+      supportsSinglePlayerMode: false, supportsTurnBased: false,
+      supportsSingleElimination: true, maxTournamentSize: 256,
       minPlayers: 2, maxPlayers: 32, minMatchDurationSeconds: 0, maxMatchDurationSeconds: 0,
     };
     if (!id) return fallback;
@@ -2480,7 +2575,12 @@ export class DeskillzBridge {
         supportsSinglePlayer:      g.supportsSinglePlayer ?? false,
         supportsSync:              g.supportsSync ?? true,
         supportsAsync:             g.supportsAsync ?? true,
+        supportsBlitz1v1:          g.supportsBlitz1v1 ?? false,
+        supportsDuel1v1:           g.supportsDuel1v1 ?? false,
+        supportsSinglePlayerMode:  g.supportsSinglePlayerMode ?? false,
+        supportsTurnBased:         g.supportsTurnBased ?? false,
         supportsSingleElimination: g.supportsSingleElimination ?? true,
+        maxTournamentSize:         g.maxTournamentSize ?? 256,
         minPlayers:                g.minPlayers ?? 2,
         maxPlayers:                g.maxPlayers ?? 32,
         minMatchDurationSeconds:   g.minMatchDurationSeconds ?? 0,

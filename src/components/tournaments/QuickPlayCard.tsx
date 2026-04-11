@@ -646,7 +646,82 @@ export default function QuickPlayCard({ qp, onMatchStart, className }: QuickPlay
     )
   }
 
-  if (!config) return null
+  if (!config) {
+    return (
+      <Card className={cn(
+        'bg-gradient-to-br from-cyan-500/5 via-purple-500/5 to-pink-500/5',
+        'border-l-4 border-l-cyan-500/30 overflow-hidden',
+        className,
+      )}>
+        <CardContent className="p-0">
+          {/* Header */}
+          <div className="px-5 pt-5 pb-4 border-b border-white/5">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 bg-gradient-to-br from-cyan-500/15 to-purple-500/15">
+                <Zap className="w-5 h-5 text-cyan-400/50" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <h3 className="text-base font-semibold text-white">Quick Play</h3>
+                <p className="text-xs text-white/50">Instant matchmaking · No scheduling</p>
+              </div>
+              <Badge variant="default" size="sm" className="bg-white/5 text-white/30 border-white/10">
+                Coming Soon
+              </Badge>
+            </div>
+          </div>
+
+          {/* Preview skeleton */}
+          <div className="px-5 py-4 space-y-4">
+            {/* Mode selector skeleton */}
+            <div>
+              <div className="h-3 w-12 bg-white/5 rounded mb-2" />
+              <div className="flex gap-2">
+                <div className="flex-1 h-10 bg-white/5 border border-white/8 rounded-lg" />
+                <div className="flex-1 h-10 bg-white/5 border border-white/8 rounded-lg" />
+              </div>
+            </div>
+
+            {/* Entry fee chips skeleton */}
+            <div>
+              <div className="h-3 w-16 bg-white/5 rounded mb-2" />
+              <div className="grid grid-cols-4 gap-2">
+                {[0,1,2,3].map(i => (
+                  <div key={i} className="h-10 bg-white/5 border border-white/8 rounded-lg" />
+                ))}
+              </div>
+            </div>
+
+            {/* Currency skeleton */}
+            <div>
+              <div className="h-3 w-16 bg-white/5 rounded mb-2" />
+              <div className="h-10 bg-white/5 border border-white/8 rounded-lg" />
+            </div>
+
+            {/* Info row skeleton */}
+            <div className="grid grid-cols-3 gap-2">
+              {[0,1,2].map(i => (
+                <div key={i} className="h-5 bg-white/5 rounded" />
+              ))}
+            </div>
+
+            {/* Play button — disabled state */}
+            <div className="w-full rounded-xl py-3.5 bg-white/5 border border-white/10 flex items-center justify-center gap-2">
+              <Zap className="w-5 h-5 text-white/20" />
+              <span className="font-bold text-sm uppercase tracking-wider text-white/20">
+                Not Available Yet
+              </span>
+            </div>
+
+            {/* Helpful message */}
+            <p className="text-xs text-center text-white/30 leading-relaxed">
+              Quick Play will be available once the game developer enables instant matchmaking.
+              Check back soon!
+            </p>
+          </div>
+        </CardContent>
+      </Card>
+    )
+  }
 
   const isEsport = config.gameCategory === 'ESPORTS'
 

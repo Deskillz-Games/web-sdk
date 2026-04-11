@@ -25,7 +25,13 @@ import { GameCapabilities, DEFAULT_CAPABILITIES } from '../../types/GameCapabili
 // TYPES
 // =============================================================================
 
-export type GameMode = 'SYNC' | 'ASYNC'
+export type GameMode =
+  | 'SYNC'              // Real-time multiplayer (all players play simultaneously)
+  | 'ASYNC'             // Score-attack (play before deadline, scores compared at end)
+  | 'BLITZ_1V1'         // Short real-time 1v1 (e.g. Candy Duel 60s rounds)
+  | 'DUEL_1V1'          // Full real-time 1v1 (e.g. Bubble Battle full match)
+  | 'SINGLE_PLAYER'     // Solo score attack (async, no opponent, ranked by score)
+  | 'TURN_BASED'        // Turn-based multiplayer (players take turns, not real-time)
 export type RoomVisibility = 'PUBLIC_LISTED' | 'UNLISTED'
 export type TournamentFormat = 'SINGLE_ELIMINATION' | 'FFA'
 
@@ -44,6 +50,8 @@ export interface EsportGameConfig {
   prizeDistribution: PrizeDistribution
   visibility: RoomVisibility
   tournamentFormat: TournamentFormat
+  /** Platform fee percentage (default 10). Host tier may reduce this. */
+  platformFeePercent: number
 }
 
 export interface EsportGameSettingsProps {
@@ -61,21 +69,8 @@ export interface EsportGameSettingsProps {
 // =============================================================================
 
 const ENTRY_FEE_PRESETS = [1, 5, 10, 25, 50, 100, 250, 500]
-const DURATION_PRESETS  = [
-  { value: 60,   label: '1 min' },
-  { value: 120,  label: '2 min' },
-  { value: 180,  label: '3 min' },
-  { value: 300,  label: '5 min' },
-  { value: 600,  label: '10 min' },
-  { value: 900,  label: '15 min' },
-  { value: 1800, label: '30 min' },
-]
-const ROUNDS_PRESETS = [
-  { value: 1, label: '1 Round',   description: 'Single' },
-  { value: 3, label: 'Best of 3', description: '2 to win' },
-  { value: 5, label: 'Best of 5', description: '3 to win' },
-  { value: 7, label: 'Best of 7', description: '4 to win' },
-]
+const DURATION_PRESETS = [60, 120, 180, 300, 600, 900, 1800]
+const ROUNDS_PRESETS = [1, 3, 5, 7]
 const FFA_PLAYER_PRESETS    = [2, 3, 4, 6, 8, 10, 16, 32, 64]
 const DEFAULT_CURRENCIES    = ['USDT_BSC', 'USDC_BSC', 'BNB', 'USDT_TRON', 'USDC_TRON']
 const CURRENCY_LABELS: Record<string, string> = {
@@ -281,13 +276,43 @@ export default function EsportGameSettings({
   // How many format options are available
   const formatCount = [cap.supportsSingleElimination, cap.supportsFFA].filter(Boolean).length
 
+  // Build available game modes from capabilities
+  type ModeOption = { mode: GameMode; icon: typeof Swords; iconClass: string; title: string; subtitle: string }
+  const availableModes: ModeOption[] = [
+    ...(cap.supportsSync ? [{
+      mode: 'SYNC' as GameMode, icon: Swords, iconClass: 'text-amber-400',
+      title: 'Synchronous', subtitle: 'Real-time multiplayer',
+    }] : []),
+    ...(cap.supportsAsync ? [{
+      mode: 'ASYNC' as GameMode, icon: Clock, iconClass: 'text-blue-400',
+      title: 'Asynchronous', subtitle: 'Play before deadline',
+    }] : []),
+    ...(cap.supportsBlitz1v1 ? [{
+      mode: 'BLITZ_1V1' as GameMode, icon: Zap, iconClass: 'text-pink-400',
+      title: 'Blitz 1v1', subtitle: 'Short burst duel',
+    }] : []),
+    ...(cap.supportsDuel1v1 ? [{
+      mode: 'DUEL_1V1' as GameMode, icon: Swords, iconClass: 'text-red-400',
+      title: 'Duel 1v1', subtitle: 'Full match head-to-head',
+    }] : []),
+    ...(cap.supportsSinglePlayerMode ? [{
+      mode: 'SINGLE_PLAYER' as GameMode, icon: Trophy, iconClass: 'text-emerald-400',
+      title: 'Single Player', subtitle: 'Solo score attack',
+    }] : []),
+    ...(cap.supportsTurnBased ? [{
+      mode: 'TURN_BASED' as GameMode, icon: Clock, iconClass: 'text-violet-400',
+      title: 'Turn-Based', subtitle: 'Players take turns',
+    }] : []),
+  ]
+
   const update = useCallback(
     (partial: Partial<EsportGameConfig>) => onChange({ ...config, ...partial }),
     [config, onChange],
   )
 
   const grossPool    = config.entryFee * config.maxPlayers
-  const platformRake = grossPool * 0.10
+  const platformFee  = config.platformFeePercent ?? 10
+  const platformRake = grossPool * (platformFee / 100)
   const netPool      = grossPool - platformRake
   const prizeTotal   = Object.values(config.prizeDistribution).reduce((s, v) => s + v, 0)
   const isPrizeValid = Math.abs(prizeTotal - 100) < 0.01
@@ -299,9 +324,10 @@ export default function EsportGameSettings({
   }
 
   // Duration presets filtered by capabilities
+  // Filter duration presets by capabilities
   const validDurations = DURATION_PRESETS.filter((d) =>
-    (cap.minMatchDurationSeconds === 0 || d.value >= cap.minMatchDurationSeconds) &&
-    (cap.maxMatchDurationSeconds === 0 || d.value <= cap.maxMatchDurationSeconds)
+    (cap.minMatchDurationSeconds === 0 || d >= cap.minMatchDurationSeconds) &&
+    (cap.maxMatchDurationSeconds === 0 || d <= cap.maxMatchDurationSeconds)
   )
 
   return (
@@ -415,7 +441,8 @@ export default function EsportGameSettings({
         {isSE ? (
           <SEPlayerStepper
             value={config.maxPlayers} disabled={disabled}
-            capMin={Math.max(cap.minPlayers, MIN_SE_SIZE)} capMax={cap.maxPlayers}
+            capMin={Math.max(cap.minPlayers, MIN_SE_SIZE)}
+            capMax={cap.maxTournamentSize || cap.maxPlayers || 256}
             onChange={(players, rounds) => update({ maxPlayers: players, minPlayers: players })}
           />
         ) : (
@@ -430,31 +457,21 @@ export default function EsportGameSettings({
       </div>
 
       {/* ── GAME MODE ── */}
-      {(cap.supportsSync || cap.supportsAsync) && (
+      {availableModes.length > 0 && (
         <div className={S.section}>
           <LabelWithTooltip icon={Swords} iconClass="text-amber-400" label="Game Mode"
-            tooltip="Synchronous: all players play at the exact same time in a live session. Asynchronous: players complete their run before a deadline and scores are compared at the end." />
-          <div className={cn('grid gap-2', (cap.supportsSync && cap.supportsAsync) ? 'grid-cols-2' : 'grid-cols-1')}>
-            {cap.supportsSync && (
-              <button type="button" disabled={disabled} onClick={() => update({ mode: 'SYNC' })}
+            tooltip="How players interact. Sync = all play at once. Async = play before deadline. Blitz = short 1v1. Duel = full 1v1. Single Player = solo score attack. Turn-Based = take turns." />
+          <div className={cn('grid gap-2', availableModes.length >= 4 ? 'grid-cols-3' : availableModes.length >= 2 ? 'grid-cols-2' : 'grid-cols-1')}>
+            {availableModes.map(({ mode, icon: ModeIcon, iconClass, title, subtitle }) => (
+              <button key={mode} type="button" disabled={disabled} onClick={() => update({ mode })}
                 className={cn('p-3 rounded-lg border-2 transition-all text-center',
-                  config.mode === 'SYNC' ? 'border-cyan-500 bg-cyan-500/10' : 'border-gray-700 bg-[#1a1a2e] hover:border-gray-600',
+                  config.mode === mode ? 'border-cyan-500 bg-cyan-500/10' : 'border-gray-700 bg-[#1a1a2e] hover:border-gray-600',
                   disabled && S.chipDisabled)}>
-                <Swords className="w-5 h-5 text-amber-400 mx-auto mb-1" />
-                <p className="text-sm font-bold text-white">Synchronous</p>
-                <p className="text-xs text-gray-500">Real-time multiplayer</p>
+                <ModeIcon className={cn('w-5 h-5 mx-auto mb-1', iconClass)} />
+                <p className="text-sm font-bold text-white">{title}</p>
+                <p className="text-xs text-gray-500">{subtitle}</p>
               </button>
-            )}
-            {cap.supportsAsync && (
-              <button type="button" disabled={disabled} onClick={() => update({ mode: 'ASYNC' })}
-                className={cn('p-3 rounded-lg border-2 transition-all text-center',
-                  config.mode === 'ASYNC' ? 'border-cyan-500 bg-cyan-500/10' : 'border-gray-700 bg-[#1a1a2e] hover:border-gray-600',
-                  disabled && S.chipDisabled)}>
-                <Clock className="w-5 h-5 text-blue-400 mx-auto mb-1" />
-                <p className="text-sm font-bold text-white">Asynchronous</p>
-                <p className="text-xs text-gray-500">Play before deadline</p>
-              </button>
-            )}
+            ))}
           </div>
         </div>
       )}
@@ -464,34 +481,15 @@ export default function EsportGameSettings({
         <LabelWithTooltip icon={Timer} iconClass="text-cyan-400" label="Match Duration"
           tooltip={`How long each individual match lasts.${cap.minMatchDurationSeconds > 0 ? ` Min: ${formatDuration(cap.minMatchDurationSeconds)}.` : ''}${cap.maxMatchDurationSeconds > 0 ? ` Max: ${formatDuration(cap.maxMatchDurationSeconds)}.` : ''}`}
         />
-        <div className={S.chipGrid}>
-          {validDurations.map((opt) => (
-            <Chip key={opt.value} selected={config.matchDurationSeconds === opt.value} disabled={disabled}
-              onClick={() => update({ matchDurationSeconds: opt.value })}>
-              {opt.label}
-            </Chip>
-          ))}
-          <Chip selected={!validDurations.find((d) => d.value === config.matchDurationSeconds)} disabled={disabled} onClick={() => {}}>
-            Custom
-          </Chip>
-        </div>
-        {!validDurations.find((d) => d.value === config.matchDurationSeconds) && (
-          <div className="flex items-center gap-2 mt-1">
-            <input type="number"
-              min={cap.minMatchDurationSeconds || 10}
-              max={cap.maxMatchDurationSeconds || undefined}
-              step={10} value={config.matchDurationSeconds}
-              onChange={(e) => {
-                let v = Math.max(cap.minMatchDurationSeconds || 10, parseInt(e.target.value) || 10)
-                if (cap.maxMatchDurationSeconds > 0) v = Math.min(cap.maxMatchDurationSeconds, v)
-                update({ matchDurationSeconds: v })
-              }}
-              disabled={disabled} className={cn(S.freeInput, 'w-28')} />
-            <span className="text-gray-500 text-sm">
-              seconds ({formatDuration(config.matchDurationSeconds)})
-            </span>
-          </div>
-        )}
+        <ChipPlusFreeInput
+          presets={validDurations} value={config.matchDurationSeconds} disabled={disabled}
+          onSelect={(v) => update({ matchDurationSeconds: v })}
+          inputMin={cap.minMatchDurationSeconds || 10}
+          inputMax={cap.maxMatchDurationSeconds || undefined}
+          inputStep={10} inputSuffix="seconds"
+          placeholder="180"
+          formatPreset={(v) => formatDuration(v)}
+        />
       </div>
 
       {/* ── ROUNDS PER MATCH (SE only) ── */}
@@ -499,32 +497,18 @@ export default function EsportGameSettings({
         <div className={S.section}>
           <LabelWithTooltip icon={Trophy} iconClass="text-yellow-400" label="Rounds Per Match"
             tooltip="How many games are played within each 1v1 matchup. Best of 3 = first to win 2 games advances. Always odd so there is always a winner." />
-          <div className={S.chipGrid}>
-            {ROUNDS_PRESETS.map((opt) => (
-              <Chip key={opt.value} selected={config.roundsCount === opt.value} disabled={disabled}
-                onClick={() => update({ roundsCount: opt.value })}>
-                <span className="block font-bold">{opt.label}</span>
-                <span className="block text-xs text-gray-500">{opt.description}</span>
-              </Chip>
-            ))}
-            <Chip selected={!ROUNDS_PRESETS.find((r) => r.value === config.roundsCount)} disabled={disabled} onClick={() => {}}>
-              Custom
-            </Chip>
-          </div>
-          {!ROUNDS_PRESETS.find((r) => r.value === config.roundsCount) && (
-            <div className="flex items-center gap-2 mt-1">
-              <input type="number" min={1} step={2} value={config.roundsCount}
-                onChange={(e) => {
-                  let v = Math.max(1, parseInt(e.target.value) || 1)
-                  if (v % 2 === 0) v = v + 1
-                  update({ roundsCount: v })
-                }}
-                disabled={disabled} className={cn(S.freeInput, 'w-24')} />
-              <span className="text-gray-500 text-sm">
-                rounds (first to {Math.ceil(config.roundsCount / 2)} wins) — must be odd
-              </span>
-            </div>
-          )}
+          <ChipPlusFreeInput
+            presets={ROUNDS_PRESETS} value={config.roundsCount} disabled={disabled}
+            onSelect={(v) => {
+              let r = Math.max(1, Math.round(v))
+              if (r % 2 === 0) r = r + 1
+              update({ roundsCount: r })
+            }}
+            inputMin={1} inputStep={2}
+            inputSuffix={`rounds (first to ${Math.ceil(config.roundsCount / 2)} wins)`}
+            placeholder="3"
+            formatPreset={(v) => v === 1 ? '1 Round' : `Bo${v}`}
+          />
         </div>
       )}
 
@@ -632,7 +616,7 @@ export default function EsportGameSettings({
           {isSE
             ? `Single Elimination bracket — ${config.maxPlayers} players, ${deriveSEMeta(config.maxPlayers).rounds} bracket rounds, Best of ${config.roundsCount} per match. `
             : `FFA — all ${config.maxPlayers} players compete simultaneously, ranked by score. `}
-          10% platform fee deducted from gross pool. Entry fees held in escrow until match completes.
+          {platformFee}% platform fee deducted from gross pool. Entry fees held in escrow until match completes.
         </p>
       </div>
     </div>
@@ -653,7 +637,13 @@ export function createDefaultEsportGameConfig(
   const players = format === 'SINGLE_ELIMINATION'
     ? Math.max(MIN_SE_SIZE, isPowerOf2(cap.minPlayers) ? cap.minPlayers : nextPowerOf2(cap.minPlayers))
     : cap.minPlayers
-  const mode: GameMode = cap.supportsSync ? 'SYNC' : 'ASYNC'
+  const mode: GameMode = cap.supportsSync ? 'SYNC'
+    : cap.supportsAsync ? 'ASYNC'
+    : cap.supportsBlitz1v1 ? 'BLITZ_1V1'
+    : cap.supportsDuel1v1 ? 'DUEL_1V1'
+    : cap.supportsSinglePlayerMode ? 'SINGLE_PLAYER'
+    : cap.supportsTurnBased ? 'TURN_BASED'
+    : 'SYNC'
   const duration = cap.minMatchDurationSeconds > 0 ? cap.minMatchDurationSeconds : 180
 
   return {
@@ -667,5 +657,6 @@ export function createDefaultEsportGameConfig(
     prizeDistribution:    { '1': 100 },
     visibility:           'PUBLIC_LISTED',
     tournamentFormat:     format,
+    platformFeePercent:   10,
   }
 }

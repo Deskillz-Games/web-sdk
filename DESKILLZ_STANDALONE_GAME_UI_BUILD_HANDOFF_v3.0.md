@@ -14,7 +14,7 @@
 
 ### v3.2 (April 4, 2026)
 - PWA Cache-Bust: deskillz-sw.js replaces sw.js to avoid Workbox generateSW overwrite
-- New shared files: public/deskillz-sw.js, src/plugins/vite-plugin-sw-version.ts
+- New shared files: public/deskillz-sw.js, src/plugins/vite-plugin-sw-version.mjs
 - index.html template updated: registers deskillz-sw.js, removed confirm() dialog
 - maxTournamentSize added to GameCapabilities interface + DEFAULT_CAPABILITIES
 - Developer Portal Gameplay tab reorganized with tooltips and label fixes
@@ -1582,7 +1582,7 @@ new-game/
     sdk/
       DeskillzBridge.ts       <- DO NOT MODIFY
     plugins/
-      vite-plugin-sw-version.ts  <- Stamps build hash into deskillz-sw.js
+      vite-plugin-sw-version.mjs  <- Stamps build hash into deskillz-sw.js
     types/
       GameCapabilities.ts     <- Interface + DEFAULT_CAPABILITIES
   public/

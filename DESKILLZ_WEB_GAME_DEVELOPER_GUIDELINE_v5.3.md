@@ -2383,7 +2383,7 @@ Use `deskillz-sw.js` (NOT `sw.js`) to avoid Cloud Build Workbox overwrite:
 
 ```
 public/deskillz-sw.js      <- Universal SW template from SDK (has __BUILD_HASH__ placeholder)
-src/plugins/vite-plugin-sw-version.ts  <- Vite plugin stamps hash at build time
+src/plugins/vite-plugin-sw-version.mjs  <- Vite plugin stamps hash at build time
 ```
 
 Build command (manual hash stamp -- Vite plugin cache workaround):
