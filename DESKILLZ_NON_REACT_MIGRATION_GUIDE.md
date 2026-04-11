@@ -2,12 +2,22 @@
 
 ## Dou Dizhu | Bubble Battle | Candy Duel
 
-**Version:** 1.6
-**Date:** March 30, 2026
+**Version:** 1.8
+**Date:** April 11, 2026
 **For:** Developers of existing non-React standalone games
 **Applies to:** Dou Dizhu (PixiJS), Bubble Battle (Canvas/TypeScript), Candy Duel (Canvas/TypeScript)
 
-**Changelog v1.6 (current):**
+**Changelog v1.8 (April 11, 2026):**
+- SDK v3.4.3: GameCapabilities expanded with 4 new mode flags
+  (supportsBlitz1v1, supportsDuel1v1, supportsSinglePlayerMode, supportsTurnBased)
+- EsportGameSettings: duration/rounds use ChipPlusFreeInput, platformFeePercent from config,
+  6 game modes (SYNC, ASYNC, BLITZ_1V1, DUEL_1V1, SINGLE_PLAYER, TURN_BASED)
+- Bubble Battle: set supportsDuel1v1=true in Developer Portal
+- Candy Duel: set supportsBlitz1v1=true in Developer Portal
+- QuickPlayCard: empty state preview UI when no QuickPlayConfig exists
+- LobbyOverlay: tournament tab with filters, stats, auto-refresh, empty state
+
+**Changelog v1.6:**
 - Added Step 11: PWA Cache-Bust Setup (deskillz-sw.js + vite-plugin-sw-version)
 - Added maxTournamentSize to GameCapabilities
 - Updated index.html template: deskillz-sw.js registration, no confirm() dialog
@@ -599,7 +609,7 @@ Same as React Game Update Guide v1.5 Step 11. Drop these files:
 | File | Location |
 |------|----------|
 | `deskillz-sw.js` | `public/deskillz-sw.js` |
-| `vite-plugin-sw-version.mjs` | `src/plugins/vite-plugin-sw-version.mjs` |
+| `vite-plugin-sw-version.ts` | `src/plugins/vite-plugin-sw-version.ts` |
 
 Add `swVersionPlugin()` to `vite.config.ts` plugins array.
 Update `index.html` to register `./deskillz-sw.js` (not `./sw.js`).

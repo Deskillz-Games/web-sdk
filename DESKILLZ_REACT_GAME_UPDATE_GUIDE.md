@@ -2,12 +2,23 @@
 
 ## Big 2 | Mahjong | Thirteen Cards (Chinese Poker)
 
-**Version:** 1.5
-**Date:** March 30, 2026
+**Version:** 1.7
+**Date:** April 11, 2026
 **Applies to:** All three React/Vite standalone games
-**SDK:** DeskillzBridge v3.2 + @deskillz/game-ui v3.2.0
+**SDK:** DeskillzBridge v3.4.3 + @deskillz/game-ui v3.4.3
 
-**Changelog v1.5 (current):**
+**Changelog v1.7 (April 11, 2026):**
+- SDK v3.4.3: GameCapabilities expanded with 4 new mode flags
+  (supportsBlitz1v1, supportsDuel1v1, supportsSinglePlayerMode, supportsTurnBased)
+- SocialGameSettings: DOU_DIZHU game type added, timer/rake/point-target use ChipPlusFreeInput (custom values)
+- EsportGameSettings: duration/rounds use ChipPlusFreeInput, platformFeePercent from config (was hardcoded 10%), 
+  maxTournamentSize applied to bracket stepper, 6 game modes (SYNC, ASYNC, BLITZ_1V1, DUEL_1V1, SINGLE_PLAYER, TURN_BASED)
+- QuickPlayCard: empty state preview UI when no QuickPlayConfig exists ("Coming Soon" skeleton)
+- LobbyOverlay: tournament tab with filter bar (All/Open/Live/Completed), stats summary, auto-refresh, skeleton empty state
+- vite-plugin-sw-version.mjs confirmed for Big 2 + Thirteen Cards (all 4 React games now use .mjs)
+- All preset selectors (timer, rake, duration, rounds) now accept custom freeform values via ChipPlusFreeInput
+
+**Changelog v1.5:**
 - Added Step 11: PWA Cache-Bust Setup (deskillz-sw.js + vite-plugin-sw-version)
 - Added maxTournamentSize to GameCapabilities interface
 - Updated index.html SW registration: ./deskillz-sw.js replaces ./sw.js
@@ -29,7 +40,7 @@
 - Score signing (signScore/verifyScore) added for esport anti-cheat
 
 **Changelog v1.2:**
-- QuickPlayCard and useQuickPlayQueue updated to v3.2.0
+- QuickPlayCard and useQuickPlayQueue updated to v3.4.3
 - Social games: point value/currency dropdowns, live Available Games board
 - Social games: Create Game + JOIN flow, new 'waiting' state
 
@@ -991,7 +1002,7 @@ To prevent it from overwriting your custom service worker, we use `deskillz-sw.j
 | File | Location | Source |
 |------|----------|--------|
 | `deskillz-sw.js` | `public/deskillz-sw.js` | From SDK `public/` |
-| `vite-plugin-sw-version.mjs` | `src/plugins/vite-plugin-sw-version.mjs` | From SDK `src/plugins/` |
+| `vite-plugin-sw-version.ts` | `src/plugins/vite-plugin-sw-version.ts` | From SDK `src/plugins/` |
 
 Delete any old `public/sw.js` or `public/sw.js.bak`.
 

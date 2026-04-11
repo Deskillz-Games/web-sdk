@@ -1,9 +1,9 @@
 # DESKILLZ STANDALONE GAME UI BUILD HANDOFF
 ## Universal UI Guide for Self-Sufficient Game Apps
 
-**Version:** 3.2
-**Date:** March 30, 2026
-**SDK Version:** Deskillz SDK v3.2 + @deskillz/game-ui v3.2.0
+**Version:** 3.3
+**Date:** April 11, 2026
+**SDK Version:** Deskillz SDK v3.4.3 + @deskillz/game-ui v3.4.3
 **Architecture:** Self-Sufficient (No External App Dependency)
 **Supported Game Types:** Esports (Competitive) + Social Games (Cash Game + Tournament)
 **Supported Web Engine:** React/Vite only (all standalone web games)
@@ -12,9 +12,23 @@
 
 ## CHANGELOG
 
+### v3.3 (April 11, 2026)
+- SDK v3.4.3 released
+- GameCapabilities: 4 new mode flags (supportsBlitz1v1, supportsDuel1v1, supportsSinglePlayerMode, supportsTurnBased)
+- SocialGameSettings: DOU_DIZHU added as game type with 3-player defaults
+- SocialGameSettings: timer, rake, point-target all use ChipPlusFreeInput (custom freeform values)
+- EsportGameSettings: duration/rounds use ChipPlusFreeInput, platformFeePercent configurable, 6 game modes
+- EsportGameConfig: new platformFeePercent field (default 10, was hardcoded)
+- GameMode type expanded: SYNC, ASYNC, BLITZ_1V1, DUEL_1V1, SINGLE_PLAYER, TURN_BASED
+- QuickPlayCard: skeleton preview empty state when no QuickPlayConfig exists
+- LobbyOverlay: tournament tab filter bar, stats summary, auto-refresh, retry button, skeleton empty state
+- DeskillzBridge: roomRebuy(), submitRound(), triggerSettlement(), 5 social QuickPlay methods added
+- vite-plugin-sw-version.mjs applied to all 4 React games (Big 2, Mahjong, Thirteen Cards, DDZ)
+- release-sdk.ps1 rewritten: workbox retired, .mjs, deskillz-sw.js, version bump, CHANGELOG auto-entry
+
 ### v3.2 (April 4, 2026)
 - PWA Cache-Bust: deskillz-sw.js replaces sw.js to avoid Workbox generateSW overwrite
-- New shared files: public/deskillz-sw.js, src/plugins/vite-plugin-sw-version.mjs
+- New shared files: public/deskillz-sw.js, src/plugins/vite-plugin-sw-version.ts
 - index.html template updated: registers deskillz-sw.js, removed confirm() dialog
 - maxTournamentSize added to GameCapabilities interface + DEFAULT_CAPABILITIES
 - Developer Portal Gameplay tab reorganized with tooltips and label fixes
@@ -46,13 +60,13 @@
 - New bridge methods: getHostProfile, getHostEarnings, getHostBadges, getActiveRooms, getEsportsTier, getSocialTier, getLevelInfo, verifyAge, checkAgeVerified, requestHostWithdrawal, getGameLeaderboard, getMyRank, getMyGameRank, getUserRank, getUserStats, getMyProfile, getTransactions, signScore, verifyScore, startRoom
 
 ### v2.9 (March 30, 2026)
-- Updated Section 9 (QuickPlay Page) to v3.2.0 — full rewrite
+- Updated Section 9 (QuickPlay Page) to v3.4.3 — full rewrite
 - QuickPlayCard is now a shared, ready-to-use template — game developers drop it in, do not build from scratch
 - Social games: point value and currency are dropdown selectors driven by admin config
 - Social games: live Available Games board (quick-play:lobby-update socket)
 - Social games: Create Game + JOIN flow; new 'waiting' state
 - Esport games: entry fee + player mode remain chips; currency now dropdown
-- Updated Section 16 (@deskillz/game-ui) to v3.2.0 — added AvailableGame interface
+- Updated Section 16 (@deskillz/game-ui) to v3.4.3 — added AvailableGame interface
 - Updated Section 18 SDK Events — added quickPlayLobbyUpdate + quickPlayWaiting
 - Updated Section 21 Phase 4 to reflect new QuickPlay states
 - Updated Section 22 testing checklist for QuickPlay v3.2
@@ -882,7 +896,7 @@ All shared UI primitives come from `@deskillz/game-ui`. Do not rebuild them:
 
 ## 16. SHARED UI LIBRARY: @deskillz/game-ui
 
-### v3.2.0 Breaking Changes
+### v3.4.3 Breaking Changes
 
 - **`useQuickPlayQueue` exports new `AvailableGame` interface** — import if you need to type the live games board
 - **Social QuickPlay flow changed** — `createGame()` and `joinGame(queueKey)` replace the single `joinQueue()` for social games. `joinQueue()` still works for esport.
@@ -1582,7 +1596,7 @@ new-game/
     sdk/
       DeskillzBridge.ts       <- DO NOT MODIFY
     plugins/
-      vite-plugin-sw-version.mjs  <- Stamps build hash into deskillz-sw.js
+      vite-plugin-sw-version.ts  <- Stamps build hash into deskillz-sw.js
     types/
       GameCapabilities.ts     <- Interface + DEFAULT_CAPABILITIES
   public/
@@ -1849,7 +1863,7 @@ Copy this at the start of any new session working on a standalone game:
 I am building a Deskillz standalone game.
 
 CONTEXT:
-- Deskillz SDK v3.1 + @deskillz/game-ui v3.2.0 (self-sufficient architecture)
+- Deskillz SDK v3.1 + @deskillz/game-ui v3.4.3 (self-sufficient architecture)
 - Reference doc: DESKILLZ_STANDALONE_GAME_UI_BUILD_HANDOFF_v2.9.md
 - Game type: [ESPORTS | SOCIAL]
 - Social modes: [CASH_GAME | TOURNAMENT | BOTH] (social games only)
@@ -1873,4 +1887,4 @@ CURRENT TASK:
 ---
 
 *Document End — Version 2.9*
-*All standalone web games: React/Vite + DeskillzBridge.ts + @deskillz/game-ui v3.2.0*
+*All standalone web games: React/Vite + DeskillzBridge.ts + @deskillz/game-ui v3.4.3*

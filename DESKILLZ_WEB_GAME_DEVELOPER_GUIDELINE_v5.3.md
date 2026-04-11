@@ -2,10 +2,19 @@
 
 ## Complete Integration Reference for HTML5/JavaScript Game Developers
 
-**Version:** 5.4
-**Date:** March 30, 2026
-**SDK Version:** DeskillzBridge v3.2 + @deskillz/game-ui ES module v3.2.0
+**Version:** 5.5
+**Date:** April 11, 2026
+**SDK Version:** DeskillzBridge v3.4.3 + @deskillz/game-ui ES module v3.4.3
 **Web Engine:** React/Vite only — all standalone web games
+
+**Changelog v5.5 (April 11, 2026):** SDK v3.4.3 -- GameCapabilities expanded with
+supportsBlitz1v1, supportsDuel1v1, supportsSinglePlayerMode, supportsTurnBased. GameMode
+type expanded to 6 values. EsportGameSettings future-proofed (ChipPlusFreeInput for duration/
+rounds, platformFeePercent configurable, maxTournamentSize in bracket stepper). SocialGameSettings
+adds DOU_DIZHU game type + ChipPlusFreeInput for timer/rake/point-target. QuickPlayCard shows
+skeleton preview when no config exists. LobbyOverlay tournament tab has filters, stats, auto-refresh.
+DeskillzBridge: roomRebuy, submitRound, triggerSettlement, 5 social QuickPlay methods.
+EsportMatchMode updated to include SINGLE_PLAYER and TURN_BASED in documentation.
 
 **Changelog v5.4:** PWA service worker renamed from sw.js to deskillz-sw.js to avoid
 Cloud Build Docker worker Workbox generateSW overwrite. Updated Section 4 file structure,
@@ -17,7 +26,7 @@ Developer Portal Gameplay tab reorganized with tooltips and maxTournamentSize fi
 accepts capabilities prop. DeskillzBridge v3.3 getGameCapabilities() method. Updated file
 structure with src/types/GameCapabilities.ts.
 
-**Changelog v5.2:** Updated Section 23 to @deskillz/game-ui v3.2.0 — QuickPlayCard
+**Changelog v5.2:** Updated Section 23 to @deskillz/game-ui v3.4.3 — QuickPlayCard
 and useQuickPlayQueue rebuilt for esport and social flows. Social QuickPlay now has
 point value dropdown, currency dropdown, live Available Games board, Create Game +
 JOIN flow, and 'waiting' state. Esport QuickPlay unchanged except currency is now
@@ -1468,8 +1477,10 @@ Show: "Filling match..." — nothing more.
 |-------|-------------|
 | `ASYNC` | Players play at their own pace, scores compared at deadline |
 | `SYNC` | Players queue and match in real-time |
-| `BLITZ_1V1` | Fast-paced 1v1 match, short time limit |
-| `DUEL_1V1` | Standard 1v1 duel format |
+| `BLITZ_1V1` | Fast-paced 1v1 match, short time limit (e.g. Candy Duel 60s) |
+| `DUEL_1V1` | Standard 1v1 duel, full match duration (e.g. Bubble Battle) |
+| `SINGLE_PLAYER` | Solo score attack, no opponent, ranked by score |
+| `TURN_BASED` | Players take turns, not real-time (strategy/board/card games) |
 
 ### Deskillz Platform Colors
 
@@ -1980,7 +1991,7 @@ tournament and QuickPlay UI with zero HTTP calls — all API calls go through
 **This is a shared template — game developers drop it in, they do not build
 QuickPlay or Tournament UI from scratch.**
 
-**v3.2.0 changes:**
+**v3.4.3 changes:**
 - `QuickPlayCard` rebuilt for esport AND social flows
 - Social: point value is now a `<select>` dropdown (from `socialPointValueTiers`)
 - Social: currency is now a `<select>` dropdown (from `socialCurrencies`)
@@ -2038,7 +2049,7 @@ import { TournamentCard, QuickPlayCard, useEnrollmentStatus, useQuickPlayQueue }
 import type { AvailableGame } from '@deskillz/game-ui'
 ```
 
-### QuickPlay Flows (v3.2.0)
+### QuickPlay Flows (v3.4.3)
 
 **ESPORTS** (Candy Duel, Bubble Battle, future arcade/puzzle games):
 ```
@@ -2083,11 +2094,11 @@ export default function QuickPlayPage() {
 The card handles all rendering, states, socket subscriptions, and API calls.
 The caller only provides `onMatchStart` for navigation.
 
-### Package Structure (v3.2.0)
+### Package Structure (v3.4.3)
 
 ```
 packages/game-ui/
-  package.json            @deskillz/game-ui v3.2.0
+  package.json            @deskillz/game-ui v3.4.3
   vite.config.ts          ES module only, process.env.NODE_ENV substituted
   src/
     index.ts              Public exports (updated for rooms + host dashboard)
@@ -2383,7 +2394,7 @@ Use `deskillz-sw.js` (NOT `sw.js`) to avoid Cloud Build Workbox overwrite:
 
 ```
 public/deskillz-sw.js      <- Universal SW template from SDK (has __BUILD_HASH__ placeholder)
-src/plugins/vite-plugin-sw-version.mjs  <- Vite plugin stamps hash at build time
+src/plugins/vite-plugin-sw-version.ts  <- Vite plugin stamps hash at build time
 ```
 
 Build command (manual hash stamp -- Vite plugin cache workaround):
@@ -2450,7 +2461,7 @@ Workbox generates `sw.js` separately -- the browser ignores it.
 
 *Document End — Version 5.2*
 *Web engine: React/Vite only — all standalone games*
-*@deskillz/game-ui: v3.2.0 — QuickPlayCard esport + social flows*
+*@deskillz/game-ui: v3.4.3 — QuickPlayCard esport + social flows*
 *Non-React migration: see DESKILLZ_NON_REACT_MIGRATION_GUIDE.md*
 *Production Backend: https://newdeskillzgames-production.up.railway.app*
 *For support: developer-support@deskillz.games*
