@@ -1,9 +1,9 @@
 # DESKILLZ STANDALONE GAME UI BUILD HANDOFF
 ## Universal UI Guide for Self-Sufficient Game Apps
 
-**Version:** 3.5
+**Version:** 3.6
 **Date:** April 13, 2026
-**SDK Version:** Deskillz SDK v3.4.5 + @deskillz/game-ui v3.4.5
+**SDK Version:** Deskillz SDK v3.4.6 + @deskillz/game-ui v3.4.6
 **Architecture:** Self-Sufficient (No External App Dependency)
 **Supported Game Types:** Esports (Competitive) + Social Games (Cash Game + Tournament)
 **Supported Web Engine:** React/Vite only (all standalone web games)
@@ -11,6 +11,28 @@
 ---
 
 ## CHANGELOG
+
+### v3.6 (April 13, 2026)
+- DISPUTE ENHANCEMENT: DisputeModal rewritten with 4-layer match context:
+  Layer 1 auto-attach (props from ResultsScreen), Layer 2 recent matches
+  selector (last 10 matches as selectable cards), Layer 3 localStorage
+  last-match suggestion (7-day expiry), Layer 4 manual roomCode fallback
+- NEW: DeskillzBridge.persistLastMatch() -- persist match context to localStorage
+- NEW: DeskillzBridge.getLastMatch() -- read last match from localStorage
+- NEW: DeskillzBridge.getRecentMatchesForDispute() -- last 10 matches for dispute
+- DeskillzBridge: fileDispute() accepts roomCode, DisputeRecord adds roomCode
+- Backend: CreateDisputeDto accepts roomCode (stored in metadata JSON)
+- Backend: GET /matches/history/me adds tournamentId + matchType per match
+- Backend: dispute:status-changed + dispute:notification socket events
+- FIX: getPublicRooms() -> /private-rooms (was /private-rooms/public, 404)
+- FIX: getMatchHistory() -> /matches/history/me (was /users/match-history)
+- FIX: Admin dispute notification path -> /admin/disputes/:id/notify
+- FREE MODE: SocialGameSettings + EsportGameSettings show "Placement Ranking"
+  with ordinal labels instead of prize % inputs when entryFee is 0
+- FREE MODE: PrizeDistributionEditor shows placement UI when prizePool is 0
+- Admin: QuickPlayAdminTab inline editing (Edit/Save/Cancel for all fields)
+- Updated Section 19 API reference: dispute endpoints include roomCode
+- Updated Section 22 testing: dispute context layer tests added
 
 ### v3.5 (April 13, 2026)
 - NEW: DisputeModal -- full dispute filing component for results screens.

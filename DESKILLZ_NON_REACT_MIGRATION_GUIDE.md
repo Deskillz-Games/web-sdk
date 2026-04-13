@@ -2,10 +2,24 @@
 
 ## Dou Dizhu | Bubble Battle | Candy Duel
 
-**Version:** 2.0
+**Version:** 2.1
 **Date:** April 13, 2026
 **For:** Developers of existing non-React standalone games
 **Applies to:** Dou Dizhu (PixiJS), Bubble Battle (Canvas/TypeScript), Candy Duel (Canvas/TypeScript)
+
+**Changelog v2.1 (April 13, 2026):**
+- DISPUTE ENHANCEMENT: DisputeModal rewritten with 4-layer match context
+  (auto-attach from props, recent matches selector, localStorage last-match,
+  manual roomCode fallback). disputeType prop now optional.
+- NEW: DeskillzBridge.persistLastMatch(), getLastMatch(),
+  getRecentMatchesForDispute() -- dispute context helpers
+- DeskillzBridge.fileDispute() accepts roomCode, DisputeRecord adds roomCode
+- Backend: CreateDisputeDto accepts roomCode, matches/history/me adds
+  tournamentId + matchType, dispute socket notifications added
+- FIX: getPublicRooms() path (/private-rooms), getMatchHistory() path
+  (/matches/history/me), admin dispute notification path
+- FREE MODE: EsportGameSettings shows placement ranking when free
+- Step 7 file list note: DisputeModal.tsx updated (rewritten with context layers)
 
 **Changelog v2.0 (April 13, 2026):**
 - NEW: DisputeModal component -- dispute filing UI for results screens.

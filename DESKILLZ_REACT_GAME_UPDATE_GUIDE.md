@@ -2,10 +2,45 @@
 
 ## Big 2 | Mahjong | Thirteen Cards (Chinese Poker)
 
-**Version:** 1.9
+**Version:** 2.0
 **Date:** April 13, 2026
 **Applies to:** All three React/Vite standalone games
-**SDK:** DeskillzBridge v3.4.5 + @deskillz/game-ui v3.4.5
+**SDK:** DeskillzBridge v3.4.6 + @deskillz/game-ui v3.4.6
+
+**Changelog v2.0 (April 13, 2026):**
+- DISPUTE ENHANCEMENT: DisputeModal rewritten with 4-layer match context:
+  Layer 1 (auto-attach) -- matchId/tournamentId from ResultsScreen props
+  Layer 2 (recent matches) -- fetches last 10 matches as selectable cards
+  Layer 3 (localStorage) -- auto-suggests last completed match (7-day expiry)
+  Layer 4 (manual) -- roomCode text input + dispute type selector fallback
+- DISPUTE ENHANCEMENT: DisputeModal.disputeType prop now optional (auto-detected)
+- DISPUTE ENHANCEMENT: DisputeModal accepts roomCode prop for pre-fill
+- NEW: DeskillzBridge.persistLastMatch() -- saves match context to localStorage
+  after score submission. Call from ResultsScreen.
+- NEW: DeskillzBridge.getLastMatch() -- reads last match from localStorage
+- NEW: DeskillzBridge.getRecentMatchesForDispute() -- fetches last 10 matches
+  formatted for dispute context selection
+- DeskillzBridge.fileDispute() accepts optional roomCode parameter
+- DisputeRecord type adds roomCode field
+- Backend: CreateDisputeDto accepts roomCode, stored in dispute metadata
+- Backend: GET /matches/history/me adds tournamentId + matchType to response
+- Backend: dispute:status-changed socket event emitted to dispute owner
+  when admin changes dispute status (OPEN -> UNDER_REVIEW -> RESOLVED/DISMISSED)
+- Backend: dispute:notification socket event emitted when admin sends
+  dispute notification
+- FIX: DeskillzBridge.getPublicRooms() path corrected from /private-rooms/public
+  to /private-rooms (was returning 404)
+- FIX: DeskillzBridge.getMatchHistory() path corrected from /users/match-history
+  to /matches/history/me
+- FIX: Admin sendDisputeNotification path corrected from
+  /admin/notifications/dispute to /admin/disputes/:id/notify
+- FREE MODE: SocialGameSettings + EsportGameSettings show "Placement Ranking"
+  with ordinal labels (1st, 2nd, 3rd) instead of prize % inputs when free
+- FREE MODE: PrizeDistributionEditor shows "Ranked by Score" notice and
+  ordinal placement labels when prizePool is 0
+- Admin: QuickPlayAdminTab ConfigDetails now has inline Edit/Save/Cancel.
+  Editable fields: matchmaking timeout, match duration, fee tiers, player range,
+  currencies (toggle chips), rake/platform fee, buy-in multipliers, NPC settings.
 
 **Changelog v1.9 (April 13, 2026):**
 - NEW: DisputeModal component -- full dispute filing UI for results screens.

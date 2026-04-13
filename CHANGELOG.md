@@ -9,6 +9,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
+
+## [3.4.6] - 2026-04-13
+
+### Added
+- DisputeModal: 4-layer match context (auto-attach, recent matches, localStorage, roomCode)
+- DeskillzBridge.persistLastMatch(): save match context to localStorage
+- DeskillzBridge.getLastMatch(): read last match from localStorage (7-day expiry)
+- DeskillzBridge.getRecentMatchesForDispute(): last 10 matches for dispute selector
+- fileDispute() accepts roomCode, DisputeRecord adds roomCode field
+- Admin QuickPlay inline editing (Edit/Save/Cancel for all config fields)
+- Free mode placement ranking in SocialGameSettings + EsportGameSettings
+- Dispute socket notifications (dispute:status-changed, dispute:notification)
+
+### Fixed
+- L5: getPublicRooms() path -> /private-rooms (was /private-rooms/public)
+- L6: getMatchHistory() path -> /matches/history/me (was /users/match-history)
+- L7: Admin dispute notification path -> /admin/disputes/:id/notify
+
+### Changed
+- Dispute 4-layer context, L5/L6/L7 fixes, admin inline edit, free mode placement, socket notifications
+- Synced components, hooks, types from packages/game-ui
+- Developer docs updated (v2.0, v2.1, v3.6, v5.8)
 ## [3.4.5] - 2026-04-13
 
 ### Added
@@ -24,6 +46,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Synced components, hooks, types from packages/game-ui
 - tournaments component count 3->4 (DisputeModal added)
 - Developer docs updated (v1.9, v2.0, v3.5, v5.7)
+
+## [3.4.6] - 2026-04-13
+
+### Added
+- DisputeModal: 4-layer match context (auto-attach, recent matches, localStorage, roomCode)
+- DeskillzBridge.persistLastMatch(): save match context to localStorage
+- DeskillzBridge.getLastMatch(): read last match from localStorage (7-day expiry)
+- DeskillzBridge.getRecentMatchesForDispute(): last 10 matches for dispute selector
+- fileDispute() accepts roomCode, DisputeRecord adds roomCode field
+- Admin QuickPlay inline editing (Edit/Save/Cancel for all config fields)
+- Free mode placement ranking in SocialGameSettings + EsportGameSettings
+- Dispute socket notifications (dispute:status-changed, dispute:notification)
+
+### Fixed
+- L5: getPublicRooms() path -> /private-rooms (was /private-rooms/public)
+- L6: getMatchHistory() path -> /matches/history/me (was /users/match-history)
+- L7: Admin dispute notification path -> /admin/disputes/:id/notify
+
+### Changed
+- Dispute 4-layer context, L5/L6/L7 fixes, admin inline edit, free mode placement, socket notifications
+- Synced components, hooks, types from packages/game-ui
+- Developer docs updated (v2.0, v2.1, v3.6, v5.8)
 ## [3.4.4] - 2026-04-13
 
 ### Added
@@ -44,6 +88,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Plugin: vite-plugin-sw-version.mjs (retired .ts)
 - Service worker: deskillz-sw.js (retired sw.js)
 
+
+## [3.4.6] - 2026-04-13
+
+### Added
+- DisputeModal: 4-layer match context (auto-attach, recent matches, localStorage, roomCode)
+- DeskillzBridge.persistLastMatch(): save match context to localStorage
+- DeskillzBridge.getLastMatch(): read last match from localStorage (7-day expiry)
+- DeskillzBridge.getRecentMatchesForDispute(): last 10 matches for dispute selector
+- fileDispute() accepts roomCode, DisputeRecord adds roomCode field
+- Admin QuickPlay inline editing (Edit/Save/Cancel for all config fields)
+- Free mode placement ranking in SocialGameSettings + EsportGameSettings
+- Dispute socket notifications (dispute:status-changed, dispute:notification)
+
+### Fixed
+- L5: getPublicRooms() path -> /private-rooms (was /private-rooms/public)
+- L6: getMatchHistory() path -> /matches/history/me (was /users/match-history)
+- L7: Admin dispute notification path -> /admin/disputes/:id/notify
+
+### Changed
+- Dispute 4-layer context, L5/L6/L7 fixes, admin inline edit, free mode placement, socket notifications
+- Synced components, hooks, types from packages/game-ui
+- Developer docs updated (v2.0, v2.1, v3.6, v5.8)
 ## [3.4.5] - 2026-04-13
 
 ### Added
@@ -59,6 +125,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Synced components, hooks, types from packages/game-ui
 - tournaments component count 3->4 (DisputeModal added)
 - Developer docs updated (v1.9, v2.0, v3.5, v5.7)
+
+## [3.4.6] - 2026-04-13
+
+### Added
+- DisputeModal: 4-layer match context (auto-attach, recent matches, localStorage, roomCode)
+- DeskillzBridge.persistLastMatch(): save match context to localStorage
+- DeskillzBridge.getLastMatch(): read last match from localStorage (7-day expiry)
+- DeskillzBridge.getRecentMatchesForDispute(): last 10 matches for dispute selector
+- fileDispute() accepts roomCode, DisputeRecord adds roomCode field
+- Admin QuickPlay inline editing (Edit/Save/Cancel for all config fields)
+- Free mode placement ranking in SocialGameSettings + EsportGameSettings
+- Dispute socket notifications (dispute:status-changed, dispute:notification)
+
+### Fixed
+- L5: getPublicRooms() path -> /private-rooms (was /private-rooms/public)
+- L6: getMatchHistory() path -> /matches/history/me (was /users/match-history)
+- L7: Admin dispute notification path -> /admin/disputes/:id/notify
+
+### Changed
+- Dispute 4-layer context, L5/L6/L7 fixes, admin inline edit, free mode placement, socket notifications
+- Synced components, hooks, types from packages/game-ui
+- Developer docs updated (v2.0, v2.1, v3.6, v5.8)
 ## [3.4.4] - 2026-04-12
 
 ### Added
@@ -80,6 +168,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Service worker: deskillz-sw.js (retired sw.js)
 
 
+
+## [3.4.6] - 2026-04-13
+
+### Added
+- DisputeModal: 4-layer match context (auto-attach, recent matches, localStorage, roomCode)
+- DeskillzBridge.persistLastMatch(): save match context to localStorage
+- DeskillzBridge.getLastMatch(): read last match from localStorage (7-day expiry)
+- DeskillzBridge.getRecentMatchesForDispute(): last 10 matches for dispute selector
+- fileDispute() accepts roomCode, DisputeRecord adds roomCode field
+- Admin QuickPlay inline editing (Edit/Save/Cancel for all config fields)
+- Free mode placement ranking in SocialGameSettings + EsportGameSettings
+- Dispute socket notifications (dispute:status-changed, dispute:notification)
+
+### Fixed
+- L5: getPublicRooms() path -> /private-rooms (was /private-rooms/public)
+- L6: getMatchHistory() path -> /matches/history/me (was /users/match-history)
+- L7: Admin dispute notification path -> /admin/disputes/:id/notify
+
+### Changed
+- Dispute 4-layer context, L5/L6/L7 fixes, admin inline edit, free mode placement, socket notifications
+- Synced components, hooks, types from packages/game-ui
+- Developer docs updated (v2.0, v2.1, v3.6, v5.8)
 ## [3.4.5] - 2026-04-13
 
 ### Added
@@ -95,6 +205,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Synced components, hooks, types from packages/game-ui
 - tournaments component count 3->4 (DisputeModal added)
 - Developer docs updated (v1.9, v2.0, v3.5, v5.7)
+
+## [3.4.6] - 2026-04-13
+
+### Added
+- DisputeModal: 4-layer match context (auto-attach, recent matches, localStorage, roomCode)
+- DeskillzBridge.persistLastMatch(): save match context to localStorage
+- DeskillzBridge.getLastMatch(): read last match from localStorage (7-day expiry)
+- DeskillzBridge.getRecentMatchesForDispute(): last 10 matches for dispute selector
+- fileDispute() accepts roomCode, DisputeRecord adds roomCode field
+- Admin QuickPlay inline editing (Edit/Save/Cancel for all config fields)
+- Free mode placement ranking in SocialGameSettings + EsportGameSettings
+- Dispute socket notifications (dispute:status-changed, dispute:notification)
+
+### Fixed
+- L5: getPublicRooms() path -> /private-rooms (was /private-rooms/public)
+- L6: getMatchHistory() path -> /matches/history/me (was /users/match-history)
+- L7: Admin dispute notification path -> /admin/disputes/:id/notify
+
+### Changed
+- Dispute 4-layer context, L5/L6/L7 fixes, admin inline edit, free mode placement, socket notifications
+- Synced components, hooks, types from packages/game-ui
+- Developer docs updated (v2.0, v2.1, v3.6, v5.8)
 ## [3.4.4] - 2026-04-13
 
 ### Added
@@ -115,6 +247,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Plugin: vite-plugin-sw-version.mjs (retired .ts)
 - Service worker: deskillz-sw.js (retired sw.js)
 
+
+## [3.4.6] - 2026-04-13
+
+### Added
+- DisputeModal: 4-layer match context (auto-attach, recent matches, localStorage, roomCode)
+- DeskillzBridge.persistLastMatch(): save match context to localStorage
+- DeskillzBridge.getLastMatch(): read last match from localStorage (7-day expiry)
+- DeskillzBridge.getRecentMatchesForDispute(): last 10 matches for dispute selector
+- fileDispute() accepts roomCode, DisputeRecord adds roomCode field
+- Admin QuickPlay inline editing (Edit/Save/Cancel for all config fields)
+- Free mode placement ranking in SocialGameSettings + EsportGameSettings
+- Dispute socket notifications (dispute:status-changed, dispute:notification)
+
+### Fixed
+- L5: getPublicRooms() path -> /private-rooms (was /private-rooms/public)
+- L6: getMatchHistory() path -> /matches/history/me (was /users/match-history)
+- L7: Admin dispute notification path -> /admin/disputes/:id/notify
+
+### Changed
+- Dispute 4-layer context, L5/L6/L7 fixes, admin inline edit, free mode placement, socket notifications
+- Synced components, hooks, types from packages/game-ui
+- Developer docs updated (v2.0, v2.1, v3.6, v5.8)
 ## [3.4.5] - 2026-04-13
 
 ### Added
@@ -130,6 +284,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Synced components, hooks, types from packages/game-ui
 - tournaments component count 3->4 (DisputeModal added)
 - Developer docs updated (v1.9, v2.0, v3.5, v5.7)
+
+## [3.4.6] - 2026-04-13
+
+### Added
+- DisputeModal: 4-layer match context (auto-attach, recent matches, localStorage, roomCode)
+- DeskillzBridge.persistLastMatch(): save match context to localStorage
+- DeskillzBridge.getLastMatch(): read last match from localStorage (7-day expiry)
+- DeskillzBridge.getRecentMatchesForDispute(): last 10 matches for dispute selector
+- fileDispute() accepts roomCode, DisputeRecord adds roomCode field
+- Admin QuickPlay inline editing (Edit/Save/Cancel for all config fields)
+- Free mode placement ranking in SocialGameSettings + EsportGameSettings
+- Dispute socket notifications (dispute:status-changed, dispute:notification)
+
+### Fixed
+- L5: getPublicRooms() path -> /private-rooms (was /private-rooms/public)
+- L6: getMatchHistory() path -> /matches/history/me (was /users/match-history)
+- L7: Admin dispute notification path -> /admin/disputes/:id/notify
+
+### Changed
+- Dispute 4-layer context, L5/L6/L7 fixes, admin inline edit, free mode placement, socket notifications
+- Synced components, hooks, types from packages/game-ui
+- Developer docs updated (v2.0, v2.1, v3.6, v5.8)
 ## [3.4.3] - 2026-04-11
 
 ### Changed
@@ -141,6 +317,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
+
+## [3.4.6] - 2026-04-13
+
+### Added
+- DisputeModal: 4-layer match context (auto-attach, recent matches, localStorage, roomCode)
+- DeskillzBridge.persistLastMatch(): save match context to localStorage
+- DeskillzBridge.getLastMatch(): read last match from localStorage (7-day expiry)
+- DeskillzBridge.getRecentMatchesForDispute(): last 10 matches for dispute selector
+- fileDispute() accepts roomCode, DisputeRecord adds roomCode field
+- Admin QuickPlay inline editing (Edit/Save/Cancel for all config fields)
+- Free mode placement ranking in SocialGameSettings + EsportGameSettings
+- Dispute socket notifications (dispute:status-changed, dispute:notification)
+
+### Fixed
+- L5: getPublicRooms() path -> /private-rooms (was /private-rooms/public)
+- L6: getMatchHistory() path -> /matches/history/me (was /users/match-history)
+- L7: Admin dispute notification path -> /admin/disputes/:id/notify
+
+### Changed
+- Dispute 4-layer context, L5/L6/L7 fixes, admin inline edit, free mode placement, socket notifications
+- Synced components, hooks, types from packages/game-ui
+- Developer docs updated (v2.0, v2.1, v3.6, v5.8)
 ## [3.4.5] - 2026-04-13
 
 ### Added
@@ -156,6 +354,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Synced components, hooks, types from packages/game-ui
 - tournaments component count 3->4 (DisputeModal added)
 - Developer docs updated (v1.9, v2.0, v3.5, v5.7)
+
+## [3.4.6] - 2026-04-13
+
+### Added
+- DisputeModal: 4-layer match context (auto-attach, recent matches, localStorage, roomCode)
+- DeskillzBridge.persistLastMatch(): save match context to localStorage
+- DeskillzBridge.getLastMatch(): read last match from localStorage (7-day expiry)
+- DeskillzBridge.getRecentMatchesForDispute(): last 10 matches for dispute selector
+- fileDispute() accepts roomCode, DisputeRecord adds roomCode field
+- Admin QuickPlay inline editing (Edit/Save/Cancel for all config fields)
+- Free mode placement ranking in SocialGameSettings + EsportGameSettings
+- Dispute socket notifications (dispute:status-changed, dispute:notification)
+
+### Fixed
+- L5: getPublicRooms() path -> /private-rooms (was /private-rooms/public)
+- L6: getMatchHistory() path -> /matches/history/me (was /users/match-history)
+- L7: Admin dispute notification path -> /admin/disputes/:id/notify
+
+### Changed
+- Dispute 4-layer context, L5/L6/L7 fixes, admin inline edit, free mode placement, socket notifications
+- Synced components, hooks, types from packages/game-ui
+- Developer docs updated (v2.0, v2.1, v3.6, v5.8)
 ## [3.4.4] - 2026-04-13
 
 ### Added
@@ -176,6 +396,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Plugin: vite-plugin-sw-version.mjs (retired .ts)
 - Service worker: deskillz-sw.js (retired sw.js)
 
+
+## [3.4.6] - 2026-04-13
+
+### Added
+- DisputeModal: 4-layer match context (auto-attach, recent matches, localStorage, roomCode)
+- DeskillzBridge.persistLastMatch(): save match context to localStorage
+- DeskillzBridge.getLastMatch(): read last match from localStorage (7-day expiry)
+- DeskillzBridge.getRecentMatchesForDispute(): last 10 matches for dispute selector
+- fileDispute() accepts roomCode, DisputeRecord adds roomCode field
+- Admin QuickPlay inline editing (Edit/Save/Cancel for all config fields)
+- Free mode placement ranking in SocialGameSettings + EsportGameSettings
+- Dispute socket notifications (dispute:status-changed, dispute:notification)
+
+### Fixed
+- L5: getPublicRooms() path -> /private-rooms (was /private-rooms/public)
+- L6: getMatchHistory() path -> /matches/history/me (was /users/match-history)
+- L7: Admin dispute notification path -> /admin/disputes/:id/notify
+
+### Changed
+- Dispute 4-layer context, L5/L6/L7 fixes, admin inline edit, free mode placement, socket notifications
+- Synced components, hooks, types from packages/game-ui
+- Developer docs updated (v2.0, v2.1, v3.6, v5.8)
 ## [3.4.5] - 2026-04-13
 
 ### Added
@@ -191,6 +433,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Synced components, hooks, types from packages/game-ui
 - tournaments component count 3->4 (DisputeModal added)
 - Developer docs updated (v1.9, v2.0, v3.5, v5.7)
+
+## [3.4.6] - 2026-04-13
+
+### Added
+- DisputeModal: 4-layer match context (auto-attach, recent matches, localStorage, roomCode)
+- DeskillzBridge.persistLastMatch(): save match context to localStorage
+- DeskillzBridge.getLastMatch(): read last match from localStorage (7-day expiry)
+- DeskillzBridge.getRecentMatchesForDispute(): last 10 matches for dispute selector
+- fileDispute() accepts roomCode, DisputeRecord adds roomCode field
+- Admin QuickPlay inline editing (Edit/Save/Cancel for all config fields)
+- Free mode placement ranking in SocialGameSettings + EsportGameSettings
+- Dispute socket notifications (dispute:status-changed, dispute:notification)
+
+### Fixed
+- L5: getPublicRooms() path -> /private-rooms (was /private-rooms/public)
+- L6: getMatchHistory() path -> /matches/history/me (was /users/match-history)
+- L7: Admin dispute notification path -> /admin/disputes/:id/notify
+
+### Changed
+- Dispute 4-layer context, L5/L6/L7 fixes, admin inline edit, free mode placement, socket notifications
+- Synced components, hooks, types from packages/game-ui
+- Developer docs updated (v2.0, v2.1, v3.6, v5.8)
 ## [3.4.4] - 2026-04-12
 
 ### Added
@@ -212,6 +476,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Service worker: deskillz-sw.js (retired sw.js)
 
 
+
+## [3.4.6] - 2026-04-13
+
+### Added
+- DisputeModal: 4-layer match context (auto-attach, recent matches, localStorage, roomCode)
+- DeskillzBridge.persistLastMatch(): save match context to localStorage
+- DeskillzBridge.getLastMatch(): read last match from localStorage (7-day expiry)
+- DeskillzBridge.getRecentMatchesForDispute(): last 10 matches for dispute selector
+- fileDispute() accepts roomCode, DisputeRecord adds roomCode field
+- Admin QuickPlay inline editing (Edit/Save/Cancel for all config fields)
+- Free mode placement ranking in SocialGameSettings + EsportGameSettings
+- Dispute socket notifications (dispute:status-changed, dispute:notification)
+
+### Fixed
+- L5: getPublicRooms() path -> /private-rooms (was /private-rooms/public)
+- L6: getMatchHistory() path -> /matches/history/me (was /users/match-history)
+- L7: Admin dispute notification path -> /admin/disputes/:id/notify
+
+### Changed
+- Dispute 4-layer context, L5/L6/L7 fixes, admin inline edit, free mode placement, socket notifications
+- Synced components, hooks, types from packages/game-ui
+- Developer docs updated (v2.0, v2.1, v3.6, v5.8)
 ## [3.4.5] - 2026-04-13
 
 ### Added
@@ -227,6 +513,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Synced components, hooks, types from packages/game-ui
 - tournaments component count 3->4 (DisputeModal added)
 - Developer docs updated (v1.9, v2.0, v3.5, v5.7)
+
+## [3.4.6] - 2026-04-13
+
+### Added
+- DisputeModal: 4-layer match context (auto-attach, recent matches, localStorage, roomCode)
+- DeskillzBridge.persistLastMatch(): save match context to localStorage
+- DeskillzBridge.getLastMatch(): read last match from localStorage (7-day expiry)
+- DeskillzBridge.getRecentMatchesForDispute(): last 10 matches for dispute selector
+- fileDispute() accepts roomCode, DisputeRecord adds roomCode field
+- Admin QuickPlay inline editing (Edit/Save/Cancel for all config fields)
+- Free mode placement ranking in SocialGameSettings + EsportGameSettings
+- Dispute socket notifications (dispute:status-changed, dispute:notification)
+
+### Fixed
+- L5: getPublicRooms() path -> /private-rooms (was /private-rooms/public)
+- L6: getMatchHistory() path -> /matches/history/me (was /users/match-history)
+- L7: Admin dispute notification path -> /admin/disputes/:id/notify
+
+### Changed
+- Dispute 4-layer context, L5/L6/L7 fixes, admin inline edit, free mode placement, socket notifications
+- Synced components, hooks, types from packages/game-ui
+- Developer docs updated (v2.0, v2.1, v3.6, v5.8)
 ## [3.4.4] - 2026-04-13
 
 ### Added
@@ -247,6 +555,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Plugin: vite-plugin-sw-version.mjs (retired .ts)
 - Service worker: deskillz-sw.js (retired sw.js)
 
+
+## [3.4.6] - 2026-04-13
+
+### Added
+- DisputeModal: 4-layer match context (auto-attach, recent matches, localStorage, roomCode)
+- DeskillzBridge.persistLastMatch(): save match context to localStorage
+- DeskillzBridge.getLastMatch(): read last match from localStorage (7-day expiry)
+- DeskillzBridge.getRecentMatchesForDispute(): last 10 matches for dispute selector
+- fileDispute() accepts roomCode, DisputeRecord adds roomCode field
+- Admin QuickPlay inline editing (Edit/Save/Cancel for all config fields)
+- Free mode placement ranking in SocialGameSettings + EsportGameSettings
+- Dispute socket notifications (dispute:status-changed, dispute:notification)
+
+### Fixed
+- L5: getPublicRooms() path -> /private-rooms (was /private-rooms/public)
+- L6: getMatchHistory() path -> /matches/history/me (was /users/match-history)
+- L7: Admin dispute notification path -> /admin/disputes/:id/notify
+
+### Changed
+- Dispute 4-layer context, L5/L6/L7 fixes, admin inline edit, free mode placement, socket notifications
+- Synced components, hooks, types from packages/game-ui
+- Developer docs updated (v2.0, v2.1, v3.6, v5.8)
 ## [3.4.5] - 2026-04-13
 
 ### Added
@@ -262,6 +592,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Synced components, hooks, types from packages/game-ui
 - tournaments component count 3->4 (DisputeModal added)
 - Developer docs updated (v1.9, v2.0, v3.5, v5.7)
+
+## [3.4.6] - 2026-04-13
+
+### Added
+- DisputeModal: 4-layer match context (auto-attach, recent matches, localStorage, roomCode)
+- DeskillzBridge.persistLastMatch(): save match context to localStorage
+- DeskillzBridge.getLastMatch(): read last match from localStorage (7-day expiry)
+- DeskillzBridge.getRecentMatchesForDispute(): last 10 matches for dispute selector
+- fileDispute() accepts roomCode, DisputeRecord adds roomCode field
+- Admin QuickPlay inline editing (Edit/Save/Cancel for all config fields)
+- Free mode placement ranking in SocialGameSettings + EsportGameSettings
+- Dispute socket notifications (dispute:status-changed, dispute:notification)
+
+### Fixed
+- L5: getPublicRooms() path -> /private-rooms (was /private-rooms/public)
+- L6: getMatchHistory() path -> /matches/history/me (was /users/match-history)
+- L7: Admin dispute notification path -> /admin/disputes/:id/notify
+
+### Changed
+- Dispute 4-layer context, L5/L6/L7 fixes, admin inline edit, free mode placement, socket notifications
+- Synced components, hooks, types from packages/game-ui
+- Developer docs updated (v2.0, v2.1, v3.6, v5.8)
 ## [3.0.0] - 2026-02-03
 
 ### Added
@@ -363,6 +715,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
+
+## [3.4.6] - 2026-04-13
+
+### Added
+- DisputeModal: 4-layer match context (auto-attach, recent matches, localStorage, roomCode)
+- DeskillzBridge.persistLastMatch(): save match context to localStorage
+- DeskillzBridge.getLastMatch(): read last match from localStorage (7-day expiry)
+- DeskillzBridge.getRecentMatchesForDispute(): last 10 matches for dispute selector
+- fileDispute() accepts roomCode, DisputeRecord adds roomCode field
+- Admin QuickPlay inline editing (Edit/Save/Cancel for all config fields)
+- Free mode placement ranking in SocialGameSettings + EsportGameSettings
+- Dispute socket notifications (dispute:status-changed, dispute:notification)
+
+### Fixed
+- L5: getPublicRooms() path -> /private-rooms (was /private-rooms/public)
+- L6: getMatchHistory() path -> /matches/history/me (was /users/match-history)
+- L7: Admin dispute notification path -> /admin/disputes/:id/notify
+
+### Changed
+- Dispute 4-layer context, L5/L6/L7 fixes, admin inline edit, free mode placement, socket notifications
+- Synced components, hooks, types from packages/game-ui
+- Developer docs updated (v2.0, v2.1, v3.6, v5.8)
 ## [3.4.5] - 2026-04-13
 
 ### Added
@@ -378,6 +752,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Synced components, hooks, types from packages/game-ui
 - tournaments component count 3->4 (DisputeModal added)
 - Developer docs updated (v1.9, v2.0, v3.5, v5.7)
+
+## [3.4.6] - 2026-04-13
+
+### Added
+- DisputeModal: 4-layer match context (auto-attach, recent matches, localStorage, roomCode)
+- DeskillzBridge.persistLastMatch(): save match context to localStorage
+- DeskillzBridge.getLastMatch(): read last match from localStorage (7-day expiry)
+- DeskillzBridge.getRecentMatchesForDispute(): last 10 matches for dispute selector
+- fileDispute() accepts roomCode, DisputeRecord adds roomCode field
+- Admin QuickPlay inline editing (Edit/Save/Cancel for all config fields)
+- Free mode placement ranking in SocialGameSettings + EsportGameSettings
+- Dispute socket notifications (dispute:status-changed, dispute:notification)
+
+### Fixed
+- L5: getPublicRooms() path -> /private-rooms (was /private-rooms/public)
+- L6: getMatchHistory() path -> /matches/history/me (was /users/match-history)
+- L7: Admin dispute notification path -> /admin/disputes/:id/notify
+
+### Changed
+- Dispute 4-layer context, L5/L6/L7 fixes, admin inline edit, free mode placement, socket notifications
+- Synced components, hooks, types from packages/game-ui
+- Developer docs updated (v2.0, v2.1, v3.6, v5.8)
 ## [3.4.4] - 2026-04-13
 
 ### Added
@@ -398,6 +794,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Plugin: vite-plugin-sw-version.mjs (retired .ts)
 - Service worker: deskillz-sw.js (retired sw.js)
 
+
+## [3.4.6] - 2026-04-13
+
+### Added
+- DisputeModal: 4-layer match context (auto-attach, recent matches, localStorage, roomCode)
+- DeskillzBridge.persistLastMatch(): save match context to localStorage
+- DeskillzBridge.getLastMatch(): read last match from localStorage (7-day expiry)
+- DeskillzBridge.getRecentMatchesForDispute(): last 10 matches for dispute selector
+- fileDispute() accepts roomCode, DisputeRecord adds roomCode field
+- Admin QuickPlay inline editing (Edit/Save/Cancel for all config fields)
+- Free mode placement ranking in SocialGameSettings + EsportGameSettings
+- Dispute socket notifications (dispute:status-changed, dispute:notification)
+
+### Fixed
+- L5: getPublicRooms() path -> /private-rooms (was /private-rooms/public)
+- L6: getMatchHistory() path -> /matches/history/me (was /users/match-history)
+- L7: Admin dispute notification path -> /admin/disputes/:id/notify
+
+### Changed
+- Dispute 4-layer context, L5/L6/L7 fixes, admin inline edit, free mode placement, socket notifications
+- Synced components, hooks, types from packages/game-ui
+- Developer docs updated (v2.0, v2.1, v3.6, v5.8)
 ## [3.4.5] - 2026-04-13
 
 ### Added
@@ -413,6 +831,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Synced components, hooks, types from packages/game-ui
 - tournaments component count 3->4 (DisputeModal added)
 - Developer docs updated (v1.9, v2.0, v3.5, v5.7)
+
+## [3.4.6] - 2026-04-13
+
+### Added
+- DisputeModal: 4-layer match context (auto-attach, recent matches, localStorage, roomCode)
+- DeskillzBridge.persistLastMatch(): save match context to localStorage
+- DeskillzBridge.getLastMatch(): read last match from localStorage (7-day expiry)
+- DeskillzBridge.getRecentMatchesForDispute(): last 10 matches for dispute selector
+- fileDispute() accepts roomCode, DisputeRecord adds roomCode field
+- Admin QuickPlay inline editing (Edit/Save/Cancel for all config fields)
+- Free mode placement ranking in SocialGameSettings + EsportGameSettings
+- Dispute socket notifications (dispute:status-changed, dispute:notification)
+
+### Fixed
+- L5: getPublicRooms() path -> /private-rooms (was /private-rooms/public)
+- L6: getMatchHistory() path -> /matches/history/me (was /users/match-history)
+- L7: Admin dispute notification path -> /admin/disputes/:id/notify
+
+### Changed
+- Dispute 4-layer context, L5/L6/L7 fixes, admin inline edit, free mode placement, socket notifications
+- Synced components, hooks, types from packages/game-ui
+- Developer docs updated (v2.0, v2.1, v3.6, v5.8)
 ## [3.4.4] - 2026-04-12
 
 ### Added
@@ -434,6 +874,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Service worker: deskillz-sw.js (retired sw.js)
 
 
+
+## [3.4.6] - 2026-04-13
+
+### Added
+- DisputeModal: 4-layer match context (auto-attach, recent matches, localStorage, roomCode)
+- DeskillzBridge.persistLastMatch(): save match context to localStorage
+- DeskillzBridge.getLastMatch(): read last match from localStorage (7-day expiry)
+- DeskillzBridge.getRecentMatchesForDispute(): last 10 matches for dispute selector
+- fileDispute() accepts roomCode, DisputeRecord adds roomCode field
+- Admin QuickPlay inline editing (Edit/Save/Cancel for all config fields)
+- Free mode placement ranking in SocialGameSettings + EsportGameSettings
+- Dispute socket notifications (dispute:status-changed, dispute:notification)
+
+### Fixed
+- L5: getPublicRooms() path -> /private-rooms (was /private-rooms/public)
+- L6: getMatchHistory() path -> /matches/history/me (was /users/match-history)
+- L7: Admin dispute notification path -> /admin/disputes/:id/notify
+
+### Changed
+- Dispute 4-layer context, L5/L6/L7 fixes, admin inline edit, free mode placement, socket notifications
+- Synced components, hooks, types from packages/game-ui
+- Developer docs updated (v2.0, v2.1, v3.6, v5.8)
 ## [3.4.5] - 2026-04-13
 
 ### Added
@@ -449,6 +911,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Synced components, hooks, types from packages/game-ui
 - tournaments component count 3->4 (DisputeModal added)
 - Developer docs updated (v1.9, v2.0, v3.5, v5.7)
+
+## [3.4.6] - 2026-04-13
+
+### Added
+- DisputeModal: 4-layer match context (auto-attach, recent matches, localStorage, roomCode)
+- DeskillzBridge.persistLastMatch(): save match context to localStorage
+- DeskillzBridge.getLastMatch(): read last match from localStorage (7-day expiry)
+- DeskillzBridge.getRecentMatchesForDispute(): last 10 matches for dispute selector
+- fileDispute() accepts roomCode, DisputeRecord adds roomCode field
+- Admin QuickPlay inline editing (Edit/Save/Cancel for all config fields)
+- Free mode placement ranking in SocialGameSettings + EsportGameSettings
+- Dispute socket notifications (dispute:status-changed, dispute:notification)
+
+### Fixed
+- L5: getPublicRooms() path -> /private-rooms (was /private-rooms/public)
+- L6: getMatchHistory() path -> /matches/history/me (was /users/match-history)
+- L7: Admin dispute notification path -> /admin/disputes/:id/notify
+
+### Changed
+- Dispute 4-layer context, L5/L6/L7 fixes, admin inline edit, free mode placement, socket notifications
+- Synced components, hooks, types from packages/game-ui
+- Developer docs updated (v2.0, v2.1, v3.6, v5.8)
 ## [3.4.4] - 2026-04-13
 
 ### Added
@@ -469,6 +953,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Plugin: vite-plugin-sw-version.mjs (retired .ts)
 - Service worker: deskillz-sw.js (retired sw.js)
 
+
+## [3.4.6] - 2026-04-13
+
+### Added
+- DisputeModal: 4-layer match context (auto-attach, recent matches, localStorage, roomCode)
+- DeskillzBridge.persistLastMatch(): save match context to localStorage
+- DeskillzBridge.getLastMatch(): read last match from localStorage (7-day expiry)
+- DeskillzBridge.getRecentMatchesForDispute(): last 10 matches for dispute selector
+- fileDispute() accepts roomCode, DisputeRecord adds roomCode field
+- Admin QuickPlay inline editing (Edit/Save/Cancel for all config fields)
+- Free mode placement ranking in SocialGameSettings + EsportGameSettings
+- Dispute socket notifications (dispute:status-changed, dispute:notification)
+
+### Fixed
+- L5: getPublicRooms() path -> /private-rooms (was /private-rooms/public)
+- L6: getMatchHistory() path -> /matches/history/me (was /users/match-history)
+- L7: Admin dispute notification path -> /admin/disputes/:id/notify
+
+### Changed
+- Dispute 4-layer context, L5/L6/L7 fixes, admin inline edit, free mode placement, socket notifications
+- Synced components, hooks, types from packages/game-ui
+- Developer docs updated (v2.0, v2.1, v3.6, v5.8)
 ## [3.4.5] - 2026-04-13
 
 ### Added
@@ -484,6 +990,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Synced components, hooks, types from packages/game-ui
 - tournaments component count 3->4 (DisputeModal added)
 - Developer docs updated (v1.9, v2.0, v3.5, v5.7)
+
+## [3.4.6] - 2026-04-13
+
+### Added
+- DisputeModal: 4-layer match context (auto-attach, recent matches, localStorage, roomCode)
+- DeskillzBridge.persistLastMatch(): save match context to localStorage
+- DeskillzBridge.getLastMatch(): read last match from localStorage (7-day expiry)
+- DeskillzBridge.getRecentMatchesForDispute(): last 10 matches for dispute selector
+- fileDispute() accepts roomCode, DisputeRecord adds roomCode field
+- Admin QuickPlay inline editing (Edit/Save/Cancel for all config fields)
+- Free mode placement ranking in SocialGameSettings + EsportGameSettings
+- Dispute socket notifications (dispute:status-changed, dispute:notification)
+
+### Fixed
+- L5: getPublicRooms() path -> /private-rooms (was /private-rooms/public)
+- L6: getMatchHistory() path -> /matches/history/me (was /users/match-history)
+- L7: Admin dispute notification path -> /admin/disputes/:id/notify
+
+### Changed
+- Dispute 4-layer context, L5/L6/L7 fixes, admin inline edit, free mode placement, socket notifications
+- Synced components, hooks, types from packages/game-ui
+- Developer docs updated (v2.0, v2.1, v3.6, v5.8)
 ## [3.4.3] - 2026-04-11
 
 ### Changed
@@ -495,6 +1023,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
+
+## [3.4.6] - 2026-04-13
+
+### Added
+- DisputeModal: 4-layer match context (auto-attach, recent matches, localStorage, roomCode)
+- DeskillzBridge.persistLastMatch(): save match context to localStorage
+- DeskillzBridge.getLastMatch(): read last match from localStorage (7-day expiry)
+- DeskillzBridge.getRecentMatchesForDispute(): last 10 matches for dispute selector
+- fileDispute() accepts roomCode, DisputeRecord adds roomCode field
+- Admin QuickPlay inline editing (Edit/Save/Cancel for all config fields)
+- Free mode placement ranking in SocialGameSettings + EsportGameSettings
+- Dispute socket notifications (dispute:status-changed, dispute:notification)
+
+### Fixed
+- L5: getPublicRooms() path -> /private-rooms (was /private-rooms/public)
+- L6: getMatchHistory() path -> /matches/history/me (was /users/match-history)
+- L7: Admin dispute notification path -> /admin/disputes/:id/notify
+
+### Changed
+- Dispute 4-layer context, L5/L6/L7 fixes, admin inline edit, free mode placement, socket notifications
+- Synced components, hooks, types from packages/game-ui
+- Developer docs updated (v2.0, v2.1, v3.6, v5.8)
 ## [3.4.5] - 2026-04-13
 
 ### Added
@@ -510,6 +1060,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Synced components, hooks, types from packages/game-ui
 - tournaments component count 3->4 (DisputeModal added)
 - Developer docs updated (v1.9, v2.0, v3.5, v5.7)
+
+## [3.4.6] - 2026-04-13
+
+### Added
+- DisputeModal: 4-layer match context (auto-attach, recent matches, localStorage, roomCode)
+- DeskillzBridge.persistLastMatch(): save match context to localStorage
+- DeskillzBridge.getLastMatch(): read last match from localStorage (7-day expiry)
+- DeskillzBridge.getRecentMatchesForDispute(): last 10 matches for dispute selector
+- fileDispute() accepts roomCode, DisputeRecord adds roomCode field
+- Admin QuickPlay inline editing (Edit/Save/Cancel for all config fields)
+- Free mode placement ranking in SocialGameSettings + EsportGameSettings
+- Dispute socket notifications (dispute:status-changed, dispute:notification)
+
+### Fixed
+- L5: getPublicRooms() path -> /private-rooms (was /private-rooms/public)
+- L6: getMatchHistory() path -> /matches/history/me (was /users/match-history)
+- L7: Admin dispute notification path -> /admin/disputes/:id/notify
+
+### Changed
+- Dispute 4-layer context, L5/L6/L7 fixes, admin inline edit, free mode placement, socket notifications
+- Synced components, hooks, types from packages/game-ui
+- Developer docs updated (v2.0, v2.1, v3.6, v5.8)
 ## [3.4.4] - 2026-04-13
 
 ### Added
@@ -530,6 +1102,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Plugin: vite-plugin-sw-version.mjs (retired .ts)
 - Service worker: deskillz-sw.js (retired sw.js)
 
+
+## [3.4.6] - 2026-04-13
+
+### Added
+- DisputeModal: 4-layer match context (auto-attach, recent matches, localStorage, roomCode)
+- DeskillzBridge.persistLastMatch(): save match context to localStorage
+- DeskillzBridge.getLastMatch(): read last match from localStorage (7-day expiry)
+- DeskillzBridge.getRecentMatchesForDispute(): last 10 matches for dispute selector
+- fileDispute() accepts roomCode, DisputeRecord adds roomCode field
+- Admin QuickPlay inline editing (Edit/Save/Cancel for all config fields)
+- Free mode placement ranking in SocialGameSettings + EsportGameSettings
+- Dispute socket notifications (dispute:status-changed, dispute:notification)
+
+### Fixed
+- L5: getPublicRooms() path -> /private-rooms (was /private-rooms/public)
+- L6: getMatchHistory() path -> /matches/history/me (was /users/match-history)
+- L7: Admin dispute notification path -> /admin/disputes/:id/notify
+
+### Changed
+- Dispute 4-layer context, L5/L6/L7 fixes, admin inline edit, free mode placement, socket notifications
+- Synced components, hooks, types from packages/game-ui
+- Developer docs updated (v2.0, v2.1, v3.6, v5.8)
 ## [3.4.5] - 2026-04-13
 
 ### Added
@@ -545,6 +1139,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Synced components, hooks, types from packages/game-ui
 - tournaments component count 3->4 (DisputeModal added)
 - Developer docs updated (v1.9, v2.0, v3.5, v5.7)
+
+## [3.4.6] - 2026-04-13
+
+### Added
+- DisputeModal: 4-layer match context (auto-attach, recent matches, localStorage, roomCode)
+- DeskillzBridge.persistLastMatch(): save match context to localStorage
+- DeskillzBridge.getLastMatch(): read last match from localStorage (7-day expiry)
+- DeskillzBridge.getRecentMatchesForDispute(): last 10 matches for dispute selector
+- fileDispute() accepts roomCode, DisputeRecord adds roomCode field
+- Admin QuickPlay inline editing (Edit/Save/Cancel for all config fields)
+- Free mode placement ranking in SocialGameSettings + EsportGameSettings
+- Dispute socket notifications (dispute:status-changed, dispute:notification)
+
+### Fixed
+- L5: getPublicRooms() path -> /private-rooms (was /private-rooms/public)
+- L6: getMatchHistory() path -> /matches/history/me (was /users/match-history)
+- L7: Admin dispute notification path -> /admin/disputes/:id/notify
+
+### Changed
+- Dispute 4-layer context, L5/L6/L7 fixes, admin inline edit, free mode placement, socket notifications
+- Synced components, hooks, types from packages/game-ui
+- Developer docs updated (v2.0, v2.1, v3.6, v5.8)
 ## [3.4.4] - 2026-04-12
 
 ### Added
@@ -566,6 +1182,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Service worker: deskillz-sw.js (retired sw.js)
 
 
+
+## [3.4.6] - 2026-04-13
+
+### Added
+- DisputeModal: 4-layer match context (auto-attach, recent matches, localStorage, roomCode)
+- DeskillzBridge.persistLastMatch(): save match context to localStorage
+- DeskillzBridge.getLastMatch(): read last match from localStorage (7-day expiry)
+- DeskillzBridge.getRecentMatchesForDispute(): last 10 matches for dispute selector
+- fileDispute() accepts roomCode, DisputeRecord adds roomCode field
+- Admin QuickPlay inline editing (Edit/Save/Cancel for all config fields)
+- Free mode placement ranking in SocialGameSettings + EsportGameSettings
+- Dispute socket notifications (dispute:status-changed, dispute:notification)
+
+### Fixed
+- L5: getPublicRooms() path -> /private-rooms (was /private-rooms/public)
+- L6: getMatchHistory() path -> /matches/history/me (was /users/match-history)
+- L7: Admin dispute notification path -> /admin/disputes/:id/notify
+
+### Changed
+- Dispute 4-layer context, L5/L6/L7 fixes, admin inline edit, free mode placement, socket notifications
+- Synced components, hooks, types from packages/game-ui
+- Developer docs updated (v2.0, v2.1, v3.6, v5.8)
 ## [3.4.5] - 2026-04-13
 
 ### Added
@@ -581,6 +1219,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Synced components, hooks, types from packages/game-ui
 - tournaments component count 3->4 (DisputeModal added)
 - Developer docs updated (v1.9, v2.0, v3.5, v5.7)
+
+## [3.4.6] - 2026-04-13
+
+### Added
+- DisputeModal: 4-layer match context (auto-attach, recent matches, localStorage, roomCode)
+- DeskillzBridge.persistLastMatch(): save match context to localStorage
+- DeskillzBridge.getLastMatch(): read last match from localStorage (7-day expiry)
+- DeskillzBridge.getRecentMatchesForDispute(): last 10 matches for dispute selector
+- fileDispute() accepts roomCode, DisputeRecord adds roomCode field
+- Admin QuickPlay inline editing (Edit/Save/Cancel for all config fields)
+- Free mode placement ranking in SocialGameSettings + EsportGameSettings
+- Dispute socket notifications (dispute:status-changed, dispute:notification)
+
+### Fixed
+- L5: getPublicRooms() path -> /private-rooms (was /private-rooms/public)
+- L6: getMatchHistory() path -> /matches/history/me (was /users/match-history)
+- L7: Admin dispute notification path -> /admin/disputes/:id/notify
+
+### Changed
+- Dispute 4-layer context, L5/L6/L7 fixes, admin inline edit, free mode placement, socket notifications
+- Synced components, hooks, types from packages/game-ui
+- Developer docs updated (v2.0, v2.1, v3.6, v5.8)
 ## [3.4.4] - 2026-04-13
 
 ### Added
@@ -601,6 +1261,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Plugin: vite-plugin-sw-version.mjs (retired .ts)
 - Service worker: deskillz-sw.js (retired sw.js)
 
+
+## [3.4.6] - 2026-04-13
+
+### Added
+- DisputeModal: 4-layer match context (auto-attach, recent matches, localStorage, roomCode)
+- DeskillzBridge.persistLastMatch(): save match context to localStorage
+- DeskillzBridge.getLastMatch(): read last match from localStorage (7-day expiry)
+- DeskillzBridge.getRecentMatchesForDispute(): last 10 matches for dispute selector
+- fileDispute() accepts roomCode, DisputeRecord adds roomCode field
+- Admin QuickPlay inline editing (Edit/Save/Cancel for all config fields)
+- Free mode placement ranking in SocialGameSettings + EsportGameSettings
+- Dispute socket notifications (dispute:status-changed, dispute:notification)
+
+### Fixed
+- L5: getPublicRooms() path -> /private-rooms (was /private-rooms/public)
+- L6: getMatchHistory() path -> /matches/history/me (was /users/match-history)
+- L7: Admin dispute notification path -> /admin/disputes/:id/notify
+
+### Changed
+- Dispute 4-layer context, L5/L6/L7 fixes, admin inline edit, free mode placement, socket notifications
+- Synced components, hooks, types from packages/game-ui
+- Developer docs updated (v2.0, v2.1, v3.6, v5.8)
 ## [3.4.5] - 2026-04-13
 
 ### Added
@@ -616,6 +1298,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Synced components, hooks, types from packages/game-ui
 - tournaments component count 3->4 (DisputeModal added)
 - Developer docs updated (v1.9, v2.0, v3.5, v5.7)
+
+## [3.4.6] - 2026-04-13
+
+### Added
+- DisputeModal: 4-layer match context (auto-attach, recent matches, localStorage, roomCode)
+- DeskillzBridge.persistLastMatch(): save match context to localStorage
+- DeskillzBridge.getLastMatch(): read last match from localStorage (7-day expiry)
+- DeskillzBridge.getRecentMatchesForDispute(): last 10 matches for dispute selector
+- fileDispute() accepts roomCode, DisputeRecord adds roomCode field
+- Admin QuickPlay inline editing (Edit/Save/Cancel for all config fields)
+- Free mode placement ranking in SocialGameSettings + EsportGameSettings
+- Dispute socket notifications (dispute:status-changed, dispute:notification)
+
+### Fixed
+- L5: getPublicRooms() path -> /private-rooms (was /private-rooms/public)
+- L6: getMatchHistory() path -> /matches/history/me (was /users/match-history)
+- L7: Admin dispute notification path -> /admin/disputes/:id/notify
+
+### Changed
+- Dispute 4-layer context, L5/L6/L7 fixes, admin inline edit, free mode placement, socket notifications
+- Synced components, hooks, types from packages/game-ui
+- Developer docs updated (v2.0, v2.1, v3.6, v5.8)
 ## [2.x.x] - Previous Versions
 
 Previous versions were platform-specific SDKs (Unity, Unreal Engine).

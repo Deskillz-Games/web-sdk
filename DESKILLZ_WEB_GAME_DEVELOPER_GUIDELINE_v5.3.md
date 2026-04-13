@@ -2,10 +2,34 @@
 
 ## Complete Integration Reference for HTML5/JavaScript Game Developers
 
-**Version:** 5.7
+**Version:** 5.8
 **Date:** April 13, 2026
-**SDK Version:** DeskillzBridge v3.4.5 + @deskillz/game-ui ES module v3.4.5
+**SDK Version:** DeskillzBridge v3.4.6 + @deskillz/game-ui ES module v3.4.6
 **Web Engine:** React/Vite only -- all standalone web games
+
+**Changelog v5.8 (April 13, 2026):**
+- DISPUTE ENHANCEMENT: DisputeModal rewritten with 4-layer match context:
+  auto-attach (ResultsScreen props), recent matches selector (last 10 matches),
+  localStorage last-match suggestion (7-day expiry), manual roomCode fallback
+- NEW: DeskillzBridge.persistLastMatch() -- saves match context to localStorage
+- NEW: DeskillzBridge.getLastMatch() -- reads last match from localStorage
+- NEW: DeskillzBridge.getRecentMatchesForDispute() -- fetches last 10 matches
+  formatted for dispute context selection
+- DeskillzBridge: fileDispute() accepts optional roomCode parameter
+- DisputeRecord type adds roomCode: string | null field
+- Backend: CreateDisputeDto accepts roomCode (stored in metadata JSON)
+- Backend: GET /matches/history/me response adds tournamentId + matchType
+- Backend: dispute:status-changed + dispute:notification socket events emitted
+  to dispute owner when admin changes status or sends notification
+- FIX: getPublicRooms() path -> /private-rooms (was /private-rooms/public)
+- FIX: getMatchHistory() path -> /matches/history/me (was /users/match-history)
+- FIX: Admin sendDisputeNotification -> /admin/disputes/:id/notify
+- FREE MODE: SocialGameSettings + EsportGameSettings show "Placement Ranking"
+  with ordinal labels instead of prize % inputs when free mode active
+- Admin: QuickPlayAdminTab has inline Edit/Save/Cancel for all config fields
+- Updated Section 5 SDK Method Summary with 3 new dispute context methods
+- Updated Section 14 API reference: roomCode in dispute endpoints, matchType
+  in match history response
 
 **Changelog v5.7 (April 13, 2026):**
 - NEW: DisputeModal component -- dispute filing UI for results screens.
@@ -621,8 +645,13 @@ bridge.verifyScore(signedScore)       // Client-side signature verification
 bridge.startRoom(roomId)              // POST /api/v1/private-rooms/:roomId/start
 
 
+
+// Dispute Context (v3.4.6 -- NEW)
+bridge.persistLastMatch(data)         // Saves match context to localStorage
+bridge.getLastMatch()                 // Reads last match from localStorage (7-day expiry)
+bridge.getRecentMatchesForDispute()   // GET /api/v1/matches/history/me (last 10, formatted)
 // Disputes (v3.4.5 -- NEW)
-bridge.fileDispute(params)            // POST /api/v1/disputes (5 open max per user)
+bridge.fileDispute(params)            // POST /api/v1/disputes (5 open max, accepts roomCode)
 bridge.getMyDisputes(status?)         // GET  /api/v1/disputes/me
 bridge.getDisputeDetails(disputeId)   // GET  /api/v1/disputes/:id (own disputes only)
 bridge.addDisputeEvidence(id, arr)    // POST /api/v1/disputes/:id/evidence

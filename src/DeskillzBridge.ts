@@ -493,6 +493,7 @@ export interface DisputeRecord {
   tournamentId: string | null;
   tournamentName: string | null;
   matchId: string | null;
+  roomCode: string | null;
   reason: string;
   description: string;
   evidence: string[];
@@ -1367,7 +1368,7 @@ export class DeskillzBridge {
       const result = await this.http.get<{
         matches: MatchRecord[];
         pagination: { page: number; limit: number; total: number };
-      }>('/api/v1/users/match-history', { page, limit });
+      }>('/api/v1/matches/history/me', { page, limit });
       return result.matches;
     } catch (err) {
       this.log('Get match history error:', err);
@@ -1621,17 +1622,11 @@ export class DeskillzBridge {
   async getPublicRooms(): Promise<any[]> {
     try {
       const params: Record<string, string> = { gameId: this.config.gameId };
-      const result = await this.http.get<{ rooms: any[] }>('/api/v1/private-rooms/public', params);
-      return result.rooms || [];
+      const result = await this.http.get<any>('/api/v1/private-rooms', params);
+      return Array.isArray(result) ? result : result.rooms || [];
     } catch (err) {
       this.log('Get public rooms error:', err);
-      // Fallback: try listing all rooms
-      try {
-        const result = await this.http.get<any[]>('/api/v1/private-rooms', { gameId: this.config.gameId });
-        return Array.isArray(result) ? result : [];
-      } catch {
-        return [];
-      }
+      return [];
     }
   }
 
@@ -1756,6 +1751,7 @@ export class DeskillzBridge {
     disputeType: 'TOURNAMENT' | 'QUICK_PLAY' | 'PRIVATE_ROOM';
     tournamentId?: string;
     matchId?: string;
+    roomCode?: string;
     reason: string;
     description: string;
     evidence?: string[];
@@ -1792,6 +1788,104 @@ export class DeskillzBridge {
    */
   async addDisputeEvidence(disputeId: string, evidence: string[]): Promise<{ success: boolean; evidenceCount: number }> {
     return this.http.post(`/api/v1/disputes/${disputeId}/evidence`, { evidence });
+  }
+
+
+  // ---------------------------------------------------------------------------
+  // DISPUTE CONTEXT HELPERS
+  // ---------------------------------------------------------------------------
+
+  /**
+   * Persist last completed match context to localStorage.
+   * Called automatically after score submission or match completion.
+   * Enables DisputeModal to auto-suggest the most recent match.
+   */
+  persistLastMatch(data: {
+    matchId: string;
+    tournamentId?: string;
+    roomCode?: string;
+    gameId?: string;
+    disputeType: 'TOURNAMENT' | 'QUICK_PLAY' | 'PRIVATE_ROOM';
+    opponentName?: string;
+    completedAt: string;
+  }): void {
+    try {
+      localStorage.setItem('deskillz_last_match', JSON.stringify(data));
+    } catch {}
+  }
+
+  /**
+   * Get last completed match context from localStorage.
+   */
+  getLastMatch(): {
+    matchId: string;
+    tournamentId?: string;
+    roomCode?: string;
+    gameId?: string;
+    disputeType: 'TOURNAMENT' | 'QUICK_PLAY' | 'PRIVATE_ROOM';
+    opponentName?: string;
+    completedAt: string;
+  } | null {
+    try {
+      const raw = localStorage.getItem('deskillz_last_match');
+      if (!raw) return null;
+      const data = JSON.parse(raw);
+      // Expire after 7 days
+      if (data.completedAt) {
+        const age = Date.now() - new Date(data.completedAt).getTime();
+        if (age > 7 * 24 * 60 * 60 * 1000) {
+          localStorage.removeItem('deskillz_last_match');
+          return null;
+        }
+      }
+      return data;
+    } catch {
+      return null;
+    }
+  }
+
+  /**
+   * Fetch recent matches formatted for dispute context selection.
+   * Returns last 10 matches with all identifiers needed for DisputeModal.
+   */
+  async getRecentMatchesForDispute(): Promise<Array<{
+    matchId: string;
+    tournamentId: string | null;
+    matchType: string;
+    opponentName: string;
+    myScore: number | null;
+    isWinner: boolean;
+    playedAt: string;
+    gameName: string;
+  }>> {
+    if (this._isGuest || !this._isAuthenticated) return [];
+    try {
+      const result = await this.http.get<{
+        matches: Array<{
+          matchId: string;
+          tournamentId?: string;
+          matchType?: string;
+          opponent?: { username: string };
+          myScore?: number;
+          isWinner: boolean;
+          playedAt: string;
+          game?: { name: string };
+        }>;
+      }>('/api/v1/matches/history/me', { limit: 10 });
+      const matches = result.matches || (Array.isArray(result) ? result : []);
+      return matches.map((m: any) => ({
+        matchId: m.matchId,
+        tournamentId: m.tournamentId || null,
+        matchType: m.matchType || 'QUICK_PLAY',
+        opponentName: m.opponent?.username || 'Unknown',
+        myScore: m.myScore ?? null,
+        isWinner: !!m.isWinner,
+        playedAt: m.playedAt,
+        gameName: m.game?.name || 'Game',
+      }));
+    } catch {
+      return [];
+    }
   }
 
   // ---------------------------------------------------------------------------
