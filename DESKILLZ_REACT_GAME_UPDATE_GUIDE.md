@@ -18,6 +18,22 @@
 - NEW: 5 TypeScript types added to DeskillzBridge: TournamentSchedule,
   TournamentScheduleRound, TournamentScheduleTable, TournamentSchedulePlayer,
   TournamentPlayerStatus
+- FREE ENTRY: TournamentCard shows green "Free" pill badge when entryFee === 0
+- FREE ENTRY: CreateTournamentModal has Free/Paid chip toggle for both esport and
+  social tournaments. Currency greyed out when Free selected. Helper text explains
+  no wallet required and no rake collected.
+- FREE ENTRY: QuickPlayCard hides currency dropdown when [FREE] chip selected,
+  shows "Free Entry -- No wallet required" banner, "No rake", "For fun" labels
+- FREE ENTRY: QuickPlaySettingsTab TierInput min changed from $0.50 to $0 so
+  admins can add a free entry tier
+- FREE ENTRY: Backend escrow skips wallet deduction for $0 entry fees
+- FREE ENTRY: Backend tournament registration auto-confirms free entries (no tx hash)
+- HOST DASHBOARD: useHostDashboard HostProfile adds freeEventsHosted,
+  freePlayersHosted, monthlyFreeEvents, monthlyFreePlayers fields
+- HOST DASHBOARD: 3 new community badges -- COMMUNITY_CHAMPION (10 free events),
+  FREE_FOR_ALL (50 free players), OPEN_DOORS (100 free events)
+- HOST DASHBOARD: tournaments.processor now counts rooms/players for free events
+  (previously skipped entirely when entryFee <= 0)
 - QuickPlay: SocialGameType enum now includes DOU_DIZHU in quick-play.ts
 - QuickPlay: SOCIAL_GAME_LABELS changed from strict Record<SocialGameType,string>
   to dynamic Record<string,string> -- extensible for new game types without code changes

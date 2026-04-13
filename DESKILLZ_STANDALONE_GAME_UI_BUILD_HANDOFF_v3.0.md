@@ -23,6 +23,23 @@
 - NEW: DeskillzBridge.getTournamentSchedule(tournamentId) method
 - NEW: 5 TypeScript types: TournamentSchedule, TournamentScheduleRound,
   TournamentScheduleTable, TournamentSchedulePlayer, TournamentPlayerStatus
+- FREE ENTRY: TournamentCard shows green "Free" pill badge when entryFee=0
+- FREE ENTRY: CreateTournamentModal Free/Paid chip toggle, currency greyed out
+  when Free, helper text "no wallet required, no rake collected"
+- FREE ENTRY: QuickPlayCard hides currency when FREE chip selected, shows
+  "Free Entry -- No wallet required" banner, "No rake", "For fun" labels
+- FREE ENTRY: QuickPlaySettingsTab allows $0 entry fee tier
+- FREE ENTRY: Backend auto-confirms free tournament registrations (no tx hash)
+- FREE ENTRY: QuickPlay escrow skips wallet deduction for $0 entry fees
+- HOST DASHBOARD: HostProfile adds freeEventsHosted, freePlayersHosted,
+  monthlyFreeEvents, monthlyFreePlayers (Prisma migration + API + hook)
+- HOST DASHBOARD: 3 new community badges: COMMUNITY_CHAMPION (10 free events),
+  FREE_FOR_ALL (50 free players), OPEN_DOORS (100 free events)
+- HOST DASHBOARD: tournaments.processor now counts rooms/players for free events
+  (previously the entire increment block was skipped when entryFee <= 0)
+- NPC FIX: QuickPlay entry fee escrow added (was missing -- phantom prize pools)
+- NPC FIX: Tournament NPC fill uses escrowAddress from tournament record
+  (was empty string causing on-chain tx failure)
 - QuickPlay future-proofing: SocialGameType enum includes DOU_DIZHU,
   SOCIAL_GAME_LABELS is now Record<string,string> (extensible),
   fetchSocialGameTypes() fetches from GET /api/v1/games/social-types,

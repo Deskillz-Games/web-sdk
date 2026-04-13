@@ -11,6 +11,13 @@
 - NEW: TournamentLobbyCard component added to Step 7 file list
 - NEW: useTournamentLobby hook added to Step 7 file list
 - NEW: DeskillzBridge.getTournamentSchedule() method + 5 tournament schedule types
+- FREE ENTRY: TournamentCard green "Free" badge, QuickPlayCard hides currency
+  when FREE selected, CreateTournamentModal Free/Paid chip toggle
+- FREE ENTRY: QuickPlaySettingsTab allows $0 entry fee tier for free QuickPlay
+- FREE ENTRY: Backend escrow skips $0 fees, tournament auto-confirms free entries
+- HOST DASHBOARD: useHostDashboard adds freeEventsHosted, freePlayersHosted,
+  monthlyFreeEvents, monthlyFreePlayers. 3 community badges added.
+- HOST DASHBOARD: Free events now count toward rooms/players hosted stats
 - QuickPlay: SocialGameType enum includes DOU_DIZHU, SOCIAL_GAME_LABELS is
   now dynamic (Record<string,string>), fetchSocialGameTypes() auto-fetches from backend
 - QuickPlay: getSocialGameLabel() helper for safe label lookup

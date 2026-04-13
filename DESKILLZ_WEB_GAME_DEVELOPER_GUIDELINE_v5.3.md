@@ -19,6 +19,19 @@
   GET /api/v1/tournaments/:id/schedule returns bracket with rounds, tables, players
 - NEW: 5 TypeScript types: TournamentSchedule, TournamentScheduleRound,
   TournamentScheduleTable, TournamentSchedulePlayer, TournamentPlayerStatus
+- FREE ENTRY: TournamentCard shows green "Free" pill badge when entryFee=0
+- FREE ENTRY: CreateTournamentModal Free/Paid chip toggle for esport + social.
+  Currency greyed out when Free. No wallet required, no rake collected.
+- FREE ENTRY: QuickPlayCard hides currency when FREE chip selected, shows
+  "Free Entry -- No wallet required", "No rake", "For fun" labels
+- FREE ENTRY: QuickPlaySettingsTab allows $0 entry fee tier for free QuickPlay
+- FREE ENTRY: Backend auto-confirms free registrations, escrow skips $0 fees
+- HOST DASHBOARD: HostProfile adds freeEventsHosted, freePlayersHosted,
+  monthlyFreeEvents, monthlyFreePlayers. Prisma migration adds 4 new columns.
+- HOST DASHBOARD: 3 community badges: COMMUNITY_CHAMPION, FREE_FOR_ALL, OPEN_DOORS
+- HOST DASHBOARD: Free events now count toward rooms/players stats (was skipped)
+- NPC FIX: QuickPlay entry fee escrow (deduct on join, refund on leave)
+- NPC FIX: Tournament NPC fill uses tournament.escrowAddress (was empty string)
 - QuickPlay future-proofing: SocialGameType enum includes DOU_DIZHU.
   SOCIAL_GAME_LABELS changed to Record<string,string> (extensible).
   fetchSocialGameTypes() fetches from GET /api/v1/games/social-types.
