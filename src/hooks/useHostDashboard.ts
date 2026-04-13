@@ -50,6 +50,10 @@ export interface HostProfile {
   activeRoomCount: number
   maxConcurrentRooms: number
   isVerified: boolean
+  freeEventsHosted: number
+  freePlayersHosted: number
+  monthlyFreeEvents: number
+  monthlyFreePlayers: number
   joinedAt: string
   lastActiveAt: string
 }
@@ -344,6 +348,10 @@ function safeProfile(raw: any): HostProfile | null {
     activeRoomCount:     raw.activeRoomCount ?? 0,
     maxConcurrentRooms:  raw.maxConcurrentRooms ?? 3,
     isVerified:          raw.isVerified ?? false,
+    freeEventsHosted:    raw.freeEventsHosted ?? 0,
+    freePlayersHosted:   raw.freePlayersHosted ?? 0,
+    monthlyFreeEvents:   raw.monthlyFreeEvents ?? 0,
+    monthlyFreePlayers:  raw.monthlyFreePlayers ?? 0,
     joinedAt:            raw.joinedAt ?? new Date().toISOString(),
     lastActiveAt:        raw.lastActiveAt ?? new Date().toISOString(),
   }

@@ -357,7 +357,12 @@ function StatsGrid({ tournament }: { tournament: Tournament }) {
       <StatBox
         icon={<Coins className="w-3.5 h-3.5 text-white/50" />}
         label="Entry"
-        value={tournament.entryFee === 0 ? 'FREE' : `${tournament.entryFee} ${tournament.entryCurrency}`}
+        value={tournament.entryFee === 0
+          ? <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-green-500/20 text-green-400 text-xs font-bold uppercase tracking-wide border border-green-500/30">Free</span>
+          : `${tournament.entryFee} ${tournament.entryCurrency}`
+        }
+        valueClassName={tournament.entryFee === 0 ? '' : undefined}
+        borderColor={tournament.entryFee === 0 ? 'border-green-500/20' : 'border-white/10'}
       />
       <StatBox
         icon={<Users className="w-3.5 h-3.5 text-cyan-400" />}

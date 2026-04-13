@@ -333,18 +333,24 @@ function EsportIdleState({ config, qp }: { config: QuickPlayConfig; qp: QuickPla
         </div>
       </div>
 
-      {/* Currency dropdown */}
-      <CurrencyDropdown currencies={currencies} selected={qp.selectedCurrency} onChange={qp.setSelectedCurrency} />
+      {/* Currency dropdown -- hidden when FREE selected */}
+      {qp.selectedFee > 0 ? (
+        <CurrencyDropdown currencies={currencies} selected={qp.selectedCurrency} onChange={qp.setSelectedCurrency} />
+      ) : (
+        <div className="px-3 py-2.5 rounded-lg bg-white/5 border border-green-500/20 text-green-400 text-sm font-medium text-center">
+          Free Entry -- No wallet required
+        </div>
+      )}
 
-      {/* Info row */}
+      {/* Info row -- adjusted for free */}
       <div className="grid grid-cols-3 gap-2 text-xs">
         <div className="flex items-center gap-1.5 text-green-400">
           <Trophy className="w-3.5 h-3.5" />
-          <span className="font-semibold">Win: {prize}</span>
+          <span className="font-semibold">{qp.selectedFee === 0 ? 'For fun' : `Win: ${prize}`}</span>
         </div>
         <div className="flex items-center gap-1.5 text-white/40">
           <CircleDollarSign className="w-3.5 h-3.5" />
-          <span>{config.esportPlatformFee ?? 10}% rake</span>
+          <span>{qp.selectedFee === 0 ? 'No rake' : `${config.esportPlatformFee ?? 10}% rake`}</span>
         </div>
         <div className="flex items-center gap-1.5 text-white/40">
           <Timer className="w-3.5 h-3.5" />
