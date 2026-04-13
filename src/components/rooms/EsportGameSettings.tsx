@@ -68,7 +68,7 @@ export interface EsportGameSettingsProps {
 // CONSTANTS
 // =============================================================================
 
-const ENTRY_FEE_PRESETS = [1, 5, 10, 25, 50, 100, 250, 500]
+const ENTRY_FEE_PRESETS = [0, 1, 5, 10, 25, 50, 100, 250, 500]
 const DURATION_PRESETS = [60, 120, 180, 300, 600, 900, 1800]
 const ROUNDS_PRESETS = [1, 3, 5, 7]
 const FFA_PLAYER_PRESETS    = [2, 3, 4, 6, 8, 10, 16, 32, 64]
@@ -410,13 +410,16 @@ export default function EsportGameSettings({
         <ChipPlusFreeInput
           presets={ENTRY_FEE_PRESETS} value={config.entryFee} disabled={disabled}
           onSelect={(v) => update({ entryFee: v })}
-          inputMin={0.01} inputStep={0.01} inputPrefix="$" placeholder="5.00"
-          formatPreset={(v) => `$${v}`}
+          inputMin={0} inputStep={0.01} inputPrefix="$" placeholder="5.00"
+          formatPreset={(v) => v === 0 ? 'FREE' : `$${v}`}
         />
+        {config.entryFee === 0 && (
+          <p className="text-xs text-green-400/70 mt-1">Free entry -- no wallet required. No platform fee collected.</p>
+        )}
       </div>
 
-      {/* ── CURRENCY ── */}
-      <div className={S.section}>
+      {/* -- CURRENCY -- */}
+      <div className={S.section} style={config.entryFee === 0 ? { opacity: 0.3, pointerEvents: 'none' } : undefined}>
         <label className={S.label}><DollarSign className="w-4 h-4 text-green-400" />Currency</label>
         <div className={S.selectWrap}>
           <select value={config.entryCurrency} onChange={(e) => update({ entryCurrency: e.target.value })}
@@ -589,13 +592,13 @@ export default function EsportGameSettings({
           <span className="text-sm font-medium text-white">{isSE ? 'Bracket Preview' : 'FFA Preview'}</span>
         </div>
         <div className="grid grid-cols-4 gap-3 text-center">
-          <div><p className="text-xs text-gray-500">Entry Fee</p><p className="text-lg font-bold text-white">${config.entryFee}</p></div>
+          <div><p className="text-xs text-gray-500">Entry Fee</p><p className="text-lg font-bold text-white">{config.entryFee === 0 ? <span className="text-green-400">FREE</span> : `$${config.entryFee}`}</p></div>
           <div><p className="text-xs text-gray-500">Players</p><p className="text-lg font-bold text-white">{config.maxPlayers}</p></div>
           <div>
             <p className="text-xs text-gray-500">{isSE ? 'Bracket Rounds' : 'Session'}</p>
             <p className="text-lg font-bold text-white">{isSE ? deriveSEMeta(config.maxPlayers).rounds : '1'}</p>
           </div>
-          <div><p className="text-xs text-gray-500">Net Prize</p><p className="text-lg font-bold text-green-400">${netPool.toFixed(2)}</p></div>
+          <div><p className="text-xs text-gray-500">Net Prize</p><p className="text-lg font-bold text-green-400">{config.entryFee === 0 ? 'For fun' : `$${netPool.toFixed(2)}`}</p></div>
         </div>
         {isPrizeValid && config.maxPlayers >= 2 && (
           <div className="mt-3 pt-3 border-t border-gray-700/50 flex flex-wrap gap-3">

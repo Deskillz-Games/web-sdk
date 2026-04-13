@@ -8,6 +8,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
+
+## [3.4.5] - 2026-04-13
+
+### Added
+- DisputeModal: full dispute filing component (7 reasons, 3 types, success/error states)
+- DeskillzBridge.fileDispute(): POST /api/v1/disputes (rate limited, duplicate prevention)
+- DeskillzBridge.getMyDisputes(status?): GET /api/v1/disputes/me
+- DeskillzBridge.getDisputeDetails(id): GET /api/v1/disputes/:id
+- DeskillzBridge.addDisputeEvidence(id, evidence[]): POST /api/v1/disputes/:id/evidence
+- DisputeRecord type (13 fields) in DeskillzBridge
+
+### Changed
+- Dispute system: DisputeModal, 4 bridge methods, 4 API endpoints, 4 docs updated
+- Synced components, hooks, types from packages/game-ui
+- tournaments component count 3->4 (DisputeModal added)
+- Developer docs updated (v1.9, v2.0, v3.5, v5.7)
 ## [3.4.4] - 2026-04-13
 
 ### Added
@@ -27,6 +43,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Developer docs updated (v1.8, v1.9, v3.4, v5.6)
 - Plugin: vite-plugin-sw-version.mjs (retired .ts)
 - Service worker: deskillz-sw.js (retired sw.js)
+
+## [3.4.5] - 2026-04-13
+
+### Added
+- DisputeModal: full dispute filing component (7 reasons, 3 types, success/error states)
+- DeskillzBridge.fileDispute(): POST /api/v1/disputes (rate limited, duplicate prevention)
+- DeskillzBridge.getMyDisputes(status?): GET /api/v1/disputes/me
+- DeskillzBridge.getDisputeDetails(id): GET /api/v1/disputes/:id
+- DeskillzBridge.addDisputeEvidence(id, evidence[]): POST /api/v1/disputes/:id/evidence
+- DisputeRecord type (13 fields) in DeskillzBridge
+
+### Changed
+- Dispute system: DisputeModal, 4 bridge methods, 4 API endpoints, 4 docs updated
+- Synced components, hooks, types from packages/game-ui
+- tournaments component count 3->4 (DisputeModal added)
+- Developer docs updated (v1.9, v2.0, v3.5, v5.7)
 ## [3.4.4] - 2026-04-12
 
 ### Added
@@ -47,6 +79,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Plugin: vite-plugin-sw-version.mjs (retired .ts)
 - Service worker: deskillz-sw.js (retired sw.js)
 
+
+## [3.4.5] - 2026-04-13
+
+### Added
+- DisputeModal: full dispute filing component (7 reasons, 3 types, success/error states)
+- DeskillzBridge.fileDispute(): POST /api/v1/disputes (rate limited, duplicate prevention)
+- DeskillzBridge.getMyDisputes(status?): GET /api/v1/disputes/me
+- DeskillzBridge.getDisputeDetails(id): GET /api/v1/disputes/:id
+- DeskillzBridge.addDisputeEvidence(id, evidence[]): POST /api/v1/disputes/:id/evidence
+- DisputeRecord type (13 fields) in DeskillzBridge
+
+### Changed
+- Dispute system: DisputeModal, 4 bridge methods, 4 API endpoints, 4 docs updated
+- Synced components, hooks, types from packages/game-ui
+- tournaments component count 3->4 (DisputeModal added)
+- Developer docs updated (v1.9, v2.0, v3.5, v5.7)
 ## [3.4.4] - 2026-04-13
 
 ### Added
@@ -66,6 +114,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Developer docs updated (v1.8, v1.9, v3.4, v5.6)
 - Plugin: vite-plugin-sw-version.mjs (retired .ts)
 - Service worker: deskillz-sw.js (retired sw.js)
+
+## [3.4.5] - 2026-04-13
+
+### Added
+- DisputeModal: full dispute filing component (7 reasons, 3 types, success/error states)
+- DeskillzBridge.fileDispute(): POST /api/v1/disputes (rate limited, duplicate prevention)
+- DeskillzBridge.getMyDisputes(status?): GET /api/v1/disputes/me
+- DeskillzBridge.getDisputeDetails(id): GET /api/v1/disputes/:id
+- DeskillzBridge.addDisputeEvidence(id, evidence[]): POST /api/v1/disputes/:id/evidence
+- DisputeRecord type (13 fields) in DeskillzBridge
+
+### Changed
+- Dispute system: DisputeModal, 4 bridge methods, 4 API endpoints, 4 docs updated
+- Synced components, hooks, types from packages/game-ui
+- tournaments component count 3->4 (DisputeModal added)
+- Developer docs updated (v1.9, v2.0, v3.5, v5.7)
 ## [3.4.3] - 2026-04-11
 
 ### Changed
@@ -76,6 +140,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - workbox-config.js retired
 
 
+
+## [3.4.5] - 2026-04-13
+
+### Added
+- DisputeModal: full dispute filing component (7 reasons, 3 types, success/error states)
+- DeskillzBridge.fileDispute(): POST /api/v1/disputes (rate limited, duplicate prevention)
+- DeskillzBridge.getMyDisputes(status?): GET /api/v1/disputes/me
+- DeskillzBridge.getDisputeDetails(id): GET /api/v1/disputes/:id
+- DeskillzBridge.addDisputeEvidence(id, evidence[]): POST /api/v1/disputes/:id/evidence
+- DisputeRecord type (13 fields) in DeskillzBridge
+
+### Changed
+- Dispute system: DisputeModal, 4 bridge methods, 4 API endpoints, 4 docs updated
+- Synced components, hooks, types from packages/game-ui
+- tournaments component count 3->4 (DisputeModal added)
+- Developer docs updated (v1.9, v2.0, v3.5, v5.7)
 ## [3.4.4] - 2026-04-13
 
 ### Added
@@ -95,6 +175,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Developer docs updated (v1.8, v1.9, v3.4, v5.6)
 - Plugin: vite-plugin-sw-version.mjs (retired .ts)
 - Service worker: deskillz-sw.js (retired sw.js)
+
+## [3.4.5] - 2026-04-13
+
+### Added
+- DisputeModal: full dispute filing component (7 reasons, 3 types, success/error states)
+- DeskillzBridge.fileDispute(): POST /api/v1/disputes (rate limited, duplicate prevention)
+- DeskillzBridge.getMyDisputes(status?): GET /api/v1/disputes/me
+- DeskillzBridge.getDisputeDetails(id): GET /api/v1/disputes/:id
+- DeskillzBridge.addDisputeEvidence(id, evidence[]): POST /api/v1/disputes/:id/evidence
+- DisputeRecord type (13 fields) in DeskillzBridge
+
+### Changed
+- Dispute system: DisputeModal, 4 bridge methods, 4 API endpoints, 4 docs updated
+- Synced components, hooks, types from packages/game-ui
+- tournaments component count 3->4 (DisputeModal added)
+- Developer docs updated (v1.9, v2.0, v3.5, v5.7)
 ## [3.4.4] - 2026-04-12
 
 ### Added
@@ -115,6 +211,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Plugin: vite-plugin-sw-version.mjs (retired .ts)
 - Service worker: deskillz-sw.js (retired sw.js)
 
+
+## [3.4.5] - 2026-04-13
+
+### Added
+- DisputeModal: full dispute filing component (7 reasons, 3 types, success/error states)
+- DeskillzBridge.fileDispute(): POST /api/v1/disputes (rate limited, duplicate prevention)
+- DeskillzBridge.getMyDisputes(status?): GET /api/v1/disputes/me
+- DeskillzBridge.getDisputeDetails(id): GET /api/v1/disputes/:id
+- DeskillzBridge.addDisputeEvidence(id, evidence[]): POST /api/v1/disputes/:id/evidence
+- DisputeRecord type (13 fields) in DeskillzBridge
+
+### Changed
+- Dispute system: DisputeModal, 4 bridge methods, 4 API endpoints, 4 docs updated
+- Synced components, hooks, types from packages/game-ui
+- tournaments component count 3->4 (DisputeModal added)
+- Developer docs updated (v1.9, v2.0, v3.5, v5.7)
 ## [3.4.4] - 2026-04-13
 
 ### Added
@@ -134,6 +246,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Developer docs updated (v1.8, v1.9, v3.4, v5.6)
 - Plugin: vite-plugin-sw-version.mjs (retired .ts)
 - Service worker: deskillz-sw.js (retired sw.js)
+
+## [3.4.5] - 2026-04-13
+
+### Added
+- DisputeModal: full dispute filing component (7 reasons, 3 types, success/error states)
+- DeskillzBridge.fileDispute(): POST /api/v1/disputes (rate limited, duplicate prevention)
+- DeskillzBridge.getMyDisputes(status?): GET /api/v1/disputes/me
+- DeskillzBridge.getDisputeDetails(id): GET /api/v1/disputes/:id
+- DeskillzBridge.addDisputeEvidence(id, evidence[]): POST /api/v1/disputes/:id/evidence
+- DisputeRecord type (13 fields) in DeskillzBridge
+
+### Changed
+- Dispute system: DisputeModal, 4 bridge methods, 4 API endpoints, 4 docs updated
+- Synced components, hooks, types from packages/game-ui
+- tournaments component count 3->4 (DisputeModal added)
+- Developer docs updated (v1.9, v2.0, v3.5, v5.7)
 ## [3.0.0] - 2026-02-03
 
 ### Added
@@ -234,6 +362,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
+
+## [3.4.5] - 2026-04-13
+
+### Added
+- DisputeModal: full dispute filing component (7 reasons, 3 types, success/error states)
+- DeskillzBridge.fileDispute(): POST /api/v1/disputes (rate limited, duplicate prevention)
+- DeskillzBridge.getMyDisputes(status?): GET /api/v1/disputes/me
+- DeskillzBridge.getDisputeDetails(id): GET /api/v1/disputes/:id
+- DeskillzBridge.addDisputeEvidence(id, evidence[]): POST /api/v1/disputes/:id/evidence
+- DisputeRecord type (13 fields) in DeskillzBridge
+
+### Changed
+- Dispute system: DisputeModal, 4 bridge methods, 4 API endpoints, 4 docs updated
+- Synced components, hooks, types from packages/game-ui
+- tournaments component count 3->4 (DisputeModal added)
+- Developer docs updated (v1.9, v2.0, v3.5, v5.7)
 ## [3.4.4] - 2026-04-13
 
 ### Added
@@ -253,6 +397,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Developer docs updated (v1.8, v1.9, v3.4, v5.6)
 - Plugin: vite-plugin-sw-version.mjs (retired .ts)
 - Service worker: deskillz-sw.js (retired sw.js)
+
+## [3.4.5] - 2026-04-13
+
+### Added
+- DisputeModal: full dispute filing component (7 reasons, 3 types, success/error states)
+- DeskillzBridge.fileDispute(): POST /api/v1/disputes (rate limited, duplicate prevention)
+- DeskillzBridge.getMyDisputes(status?): GET /api/v1/disputes/me
+- DeskillzBridge.getDisputeDetails(id): GET /api/v1/disputes/:id
+- DeskillzBridge.addDisputeEvidence(id, evidence[]): POST /api/v1/disputes/:id/evidence
+- DisputeRecord type (13 fields) in DeskillzBridge
+
+### Changed
+- Dispute system: DisputeModal, 4 bridge methods, 4 API endpoints, 4 docs updated
+- Synced components, hooks, types from packages/game-ui
+- tournaments component count 3->4 (DisputeModal added)
+- Developer docs updated (v1.9, v2.0, v3.5, v5.7)
 ## [3.4.4] - 2026-04-12
 
 ### Added
@@ -273,6 +433,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Plugin: vite-plugin-sw-version.mjs (retired .ts)
 - Service worker: deskillz-sw.js (retired sw.js)
 
+
+## [3.4.5] - 2026-04-13
+
+### Added
+- DisputeModal: full dispute filing component (7 reasons, 3 types, success/error states)
+- DeskillzBridge.fileDispute(): POST /api/v1/disputes (rate limited, duplicate prevention)
+- DeskillzBridge.getMyDisputes(status?): GET /api/v1/disputes/me
+- DeskillzBridge.getDisputeDetails(id): GET /api/v1/disputes/:id
+- DeskillzBridge.addDisputeEvidence(id, evidence[]): POST /api/v1/disputes/:id/evidence
+- DisputeRecord type (13 fields) in DeskillzBridge
+
+### Changed
+- Dispute system: DisputeModal, 4 bridge methods, 4 API endpoints, 4 docs updated
+- Synced components, hooks, types from packages/game-ui
+- tournaments component count 3->4 (DisputeModal added)
+- Developer docs updated (v1.9, v2.0, v3.5, v5.7)
 ## [3.4.4] - 2026-04-13
 
 ### Added
@@ -292,6 +468,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Developer docs updated (v1.8, v1.9, v3.4, v5.6)
 - Plugin: vite-plugin-sw-version.mjs (retired .ts)
 - Service worker: deskillz-sw.js (retired sw.js)
+
+## [3.4.5] - 2026-04-13
+
+### Added
+- DisputeModal: full dispute filing component (7 reasons, 3 types, success/error states)
+- DeskillzBridge.fileDispute(): POST /api/v1/disputes (rate limited, duplicate prevention)
+- DeskillzBridge.getMyDisputes(status?): GET /api/v1/disputes/me
+- DeskillzBridge.getDisputeDetails(id): GET /api/v1/disputes/:id
+- DeskillzBridge.addDisputeEvidence(id, evidence[]): POST /api/v1/disputes/:id/evidence
+- DisputeRecord type (13 fields) in DeskillzBridge
+
+### Changed
+- Dispute system: DisputeModal, 4 bridge methods, 4 API endpoints, 4 docs updated
+- Synced components, hooks, types from packages/game-ui
+- tournaments component count 3->4 (DisputeModal added)
+- Developer docs updated (v1.9, v2.0, v3.5, v5.7)
 ## [3.4.3] - 2026-04-11
 
 ### Changed
@@ -302,6 +494,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - workbox-config.js retired
 
 
+
+## [3.4.5] - 2026-04-13
+
+### Added
+- DisputeModal: full dispute filing component (7 reasons, 3 types, success/error states)
+- DeskillzBridge.fileDispute(): POST /api/v1/disputes (rate limited, duplicate prevention)
+- DeskillzBridge.getMyDisputes(status?): GET /api/v1/disputes/me
+- DeskillzBridge.getDisputeDetails(id): GET /api/v1/disputes/:id
+- DeskillzBridge.addDisputeEvidence(id, evidence[]): POST /api/v1/disputes/:id/evidence
+- DisputeRecord type (13 fields) in DeskillzBridge
+
+### Changed
+- Dispute system: DisputeModal, 4 bridge methods, 4 API endpoints, 4 docs updated
+- Synced components, hooks, types from packages/game-ui
+- tournaments component count 3->4 (DisputeModal added)
+- Developer docs updated (v1.9, v2.0, v3.5, v5.7)
 ## [3.4.4] - 2026-04-13
 
 ### Added
@@ -321,6 +529,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Developer docs updated (v1.8, v1.9, v3.4, v5.6)
 - Plugin: vite-plugin-sw-version.mjs (retired .ts)
 - Service worker: deskillz-sw.js (retired sw.js)
+
+## [3.4.5] - 2026-04-13
+
+### Added
+- DisputeModal: full dispute filing component (7 reasons, 3 types, success/error states)
+- DeskillzBridge.fileDispute(): POST /api/v1/disputes (rate limited, duplicate prevention)
+- DeskillzBridge.getMyDisputes(status?): GET /api/v1/disputes/me
+- DeskillzBridge.getDisputeDetails(id): GET /api/v1/disputes/:id
+- DeskillzBridge.addDisputeEvidence(id, evidence[]): POST /api/v1/disputes/:id/evidence
+- DisputeRecord type (13 fields) in DeskillzBridge
+
+### Changed
+- Dispute system: DisputeModal, 4 bridge methods, 4 API endpoints, 4 docs updated
+- Synced components, hooks, types from packages/game-ui
+- tournaments component count 3->4 (DisputeModal added)
+- Developer docs updated (v1.9, v2.0, v3.5, v5.7)
 ## [3.4.4] - 2026-04-12
 
 ### Added
@@ -341,6 +565,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Plugin: vite-plugin-sw-version.mjs (retired .ts)
 - Service worker: deskillz-sw.js (retired sw.js)
 
+
+## [3.4.5] - 2026-04-13
+
+### Added
+- DisputeModal: full dispute filing component (7 reasons, 3 types, success/error states)
+- DeskillzBridge.fileDispute(): POST /api/v1/disputes (rate limited, duplicate prevention)
+- DeskillzBridge.getMyDisputes(status?): GET /api/v1/disputes/me
+- DeskillzBridge.getDisputeDetails(id): GET /api/v1/disputes/:id
+- DeskillzBridge.addDisputeEvidence(id, evidence[]): POST /api/v1/disputes/:id/evidence
+- DisputeRecord type (13 fields) in DeskillzBridge
+
+### Changed
+- Dispute system: DisputeModal, 4 bridge methods, 4 API endpoints, 4 docs updated
+- Synced components, hooks, types from packages/game-ui
+- tournaments component count 3->4 (DisputeModal added)
+- Developer docs updated (v1.9, v2.0, v3.5, v5.7)
 ## [3.4.4] - 2026-04-13
 
 ### Added
@@ -360,6 +600,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Developer docs updated (v1.8, v1.9, v3.4, v5.6)
 - Plugin: vite-plugin-sw-version.mjs (retired .ts)
 - Service worker: deskillz-sw.js (retired sw.js)
+
+## [3.4.5] - 2026-04-13
+
+### Added
+- DisputeModal: full dispute filing component (7 reasons, 3 types, success/error states)
+- DeskillzBridge.fileDispute(): POST /api/v1/disputes (rate limited, duplicate prevention)
+- DeskillzBridge.getMyDisputes(status?): GET /api/v1/disputes/me
+- DeskillzBridge.getDisputeDetails(id): GET /api/v1/disputes/:id
+- DeskillzBridge.addDisputeEvidence(id, evidence[]): POST /api/v1/disputes/:id/evidence
+- DisputeRecord type (13 fields) in DeskillzBridge
+
+### Changed
+- Dispute system: DisputeModal, 4 bridge methods, 4 API endpoints, 4 docs updated
+- Synced components, hooks, types from packages/game-ui
+- tournaments component count 3->4 (DisputeModal added)
+- Developer docs updated (v1.9, v2.0, v3.5, v5.7)
 ## [2.x.x] - Previous Versions
 
 Previous versions were platform-specific SDKs (Unity, Unreal Engine).

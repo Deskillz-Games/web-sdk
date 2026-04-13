@@ -133,7 +133,7 @@ const POINT_TARGET_OPTIONS: Record<SocialGameType, { value: number; label: strin
 const RAKE_PERCENT_PRESETS = [3, 5, 7, 10, 15, 20]
 const RAKE_CAP_PRESETS     = [1, 2, 5, 10, 25, 50]
 const POINT_VALUE_PRESETS  = [0.01, 0.05, 0.10, 0.25, 0.50, 1.00]
-const ENTRY_FEE_PRESETS    = [1, 5, 10, 25, 50, 100]
+const ENTRY_FEE_PRESETS    = [0, 1, 5, 10, 25, 50, 100]
 
 const TIMER_PRESETS = [15, 30, 45, 60, 90, 120]
 
@@ -538,8 +538,11 @@ export default function SocialGameSettings({
           <div className={S.section}>
             <label className={S.label}><Coins className="w-4 h-4 text-yellow-400" />Entry Fee</label>
             <ChipPlusFreeInput presets={ENTRY_FEE_PRESETS} value={config.entryFee} disabled={disabled}
-              onSelect={(v) => update({ entryFee: v })} inputMin={0.01} inputStep={0.01}
-              inputPrefix="$" placeholder="5.00" formatPreset={(v) => `$${v}`} />
+              onSelect={(v) => update({ entryFee: v })} inputMin={0} inputStep={0.01}
+              inputPrefix="$" placeholder="5.00" formatPreset={(v) => v === 0 ? 'FREE' : `$${v}`} />
+            {config.entryFee === 0 && (
+              <p className="text-xs text-green-400/70 mt-1">Free tournament -- no wallet required. No rake collected.</p>
+            )}
           </div>
 
           {/* Tournament Size */}
@@ -771,10 +774,10 @@ export default function SocialGameSettings({
               <span className="text-sm font-medium text-white">Tournament Preview</span>
             </div>
             <div className="grid grid-cols-4 gap-3 text-center">
-              <div><p className="text-xs text-gray-500">Entry Fee</p><p className="text-lg font-bold text-white">${config.entryFee}</p></div>
+              <div><p className="text-xs text-gray-500">Entry Fee</p><p className="text-lg font-bold text-white">{config.entryFee === 0 ? <span className="text-green-400">FREE</span> : `$${config.entryFee}`}</p></div>
               <div><p className="text-xs text-gray-500">Players</p><p className="text-lg font-bold text-white">{meta.players}</p></div>
               <div><p className="text-xs text-gray-500">Rounds</p><p className="text-lg font-bold text-white">{meta.rounds}</p></div>
-              <div><p className="text-xs text-gray-500">Prize Pool</p><p className="text-lg font-bold text-green-400">${(config.entryFee * meta.players * 0.9).toFixed(2)}</p></div>
+              <div><p className="text-xs text-gray-500">Prize Pool</p><p className="text-lg font-bold text-green-400">{config.entryFee === 0 ? 'For fun' : `$${(config.entryFee * meta.players * 0.9).toFixed(2)}`}</p></div>
             </div>
             <div className="mt-3 pt-3 border-t border-gray-700/50 grid grid-cols-2 gap-2 text-xs text-gray-500">
               <span>Advance per table: <span className="text-white font-medium">{config.playersAdvancePerTable}</span></span>

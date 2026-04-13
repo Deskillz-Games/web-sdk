@@ -2,10 +2,23 @@
 
 ## Dou Dizhu | Bubble Battle | Candy Duel
 
-**Version:** 1.9
-**Date:** April 12, 2026
+**Version:** 2.0
+**Date:** April 13, 2026
 **For:** Developers of existing non-React standalone games
 **Applies to:** Dou Dizhu (PixiJS), Bubble Battle (Canvas/TypeScript), Candy Duel (Canvas/TypeScript)
+
+**Changelog v2.0 (April 13, 2026):**
+- NEW: DisputeModal component -- dispute filing UI for results screens.
+  7 reasons, description (10-2000 chars), context badge (Tournament/QuickPlay/PrivateRoom),
+  submitting/success/error states, 24-48hr review notice.
+- NEW: DeskillzBridge.fileDispute(), getMyDisputes(), getDisputeDetails(), addDisputeEvidence()
+- NEW: DisputeRecord type (13 fields) added to DeskillzBridge
+- 7 dispute reasons: WRONG_SCORE, CHEATING, DISCONNECTION, NPC_ISSUE,
+  PAYMENT_ISSUE, UNFAIR_MATCHMAKING, OTHER
+- 3 dispute types: TOURNAMENT, QUICK_PLAY, PRIVATE_ROOM
+- Step 7 file list updated: DisputeModal.tsx added to core files (all games)
+- Dou Dizhu testing checklist updated with dispute tests
+- Summary table updated: core files count +1
 
 **Changelog v1.9 (April 12, 2026):**
 - NEW: TournamentLobbyCard component added to Step 7 file list
@@ -297,6 +310,7 @@ export default function GameScreen() {
 FROM ZIP src/sdk/DeskillzBridge.ts        -> YOUR_GAME/src/sdk/DeskillzBridge.ts          REPLACE
 FROM ZIP src/components/tournaments/TournamentCard.tsx  -> YOUR_GAME/src/components/tournaments/
 FROM ZIP src/components/tournaments/QuickPlayCard.tsx   -> YOUR_GAME/src/components/tournaments/
+FROM ZIP src/components/tournaments/DisputeModal.tsx    -> YOUR_GAME/src/components/tournaments/
 FROM ZIP src/hooks/useEnrollmentStatus.ts              -> YOUR_GAME/src/hooks/
 FROM ZIP src/hooks/useQuickPlayQueue.ts                -> YOUR_GAME/src/hooks/
 FROM ZIP src/components/ui/Badge.tsx                   -> YOUR_GAME/src/components/ui/
@@ -552,6 +566,8 @@ DO NOT TOUCH:
 - [ ] RebuyModal triggers when balance hits 0
 - [ ] Host dashboard loads with tier and earnings data
 - [ ] All 14 existing game files compile with 0 errors
+- [ ] DisputeModal opens from results screen with correct disputeType
+- [ ] bridge.fileDispute() submits dispute -- verify POST /api/v1/disputes
 
 ---
 
@@ -609,9 +625,9 @@ Set explicit pixel dimensions in useEffect, not CSS percentages.
 
 | Game | Type | Core files | Room files | Total shared |
 |------|------|:----------:|:----------:|:------------:|
-| Candy Duel | Esport | 11 | 2 (EsportSettings + AgeVerify) | 13 |
-| Bubble Battle | Esport | 11 | 2 (EsportSettings + AgeVerify) | 13 |
-| Dou Dizhu | Social | 11 | 8 + hook | 20 |
+| Candy Duel | Esport | 12 | 2 (EsportSettings + AgeVerify) | 14 |
+| Bubble Battle | Esport | 12 | 2 (EsportSettings + AgeVerify) | 14 |
+| Dou Dizhu | Social | 12 | 8 + hook | 21 |
 
 **Game logic: zero changes for all three games.**
 
@@ -645,7 +661,7 @@ See React Game Update Guide v1.5 Step 11 for full details and rationale.
 
 ---
 
-*Migration Guide v1.6 -- April 4, 2026*
+*Migration Guide v2.0 -- April 13, 2026*
 *Applies to: Dou Dizhu, Bubble Battle, Candy Duel*
 *For React game updates (Big 2, Mahjong, Thirteen Cards):*
 *see DESKILLZ_REACT_GAME_UPDATE_GUIDE.md v1.3*

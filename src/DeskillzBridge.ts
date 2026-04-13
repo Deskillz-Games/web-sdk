@@ -484,6 +484,26 @@ export interface TournamentPlayerStatus {
 }
 
 // =============================================================================
+// DISPUTE TYPES
+// =============================================================================
+
+export interface DisputeRecord {
+  id: string;
+  disputeType: 'TOURNAMENT' | 'QUICK_PLAY' | 'PRIVATE_ROOM';
+  tournamentId: string | null;
+  tournamentName: string | null;
+  matchId: string | null;
+  reason: string;
+  description: string;
+  evidence: string[];
+  status: 'OPEN' | 'UNDER_REVIEW' | 'RESOLVED' | 'DISMISSED';
+  resolution: string | null;
+  reviewerName: string | null;
+  resolvedAt: string | null;
+  createdAt: string;
+}
+
+// =============================================================================
 // EVENT SYSTEM
 // =============================================================================
 
@@ -1722,6 +1742,56 @@ export class DeskillzBridge {
     return this.http.get<TournamentSchedule>(
       `/api/v1/tournaments/${tournamentId}/schedule`,
     );
+  }
+
+  // ---------------------------------------------------------------------------
+  // DISPUTES (v3.4.4)
+  // ---------------------------------------------------------------------------
+
+  /**
+   * File a dispute against a tournament or QuickPlay match.
+   * POST /api/v1/disputes
+   */
+  async fileDispute(params: {
+    disputeType: 'TOURNAMENT' | 'QUICK_PLAY' | 'PRIVATE_ROOM';
+    tournamentId?: string;
+    matchId?: string;
+    reason: string;
+    description: string;
+    evidence?: string[];
+  }): Promise<DisputeRecord> {
+    this.ensureAuthenticated();
+    return this.http.post<DisputeRecord>('/api/v1/disputes', params);
+  }
+
+  /**
+   * Get all disputes filed by the current user.
+   * GET /api/v1/disputes/me
+   */
+  async getMyDisputes(status?: string): Promise<DisputeRecord[]> {
+    if (this._isGuest || !this._isAuthenticated) return [];
+    try {
+      const query = status ? `?status=${status}` : '';
+      return await this.http.get<DisputeRecord[]>(`/api/v1/disputes/me${query}`);
+    } catch {
+      return [];
+    }
+  }
+
+  /**
+   * Get dispute details by ID (own disputes only).
+   * GET /api/v1/disputes/:id
+   */
+  async getDisputeDetails(disputeId: string): Promise<DisputeRecord> {
+    return this.http.get<DisputeRecord>(`/api/v1/disputes/${disputeId}`);
+  }
+
+  /**
+   * Add evidence to an existing open dispute.
+   * POST /api/v1/disputes/:id/evidence
+   */
+  async addDisputeEvidence(disputeId: string, evidence: string[]): Promise<{ success: boolean; evidenceCount: number }> {
+    return this.http.post(`/api/v1/disputes/${disputeId}/evidence`, { evidence });
   }
 
   // ---------------------------------------------------------------------------

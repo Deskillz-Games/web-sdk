@@ -1,9 +1,9 @@
 # DESKILLZ STANDALONE GAME UI BUILD HANDOFF
 ## Universal UI Guide for Self-Sufficient Game Apps
 
-**Version:** 3.4
-**Date:** April 12, 2026
-**SDK Version:** Deskillz SDK v3.4.4 + @deskillz/game-ui v3.4.4
+**Version:** 3.5
+**Date:** April 13, 2026
+**SDK Version:** Deskillz SDK v3.4.5 + @deskillz/game-ui v3.4.5
 **Architecture:** Self-Sufficient (No External App Dependency)
 **Supported Game Types:** Esports (Competitive) + Social Games (Cash Game + Tournament)
 **Supported Web Engine:** React/Vite only (all standalone web games)
@@ -11,6 +11,25 @@
 ---
 
 ## CHANGELOG
+
+### v3.5 (April 13, 2026)
+- NEW: DisputeModal -- full dispute filing component for results screens.
+  7 reasons (WRONG_SCORE, CHEATING, DISCONNECTION, NPC_ISSUE, PAYMENT_ISSUE,
+  UNFAIR_MATCHMAKING, OTHER), 3 types (TOURNAMENT, QUICK_PLAY, PRIVATE_ROOM),
+  description textarea (10-2000 chars), context badge with colour coding,
+  submitting/success/error states, 24-48hr review notice, reference ID display.
+- NEW: DeskillzBridge.fileDispute() -- POST /api/v1/disputes
+  (rate limited: 5 open per user, prevents duplicate disputes on same event)
+- NEW: DeskillzBridge.getMyDisputes(status?) -- GET /api/v1/disputes/me
+- NEW: DeskillzBridge.getDisputeDetails(id) -- GET /api/v1/disputes/:id
+- NEW: DeskillzBridge.addDisputeEvidence(id, evidence[]) -- POST /api/v1/disputes/:id/evidence
+- NEW: DisputeRecord type (13 fields: id, disputeType, tournamentId,
+  tournamentName, matchId, reason, description, evidence, status,
+  resolution, reviewerName, resolvedAt, createdAt)
+- Updated Section 4 screen structure: added dispute modal note
+- Updated Section 16: tournaments count 3->4 (DisputeModal added)
+- Updated Section 19: 4 dispute API endpoints added
+- Updated Section 22: dispute testing checklist added
 
 ### v3.4 (April 12, 2026)
 - NEW: TournamentLobbyCard -- post-check-in tournament lifecycle component
@@ -1131,6 +1150,10 @@ Section 14 for the complete table (50+ endpoints).
 | POST | `/host/verify-age` | v3.2 Age verification (21+) |
 | GET | `/host/age-verified` | v3.2 Check age status |
 | POST | `/host/withdraw` | v3.2 Withdraw host earnings |
+| POST | `/disputes` | File a dispute (5 open max per user) |
+| GET | `/disputes/me` | List my disputes (optional `?status=OPEN`) |
+| GET | `/disputes/:id` | Dispute details (own disputes only) |
+| POST | `/disputes/:id/evidence` | Add evidence to open dispute |
 | GET | `/leaderboard/global` | NOT `/leaderboard` bare (404) |
 | GET | `/leaderboard/game/:gameId` | v3.2 Game leaderboard |
 | GET | `/leaderboard/me` | v3.2 My global rank |
@@ -1290,6 +1313,19 @@ The Workbox `sw.js` is ignored by the browser.
 - [ ] Created game appears on other players' Available Games boards
 - [ ] Other player can tap JOIN → both players move to match start
 - [ ] After NPC fill timeout: "Filling match..." → match found → onMatchStart fires
+
+### Disputes (all games)
+
+- [ ] DisputeModal opens from results screen with correct disputeType context badge
+- [ ] 7 reason buttons render and are selectable
+- [ ] Description textarea enforces 10 char min, 2000 char max
+- [ ] Submit calls bridge.fileDispute() -- verify POST /api/v1/disputes in network tab
+- [ ] Success state displays reference ID and 24-48hr review notice
+- [ ] Error state shows error message and allows retry
+- [ ] bridge.getMyDisputes() returns user's filed disputes
+- [ ] bridge.addDisputeEvidence() adds evidence to open dispute
+- [ ] Rate limit: 6th open dispute returns error
+- [ ] Duplicate dispute on same match/tournament returns error
 
 ### Cloud Build
 

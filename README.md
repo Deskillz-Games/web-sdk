@@ -1,4 +1,4 @@
-﻿<!-- sdk-version: v3.4.4 | released: 2026-04-13 -->
+﻿<!-- sdk-version: v3.4.5 | released: 2026-04-13 -->
 # Deskillz Web SDK
 
 Framework-agnostic SDK for integrating competitive gaming tournaments with cryptocurrency prizes into web applications.

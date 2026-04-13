@@ -2,10 +2,28 @@
 
 ## Big 2 | Mahjong | Thirteen Cards (Chinese Poker)
 
-**Version:** 1.8
-**Date:** April 12, 2026
+**Version:** 1.9
+**Date:** April 13, 2026
 **Applies to:** All three React/Vite standalone games
-**SDK:** DeskillzBridge v3.4.4 + @deskillz/game-ui v3.4.4
+**SDK:** DeskillzBridge v3.4.5 + @deskillz/game-ui v3.4.5
+
+**Changelog v1.9 (April 13, 2026):**
+- NEW: DisputeModal component -- full dispute filing UI for results screens.
+  Reason grid (7 reasons), description textarea (10-2000 chars), context badge
+  (Tournament purple / QuickPlay cyan / PrivateRoom pink), submitting/success/error
+  states, 24-48hr review notice, reference ID on success.
+- NEW: DeskillzBridge.fileDispute() -- POST /api/v1/disputes (rate limited: 5 open per user)
+- NEW: DeskillzBridge.getMyDisputes(status?) -- GET /api/v1/disputes/me
+- NEW: DeskillzBridge.getDisputeDetails(id) -- GET /api/v1/disputes/:id (own disputes only)
+- NEW: DeskillzBridge.addDisputeEvidence(id, evidence[]) -- POST /api/v1/disputes/:id/evidence
+- NEW: DisputeRecord type added to DeskillzBridge (13 fields: id, disputeType,
+  tournamentId, tournamentName, matchId, reason, description, evidence, status,
+  resolution, reviewerName, resolvedAt, createdAt)
+- 7 dispute reasons: WRONG_SCORE, CHEATING, DISCONNECTION, NPC_ISSUE,
+  PAYMENT_ISSUE, UNFAIR_MATCHMAKING, OTHER
+- 3 dispute types: TOURNAMENT, QUICK_PLAY, PRIVATE_ROOM
+- Step 1 file list updated: 1 new file (DisputeModal.tsx)
+- Testing checklist updated with dispute tests
 
 **Changelog v1.8 (April 12, 2026):**
 - NEW: TournamentLobbyCard component -- post-check-in tournament lifecycle UI
@@ -184,6 +202,9 @@ FROM ZIP src/components/tournaments/QuickPlayCard.tsx
 
 FROM ZIP src/components/tournaments/TournamentLobbyCard.tsx
   -> YOUR_GAME/src/components/tournaments/TournamentLobbyCard.tsx  NEW
+FROM ZIP src/components/tournaments/DisputeModal.tsx
+  -> YOUR_GAME/src/components/tournaments/DisputeModal.tsx     NEW
+
 
 FROM ZIP src/hooks/useEnrollmentStatus.ts
   -> YOUR_GAME/src/hooks/useEnrollmentStatus.ts        REPLACE
@@ -885,6 +906,83 @@ export default function HostDashboardPage() {
 
 ---
 
+## STEP 8b -- DISPUTE MODAL (All Games)
+
+Wire the DisputeModal into your results screen so players can file disputes
+after any match, tournament, or private room game.
+
+```tsx
+// In your ResultsScreen.tsx or any post-match screen:
+import DisputeModal from '../components/tournaments/DisputeModal'
+
+// In your component:
+const [showDispute, setShowDispute] = useState(false)
+
+// Determine the context (one of these will be set from match data):
+const disputeType = matchData.tournamentId ? 'TOURNAMENT'
+                  : matchData.roomId       ? 'PRIVATE_ROOM'
+                  : 'QUICK_PLAY'
+
+// In JSX -- add a "Report Issue" button somewhere on the results screen:
+<button
+  onClick={() => setShowDispute(true)}
+  style={{
+    padding: '8px 16px', borderRadius: '8px', fontSize: '13px',
+    background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)',
+    color: 'rgba(255,255,255,0.5)', cursor: 'pointer',
+  }}
+>
+  Report Issue
+</button>
+
+<DisputeModal
+  isOpen={showDispute}
+  onClose={() => setShowDispute(false)}
+  disputeType={disputeType}
+  matchId={matchData.matchId}
+  tournamentId={matchData.tournamentId}
+  onSuccess={(disputeId) => console.log('Dispute filed:', disputeId)}
+/>
+```
+
+**DisputeModal props:**
+
+| Prop | Type | Required | Description |
+|------|------|----------|-------------|
+| `isOpen` | boolean | YES | Controls modal visibility |
+| `onClose` | () => void | YES | Called when modal is dismissed |
+| `disputeType` | 'TOURNAMENT' \| 'QUICK_PLAY' \| 'PRIVATE_ROOM' | YES | Context badge colour |
+| `tournamentId` | string | NO | Tournament ID (if tournament dispute) |
+| `matchId` | string | NO | Match ID (if QuickPlay or room dispute) |
+| `onSuccess` | (disputeId: string) => void | NO | Called after successful submission |
+
+**Bridge dispute methods (available on all bridge instances):**
+
+```typescript
+const bridge = DeskillzBridge.getInstance()
+
+// File a dispute (rate limit: 5 open disputes per user)
+const dispute = await bridge.fileDispute({
+  disputeType: 'QUICK_PLAY',
+  matchId: 'match-uuid',
+  reason: 'WRONG_SCORE',
+  description: 'My final score was 1500 but recorded as 1200',
+  evidence: [],
+})
+
+// List my disputes (optional status filter)
+const disputes = await bridge.getMyDisputes('OPEN')
+
+// Get dispute details (own disputes only)
+const detail = await bridge.getDisputeDetails('dispute-uuid')
+
+// Add evidence to an open dispute
+await bridge.addDisputeEvidence('dispute-uuid', [
+  'Screenshot shows correct score: https://...',
+])
+```
+
+
 ## STEP 9 -- VERIFY AND BUILD
 
 ```powershell
@@ -949,6 +1047,18 @@ Compress-Archive -Path .\dist\* -DestinationPath .\game-cloud-build.zip -Force
 - [ ] TurnTimer counts down with colour changes (normal/warning/critical)
 - [ ] PauseRequestModal: request, vote, status sub-modals all render
 
+### Disputes (all games)
+
+- [ ] DisputeModal opens from results screen with correct disputeType badge
+- [ ] All 7 reason buttons render and select correctly
+- [ ] Description textarea enforces 10 char minimum and 2000 char max
+- [ ] Submit calls bridge.fileDispute() -- verify POST /api/v1/disputes in network tab
+- [ ] Success state shows reference ID and "24-48 hours" review notice
+- [ ] Error state shows message and allows retry
+- [ ] bridge.getMyDisputes() returns filed disputes
+- [ ] bridge.addDisputeEvidence() adds evidence to open dispute
+- [ ] Rate limit: 6th open dispute returns error
+
 ### Cloud Build
 
 - [ ] `vite.config.ts` has `base: './'` at top level
@@ -973,6 +1083,7 @@ Compress-Archive -Path .\dist\* -DestinationPath .\game-cloud-build.zip -Force
 | `src/components/ui/Badge.tsx` | REPLACE |
 | `src/components/ui/Button.tsx` | REPLACE |
 | `src/components/ui/Card.tsx` | REPLACE |
+| `src/components/tournaments/DisputeModal.tsx` | NEW |
 | `src/bridge-types.ts` | NEW or REPLACE |
 | `src/utils.ts` | NEW or REPLACE |
 | `src/styles/tokens.css` | NEW or REPLACE |
@@ -1114,7 +1225,7 @@ on R2 but `index.html` registers `deskillz-sw.js` (ours), not `sw.js` (Workbox).
 
 ---
 
-*React Game Update Guide v1.5 -- April 4, 2026*
+*React Game Update Guide v1.9 -- April 13, 2026*
 *Applies to: Big 2, Mahjong, Thirteen Cards (Chinese Poker)*
 *For non-React migration (Dou Dizhu, Bubble Battle, Candy Duel):*
 *see DESKILLZ_NON_REACT_MIGRATION_GUIDE.md v1.4*

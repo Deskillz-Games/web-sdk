@@ -2,10 +2,26 @@
 
 ## Complete Integration Reference for HTML5/JavaScript Game Developers
 
-**Version:** 5.6
-**Date:** April 12, 2026
-**SDK Version:** DeskillzBridge v3.4.4 + @deskillz/game-ui ES module v3.4.4
+**Version:** 5.7
+**Date:** April 13, 2026
+**SDK Version:** DeskillzBridge v3.4.5 + @deskillz/game-ui ES module v3.4.5
 **Web Engine:** React/Vite only -- all standalone web games
+
+**Changelog v5.7 (April 13, 2026):**
+- NEW: DisputeModal component -- dispute filing UI for results screens.
+  7 reasons, 3 dispute types (TOURNAMENT, QUICK_PLAY, PRIVATE_ROOM),
+  context badge with colour coding, description (10-2000 chars),
+  submitting/success/error states, 24-48hr review notice, reference ID.
+- NEW: DeskillzBridge.fileDispute() -- POST /api/v1/disputes
+  (rate limited: 5 open per user, prevents duplicates on same event)
+- NEW: DeskillzBridge.getMyDisputes(status?) -- GET /api/v1/disputes/me
+- NEW: DeskillzBridge.getDisputeDetails(id) -- GET /api/v1/disputes/:id
+- NEW: DeskillzBridge.addDisputeEvidence(id, evidence[]) -- POST /api/v1/disputes/:id/evidence
+- NEW: DisputeRecord type (13 fields) added to DeskillzBridge
+- Updated Section 5 SDK Method Summary with 4 dispute methods
+- Updated Section 6 shared components: DisputeModal added to tournaments
+- Updated Section 12 testing checklist: dispute tests added
+- Updated Section 14 API endpoint reference: 4 dispute endpoints added
 
 **Changelog v5.6 (April 12, 2026):**
 - NEW: TournamentLobbyCard component -- post-check-in tournament lifecycle UI with
@@ -604,6 +620,13 @@ bridge.verifyScore(signedScore)       // Client-side signature verification
 // Room Management (v3.2 -- NEW)
 bridge.startRoom(roomId)              // POST /api/v1/private-rooms/:roomId/start
 
+
+// Disputes (v3.4.5 -- NEW)
+bridge.fileDispute(params)            // POST /api/v1/disputes (5 open max per user)
+bridge.getMyDisputes(status?)         // GET  /api/v1/disputes/me
+bridge.getDisputeDetails(disputeId)   // GET  /api/v1/disputes/:id (own disputes only)
+bridge.addDisputeEvidence(id, arr)    // POST /api/v1/disputes/:id/evidence
+
 // Realtime
 bridge.onRealtimeEvent(event, handler)
 bridge.sendRealtimeMessage(event, data)
@@ -639,6 +662,8 @@ bridge.sendRealtimeMessage(event, data)
 | **How to Play** | P2 | YES | YES | Rules, tutorial |
 
 ### Shared Components (DO NOT BUILD FROM SCRATCH)
+
+> **v3.4.5:** DisputeModal.tsx added to tournaments/ -- wire into results screens.
 
 > **SDK v3.2:** Developers NEVER build tournament cards, QuickPlay cards, or room UIs.
 > Import them from `@deskillz/game-ui`. All games are React/Vite.
@@ -1327,6 +1352,18 @@ toNum(wallet.total).toFixed(2)
 - [ ] Host Dashboard uses safe defaults (no crash on partial data)
 - [ ] `toNum()` wraps all `.toFixed()` calls
 
+### Disputes (All Games)
+
+- [ ] DisputeModal opens from results screen with correct disputeType badge
+- [ ] 7 reason buttons render and select correctly
+- [ ] Description enforces 10 char min, 2000 char max
+- [ ] Submit calls bridge.fileDispute() -- check POST /api/v1/disputes in network tab
+- [ ] Success state shows reference ID and 24-48hr review notice
+- [ ] Error state shows message, allows retry
+- [ ] bridge.getMyDisputes() returns user's disputes
+- [ ] bridge.addDisputeEvidence() adds evidence to open dispute
+- [ ] Rate limit: 6th open dispute returns error
+
 ### After Cloud Build
 
 - [ ] APK installs on Android
@@ -1457,6 +1494,11 @@ All endpoints use `/api/v1/` prefix:
 | GET | `/spectator/rooms` | List spectateable rooms |
 | GET | `/spectator/rooms/:id/check` | Permission check |
 | GET | `/spectator/rooms/:id` | Room state (REST fallback) |
+| **Disputes** | | |
+| POST | `/disputes` | File a dispute (5 open max, prevents duplicates) |
+| GET | `/disputes/me` | List my disputes (optional `?status=OPEN`) |
+| GET | `/disputes/:id` | Dispute details (own disputes only) |
+| POST | `/disputes/:id/evidence` | Add evidence to open dispute |
 | **Hosted Games** | | |
 | GET | `/hosted-games` | List public hosted games |
 | GET | `/hosted-games/:slug` | Get game by slug |
