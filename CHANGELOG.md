@@ -6,6 +6,26 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
+
+## [3.4.4] - 2026-04-12
+
+### Added
+- TournamentLobbyCard: post-check-in tournament lifecycle UI (8 states)
+- useTournamentLobby: tournament lobby state machine hook
+- DeskillzBridge.getTournamentSchedule(): bracket schedule API method
+- 5 tournament schedule TypeScript types
+- QuickPlay: fetchSocialGameTypes(), getSocialGameLabel() helpers
+- QuickPlay: DOU_DIZHU added to SocialGameType enum
+
+### Changed
+- TournamentLobbyCard, useTournamentLobby, QuickPlay future-proofing, NPC escrow fixes
+- Synced components, hooks, types from packages/game-ui
+- SOCIAL_GAME_LABELS changed to dynamic Record<string,string>
+- QuickPlaySettingsTab: social game type selector fetches from backend
+- QuickPlayAdminTab: uses getSocialGameLabel() for config labels
+- Developer docs updated (v1.8, v1.9, v3.4, v5.6)
+- Plugin: vite-plugin-sw-version.mjs (retired .ts)
+- Service worker: deskillz-sw.js (retired sw.js)
 ## [3.4.3] - 2026-04-11
 
 ### Changed
@@ -14,6 +34,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Plugin: vite-plugin-sw-version.mjs (retired .ts)
 - Service worker: deskillz-sw.js (retired sw.js)
 - workbox-config.js retired
+
+## [3.4.4] - 2026-04-12
+
+### Added
+- TournamentLobbyCard: post-check-in tournament lifecycle UI (8 states)
+- useTournamentLobby: tournament lobby state machine hook
+- DeskillzBridge.getTournamentSchedule(): bracket schedule API method
+- 5 tournament schedule TypeScript types
+- QuickPlay: fetchSocialGameTypes(), getSocialGameLabel() helpers
+- QuickPlay: DOU_DIZHU added to SocialGameType enum
+
+### Changed
+- TournamentLobbyCard, useTournamentLobby, QuickPlay future-proofing, NPC escrow fixes
+- Synced components, hooks, types from packages/game-ui
+- SOCIAL_GAME_LABELS changed to dynamic Record<string,string>
+- QuickPlaySettingsTab: social game type selector fetches from backend
+- QuickPlayAdminTab: uses getSocialGameLabel() for config labels
+- Developer docs updated (v1.8, v1.9, v3.4, v5.6)
+- Plugin: vite-plugin-sw-version.mjs (retired .ts)
+- Service worker: deskillz-sw.js (retired sw.js)
 ## [3.0.0] - 2026-02-03
 
 ### Added
@@ -112,6 +152,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Secure nonce generation using Web Crypto API
 
 
+
+## [3.4.4] - 2026-04-12
+
+### Added
+- TournamentLobbyCard: post-check-in tournament lifecycle UI (8 states)
+- useTournamentLobby: tournament lobby state machine hook
+- DeskillzBridge.getTournamentSchedule(): bracket schedule API method
+- 5 tournament schedule TypeScript types
+- QuickPlay: fetchSocialGameTypes(), getSocialGameLabel() helpers
+- QuickPlay: DOU_DIZHU added to SocialGameType enum
+
+### Changed
+- TournamentLobbyCard, useTournamentLobby, QuickPlay future-proofing, NPC escrow fixes
+- Synced components, hooks, types from packages/game-ui
+- SOCIAL_GAME_LABELS changed to dynamic Record<string,string>
+- QuickPlaySettingsTab: social game type selector fetches from backend
+- QuickPlayAdminTab: uses getSocialGameLabel() for config labels
+- Developer docs updated (v1.8, v1.9, v3.4, v5.6)
+- Plugin: vite-plugin-sw-version.mjs (retired .ts)
+- Service worker: deskillz-sw.js (retired sw.js)
 ## [3.4.3] - 2026-04-11
 
 ### Changed
@@ -120,6 +180,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Plugin: vite-plugin-sw-version.mjs (retired .ts)
 - Service worker: deskillz-sw.js (retired sw.js)
 - workbox-config.js retired
+
+## [3.4.4] - 2026-04-12
+
+### Added
+- TournamentLobbyCard: post-check-in tournament lifecycle UI (8 states)
+- useTournamentLobby: tournament lobby state machine hook
+- DeskillzBridge.getTournamentSchedule(): bracket schedule API method
+- 5 tournament schedule TypeScript types
+- QuickPlay: fetchSocialGameTypes(), getSocialGameLabel() helpers
+- QuickPlay: DOU_DIZHU added to SocialGameType enum
+
+### Changed
+- TournamentLobbyCard, useTournamentLobby, QuickPlay future-proofing, NPC escrow fixes
+- Synced components, hooks, types from packages/game-ui
+- SOCIAL_GAME_LABELS changed to dynamic Record<string,string>
+- QuickPlaySettingsTab: social game type selector fetches from backend
+- QuickPlayAdminTab: uses getSocialGameLabel() for config labels
+- Developer docs updated (v1.8, v1.9, v3.4, v5.6)
+- Plugin: vite-plugin-sw-version.mjs (retired .ts)
+- Service worker: deskillz-sw.js (retired sw.js)
 ## [2.x.x] - Previous Versions
 
 Previous versions were platform-specific SDKs (Unity, Unreal Engine).

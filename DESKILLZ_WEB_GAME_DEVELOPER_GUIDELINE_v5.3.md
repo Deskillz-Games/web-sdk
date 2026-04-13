@@ -2,10 +2,29 @@
 
 ## Complete Integration Reference for HTML5/JavaScript Game Developers
 
-**Version:** 5.5
-**Date:** April 11, 2026
-**SDK Version:** DeskillzBridge v3.4.3 + @deskillz/game-ui ES module v3.4.3
-**Web Engine:** React/Vite only — all standalone web games
+**Version:** 5.6
+**Date:** April 12, 2026
+**SDK Version:** DeskillzBridge v3.4.4 + @deskillz/game-ui ES module v3.4.4
+**Web Engine:** React/Vite only -- all standalone web games
+
+**Changelog v5.6 (April 12, 2026):**
+- NEW: TournamentLobbyCard component -- post-check-in tournament lifecycle UI with
+  8 states: LOADING, NOT_CHECKED_IN, WAITING_FOR_START, TABLE_ASSIGNED, MATCH_READY,
+  PLAYING, BETWEEN_ROUNDS, ELIMINATED, CHAMPION. Seat dots fill in real-time.
+  3-second countdown on MATCH_READY fires onMatchStart callback.
+- NEW: useTournamentLobby hook -- polls GET /tournaments/:id/my-status and
+  GET /tournaments/:id/schedule, subscribes to tournament:starting,
+  room:table-assigned, room:table-closed socket events.
+- NEW: DeskillzBridge.getTournamentSchedule(tournamentId) method --
+  GET /api/v1/tournaments/:id/schedule returns bracket with rounds, tables, players
+- NEW: 5 TypeScript types: TournamentSchedule, TournamentScheduleRound,
+  TournamentScheduleTable, TournamentSchedulePlayer, TournamentPlayerStatus
+- QuickPlay future-proofing: SocialGameType enum includes DOU_DIZHU.
+  SOCIAL_GAME_LABELS changed to Record<string,string> (extensible).
+  fetchSocialGameTypes() fetches from GET /api/v1/games/social-types.
+  getSocialGameLabel(value) for safe label lookup on any game type.
+- QuickPlaySettingsTab: social game type selector dynamically fetched from backend
+- QuickPlayAdminTab: config details use getSocialGameLabel()
 
 **Changelog v5.5 (April 11, 2026):** SDK v3.4.3 -- GameCapabilities expanded with
 supportsBlitz1v1, supportsDuel1v1, supportsSinglePlayerMode, supportsTurnBased. GameMode
@@ -616,9 +635,11 @@ bridge.sendRealtimeMessage(event, data)
 | Component | Import | Purpose |
 |-----------|--------|---------|
 | `TournamentCard` | `@deskillz/game-ui` | All 3 tournament types (esport, social, cash game) |
+| `TournamentLobbyCard` | `@deskillz/game-ui` | Post-check-in tournament lifecycle (v3.4.4) |
 | `QuickPlayCard` | `@deskillz/game-ui` | Esport queue + Social board UI (v3.2) |
 | `useEnrollmentStatus` | `@deskillz/game-ui` | Register/CheckIn/DQ state machine |
 | `useQuickPlayQueue` | `@deskillz/game-ui` | QuickPlay state machine + board (v3.2) |
+| `useTournamentLobby` | `@deskillz/game-ui` | Tournament lobby state machine (v3.4.4) |
 | `AvailableGame` (type) | `@deskillz/game-ui` | Social games board entry |
 
 **Room Components (social games -- v3.2 NEW):**
@@ -1097,10 +1118,12 @@ src/
   components/
     tournaments/
       TournamentCard.tsx      <- From @deskillz/game-ui (do not rebuild)
+      TournamentLobbyCard.tsx <- From @deskillz/game-ui (v3.4.4 -- tournament lobby)
       QuickPlayCard.tsx       <- From @deskillz/game-ui (do not rebuild)
   hooks/
     useEnrollmentStatus.ts   <- From @deskillz/game-ui
     useQuickPlayQueue.ts     <- From @deskillz/game-ui
+    useTournamentLobby.ts    <- From @deskillz/game-ui (v3.4.4 -- tournament lobby)
 ```
 
 ### Pattern 2: React/Vite + Canvas/PixiJS (Gameplay engine inside React)

@@ -1,9 +1,9 @@
 # DESKILLZ STANDALONE GAME UI BUILD HANDOFF
 ## Universal UI Guide for Self-Sufficient Game Apps
 
-**Version:** 3.3
-**Date:** April 11, 2026
-**SDK Version:** Deskillz SDK v3.4.3 + @deskillz/game-ui v3.4.3
+**Version:** 3.4
+**Date:** April 12, 2026
+**SDK Version:** Deskillz SDK v3.4.4 + @deskillz/game-ui v3.4.4
 **Architecture:** Self-Sufficient (No External App Dependency)
 **Supported Game Types:** Esports (Competitive) + Social Games (Cash Game + Tournament)
 **Supported Web Engine:** React/Vite only (all standalone web games)
@@ -11,6 +11,27 @@
 ---
 
 ## CHANGELOG
+
+### v3.4 (April 12, 2026)
+- NEW: TournamentLobbyCard -- post-check-in tournament lifecycle component
+  States: WAITING_FOR_START, TABLE_ASSIGNED, MATCH_READY, PLAYING,
+  BETWEEN_ROUNDS, ELIMINATED, CHAMPION. Seat dots fill in real-time.
+  3-second countdown on MATCH_READY -> onMatchStart callback fires.
+- NEW: useTournamentLobby hook -- polls /tournaments/:id/my-status and
+  /tournaments/:id/schedule, subscribes to tournament:starting,
+  room:table-assigned, room:table-closed socket events
+- NEW: DeskillzBridge.getTournamentSchedule(tournamentId) method
+- NEW: 5 TypeScript types: TournamentSchedule, TournamentScheduleRound,
+  TournamentScheduleTable, TournamentSchedulePlayer, TournamentPlayerStatus
+- QuickPlay future-proofing: SocialGameType enum includes DOU_DIZHU,
+  SOCIAL_GAME_LABELS is now Record<string,string> (extensible),
+  fetchSocialGameTypes() fetches from GET /api/v1/games/social-types,
+  getSocialGameLabel() for safe label lookup
+- QuickPlaySettingsTab: social game type selector dynamically fetched from backend
+- QuickPlayAdminTab: config details use getSocialGameLabel()
+- Updated Section 9 (QuickPlay) with future-proof social game type note
+- Updated Section 16 (game-ui package) with 2 new files
+- Updated Section 22 (testing checklist) with tournament lobby tests
 
 ### v3.3 (April 11, 2026)
 - SDK v3.4.3 released
@@ -885,12 +906,14 @@ All shared UI primitives come from `@deskillz/game-ui`. Do not rebuild them:
 | Component | Import | Purpose |
 |-----------|--------|---------|
 | `TournamentCard` | `@deskillz/game-ui` | All 3 tournament card types |
+| `TournamentLobbyCard` | `@deskillz/game-ui` | Post-check-in tournament lifecycle (v3.4.4) |
 | `QuickPlayCard` | `@deskillz/game-ui` | QuickPlay 5-state card |
 | `Badge` | `@deskillz/game-ui` | Status/mode badges |
 | `Button` | `@deskillz/game-ui` | Primary/secondary/danger/success buttons |
 | `Card` | `@deskillz/game-ui` | Card container with variants |
 | `useEnrollmentStatus` | `@deskillz/game-ui` | Enrollment state + DQ countdown |
 | `useQuickPlayQueue` | `@deskillz/game-ui` | QuickPlay queue state machine |
+| `useTournamentLobby` | `@deskillz/game-ui` | Tournament lobby state machine (v3.4.4) |
 
 ---
 

@@ -2,10 +2,20 @@
 
 ## Dou Dizhu | Bubble Battle | Candy Duel
 
-**Version:** 1.8
-**Date:** April 11, 2026
+**Version:** 1.9
+**Date:** April 12, 2026
 **For:** Developers of existing non-React standalone games
 **Applies to:** Dou Dizhu (PixiJS), Bubble Battle (Canvas/TypeScript), Candy Duel (Canvas/TypeScript)
+
+**Changelog v1.9 (April 12, 2026):**
+- NEW: TournamentLobbyCard component added to Step 7 file list
+- NEW: useTournamentLobby hook added to Step 7 file list
+- NEW: DeskillzBridge.getTournamentSchedule() method + 5 tournament schedule types
+- QuickPlay: SocialGameType enum includes DOU_DIZHU, SOCIAL_GAME_LABELS is
+  now dynamic (Record<string,string>), fetchSocialGameTypes() auto-fetches from backend
+- QuickPlay: getSocialGameLabel() helper for safe label lookup
+- QuickPlaySettingsTab/AdminTab: social game type selectors are now dynamic --
+  new game types added to Prisma appear automatically without frontend changes
 
 **Changelog v1.8 (April 11, 2026):**
 - SDK v3.4.3: GameCapabilities expanded with 4 new mode flags

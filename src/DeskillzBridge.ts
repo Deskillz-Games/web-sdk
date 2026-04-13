@@ -398,6 +398,91 @@ export interface QuickPlayMatchData {
   players: Array<{ id: string; rating: number }>;
   npcCount?: number;
 }
+
+// =============================================================================
+// TOURNAMENT SCHEDULE TYPES
+// =============================================================================
+
+export interface TournamentSchedulePlayer {
+  userId: string;
+  username: string;
+  avatarUrl?: string;
+  seatNumber: number;
+  isNPC: boolean;
+  status: string;
+  finalScore: number | null;
+  finalRank: number | null;
+  isWinner: boolean;
+  roundWins?: number;
+}
+
+export interface TournamentScheduleTable {
+  id: string;
+  tableNumber: number;
+  seats: number;
+  filledSeats: number;
+  npcCount: number;
+  status: string;
+  matchRoundsCount: number;
+  currentMatchRound: number;
+  winnerId: string | null;
+  winnerScore: number | null;
+  players: TournamentSchedulePlayer[];
+}
+
+export interface TournamentScheduleRound {
+  id: string;
+  roundNumber: number;
+  totalTables: number;
+  playersRemaining: number;
+  status: string;
+  checkinOpensAt: string | null;
+  startsAt: string | null;
+  endsAt: string | null;
+  tables: TournamentScheduleTable[];
+}
+
+export interface TournamentSchedule {
+  tournamentId: string;
+  name: string;
+  totalRounds: number;
+  currentRound: number;
+  seatsPerTable: number;
+  playersAdvancePerTable: number;
+  matchRoundsCount: number;
+  estimatedDurationMins: number;
+  scheduledStart: string;
+  status: string;
+  rounds: TournamentScheduleRound[];
+}
+
+export interface TournamentPlayerStatus {
+  tournamentId: string;
+  tournamentName: string;
+  isRegistered: boolean;
+  bookingStatus: string;
+  currentRound: number;
+  totalRounds: number;
+  eliminatedInRound?: number | null;
+  canCheckin: boolean;
+  checkinOpensAt?: string | null;
+  checkinDeadline?: string | null;
+  secondsUntilCheckin?: number | null;
+  currentTable: {
+    tableId: string;
+    tableNumber: number;
+    seatNumber: number;
+    status: string;
+    players: TournamentSchedulePlayer[];
+  } | null;
+  schedule: {
+    scheduledStart: string;
+    registrationCloses: string;
+    estimatedFinish: string;
+    estimatedDurationMins: number;
+  };
+}
+
 // =============================================================================
 // EVENT SYSTEM
 // =============================================================================
@@ -1626,6 +1711,17 @@ export class DeskillzBridge {
     } catch {
       return [];
     }
+  }
+
+  /**
+   * Get tournament bracket schedule with rounds, tables, and player assignments.
+   * Used by TournamentLobbyCard to show bracket progress, table assignments,
+   * and round transitions during live tournament play.
+   */
+  async getTournamentSchedule(tournamentId: string): Promise<TournamentSchedule> {
+    return this.http.get<TournamentSchedule>(
+      `/api/v1/tournaments/${tournamentId}/schedule`,
+    );
   }
 
   // ---------------------------------------------------------------------------

@@ -2,10 +2,32 @@
 
 ## Big 2 | Mahjong | Thirteen Cards (Chinese Poker)
 
-**Version:** 1.7
-**Date:** April 11, 2026
+**Version:** 1.8
+**Date:** April 12, 2026
 **Applies to:** All three React/Vite standalone games
-**SDK:** DeskillzBridge v3.4.3 + @deskillz/game-ui v3.4.3
+**SDK:** DeskillzBridge v3.4.4 + @deskillz/game-ui v3.4.4
+
+**Changelog v1.8 (April 12, 2026):**
+- NEW: TournamentLobbyCard component -- post-check-in tournament lifecycle UI
+  (waiting room, table assignment with seat dots, match countdown, bracket progress,
+  between-rounds, eliminated, champion states)
+- NEW: useTournamentLobby hook -- manages WAITING_FOR_START -> TABLE_ASSIGNED ->
+  MATCH_READY -> PLAYING -> BETWEEN_ROUNDS -> ELIMINATED/CHAMPION state machine
+- NEW: DeskillzBridge.getTournamentSchedule() -- fetches bracket schedule from
+  GET /api/v1/tournaments/:id/schedule
+- NEW: 5 TypeScript types added to DeskillzBridge: TournamentSchedule,
+  TournamentScheduleRound, TournamentScheduleTable, TournamentSchedulePlayer,
+  TournamentPlayerStatus
+- QuickPlay: SocialGameType enum now includes DOU_DIZHU in quick-play.ts
+- QuickPlay: SOCIAL_GAME_LABELS changed from strict Record<SocialGameType,string>
+  to dynamic Record<string,string> -- extensible for new game types without code changes
+- QuickPlay: fetchSocialGameTypes() helper added -- fetches from
+  GET /api/v1/games/social-types, caches result, merges labels automatically
+- QuickPlay: getSocialGameLabel(value) helper -- safe label lookup for any game type
+- QuickPlaySettingsTab (Developer Portal): social game type selector now fetches
+  dynamically from backend -- new game types appear automatically
+- QuickPlayAdminTab (Admin Panel): config details use getSocialGameLabel() for labels
+- Step 1 file list updated: 2 new files (TournamentLobbyCard.tsx, useTournamentLobby.ts)
 
 **Changelog v1.7 (April 11, 2026):**
 - SDK v3.4.3: GameCapabilities expanded with 4 new mode flags
@@ -144,11 +166,17 @@ FROM ZIP src/components/tournaments/TournamentCard.tsx
 FROM ZIP src/components/tournaments/QuickPlayCard.tsx
   -> YOUR_GAME/src/components/tournaments/QuickPlayCard.tsx     REPLACE
 
+FROM ZIP src/components/tournaments/TournamentLobbyCard.tsx
+  -> YOUR_GAME/src/components/tournaments/TournamentLobbyCard.tsx  NEW
+
 FROM ZIP src/hooks/useEnrollmentStatus.ts
   -> YOUR_GAME/src/hooks/useEnrollmentStatus.ts        REPLACE
 
 FROM ZIP src/hooks/useQuickPlayQueue.ts
   -> YOUR_GAME/src/hooks/useQuickPlayQueue.ts          REPLACE
+
+FROM ZIP src/hooks/useTournamentLobby.ts
+  -> YOUR_GAME/src/hooks/useTournamentLobby.ts         NEW
 
 FROM ZIP src/components/ui/Badge.tsx
   -> YOUR_GAME/src/components/ui/Badge.tsx             REPLACE
