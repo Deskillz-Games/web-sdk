@@ -164,6 +164,13 @@ function LabelWithTooltip({ icon: Icon, iconClass, label, tooltip }: {
 }
 
 // =============================================================================
+// ORDINAL HELPER
+const ordinal = (n: number) => {
+  const s = ['th', 'st', 'nd', 'rd']
+  const v = n % 100
+  return n + (s[(v - 20) % 10] || s[v] || s[0])
+}
+
 // CHIP + FREE INPUT
 // =============================================================================
 
@@ -515,10 +522,16 @@ export default function EsportGameSettings({
         </div>
       )}
 
-      {/* ── PRIZE DISTRIBUTION ── */}
+      {/* ── PRIZE DISTRIBUTION / PLACEMENT RANKING ── */}
       <div className={S.section}>
-        <LabelWithTooltip icon={Trophy} iconClass="text-green-400" label="Prize Split"
-          tooltip="How the net prize pool is distributed. Must total 100%. For FFA you can pay multiple positions. For Single Elimination, Winner Takes All is most common." />
+        <LabelWithTooltip icon={Trophy} iconClass="text-green-400"
+          label={config.entryFee === 0 ? 'Placement Ranking' : 'Prize Split'}
+          tooltip={config.entryFee === 0
+            ? 'Free event -- select how many positions to rank. Placement is determined by score.'
+            : 'How the net prize pool is distributed. Must total 100%. For FFA you can pay multiple positions. For Single Elimination, Winner Takes All is most common.'} />
+        {config.entryFee === 0 && (
+          <p className="text-xs text-green-400/70 mb-2">Free event -- placement is ranked by score. Select how many positions to rank.</p>
+        )}
         <div className={S.chipGrid}>
           {PRESET_PRIZE_SPLITS.map((preset) => {
             const isSelected = JSON.stringify(config.prizeDistribution) === JSON.stringify(preset.distribution)
@@ -530,22 +543,40 @@ export default function EsportGameSettings({
             )
           })}
         </div>
-        <div className="space-y-2 mt-2">
-          {Object.entries(config.prizeDistribution).map(([pos, pct]) => (
-            <div key={pos} className="flex items-center gap-2">
-              <span className="text-xs text-gray-500 w-8 text-right">#{pos}</span>
-              <input type="number" min={0} max={100} step={0.1} value={pct}
-                onChange={(e) => update({ prizeDistribution: { ...config.prizeDistribution, [pos]: parseFloat(e.target.value) || 0 } })}
-                disabled={disabled} className={cn(S.freeInput, 'w-20')} />
-              <span className="text-xs text-gray-500">%</span>
-              {Object.keys(config.prizeDistribution).length > 1 && (
-                <button type="button" disabled={disabled}
-                  onClick={() => { const d = { ...config.prizeDistribution }; delete d[pos]; update({ prizeDistribution: d }) }}
-                  className="text-red-400 hover:text-red-300 text-xs px-1">✕</button>
-              )}
-            </div>
-          ))}
-        </div>
+        {config.entryFee === 0 ? (
+          /* FREE MODE: show placement order */
+          <div className="space-y-2 mt-2">
+            {Object.keys(config.prizeDistribution).map((pos) => (
+              <div key={pos} className="flex items-center gap-2 p-2 bg-[#1a1a2e] border border-gray-700 rounded-lg">
+                <span className="text-sm font-bold text-cyan-400 w-12 text-center">{ordinal(Number(pos))}</span>
+                <span className="text-xs text-gray-400">Place</span>
+                {Object.keys(config.prizeDistribution).length > 1 && (
+                  <button type="button" disabled={disabled}
+                    onClick={() => { const d = { ...config.prizeDistribution }; delete d[pos]; update({ prizeDistribution: d }) }}
+                    className="ml-auto text-red-400 hover:text-red-300 text-xs px-1">✕</button>
+                )}
+              </div>
+            ))}
+          </div>
+        ) : (
+          /* PAID MODE: normal % inputs */
+          <div className="space-y-2 mt-2">
+            {Object.entries(config.prizeDistribution).map(([pos, pct]) => (
+              <div key={pos} className="flex items-center gap-2">
+                <span className="text-xs text-gray-500 w-8 text-right">#{pos}</span>
+                <input type="number" min={0} max={100} step={0.1} value={pct}
+                  onChange={(e) => update({ prizeDistribution: { ...config.prizeDistribution, [pos]: parseFloat(e.target.value) || 0 } })}
+                  disabled={disabled} className={cn(S.freeInput, 'w-20')} />
+                <span className="text-xs text-gray-500">%</span>
+                {Object.keys(config.prizeDistribution).length > 1 && (
+                  <button type="button" disabled={disabled}
+                    onClick={() => { const d = { ...config.prizeDistribution }; delete d[pos]; update({ prizeDistribution: d }) }}
+                    className="text-red-400 hover:text-red-300 text-xs px-1">✕</button>
+                )}
+              </div>
+            ))}
+          </div>
+        )}
         <button type="button" disabled={disabled}
           onClick={() => {
             const positions = Object.keys(config.prizeDistribution)
@@ -555,13 +586,19 @@ export default function EsportGameSettings({
           className={cn('mt-2 px-4 py-1.5 rounded-lg border text-xs font-medium transition-all bg-[#1a1a2e] border-gray-700 text-gray-400 hover:border-green-500 hover:text-green-400', disabled && 'opacity-50 cursor-not-allowed')}>
           + Add Position
         </button>
-        {!isPrizeValid && (
-          <div className="flex items-center gap-2 mt-1 text-xs text-red-400">
-            <AlertCircle className="w-3 h-3 flex-shrink-0" />
-            Prize split must total 100% (currently {prizeTotal.toFixed(1)}%)
-          </div>
+        {config.entryFee === 0 ? (
+          <p className="text-xs text-green-400 mt-1">{Object.keys(config.prizeDistribution).length} position(s) ranked</p>
+        ) : (
+          <>
+            {!isPrizeValid && (
+              <div className="flex items-center gap-2 mt-1 text-xs text-red-400">
+                <AlertCircle className="w-3 h-3 flex-shrink-0" />
+                Prize split must total 100% (currently {prizeTotal.toFixed(1)}%)
+              </div>
+            )}
+            {isPrizeValid && <p className="text-xs text-green-400 mt-1">Total: 100% ✓</p>}
+          </>
         )}
-        {isPrizeValid && <p className="text-xs text-green-400 mt-1">Total: 100% ✓</p>}
       </div>
 
       {/* ── VISIBILITY ── */}
@@ -604,8 +641,8 @@ export default function EsportGameSettings({
           <div className="mt-3 pt-3 border-t border-gray-700/50 flex flex-wrap gap-3">
             {Object.entries(config.prizeDistribution).map(([pos, pct]) => (
               <div key={pos} className="text-center">
-                <p className="text-xs text-gray-500">#{pos}</p>
-                <p className="text-sm font-bold text-cyan-400">${((netPool * pct) / 100).toFixed(2)}</p>
+                <p className="text-xs text-gray-500">{ordinal(Number(pos))}</p>
+                <p className="text-sm font-bold text-cyan-400">{config.entryFee === 0 ? 'Place' : `$${((netPool * pct) / 100).toFixed(2)}`}</p>
               </div>
             ))}
           </div>

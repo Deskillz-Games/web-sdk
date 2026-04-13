@@ -231,6 +231,13 @@ function LabelWithTooltip({ icon: Icon, iconClass, label, tooltip }: {
 }
 
 // =============================================================================
+// ORDINAL HELPER
+const ordinal = (n: number) => {
+  const s = ['th', 'st', 'nd', 'rd']
+  const v = n % 100
+  return n + (s[(v - 20) % 10] || s[v] || s[0])
+}
+
 // CHIP + FREE INPUT
 // =============================================================================
 
@@ -624,9 +631,15 @@ export default function SocialGameSettings({
             </div>
           </div>
 
-          {/* Prize Distribution */}
+          {/* Prize Distribution / Placement Ranking */}
           <div className={S.section}>
-            <label className={S.label}><Trophy className="w-4 h-4 text-green-400" />Prize Split</label>
+            <label className={S.label}>
+              <Trophy className="w-4 h-4 text-green-400" />
+              {config.entryFee === 0 ? 'Placement Ranking' : 'Prize Split'}
+            </label>
+            {config.entryFee === 0 && (
+              <p className="text-xs text-green-400/70 mb-2">Free event -- placement is ranked by total points. Select how many positions to rank.</p>
+            )}
             <div className={cn(S.chipGrid, 'mb-3')}>
               {[
                 { label: 'Top 1',  dist: { '1': 100 } as Record<string, number> },
@@ -641,22 +654,40 @@ export default function SocialGameSettings({
                 )
               })}
             </div>
-            <div className="space-y-2">
-              {Object.entries(config.prizeDistribution || {}).map(([pos, pct]) => (
-                <div key={pos} className="flex items-center gap-2">
-                  <span className="text-xs text-gray-500 w-8 text-right">#{pos}</span>
-                  <input type="number" min={0} max={100} value={pct}
-                    onChange={(e) => update({ prizeDistribution: { ...config.prizeDistribution, [pos]: parseInt(e.target.value) || 0 } })}
-                    disabled={disabled} className="flex-1 px-3 py-1.5 bg-[#1a1a2e] border border-gray-700 rounded-lg text-white text-sm focus:border-yellow-500 focus:outline-none w-20" />
-                  <span className="text-xs text-gray-500">%</span>
-                  {Object.keys(config.prizeDistribution || {}).length > 1 && (
-                    <button type="button" disabled={disabled}
-                      onClick={() => { const d = { ...config.prizeDistribution }; delete d[pos]; update({ prizeDistribution: d }) }}
-                      className="text-red-400 hover:text-red-300 text-xs px-1">✕</button>
-                  )}
-                </div>
-              ))}
-            </div>
+            {config.entryFee === 0 ? (
+              /* FREE MODE: show placement order instead of % inputs */
+              <div className="space-y-2">
+                {Object.keys(config.prizeDistribution || {}).map((pos) => (
+                  <div key={pos} className="flex items-center gap-2 p-2 bg-[#1a1a2e] border border-gray-700 rounded-lg">
+                    <span className="text-sm font-bold text-cyan-400 w-12 text-center">{ordinal(Number(pos))}</span>
+                    <span className="text-xs text-gray-400">Place</span>
+                    {Object.keys(config.prizeDistribution || {}).length > 1 && (
+                      <button type="button" disabled={disabled}
+                        onClick={() => { const d = { ...config.prizeDistribution }; delete d[pos]; update({ prizeDistribution: d }) }}
+                        className="ml-auto text-red-400 hover:text-red-300 text-xs px-1">✕</button>
+                    )}
+                  </div>
+                ))}
+              </div>
+            ) : (
+              /* PAID MODE: normal % inputs */
+              <div className="space-y-2">
+                {Object.entries(config.prizeDistribution || {}).map(([pos, pct]) => (
+                  <div key={pos} className="flex items-center gap-2">
+                    <span className="text-xs text-gray-500 w-8 text-right">#{pos}</span>
+                    <input type="number" min={0} max={100} value={pct}
+                      onChange={(e) => update({ prizeDistribution: { ...config.prizeDistribution, [pos]: parseInt(e.target.value) || 0 } })}
+                      disabled={disabled} className="flex-1 px-3 py-1.5 bg-[#1a1a2e] border border-gray-700 rounded-lg text-white text-sm focus:border-yellow-500 focus:outline-none w-20" />
+                    <span className="text-xs text-gray-500">%</span>
+                    {Object.keys(config.prizeDistribution || {}).length > 1 && (
+                      <button type="button" disabled={disabled}
+                        onClick={() => { const d = { ...config.prizeDistribution }; delete d[pos]; update({ prizeDistribution: d }) }}
+                        className="text-red-400 hover:text-red-300 text-xs px-1">✕</button>
+                    )}
+                  </div>
+                ))}
+              </div>
+            )}
             <button type="button" disabled={disabled}
               onClick={() => {
                 const positions = Object.keys(config.prizeDistribution || {})
@@ -666,7 +697,9 @@ export default function SocialGameSettings({
               className={cn('mt-2 px-4 py-1.5 rounded-lg border text-xs font-medium transition-all bg-[#1a1a2e] border-gray-700 text-gray-400 hover:border-green-500 hover:text-green-400', disabled && 'opacity-50 cursor-not-allowed')}>
               + Add Position
             </button>
-            {(() => {
+            {config.entryFee === 0 ? (
+              <p className="text-xs text-green-400 mt-1">{Object.keys(config.prizeDistribution || {}).length} position(s) ranked</p>
+            ) : (() => {
               const total = Object.values(config.prizeDistribution || {}).reduce((s, v) => s + v, 0)
               return total !== 100
                 ? <p className="text-xs text-red-400 mt-1">Total must equal 100% (currently {total}%)</p>
