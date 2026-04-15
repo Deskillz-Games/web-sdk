@@ -2,10 +2,30 @@
 
 ## Complete Integration Reference for HTML5/JavaScript Game Developers
 
-**Version:** 5.8
-**Date:** April 13, 2026
-**SDK Version:** DeskillzBridge v3.4.6 + @deskillz/game-ui ES module v3.4.6
+**Version:** 5.9
+**Date:** April 14, 2026
+**SDK Version:** DeskillzBridge v3.4.7 + @deskillz/game-ui ES module v3.4.7
 **Web Engine:** React/Vite only -- all standalone web games
+
+**Changelog v5.9 (April 14, 2026):**
+- QUICKPLAY: Dynamic category seeding -- QuickPlayConfig auto-created with
+  correct Social vs Esport defaults from Game.gameCategory. Social defaults:
+  4 players, point value tiers $0.25/$0.50/$1/$5, all 5 currencies, 100x/50x
+  buy-in multipliers, 5% rake, $50 cap, 90s timeout, 20 min session.
+  Esport defaults: 1v1, entry fee tiers $1/$5/$10/$25, 10% platform fee, 20s timeout.
+- QUICKPLAY DTO: SocialGameTypeDto updated with DOU_DIZHU + OTHER enum values,
+  socialGameTypeCustom String field for developer-defined custom game types
+- ADMIN: QuickPlay admin panel now supports inline category toggle
+  (Esport<->Social with auto-seeded defaults), social game type selector
+  with OTHER custom name input, developer-configured awareness banner
+- CREATEROOM: Main deskillz.games app CreateRoomModal is now category-aware --
+  reads game.gameCategory from API, shows SocialGameSettings for social games
+  and EsportGameSettings for esport games
+- ESPORT: Fixed Custom button in ChipPlusFreeInput component -- clicking
+  Custom now opens free input field for entry fee, duration, rounds, players
+- LOBBY: GameWithLobbyStats.gameCategory field added to lobby API interface
+- BACKEND: quick-play.service.ts refactored with buildSeedData() helper,
+  gameSelectForSeed constant, formatConfig returns socialGameTypeCustom
 
 **Changelog v5.8 (April 13, 2026):**
 - DISPUTE ENHANCEMENT: DisputeModal rewritten with 4-layer match context:

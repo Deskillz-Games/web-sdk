@@ -10,6 +10,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
+
+## [3.4.7] - 2026-04-14
+
+### Added
+- Dynamic QuickPlay category seeding: buildSeedData() reads Game.gameCategory
+  to auto-create configs with correct Social/Esport defaults
+- SocialGameTypeDto: DOU_DIZHU + OTHER enum values, socialGameTypeCustom field
+- Admin QuickPlay: category toggle (Esport<->Social), social game type selector,
+  developer-configured awareness banner, session duration for social
+- CreateRoomModal category-aware: reads game.gameCategory, shows correct
+  SocialGameSettings or EsportGameSettings component
+- GameWithLobbyStats.gameCategory field in lobby API interface
+
+### Fixed
+- EsportGameSettings Custom button in ChipPlusFreeInput (was onClick={() => {}),
+  now sets value to non-preset to reveal free input field
+- GameDetailPage + GlobalLobbyPage now pass category to CreateRoomModal
+- Admin QuickPlay can switch game category inline with auto-seeded defaults
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
+- Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 ## [3.4.6] - 2026-04-13
 
 ### Added
@@ -31,6 +54,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Dispute 4-layer context, L5/L6/L7 fixes, admin inline edit, free mode placement, socket notifications
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.0, v2.1, v3.6, v5.8)
+
+## [3.4.7] - 2026-04-14
+
+### Added
+- Dynamic QuickPlay category seeding: buildSeedData() reads Game.gameCategory
+  to auto-create configs with correct Social/Esport defaults
+- SocialGameTypeDto: DOU_DIZHU + OTHER enum values, socialGameTypeCustom field
+- Admin QuickPlay: category toggle (Esport<->Social), social game type selector,
+  developer-configured awareness banner, session duration for social
+- CreateRoomModal category-aware: reads game.gameCategory, shows correct
+  SocialGameSettings or EsportGameSettings component
+- GameWithLobbyStats.gameCategory field in lobby API interface
+
+### Fixed
+- EsportGameSettings Custom button in ChipPlusFreeInput (was onClick={() => {}),
+  now sets value to non-preset to reveal free input field
+- GameDetailPage + GlobalLobbyPage now pass category to CreateRoomModal
+- Admin QuickPlay can switch game category inline with auto-seeded defaults
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
+- Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 ## [3.4.5] - 2026-04-13
 
 ### Added
@@ -47,6 +93,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - tournaments component count 3->4 (DisputeModal added)
 - Developer docs updated (v1.9, v2.0, v3.5, v5.7)
 
+
+## [3.4.7] - 2026-04-14
+
+### Added
+- Dynamic QuickPlay category seeding: buildSeedData() reads Game.gameCategory
+  to auto-create configs with correct Social/Esport defaults
+- SocialGameTypeDto: DOU_DIZHU + OTHER enum values, socialGameTypeCustom field
+- Admin QuickPlay: category toggle (Esport<->Social), social game type selector,
+  developer-configured awareness banner, session duration for social
+- CreateRoomModal category-aware: reads game.gameCategory, shows correct
+  SocialGameSettings or EsportGameSettings component
+- GameWithLobbyStats.gameCategory field in lobby API interface
+
+### Fixed
+- EsportGameSettings Custom button in ChipPlusFreeInput (was onClick={() => {}),
+  now sets value to non-preset to reveal free input field
+- GameDetailPage + GlobalLobbyPage now pass category to CreateRoomModal
+- Admin QuickPlay can switch game category inline with auto-seeded defaults
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
+- Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 ## [3.4.6] - 2026-04-13
 
 ### Added
@@ -68,6 +137,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Dispute 4-layer context, L5/L6/L7 fixes, admin inline edit, free mode placement, socket notifications
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.0, v2.1, v3.6, v5.8)
+
+## [3.4.7] - 2026-04-14
+
+### Added
+- Dynamic QuickPlay category seeding: buildSeedData() reads Game.gameCategory
+  to auto-create configs with correct Social/Esport defaults
+- SocialGameTypeDto: DOU_DIZHU + OTHER enum values, socialGameTypeCustom field
+- Admin QuickPlay: category toggle (Esport<->Social), social game type selector,
+  developer-configured awareness banner, session duration for social
+- CreateRoomModal category-aware: reads game.gameCategory, shows correct
+  SocialGameSettings or EsportGameSettings component
+- GameWithLobbyStats.gameCategory field in lobby API interface
+
+### Fixed
+- EsportGameSettings Custom button in ChipPlusFreeInput (was onClick={() => {}),
+  now sets value to non-preset to reveal free input field
+- GameDetailPage + GlobalLobbyPage now pass category to CreateRoomModal
+- Admin QuickPlay can switch game category inline with auto-seeded defaults
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
+- Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 ## [3.4.4] - 2026-04-13
 
 ### Added
@@ -89,6 +181,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Service worker: deskillz-sw.js (retired sw.js)
 
 
+
+## [3.4.7] - 2026-04-14
+
+### Added
+- Dynamic QuickPlay category seeding: buildSeedData() reads Game.gameCategory
+  to auto-create configs with correct Social/Esport defaults
+- SocialGameTypeDto: DOU_DIZHU + OTHER enum values, socialGameTypeCustom field
+- Admin QuickPlay: category toggle (Esport<->Social), social game type selector,
+  developer-configured awareness banner, session duration for social
+- CreateRoomModal category-aware: reads game.gameCategory, shows correct
+  SocialGameSettings or EsportGameSettings component
+- GameWithLobbyStats.gameCategory field in lobby API interface
+
+### Fixed
+- EsportGameSettings Custom button in ChipPlusFreeInput (was onClick={() => {}),
+  now sets value to non-preset to reveal free input field
+- GameDetailPage + GlobalLobbyPage now pass category to CreateRoomModal
+- Admin QuickPlay can switch game category inline with auto-seeded defaults
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
+- Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 ## [3.4.6] - 2026-04-13
 
 ### Added
@@ -110,6 +225,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Dispute 4-layer context, L5/L6/L7 fixes, admin inline edit, free mode placement, socket notifications
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.0, v2.1, v3.6, v5.8)
+
+## [3.4.7] - 2026-04-14
+
+### Added
+- Dynamic QuickPlay category seeding: buildSeedData() reads Game.gameCategory
+  to auto-create configs with correct Social/Esport defaults
+- SocialGameTypeDto: DOU_DIZHU + OTHER enum values, socialGameTypeCustom field
+- Admin QuickPlay: category toggle (Esport<->Social), social game type selector,
+  developer-configured awareness banner, session duration for social
+- CreateRoomModal category-aware: reads game.gameCategory, shows correct
+  SocialGameSettings or EsportGameSettings component
+- GameWithLobbyStats.gameCategory field in lobby API interface
+
+### Fixed
+- EsportGameSettings Custom button in ChipPlusFreeInput (was onClick={() => {}),
+  now sets value to non-preset to reveal free input field
+- GameDetailPage + GlobalLobbyPage now pass category to CreateRoomModal
+- Admin QuickPlay can switch game category inline with auto-seeded defaults
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
+- Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 ## [3.4.5] - 2026-04-13
 
 ### Added
@@ -126,6 +264,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - tournaments component count 3->4 (DisputeModal added)
 - Developer docs updated (v1.9, v2.0, v3.5, v5.7)
 
+
+## [3.4.7] - 2026-04-14
+
+### Added
+- Dynamic QuickPlay category seeding: buildSeedData() reads Game.gameCategory
+  to auto-create configs with correct Social/Esport defaults
+- SocialGameTypeDto: DOU_DIZHU + OTHER enum values, socialGameTypeCustom field
+- Admin QuickPlay: category toggle (Esport<->Social), social game type selector,
+  developer-configured awareness banner, session duration for social
+- CreateRoomModal category-aware: reads game.gameCategory, shows correct
+  SocialGameSettings or EsportGameSettings component
+- GameWithLobbyStats.gameCategory field in lobby API interface
+
+### Fixed
+- EsportGameSettings Custom button in ChipPlusFreeInput (was onClick={() => {}),
+  now sets value to non-preset to reveal free input field
+- GameDetailPage + GlobalLobbyPage now pass category to CreateRoomModal
+- Admin QuickPlay can switch game category inline with auto-seeded defaults
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
+- Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 ## [3.4.6] - 2026-04-13
 
 ### Added
@@ -147,6 +308,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Dispute 4-layer context, L5/L6/L7 fixes, admin inline edit, free mode placement, socket notifications
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.0, v2.1, v3.6, v5.8)
+
+## [3.4.7] - 2026-04-14
+
+### Added
+- Dynamic QuickPlay category seeding: buildSeedData() reads Game.gameCategory
+  to auto-create configs with correct Social/Esport defaults
+- SocialGameTypeDto: DOU_DIZHU + OTHER enum values, socialGameTypeCustom field
+- Admin QuickPlay: category toggle (Esport<->Social), social game type selector,
+  developer-configured awareness banner, session duration for social
+- CreateRoomModal category-aware: reads game.gameCategory, shows correct
+  SocialGameSettings or EsportGameSettings component
+- GameWithLobbyStats.gameCategory field in lobby API interface
+
+### Fixed
+- EsportGameSettings Custom button in ChipPlusFreeInput (was onClick={() => {}),
+  now sets value to non-preset to reveal free input field
+- GameDetailPage + GlobalLobbyPage now pass category to CreateRoomModal
+- Admin QuickPlay can switch game category inline with auto-seeded defaults
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
+- Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 ## [3.4.4] - 2026-04-12
 
 ### Added
@@ -169,6 +353,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
+
+## [3.4.7] - 2026-04-14
+
+### Added
+- Dynamic QuickPlay category seeding: buildSeedData() reads Game.gameCategory
+  to auto-create configs with correct Social/Esport defaults
+- SocialGameTypeDto: DOU_DIZHU + OTHER enum values, socialGameTypeCustom field
+- Admin QuickPlay: category toggle (Esport<->Social), social game type selector,
+  developer-configured awareness banner, session duration for social
+- CreateRoomModal category-aware: reads game.gameCategory, shows correct
+  SocialGameSettings or EsportGameSettings component
+- GameWithLobbyStats.gameCategory field in lobby API interface
+
+### Fixed
+- EsportGameSettings Custom button in ChipPlusFreeInput (was onClick={() => {}),
+  now sets value to non-preset to reveal free input field
+- GameDetailPage + GlobalLobbyPage now pass category to CreateRoomModal
+- Admin QuickPlay can switch game category inline with auto-seeded defaults
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
+- Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 ## [3.4.6] - 2026-04-13
 
 ### Added
@@ -190,6 +397,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Dispute 4-layer context, L5/L6/L7 fixes, admin inline edit, free mode placement, socket notifications
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.0, v2.1, v3.6, v5.8)
+
+## [3.4.7] - 2026-04-14
+
+### Added
+- Dynamic QuickPlay category seeding: buildSeedData() reads Game.gameCategory
+  to auto-create configs with correct Social/Esport defaults
+- SocialGameTypeDto: DOU_DIZHU + OTHER enum values, socialGameTypeCustom field
+- Admin QuickPlay: category toggle (Esport<->Social), social game type selector,
+  developer-configured awareness banner, session duration for social
+- CreateRoomModal category-aware: reads game.gameCategory, shows correct
+  SocialGameSettings or EsportGameSettings component
+- GameWithLobbyStats.gameCategory field in lobby API interface
+
+### Fixed
+- EsportGameSettings Custom button in ChipPlusFreeInput (was onClick={() => {}),
+  now sets value to non-preset to reveal free input field
+- GameDetailPage + GlobalLobbyPage now pass category to CreateRoomModal
+- Admin QuickPlay can switch game category inline with auto-seeded defaults
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
+- Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 ## [3.4.5] - 2026-04-13
 
 ### Added
@@ -206,6 +436,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - tournaments component count 3->4 (DisputeModal added)
 - Developer docs updated (v1.9, v2.0, v3.5, v5.7)
 
+
+## [3.4.7] - 2026-04-14
+
+### Added
+- Dynamic QuickPlay category seeding: buildSeedData() reads Game.gameCategory
+  to auto-create configs with correct Social/Esport defaults
+- SocialGameTypeDto: DOU_DIZHU + OTHER enum values, socialGameTypeCustom field
+- Admin QuickPlay: category toggle (Esport<->Social), social game type selector,
+  developer-configured awareness banner, session duration for social
+- CreateRoomModal category-aware: reads game.gameCategory, shows correct
+  SocialGameSettings or EsportGameSettings component
+- GameWithLobbyStats.gameCategory field in lobby API interface
+
+### Fixed
+- EsportGameSettings Custom button in ChipPlusFreeInput (was onClick={() => {}),
+  now sets value to non-preset to reveal free input field
+- GameDetailPage + GlobalLobbyPage now pass category to CreateRoomModal
+- Admin QuickPlay can switch game category inline with auto-seeded defaults
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
+- Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 ## [3.4.6] - 2026-04-13
 
 ### Added
@@ -227,6 +480,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Dispute 4-layer context, L5/L6/L7 fixes, admin inline edit, free mode placement, socket notifications
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.0, v2.1, v3.6, v5.8)
+
+## [3.4.7] - 2026-04-14
+
+### Added
+- Dynamic QuickPlay category seeding: buildSeedData() reads Game.gameCategory
+  to auto-create configs with correct Social/Esport defaults
+- SocialGameTypeDto: DOU_DIZHU + OTHER enum values, socialGameTypeCustom field
+- Admin QuickPlay: category toggle (Esport<->Social), social game type selector,
+  developer-configured awareness banner, session duration for social
+- CreateRoomModal category-aware: reads game.gameCategory, shows correct
+  SocialGameSettings or EsportGameSettings component
+- GameWithLobbyStats.gameCategory field in lobby API interface
+
+### Fixed
+- EsportGameSettings Custom button in ChipPlusFreeInput (was onClick={() => {}),
+  now sets value to non-preset to reveal free input field
+- GameDetailPage + GlobalLobbyPage now pass category to CreateRoomModal
+- Admin QuickPlay can switch game category inline with auto-seeded defaults
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
+- Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 ## [3.4.4] - 2026-04-13
 
 ### Added
@@ -248,6 +524,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Service worker: deskillz-sw.js (retired sw.js)
 
 
+
+## [3.4.7] - 2026-04-14
+
+### Added
+- Dynamic QuickPlay category seeding: buildSeedData() reads Game.gameCategory
+  to auto-create configs with correct Social/Esport defaults
+- SocialGameTypeDto: DOU_DIZHU + OTHER enum values, socialGameTypeCustom field
+- Admin QuickPlay: category toggle (Esport<->Social), social game type selector,
+  developer-configured awareness banner, session duration for social
+- CreateRoomModal category-aware: reads game.gameCategory, shows correct
+  SocialGameSettings or EsportGameSettings component
+- GameWithLobbyStats.gameCategory field in lobby API interface
+
+### Fixed
+- EsportGameSettings Custom button in ChipPlusFreeInput (was onClick={() => {}),
+  now sets value to non-preset to reveal free input field
+- GameDetailPage + GlobalLobbyPage now pass category to CreateRoomModal
+- Admin QuickPlay can switch game category inline with auto-seeded defaults
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
+- Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 ## [3.4.6] - 2026-04-13
 
 ### Added
@@ -269,6 +568,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Dispute 4-layer context, L5/L6/L7 fixes, admin inline edit, free mode placement, socket notifications
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.0, v2.1, v3.6, v5.8)
+
+## [3.4.7] - 2026-04-14
+
+### Added
+- Dynamic QuickPlay category seeding: buildSeedData() reads Game.gameCategory
+  to auto-create configs with correct Social/Esport defaults
+- SocialGameTypeDto: DOU_DIZHU + OTHER enum values, socialGameTypeCustom field
+- Admin QuickPlay: category toggle (Esport<->Social), social game type selector,
+  developer-configured awareness banner, session duration for social
+- CreateRoomModal category-aware: reads game.gameCategory, shows correct
+  SocialGameSettings or EsportGameSettings component
+- GameWithLobbyStats.gameCategory field in lobby API interface
+
+### Fixed
+- EsportGameSettings Custom button in ChipPlusFreeInput (was onClick={() => {}),
+  now sets value to non-preset to reveal free input field
+- GameDetailPage + GlobalLobbyPage now pass category to CreateRoomModal
+- Admin QuickPlay can switch game category inline with auto-seeded defaults
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
+- Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 ## [3.4.5] - 2026-04-13
 
 ### Added
@@ -285,6 +607,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - tournaments component count 3->4 (DisputeModal added)
 - Developer docs updated (v1.9, v2.0, v3.5, v5.7)
 
+
+## [3.4.7] - 2026-04-14
+
+### Added
+- Dynamic QuickPlay category seeding: buildSeedData() reads Game.gameCategory
+  to auto-create configs with correct Social/Esport defaults
+- SocialGameTypeDto: DOU_DIZHU + OTHER enum values, socialGameTypeCustom field
+- Admin QuickPlay: category toggle (Esport<->Social), social game type selector,
+  developer-configured awareness banner, session duration for social
+- CreateRoomModal category-aware: reads game.gameCategory, shows correct
+  SocialGameSettings or EsportGameSettings component
+- GameWithLobbyStats.gameCategory field in lobby API interface
+
+### Fixed
+- EsportGameSettings Custom button in ChipPlusFreeInput (was onClick={() => {}),
+  now sets value to non-preset to reveal free input field
+- GameDetailPage + GlobalLobbyPage now pass category to CreateRoomModal
+- Admin QuickPlay can switch game category inline with auto-seeded defaults
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
+- Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 ## [3.4.6] - 2026-04-13
 
 ### Added
@@ -306,6 +651,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Dispute 4-layer context, L5/L6/L7 fixes, admin inline edit, free mode placement, socket notifications
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.0, v2.1, v3.6, v5.8)
+
+## [3.4.7] - 2026-04-14
+
+### Added
+- Dynamic QuickPlay category seeding: buildSeedData() reads Game.gameCategory
+  to auto-create configs with correct Social/Esport defaults
+- SocialGameTypeDto: DOU_DIZHU + OTHER enum values, socialGameTypeCustom field
+- Admin QuickPlay: category toggle (Esport<->Social), social game type selector,
+  developer-configured awareness banner, session duration for social
+- CreateRoomModal category-aware: reads game.gameCategory, shows correct
+  SocialGameSettings or EsportGameSettings component
+- GameWithLobbyStats.gameCategory field in lobby API interface
+
+### Fixed
+- EsportGameSettings Custom button in ChipPlusFreeInput (was onClick={() => {}),
+  now sets value to non-preset to reveal free input field
+- GameDetailPage + GlobalLobbyPage now pass category to CreateRoomModal
+- Admin QuickPlay can switch game category inline with auto-seeded defaults
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
+- Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 ## [3.4.3] - 2026-04-11
 
 ### Changed
@@ -318,6 +686,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
+
+## [3.4.7] - 2026-04-14
+
+### Added
+- Dynamic QuickPlay category seeding: buildSeedData() reads Game.gameCategory
+  to auto-create configs with correct Social/Esport defaults
+- SocialGameTypeDto: DOU_DIZHU + OTHER enum values, socialGameTypeCustom field
+- Admin QuickPlay: category toggle (Esport<->Social), social game type selector,
+  developer-configured awareness banner, session duration for social
+- CreateRoomModal category-aware: reads game.gameCategory, shows correct
+  SocialGameSettings or EsportGameSettings component
+- GameWithLobbyStats.gameCategory field in lobby API interface
+
+### Fixed
+- EsportGameSettings Custom button in ChipPlusFreeInput (was onClick={() => {}),
+  now sets value to non-preset to reveal free input field
+- GameDetailPage + GlobalLobbyPage now pass category to CreateRoomModal
+- Admin QuickPlay can switch game category inline with auto-seeded defaults
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
+- Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 ## [3.4.6] - 2026-04-13
 
 ### Added
@@ -339,6 +730,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Dispute 4-layer context, L5/L6/L7 fixes, admin inline edit, free mode placement, socket notifications
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.0, v2.1, v3.6, v5.8)
+
+## [3.4.7] - 2026-04-14
+
+### Added
+- Dynamic QuickPlay category seeding: buildSeedData() reads Game.gameCategory
+  to auto-create configs with correct Social/Esport defaults
+- SocialGameTypeDto: DOU_DIZHU + OTHER enum values, socialGameTypeCustom field
+- Admin QuickPlay: category toggle (Esport<->Social), social game type selector,
+  developer-configured awareness banner, session duration for social
+- CreateRoomModal category-aware: reads game.gameCategory, shows correct
+  SocialGameSettings or EsportGameSettings component
+- GameWithLobbyStats.gameCategory field in lobby API interface
+
+### Fixed
+- EsportGameSettings Custom button in ChipPlusFreeInput (was onClick={() => {}),
+  now sets value to non-preset to reveal free input field
+- GameDetailPage + GlobalLobbyPage now pass category to CreateRoomModal
+- Admin QuickPlay can switch game category inline with auto-seeded defaults
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
+- Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 ## [3.4.5] - 2026-04-13
 
 ### Added
@@ -355,6 +769,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - tournaments component count 3->4 (DisputeModal added)
 - Developer docs updated (v1.9, v2.0, v3.5, v5.7)
 
+
+## [3.4.7] - 2026-04-14
+
+### Added
+- Dynamic QuickPlay category seeding: buildSeedData() reads Game.gameCategory
+  to auto-create configs with correct Social/Esport defaults
+- SocialGameTypeDto: DOU_DIZHU + OTHER enum values, socialGameTypeCustom field
+- Admin QuickPlay: category toggle (Esport<->Social), social game type selector,
+  developer-configured awareness banner, session duration for social
+- CreateRoomModal category-aware: reads game.gameCategory, shows correct
+  SocialGameSettings or EsportGameSettings component
+- GameWithLobbyStats.gameCategory field in lobby API interface
+
+### Fixed
+- EsportGameSettings Custom button in ChipPlusFreeInput (was onClick={() => {}),
+  now sets value to non-preset to reveal free input field
+- GameDetailPage + GlobalLobbyPage now pass category to CreateRoomModal
+- Admin QuickPlay can switch game category inline with auto-seeded defaults
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
+- Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 ## [3.4.6] - 2026-04-13
 
 ### Added
@@ -376,6 +813,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Dispute 4-layer context, L5/L6/L7 fixes, admin inline edit, free mode placement, socket notifications
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.0, v2.1, v3.6, v5.8)
+
+## [3.4.7] - 2026-04-14
+
+### Added
+- Dynamic QuickPlay category seeding: buildSeedData() reads Game.gameCategory
+  to auto-create configs with correct Social/Esport defaults
+- SocialGameTypeDto: DOU_DIZHU + OTHER enum values, socialGameTypeCustom field
+- Admin QuickPlay: category toggle (Esport<->Social), social game type selector,
+  developer-configured awareness banner, session duration for social
+- CreateRoomModal category-aware: reads game.gameCategory, shows correct
+  SocialGameSettings or EsportGameSettings component
+- GameWithLobbyStats.gameCategory field in lobby API interface
+
+### Fixed
+- EsportGameSettings Custom button in ChipPlusFreeInput (was onClick={() => {}),
+  now sets value to non-preset to reveal free input field
+- GameDetailPage + GlobalLobbyPage now pass category to CreateRoomModal
+- Admin QuickPlay can switch game category inline with auto-seeded defaults
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
+- Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 ## [3.4.4] - 2026-04-13
 
 ### Added
@@ -397,6 +857,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Service worker: deskillz-sw.js (retired sw.js)
 
 
+
+## [3.4.7] - 2026-04-14
+
+### Added
+- Dynamic QuickPlay category seeding: buildSeedData() reads Game.gameCategory
+  to auto-create configs with correct Social/Esport defaults
+- SocialGameTypeDto: DOU_DIZHU + OTHER enum values, socialGameTypeCustom field
+- Admin QuickPlay: category toggle (Esport<->Social), social game type selector,
+  developer-configured awareness banner, session duration for social
+- CreateRoomModal category-aware: reads game.gameCategory, shows correct
+  SocialGameSettings or EsportGameSettings component
+- GameWithLobbyStats.gameCategory field in lobby API interface
+
+### Fixed
+- EsportGameSettings Custom button in ChipPlusFreeInput (was onClick={() => {}),
+  now sets value to non-preset to reveal free input field
+- GameDetailPage + GlobalLobbyPage now pass category to CreateRoomModal
+- Admin QuickPlay can switch game category inline with auto-seeded defaults
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
+- Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 ## [3.4.6] - 2026-04-13
 
 ### Added
@@ -418,6 +901,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Dispute 4-layer context, L5/L6/L7 fixes, admin inline edit, free mode placement, socket notifications
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.0, v2.1, v3.6, v5.8)
+
+## [3.4.7] - 2026-04-14
+
+### Added
+- Dynamic QuickPlay category seeding: buildSeedData() reads Game.gameCategory
+  to auto-create configs with correct Social/Esport defaults
+- SocialGameTypeDto: DOU_DIZHU + OTHER enum values, socialGameTypeCustom field
+- Admin QuickPlay: category toggle (Esport<->Social), social game type selector,
+  developer-configured awareness banner, session duration for social
+- CreateRoomModal category-aware: reads game.gameCategory, shows correct
+  SocialGameSettings or EsportGameSettings component
+- GameWithLobbyStats.gameCategory field in lobby API interface
+
+### Fixed
+- EsportGameSettings Custom button in ChipPlusFreeInput (was onClick={() => {}),
+  now sets value to non-preset to reveal free input field
+- GameDetailPage + GlobalLobbyPage now pass category to CreateRoomModal
+- Admin QuickPlay can switch game category inline with auto-seeded defaults
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
+- Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 ## [3.4.5] - 2026-04-13
 
 ### Added
@@ -434,6 +940,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - tournaments component count 3->4 (DisputeModal added)
 - Developer docs updated (v1.9, v2.0, v3.5, v5.7)
 
+
+## [3.4.7] - 2026-04-14
+
+### Added
+- Dynamic QuickPlay category seeding: buildSeedData() reads Game.gameCategory
+  to auto-create configs with correct Social/Esport defaults
+- SocialGameTypeDto: DOU_DIZHU + OTHER enum values, socialGameTypeCustom field
+- Admin QuickPlay: category toggle (Esport<->Social), social game type selector,
+  developer-configured awareness banner, session duration for social
+- CreateRoomModal category-aware: reads game.gameCategory, shows correct
+  SocialGameSettings or EsportGameSettings component
+- GameWithLobbyStats.gameCategory field in lobby API interface
+
+### Fixed
+- EsportGameSettings Custom button in ChipPlusFreeInput (was onClick={() => {}),
+  now sets value to non-preset to reveal free input field
+- GameDetailPage + GlobalLobbyPage now pass category to CreateRoomModal
+- Admin QuickPlay can switch game category inline with auto-seeded defaults
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
+- Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 ## [3.4.6] - 2026-04-13
 
 ### Added
@@ -455,6 +984,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Dispute 4-layer context, L5/L6/L7 fixes, admin inline edit, free mode placement, socket notifications
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.0, v2.1, v3.6, v5.8)
+
+## [3.4.7] - 2026-04-14
+
+### Added
+- Dynamic QuickPlay category seeding: buildSeedData() reads Game.gameCategory
+  to auto-create configs with correct Social/Esport defaults
+- SocialGameTypeDto: DOU_DIZHU + OTHER enum values, socialGameTypeCustom field
+- Admin QuickPlay: category toggle (Esport<->Social), social game type selector,
+  developer-configured awareness banner, session duration for social
+- CreateRoomModal category-aware: reads game.gameCategory, shows correct
+  SocialGameSettings or EsportGameSettings component
+- GameWithLobbyStats.gameCategory field in lobby API interface
+
+### Fixed
+- EsportGameSettings Custom button in ChipPlusFreeInput (was onClick={() => {}),
+  now sets value to non-preset to reveal free input field
+- GameDetailPage + GlobalLobbyPage now pass category to CreateRoomModal
+- Admin QuickPlay can switch game category inline with auto-seeded defaults
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
+- Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 ## [3.4.4] - 2026-04-12
 
 ### Added
@@ -477,6 +1029,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
+
+## [3.4.7] - 2026-04-14
+
+### Added
+- Dynamic QuickPlay category seeding: buildSeedData() reads Game.gameCategory
+  to auto-create configs with correct Social/Esport defaults
+- SocialGameTypeDto: DOU_DIZHU + OTHER enum values, socialGameTypeCustom field
+- Admin QuickPlay: category toggle (Esport<->Social), social game type selector,
+  developer-configured awareness banner, session duration for social
+- CreateRoomModal category-aware: reads game.gameCategory, shows correct
+  SocialGameSettings or EsportGameSettings component
+- GameWithLobbyStats.gameCategory field in lobby API interface
+
+### Fixed
+- EsportGameSettings Custom button in ChipPlusFreeInput (was onClick={() => {}),
+  now sets value to non-preset to reveal free input field
+- GameDetailPage + GlobalLobbyPage now pass category to CreateRoomModal
+- Admin QuickPlay can switch game category inline with auto-seeded defaults
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
+- Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 ## [3.4.6] - 2026-04-13
 
 ### Added
@@ -498,6 +1073,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Dispute 4-layer context, L5/L6/L7 fixes, admin inline edit, free mode placement, socket notifications
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.0, v2.1, v3.6, v5.8)
+
+## [3.4.7] - 2026-04-14
+
+### Added
+- Dynamic QuickPlay category seeding: buildSeedData() reads Game.gameCategory
+  to auto-create configs with correct Social/Esport defaults
+- SocialGameTypeDto: DOU_DIZHU + OTHER enum values, socialGameTypeCustom field
+- Admin QuickPlay: category toggle (Esport<->Social), social game type selector,
+  developer-configured awareness banner, session duration for social
+- CreateRoomModal category-aware: reads game.gameCategory, shows correct
+  SocialGameSettings or EsportGameSettings component
+- GameWithLobbyStats.gameCategory field in lobby API interface
+
+### Fixed
+- EsportGameSettings Custom button in ChipPlusFreeInput (was onClick={() => {}),
+  now sets value to non-preset to reveal free input field
+- GameDetailPage + GlobalLobbyPage now pass category to CreateRoomModal
+- Admin QuickPlay can switch game category inline with auto-seeded defaults
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
+- Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 ## [3.4.5] - 2026-04-13
 
 ### Added
@@ -514,6 +1112,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - tournaments component count 3->4 (DisputeModal added)
 - Developer docs updated (v1.9, v2.0, v3.5, v5.7)
 
+
+## [3.4.7] - 2026-04-14
+
+### Added
+- Dynamic QuickPlay category seeding: buildSeedData() reads Game.gameCategory
+  to auto-create configs with correct Social/Esport defaults
+- SocialGameTypeDto: DOU_DIZHU + OTHER enum values, socialGameTypeCustom field
+- Admin QuickPlay: category toggle (Esport<->Social), social game type selector,
+  developer-configured awareness banner, session duration for social
+- CreateRoomModal category-aware: reads game.gameCategory, shows correct
+  SocialGameSettings or EsportGameSettings component
+- GameWithLobbyStats.gameCategory field in lobby API interface
+
+### Fixed
+- EsportGameSettings Custom button in ChipPlusFreeInput (was onClick={() => {}),
+  now sets value to non-preset to reveal free input field
+- GameDetailPage + GlobalLobbyPage now pass category to CreateRoomModal
+- Admin QuickPlay can switch game category inline with auto-seeded defaults
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
+- Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 ## [3.4.6] - 2026-04-13
 
 ### Added
@@ -535,6 +1156,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Dispute 4-layer context, L5/L6/L7 fixes, admin inline edit, free mode placement, socket notifications
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.0, v2.1, v3.6, v5.8)
+
+## [3.4.7] - 2026-04-14
+
+### Added
+- Dynamic QuickPlay category seeding: buildSeedData() reads Game.gameCategory
+  to auto-create configs with correct Social/Esport defaults
+- SocialGameTypeDto: DOU_DIZHU + OTHER enum values, socialGameTypeCustom field
+- Admin QuickPlay: category toggle (Esport<->Social), social game type selector,
+  developer-configured awareness banner, session duration for social
+- CreateRoomModal category-aware: reads game.gameCategory, shows correct
+  SocialGameSettings or EsportGameSettings component
+- GameWithLobbyStats.gameCategory field in lobby API interface
+
+### Fixed
+- EsportGameSettings Custom button in ChipPlusFreeInput (was onClick={() => {}),
+  now sets value to non-preset to reveal free input field
+- GameDetailPage + GlobalLobbyPage now pass category to CreateRoomModal
+- Admin QuickPlay can switch game category inline with auto-seeded defaults
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
+- Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 ## [3.4.4] - 2026-04-13
 
 ### Added
@@ -556,6 +1200,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Service worker: deskillz-sw.js (retired sw.js)
 
 
+
+## [3.4.7] - 2026-04-14
+
+### Added
+- Dynamic QuickPlay category seeding: buildSeedData() reads Game.gameCategory
+  to auto-create configs with correct Social/Esport defaults
+- SocialGameTypeDto: DOU_DIZHU + OTHER enum values, socialGameTypeCustom field
+- Admin QuickPlay: category toggle (Esport<->Social), social game type selector,
+  developer-configured awareness banner, session duration for social
+- CreateRoomModal category-aware: reads game.gameCategory, shows correct
+  SocialGameSettings or EsportGameSettings component
+- GameWithLobbyStats.gameCategory field in lobby API interface
+
+### Fixed
+- EsportGameSettings Custom button in ChipPlusFreeInput (was onClick={() => {}),
+  now sets value to non-preset to reveal free input field
+- GameDetailPage + GlobalLobbyPage now pass category to CreateRoomModal
+- Admin QuickPlay can switch game category inline with auto-seeded defaults
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
+- Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 ## [3.4.6] - 2026-04-13
 
 ### Added
@@ -577,6 +1244,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Dispute 4-layer context, L5/L6/L7 fixes, admin inline edit, free mode placement, socket notifications
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.0, v2.1, v3.6, v5.8)
+
+## [3.4.7] - 2026-04-14
+
+### Added
+- Dynamic QuickPlay category seeding: buildSeedData() reads Game.gameCategory
+  to auto-create configs with correct Social/Esport defaults
+- SocialGameTypeDto: DOU_DIZHU + OTHER enum values, socialGameTypeCustom field
+- Admin QuickPlay: category toggle (Esport<->Social), social game type selector,
+  developer-configured awareness banner, session duration for social
+- CreateRoomModal category-aware: reads game.gameCategory, shows correct
+  SocialGameSettings or EsportGameSettings component
+- GameWithLobbyStats.gameCategory field in lobby API interface
+
+### Fixed
+- EsportGameSettings Custom button in ChipPlusFreeInput (was onClick={() => {}),
+  now sets value to non-preset to reveal free input field
+- GameDetailPage + GlobalLobbyPage now pass category to CreateRoomModal
+- Admin QuickPlay can switch game category inline with auto-seeded defaults
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
+- Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 ## [3.4.5] - 2026-04-13
 
 ### Added
@@ -593,6 +1283,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - tournaments component count 3->4 (DisputeModal added)
 - Developer docs updated (v1.9, v2.0, v3.5, v5.7)
 
+
+## [3.4.7] - 2026-04-14
+
+### Added
+- Dynamic QuickPlay category seeding: buildSeedData() reads Game.gameCategory
+  to auto-create configs with correct Social/Esport defaults
+- SocialGameTypeDto: DOU_DIZHU + OTHER enum values, socialGameTypeCustom field
+- Admin QuickPlay: category toggle (Esport<->Social), social game type selector,
+  developer-configured awareness banner, session duration for social
+- CreateRoomModal category-aware: reads game.gameCategory, shows correct
+  SocialGameSettings or EsportGameSettings component
+- GameWithLobbyStats.gameCategory field in lobby API interface
+
+### Fixed
+- EsportGameSettings Custom button in ChipPlusFreeInput (was onClick={() => {}),
+  now sets value to non-preset to reveal free input field
+- GameDetailPage + GlobalLobbyPage now pass category to CreateRoomModal
+- Admin QuickPlay can switch game category inline with auto-seeded defaults
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
+- Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 ## [3.4.6] - 2026-04-13
 
 ### Added
@@ -614,6 +1327,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Dispute 4-layer context, L5/L6/L7 fixes, admin inline edit, free mode placement, socket notifications
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.0, v2.1, v3.6, v5.8)
+
+## [3.4.7] - 2026-04-14
+
+### Added
+- Dynamic QuickPlay category seeding: buildSeedData() reads Game.gameCategory
+  to auto-create configs with correct Social/Esport defaults
+- SocialGameTypeDto: DOU_DIZHU + OTHER enum values, socialGameTypeCustom field
+- Admin QuickPlay: category toggle (Esport<->Social), social game type selector,
+  developer-configured awareness banner, session duration for social
+- CreateRoomModal category-aware: reads game.gameCategory, shows correct
+  SocialGameSettings or EsportGameSettings component
+- GameWithLobbyStats.gameCategory field in lobby API interface
+
+### Fixed
+- EsportGameSettings Custom button in ChipPlusFreeInput (was onClick={() => {}),
+  now sets value to non-preset to reveal free input field
+- GameDetailPage + GlobalLobbyPage now pass category to CreateRoomModal
+- Admin QuickPlay can switch game category inline with auto-seeded defaults
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
+- Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 ## [3.0.0] - 2026-02-03
 
 ### Added
@@ -716,6 +1452,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
+
+## [3.4.7] - 2026-04-14
+
+### Added
+- Dynamic QuickPlay category seeding: buildSeedData() reads Game.gameCategory
+  to auto-create configs with correct Social/Esport defaults
+- SocialGameTypeDto: DOU_DIZHU + OTHER enum values, socialGameTypeCustom field
+- Admin QuickPlay: category toggle (Esport<->Social), social game type selector,
+  developer-configured awareness banner, session duration for social
+- CreateRoomModal category-aware: reads game.gameCategory, shows correct
+  SocialGameSettings or EsportGameSettings component
+- GameWithLobbyStats.gameCategory field in lobby API interface
+
+### Fixed
+- EsportGameSettings Custom button in ChipPlusFreeInput (was onClick={() => {}),
+  now sets value to non-preset to reveal free input field
+- GameDetailPage + GlobalLobbyPage now pass category to CreateRoomModal
+- Admin QuickPlay can switch game category inline with auto-seeded defaults
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
+- Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 ## [3.4.6] - 2026-04-13
 
 ### Added
@@ -737,6 +1496,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Dispute 4-layer context, L5/L6/L7 fixes, admin inline edit, free mode placement, socket notifications
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.0, v2.1, v3.6, v5.8)
+
+## [3.4.7] - 2026-04-14
+
+### Added
+- Dynamic QuickPlay category seeding: buildSeedData() reads Game.gameCategory
+  to auto-create configs with correct Social/Esport defaults
+- SocialGameTypeDto: DOU_DIZHU + OTHER enum values, socialGameTypeCustom field
+- Admin QuickPlay: category toggle (Esport<->Social), social game type selector,
+  developer-configured awareness banner, session duration for social
+- CreateRoomModal category-aware: reads game.gameCategory, shows correct
+  SocialGameSettings or EsportGameSettings component
+- GameWithLobbyStats.gameCategory field in lobby API interface
+
+### Fixed
+- EsportGameSettings Custom button in ChipPlusFreeInput (was onClick={() => {}),
+  now sets value to non-preset to reveal free input field
+- GameDetailPage + GlobalLobbyPage now pass category to CreateRoomModal
+- Admin QuickPlay can switch game category inline with auto-seeded defaults
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
+- Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 ## [3.4.5] - 2026-04-13
 
 ### Added
@@ -753,6 +1535,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - tournaments component count 3->4 (DisputeModal added)
 - Developer docs updated (v1.9, v2.0, v3.5, v5.7)
 
+
+## [3.4.7] - 2026-04-14
+
+### Added
+- Dynamic QuickPlay category seeding: buildSeedData() reads Game.gameCategory
+  to auto-create configs with correct Social/Esport defaults
+- SocialGameTypeDto: DOU_DIZHU + OTHER enum values, socialGameTypeCustom field
+- Admin QuickPlay: category toggle (Esport<->Social), social game type selector,
+  developer-configured awareness banner, session duration for social
+- CreateRoomModal category-aware: reads game.gameCategory, shows correct
+  SocialGameSettings or EsportGameSettings component
+- GameWithLobbyStats.gameCategory field in lobby API interface
+
+### Fixed
+- EsportGameSettings Custom button in ChipPlusFreeInput (was onClick={() => {}),
+  now sets value to non-preset to reveal free input field
+- GameDetailPage + GlobalLobbyPage now pass category to CreateRoomModal
+- Admin QuickPlay can switch game category inline with auto-seeded defaults
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
+- Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 ## [3.4.6] - 2026-04-13
 
 ### Added
@@ -774,6 +1579,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Dispute 4-layer context, L5/L6/L7 fixes, admin inline edit, free mode placement, socket notifications
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.0, v2.1, v3.6, v5.8)
+
+## [3.4.7] - 2026-04-14
+
+### Added
+- Dynamic QuickPlay category seeding: buildSeedData() reads Game.gameCategory
+  to auto-create configs with correct Social/Esport defaults
+- SocialGameTypeDto: DOU_DIZHU + OTHER enum values, socialGameTypeCustom field
+- Admin QuickPlay: category toggle (Esport<->Social), social game type selector,
+  developer-configured awareness banner, session duration for social
+- CreateRoomModal category-aware: reads game.gameCategory, shows correct
+  SocialGameSettings or EsportGameSettings component
+- GameWithLobbyStats.gameCategory field in lobby API interface
+
+### Fixed
+- EsportGameSettings Custom button in ChipPlusFreeInput (was onClick={() => {}),
+  now sets value to non-preset to reveal free input field
+- GameDetailPage + GlobalLobbyPage now pass category to CreateRoomModal
+- Admin QuickPlay can switch game category inline with auto-seeded defaults
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
+- Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 ## [3.4.4] - 2026-04-13
 
 ### Added
@@ -795,6 +1623,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Service worker: deskillz-sw.js (retired sw.js)
 
 
+
+## [3.4.7] - 2026-04-14
+
+### Added
+- Dynamic QuickPlay category seeding: buildSeedData() reads Game.gameCategory
+  to auto-create configs with correct Social/Esport defaults
+- SocialGameTypeDto: DOU_DIZHU + OTHER enum values, socialGameTypeCustom field
+- Admin QuickPlay: category toggle (Esport<->Social), social game type selector,
+  developer-configured awareness banner, session duration for social
+- CreateRoomModal category-aware: reads game.gameCategory, shows correct
+  SocialGameSettings or EsportGameSettings component
+- GameWithLobbyStats.gameCategory field in lobby API interface
+
+### Fixed
+- EsportGameSettings Custom button in ChipPlusFreeInput (was onClick={() => {}),
+  now sets value to non-preset to reveal free input field
+- GameDetailPage + GlobalLobbyPage now pass category to CreateRoomModal
+- Admin QuickPlay can switch game category inline with auto-seeded defaults
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
+- Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 ## [3.4.6] - 2026-04-13
 
 ### Added
@@ -816,6 +1667,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Dispute 4-layer context, L5/L6/L7 fixes, admin inline edit, free mode placement, socket notifications
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.0, v2.1, v3.6, v5.8)
+
+## [3.4.7] - 2026-04-14
+
+### Added
+- Dynamic QuickPlay category seeding: buildSeedData() reads Game.gameCategory
+  to auto-create configs with correct Social/Esport defaults
+- SocialGameTypeDto: DOU_DIZHU + OTHER enum values, socialGameTypeCustom field
+- Admin QuickPlay: category toggle (Esport<->Social), social game type selector,
+  developer-configured awareness banner, session duration for social
+- CreateRoomModal category-aware: reads game.gameCategory, shows correct
+  SocialGameSettings or EsportGameSettings component
+- GameWithLobbyStats.gameCategory field in lobby API interface
+
+### Fixed
+- EsportGameSettings Custom button in ChipPlusFreeInput (was onClick={() => {}),
+  now sets value to non-preset to reveal free input field
+- GameDetailPage + GlobalLobbyPage now pass category to CreateRoomModal
+- Admin QuickPlay can switch game category inline with auto-seeded defaults
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
+- Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 ## [3.4.5] - 2026-04-13
 
 ### Added
@@ -832,6 +1706,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - tournaments component count 3->4 (DisputeModal added)
 - Developer docs updated (v1.9, v2.0, v3.5, v5.7)
 
+
+## [3.4.7] - 2026-04-14
+
+### Added
+- Dynamic QuickPlay category seeding: buildSeedData() reads Game.gameCategory
+  to auto-create configs with correct Social/Esport defaults
+- SocialGameTypeDto: DOU_DIZHU + OTHER enum values, socialGameTypeCustom field
+- Admin QuickPlay: category toggle (Esport<->Social), social game type selector,
+  developer-configured awareness banner, session duration for social
+- CreateRoomModal category-aware: reads game.gameCategory, shows correct
+  SocialGameSettings or EsportGameSettings component
+- GameWithLobbyStats.gameCategory field in lobby API interface
+
+### Fixed
+- EsportGameSettings Custom button in ChipPlusFreeInput (was onClick={() => {}),
+  now sets value to non-preset to reveal free input field
+- GameDetailPage + GlobalLobbyPage now pass category to CreateRoomModal
+- Admin QuickPlay can switch game category inline with auto-seeded defaults
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
+- Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 ## [3.4.6] - 2026-04-13
 
 ### Added
@@ -853,6 +1750,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Dispute 4-layer context, L5/L6/L7 fixes, admin inline edit, free mode placement, socket notifications
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.0, v2.1, v3.6, v5.8)
+
+## [3.4.7] - 2026-04-14
+
+### Added
+- Dynamic QuickPlay category seeding: buildSeedData() reads Game.gameCategory
+  to auto-create configs with correct Social/Esport defaults
+- SocialGameTypeDto: DOU_DIZHU + OTHER enum values, socialGameTypeCustom field
+- Admin QuickPlay: category toggle (Esport<->Social), social game type selector,
+  developer-configured awareness banner, session duration for social
+- CreateRoomModal category-aware: reads game.gameCategory, shows correct
+  SocialGameSettings or EsportGameSettings component
+- GameWithLobbyStats.gameCategory field in lobby API interface
+
+### Fixed
+- EsportGameSettings Custom button in ChipPlusFreeInput (was onClick={() => {}),
+  now sets value to non-preset to reveal free input field
+- GameDetailPage + GlobalLobbyPage now pass category to CreateRoomModal
+- Admin QuickPlay can switch game category inline with auto-seeded defaults
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
+- Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 ## [3.4.4] - 2026-04-12
 
 ### Added
@@ -875,6 +1795,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
+
+## [3.4.7] - 2026-04-14
+
+### Added
+- Dynamic QuickPlay category seeding: buildSeedData() reads Game.gameCategory
+  to auto-create configs with correct Social/Esport defaults
+- SocialGameTypeDto: DOU_DIZHU + OTHER enum values, socialGameTypeCustom field
+- Admin QuickPlay: category toggle (Esport<->Social), social game type selector,
+  developer-configured awareness banner, session duration for social
+- CreateRoomModal category-aware: reads game.gameCategory, shows correct
+  SocialGameSettings or EsportGameSettings component
+- GameWithLobbyStats.gameCategory field in lobby API interface
+
+### Fixed
+- EsportGameSettings Custom button in ChipPlusFreeInput (was onClick={() => {}),
+  now sets value to non-preset to reveal free input field
+- GameDetailPage + GlobalLobbyPage now pass category to CreateRoomModal
+- Admin QuickPlay can switch game category inline with auto-seeded defaults
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
+- Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 ## [3.4.6] - 2026-04-13
 
 ### Added
@@ -896,6 +1839,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Dispute 4-layer context, L5/L6/L7 fixes, admin inline edit, free mode placement, socket notifications
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.0, v2.1, v3.6, v5.8)
+
+## [3.4.7] - 2026-04-14
+
+### Added
+- Dynamic QuickPlay category seeding: buildSeedData() reads Game.gameCategory
+  to auto-create configs with correct Social/Esport defaults
+- SocialGameTypeDto: DOU_DIZHU + OTHER enum values, socialGameTypeCustom field
+- Admin QuickPlay: category toggle (Esport<->Social), social game type selector,
+  developer-configured awareness banner, session duration for social
+- CreateRoomModal category-aware: reads game.gameCategory, shows correct
+  SocialGameSettings or EsportGameSettings component
+- GameWithLobbyStats.gameCategory field in lobby API interface
+
+### Fixed
+- EsportGameSettings Custom button in ChipPlusFreeInput (was onClick={() => {}),
+  now sets value to non-preset to reveal free input field
+- GameDetailPage + GlobalLobbyPage now pass category to CreateRoomModal
+- Admin QuickPlay can switch game category inline with auto-seeded defaults
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
+- Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 ## [3.4.5] - 2026-04-13
 
 ### Added
@@ -912,6 +1878,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - tournaments component count 3->4 (DisputeModal added)
 - Developer docs updated (v1.9, v2.0, v3.5, v5.7)
 
+
+## [3.4.7] - 2026-04-14
+
+### Added
+- Dynamic QuickPlay category seeding: buildSeedData() reads Game.gameCategory
+  to auto-create configs with correct Social/Esport defaults
+- SocialGameTypeDto: DOU_DIZHU + OTHER enum values, socialGameTypeCustom field
+- Admin QuickPlay: category toggle (Esport<->Social), social game type selector,
+  developer-configured awareness banner, session duration for social
+- CreateRoomModal category-aware: reads game.gameCategory, shows correct
+  SocialGameSettings or EsportGameSettings component
+- GameWithLobbyStats.gameCategory field in lobby API interface
+
+### Fixed
+- EsportGameSettings Custom button in ChipPlusFreeInput (was onClick={() => {}),
+  now sets value to non-preset to reveal free input field
+- GameDetailPage + GlobalLobbyPage now pass category to CreateRoomModal
+- Admin QuickPlay can switch game category inline with auto-seeded defaults
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
+- Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 ## [3.4.6] - 2026-04-13
 
 ### Added
@@ -933,6 +1922,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Dispute 4-layer context, L5/L6/L7 fixes, admin inline edit, free mode placement, socket notifications
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.0, v2.1, v3.6, v5.8)
+
+## [3.4.7] - 2026-04-14
+
+### Added
+- Dynamic QuickPlay category seeding: buildSeedData() reads Game.gameCategory
+  to auto-create configs with correct Social/Esport defaults
+- SocialGameTypeDto: DOU_DIZHU + OTHER enum values, socialGameTypeCustom field
+- Admin QuickPlay: category toggle (Esport<->Social), social game type selector,
+  developer-configured awareness banner, session duration for social
+- CreateRoomModal category-aware: reads game.gameCategory, shows correct
+  SocialGameSettings or EsportGameSettings component
+- GameWithLobbyStats.gameCategory field in lobby API interface
+
+### Fixed
+- EsportGameSettings Custom button in ChipPlusFreeInput (was onClick={() => {}),
+  now sets value to non-preset to reveal free input field
+- GameDetailPage + GlobalLobbyPage now pass category to CreateRoomModal
+- Admin QuickPlay can switch game category inline with auto-seeded defaults
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
+- Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 ## [3.4.4] - 2026-04-13
 
 ### Added
@@ -954,6 +1966,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Service worker: deskillz-sw.js (retired sw.js)
 
 
+
+## [3.4.7] - 2026-04-14
+
+### Added
+- Dynamic QuickPlay category seeding: buildSeedData() reads Game.gameCategory
+  to auto-create configs with correct Social/Esport defaults
+- SocialGameTypeDto: DOU_DIZHU + OTHER enum values, socialGameTypeCustom field
+- Admin QuickPlay: category toggle (Esport<->Social), social game type selector,
+  developer-configured awareness banner, session duration for social
+- CreateRoomModal category-aware: reads game.gameCategory, shows correct
+  SocialGameSettings or EsportGameSettings component
+- GameWithLobbyStats.gameCategory field in lobby API interface
+
+### Fixed
+- EsportGameSettings Custom button in ChipPlusFreeInput (was onClick={() => {}),
+  now sets value to non-preset to reveal free input field
+- GameDetailPage + GlobalLobbyPage now pass category to CreateRoomModal
+- Admin QuickPlay can switch game category inline with auto-seeded defaults
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
+- Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 ## [3.4.6] - 2026-04-13
 
 ### Added
@@ -975,6 +2010,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Dispute 4-layer context, L5/L6/L7 fixes, admin inline edit, free mode placement, socket notifications
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.0, v2.1, v3.6, v5.8)
+
+## [3.4.7] - 2026-04-14
+
+### Added
+- Dynamic QuickPlay category seeding: buildSeedData() reads Game.gameCategory
+  to auto-create configs with correct Social/Esport defaults
+- SocialGameTypeDto: DOU_DIZHU + OTHER enum values, socialGameTypeCustom field
+- Admin QuickPlay: category toggle (Esport<->Social), social game type selector,
+  developer-configured awareness banner, session duration for social
+- CreateRoomModal category-aware: reads game.gameCategory, shows correct
+  SocialGameSettings or EsportGameSettings component
+- GameWithLobbyStats.gameCategory field in lobby API interface
+
+### Fixed
+- EsportGameSettings Custom button in ChipPlusFreeInput (was onClick={() => {}),
+  now sets value to non-preset to reveal free input field
+- GameDetailPage + GlobalLobbyPage now pass category to CreateRoomModal
+- Admin QuickPlay can switch game category inline with auto-seeded defaults
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
+- Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 ## [3.4.5] - 2026-04-13
 
 ### Added
@@ -991,6 +2049,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - tournaments component count 3->4 (DisputeModal added)
 - Developer docs updated (v1.9, v2.0, v3.5, v5.7)
 
+
+## [3.4.7] - 2026-04-14
+
+### Added
+- Dynamic QuickPlay category seeding: buildSeedData() reads Game.gameCategory
+  to auto-create configs with correct Social/Esport defaults
+- SocialGameTypeDto: DOU_DIZHU + OTHER enum values, socialGameTypeCustom field
+- Admin QuickPlay: category toggle (Esport<->Social), social game type selector,
+  developer-configured awareness banner, session duration for social
+- CreateRoomModal category-aware: reads game.gameCategory, shows correct
+  SocialGameSettings or EsportGameSettings component
+- GameWithLobbyStats.gameCategory field in lobby API interface
+
+### Fixed
+- EsportGameSettings Custom button in ChipPlusFreeInput (was onClick={() => {}),
+  now sets value to non-preset to reveal free input field
+- GameDetailPage + GlobalLobbyPage now pass category to CreateRoomModal
+- Admin QuickPlay can switch game category inline with auto-seeded defaults
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
+- Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 ## [3.4.6] - 2026-04-13
 
 ### Added
@@ -1012,6 +2093,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Dispute 4-layer context, L5/L6/L7 fixes, admin inline edit, free mode placement, socket notifications
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.0, v2.1, v3.6, v5.8)
+
+## [3.4.7] - 2026-04-14
+
+### Added
+- Dynamic QuickPlay category seeding: buildSeedData() reads Game.gameCategory
+  to auto-create configs with correct Social/Esport defaults
+- SocialGameTypeDto: DOU_DIZHU + OTHER enum values, socialGameTypeCustom field
+- Admin QuickPlay: category toggle (Esport<->Social), social game type selector,
+  developer-configured awareness banner, session duration for social
+- CreateRoomModal category-aware: reads game.gameCategory, shows correct
+  SocialGameSettings or EsportGameSettings component
+- GameWithLobbyStats.gameCategory field in lobby API interface
+
+### Fixed
+- EsportGameSettings Custom button in ChipPlusFreeInput (was onClick={() => {}),
+  now sets value to non-preset to reveal free input field
+- GameDetailPage + GlobalLobbyPage now pass category to CreateRoomModal
+- Admin QuickPlay can switch game category inline with auto-seeded defaults
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
+- Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 ## [3.4.3] - 2026-04-11
 
 ### Changed
@@ -1024,6 +2128,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
+
+## [3.4.7] - 2026-04-14
+
+### Added
+- Dynamic QuickPlay category seeding: buildSeedData() reads Game.gameCategory
+  to auto-create configs with correct Social/Esport defaults
+- SocialGameTypeDto: DOU_DIZHU + OTHER enum values, socialGameTypeCustom field
+- Admin QuickPlay: category toggle (Esport<->Social), social game type selector,
+  developer-configured awareness banner, session duration for social
+- CreateRoomModal category-aware: reads game.gameCategory, shows correct
+  SocialGameSettings or EsportGameSettings component
+- GameWithLobbyStats.gameCategory field in lobby API interface
+
+### Fixed
+- EsportGameSettings Custom button in ChipPlusFreeInput (was onClick={() => {}),
+  now sets value to non-preset to reveal free input field
+- GameDetailPage + GlobalLobbyPage now pass category to CreateRoomModal
+- Admin QuickPlay can switch game category inline with auto-seeded defaults
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
+- Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 ## [3.4.6] - 2026-04-13
 
 ### Added
@@ -1045,6 +2172,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Dispute 4-layer context, L5/L6/L7 fixes, admin inline edit, free mode placement, socket notifications
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.0, v2.1, v3.6, v5.8)
+
+## [3.4.7] - 2026-04-14
+
+### Added
+- Dynamic QuickPlay category seeding: buildSeedData() reads Game.gameCategory
+  to auto-create configs with correct Social/Esport defaults
+- SocialGameTypeDto: DOU_DIZHU + OTHER enum values, socialGameTypeCustom field
+- Admin QuickPlay: category toggle (Esport<->Social), social game type selector,
+  developer-configured awareness banner, session duration for social
+- CreateRoomModal category-aware: reads game.gameCategory, shows correct
+  SocialGameSettings or EsportGameSettings component
+- GameWithLobbyStats.gameCategory field in lobby API interface
+
+### Fixed
+- EsportGameSettings Custom button in ChipPlusFreeInput (was onClick={() => {}),
+  now sets value to non-preset to reveal free input field
+- GameDetailPage + GlobalLobbyPage now pass category to CreateRoomModal
+- Admin QuickPlay can switch game category inline with auto-seeded defaults
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
+- Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 ## [3.4.5] - 2026-04-13
 
 ### Added
@@ -1061,6 +2211,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - tournaments component count 3->4 (DisputeModal added)
 - Developer docs updated (v1.9, v2.0, v3.5, v5.7)
 
+
+## [3.4.7] - 2026-04-14
+
+### Added
+- Dynamic QuickPlay category seeding: buildSeedData() reads Game.gameCategory
+  to auto-create configs with correct Social/Esport defaults
+- SocialGameTypeDto: DOU_DIZHU + OTHER enum values, socialGameTypeCustom field
+- Admin QuickPlay: category toggle (Esport<->Social), social game type selector,
+  developer-configured awareness banner, session duration for social
+- CreateRoomModal category-aware: reads game.gameCategory, shows correct
+  SocialGameSettings or EsportGameSettings component
+- GameWithLobbyStats.gameCategory field in lobby API interface
+
+### Fixed
+- EsportGameSettings Custom button in ChipPlusFreeInput (was onClick={() => {}),
+  now sets value to non-preset to reveal free input field
+- GameDetailPage + GlobalLobbyPage now pass category to CreateRoomModal
+- Admin QuickPlay can switch game category inline with auto-seeded defaults
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
+- Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 ## [3.4.6] - 2026-04-13
 
 ### Added
@@ -1082,6 +2255,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Dispute 4-layer context, L5/L6/L7 fixes, admin inline edit, free mode placement, socket notifications
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.0, v2.1, v3.6, v5.8)
+
+## [3.4.7] - 2026-04-14
+
+### Added
+- Dynamic QuickPlay category seeding: buildSeedData() reads Game.gameCategory
+  to auto-create configs with correct Social/Esport defaults
+- SocialGameTypeDto: DOU_DIZHU + OTHER enum values, socialGameTypeCustom field
+- Admin QuickPlay: category toggle (Esport<->Social), social game type selector,
+  developer-configured awareness banner, session duration for social
+- CreateRoomModal category-aware: reads game.gameCategory, shows correct
+  SocialGameSettings or EsportGameSettings component
+- GameWithLobbyStats.gameCategory field in lobby API interface
+
+### Fixed
+- EsportGameSettings Custom button in ChipPlusFreeInput (was onClick={() => {}),
+  now sets value to non-preset to reveal free input field
+- GameDetailPage + GlobalLobbyPage now pass category to CreateRoomModal
+- Admin QuickPlay can switch game category inline with auto-seeded defaults
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
+- Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 ## [3.4.4] - 2026-04-13
 
 ### Added
@@ -1103,6 +2299,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Service worker: deskillz-sw.js (retired sw.js)
 
 
+
+## [3.4.7] - 2026-04-14
+
+### Added
+- Dynamic QuickPlay category seeding: buildSeedData() reads Game.gameCategory
+  to auto-create configs with correct Social/Esport defaults
+- SocialGameTypeDto: DOU_DIZHU + OTHER enum values, socialGameTypeCustom field
+- Admin QuickPlay: category toggle (Esport<->Social), social game type selector,
+  developer-configured awareness banner, session duration for social
+- CreateRoomModal category-aware: reads game.gameCategory, shows correct
+  SocialGameSettings or EsportGameSettings component
+- GameWithLobbyStats.gameCategory field in lobby API interface
+
+### Fixed
+- EsportGameSettings Custom button in ChipPlusFreeInput (was onClick={() => {}),
+  now sets value to non-preset to reveal free input field
+- GameDetailPage + GlobalLobbyPage now pass category to CreateRoomModal
+- Admin QuickPlay can switch game category inline with auto-seeded defaults
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
+- Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 ## [3.4.6] - 2026-04-13
 
 ### Added
@@ -1124,6 +2343,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Dispute 4-layer context, L5/L6/L7 fixes, admin inline edit, free mode placement, socket notifications
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.0, v2.1, v3.6, v5.8)
+
+## [3.4.7] - 2026-04-14
+
+### Added
+- Dynamic QuickPlay category seeding: buildSeedData() reads Game.gameCategory
+  to auto-create configs with correct Social/Esport defaults
+- SocialGameTypeDto: DOU_DIZHU + OTHER enum values, socialGameTypeCustom field
+- Admin QuickPlay: category toggle (Esport<->Social), social game type selector,
+  developer-configured awareness banner, session duration for social
+- CreateRoomModal category-aware: reads game.gameCategory, shows correct
+  SocialGameSettings or EsportGameSettings component
+- GameWithLobbyStats.gameCategory field in lobby API interface
+
+### Fixed
+- EsportGameSettings Custom button in ChipPlusFreeInput (was onClick={() => {}),
+  now sets value to non-preset to reveal free input field
+- GameDetailPage + GlobalLobbyPage now pass category to CreateRoomModal
+- Admin QuickPlay can switch game category inline with auto-seeded defaults
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
+- Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 ## [3.4.5] - 2026-04-13
 
 ### Added
@@ -1140,6 +2382,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - tournaments component count 3->4 (DisputeModal added)
 - Developer docs updated (v1.9, v2.0, v3.5, v5.7)
 
+
+## [3.4.7] - 2026-04-14
+
+### Added
+- Dynamic QuickPlay category seeding: buildSeedData() reads Game.gameCategory
+  to auto-create configs with correct Social/Esport defaults
+- SocialGameTypeDto: DOU_DIZHU + OTHER enum values, socialGameTypeCustom field
+- Admin QuickPlay: category toggle (Esport<->Social), social game type selector,
+  developer-configured awareness banner, session duration for social
+- CreateRoomModal category-aware: reads game.gameCategory, shows correct
+  SocialGameSettings or EsportGameSettings component
+- GameWithLobbyStats.gameCategory field in lobby API interface
+
+### Fixed
+- EsportGameSettings Custom button in ChipPlusFreeInput (was onClick={() => {}),
+  now sets value to non-preset to reveal free input field
+- GameDetailPage + GlobalLobbyPage now pass category to CreateRoomModal
+- Admin QuickPlay can switch game category inline with auto-seeded defaults
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
+- Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 ## [3.4.6] - 2026-04-13
 
 ### Added
@@ -1161,6 +2426,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Dispute 4-layer context, L5/L6/L7 fixes, admin inline edit, free mode placement, socket notifications
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.0, v2.1, v3.6, v5.8)
+
+## [3.4.7] - 2026-04-14
+
+### Added
+- Dynamic QuickPlay category seeding: buildSeedData() reads Game.gameCategory
+  to auto-create configs with correct Social/Esport defaults
+- SocialGameTypeDto: DOU_DIZHU + OTHER enum values, socialGameTypeCustom field
+- Admin QuickPlay: category toggle (Esport<->Social), social game type selector,
+  developer-configured awareness banner, session duration for social
+- CreateRoomModal category-aware: reads game.gameCategory, shows correct
+  SocialGameSettings or EsportGameSettings component
+- GameWithLobbyStats.gameCategory field in lobby API interface
+
+### Fixed
+- EsportGameSettings Custom button in ChipPlusFreeInput (was onClick={() => {}),
+  now sets value to non-preset to reveal free input field
+- GameDetailPage + GlobalLobbyPage now pass category to CreateRoomModal
+- Admin QuickPlay can switch game category inline with auto-seeded defaults
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
+- Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 ## [3.4.4] - 2026-04-12
 
 ### Added
@@ -1183,6 +2471,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
+
+## [3.4.7] - 2026-04-14
+
+### Added
+- Dynamic QuickPlay category seeding: buildSeedData() reads Game.gameCategory
+  to auto-create configs with correct Social/Esport defaults
+- SocialGameTypeDto: DOU_DIZHU + OTHER enum values, socialGameTypeCustom field
+- Admin QuickPlay: category toggle (Esport<->Social), social game type selector,
+  developer-configured awareness banner, session duration for social
+- CreateRoomModal category-aware: reads game.gameCategory, shows correct
+  SocialGameSettings or EsportGameSettings component
+- GameWithLobbyStats.gameCategory field in lobby API interface
+
+### Fixed
+- EsportGameSettings Custom button in ChipPlusFreeInput (was onClick={() => {}),
+  now sets value to non-preset to reveal free input field
+- GameDetailPage + GlobalLobbyPage now pass category to CreateRoomModal
+- Admin QuickPlay can switch game category inline with auto-seeded defaults
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
+- Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 ## [3.4.6] - 2026-04-13
 
 ### Added
@@ -1204,6 +2515,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Dispute 4-layer context, L5/L6/L7 fixes, admin inline edit, free mode placement, socket notifications
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.0, v2.1, v3.6, v5.8)
+
+## [3.4.7] - 2026-04-14
+
+### Added
+- Dynamic QuickPlay category seeding: buildSeedData() reads Game.gameCategory
+  to auto-create configs with correct Social/Esport defaults
+- SocialGameTypeDto: DOU_DIZHU + OTHER enum values, socialGameTypeCustom field
+- Admin QuickPlay: category toggle (Esport<->Social), social game type selector,
+  developer-configured awareness banner, session duration for social
+- CreateRoomModal category-aware: reads game.gameCategory, shows correct
+  SocialGameSettings or EsportGameSettings component
+- GameWithLobbyStats.gameCategory field in lobby API interface
+
+### Fixed
+- EsportGameSettings Custom button in ChipPlusFreeInput (was onClick={() => {}),
+  now sets value to non-preset to reveal free input field
+- GameDetailPage + GlobalLobbyPage now pass category to CreateRoomModal
+- Admin QuickPlay can switch game category inline with auto-seeded defaults
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
+- Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 ## [3.4.5] - 2026-04-13
 
 ### Added
@@ -1220,6 +2554,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - tournaments component count 3->4 (DisputeModal added)
 - Developer docs updated (v1.9, v2.0, v3.5, v5.7)
 
+
+## [3.4.7] - 2026-04-14
+
+### Added
+- Dynamic QuickPlay category seeding: buildSeedData() reads Game.gameCategory
+  to auto-create configs with correct Social/Esport defaults
+- SocialGameTypeDto: DOU_DIZHU + OTHER enum values, socialGameTypeCustom field
+- Admin QuickPlay: category toggle (Esport<->Social), social game type selector,
+  developer-configured awareness banner, session duration for social
+- CreateRoomModal category-aware: reads game.gameCategory, shows correct
+  SocialGameSettings or EsportGameSettings component
+- GameWithLobbyStats.gameCategory field in lobby API interface
+
+### Fixed
+- EsportGameSettings Custom button in ChipPlusFreeInput (was onClick={() => {}),
+  now sets value to non-preset to reveal free input field
+- GameDetailPage + GlobalLobbyPage now pass category to CreateRoomModal
+- Admin QuickPlay can switch game category inline with auto-seeded defaults
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
+- Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 ## [3.4.6] - 2026-04-13
 
 ### Added
@@ -1241,6 +2598,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Dispute 4-layer context, L5/L6/L7 fixes, admin inline edit, free mode placement, socket notifications
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.0, v2.1, v3.6, v5.8)
+
+## [3.4.7] - 2026-04-14
+
+### Added
+- Dynamic QuickPlay category seeding: buildSeedData() reads Game.gameCategory
+  to auto-create configs with correct Social/Esport defaults
+- SocialGameTypeDto: DOU_DIZHU + OTHER enum values, socialGameTypeCustom field
+- Admin QuickPlay: category toggle (Esport<->Social), social game type selector,
+  developer-configured awareness banner, session duration for social
+- CreateRoomModal category-aware: reads game.gameCategory, shows correct
+  SocialGameSettings or EsportGameSettings component
+- GameWithLobbyStats.gameCategory field in lobby API interface
+
+### Fixed
+- EsportGameSettings Custom button in ChipPlusFreeInput (was onClick={() => {}),
+  now sets value to non-preset to reveal free input field
+- GameDetailPage + GlobalLobbyPage now pass category to CreateRoomModal
+- Admin QuickPlay can switch game category inline with auto-seeded defaults
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
+- Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 ## [3.4.4] - 2026-04-13
 
 ### Added
@@ -1262,6 +2642,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Service worker: deskillz-sw.js (retired sw.js)
 
 
+
+## [3.4.7] - 2026-04-14
+
+### Added
+- Dynamic QuickPlay category seeding: buildSeedData() reads Game.gameCategory
+  to auto-create configs with correct Social/Esport defaults
+- SocialGameTypeDto: DOU_DIZHU + OTHER enum values, socialGameTypeCustom field
+- Admin QuickPlay: category toggle (Esport<->Social), social game type selector,
+  developer-configured awareness banner, session duration for social
+- CreateRoomModal category-aware: reads game.gameCategory, shows correct
+  SocialGameSettings or EsportGameSettings component
+- GameWithLobbyStats.gameCategory field in lobby API interface
+
+### Fixed
+- EsportGameSettings Custom button in ChipPlusFreeInput (was onClick={() => {}),
+  now sets value to non-preset to reveal free input field
+- GameDetailPage + GlobalLobbyPage now pass category to CreateRoomModal
+- Admin QuickPlay can switch game category inline with auto-seeded defaults
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
+- Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 ## [3.4.6] - 2026-04-13
 
 ### Added
@@ -1283,6 +2686,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Dispute 4-layer context, L5/L6/L7 fixes, admin inline edit, free mode placement, socket notifications
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.0, v2.1, v3.6, v5.8)
+
+## [3.4.7] - 2026-04-14
+
+### Added
+- Dynamic QuickPlay category seeding: buildSeedData() reads Game.gameCategory
+  to auto-create configs with correct Social/Esport defaults
+- SocialGameTypeDto: DOU_DIZHU + OTHER enum values, socialGameTypeCustom field
+- Admin QuickPlay: category toggle (Esport<->Social), social game type selector,
+  developer-configured awareness banner, session duration for social
+- CreateRoomModal category-aware: reads game.gameCategory, shows correct
+  SocialGameSettings or EsportGameSettings component
+- GameWithLobbyStats.gameCategory field in lobby API interface
+
+### Fixed
+- EsportGameSettings Custom button in ChipPlusFreeInput (was onClick={() => {}),
+  now sets value to non-preset to reveal free input field
+- GameDetailPage + GlobalLobbyPage now pass category to CreateRoomModal
+- Admin QuickPlay can switch game category inline with auto-seeded defaults
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
+- Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 ## [3.4.5] - 2026-04-13
 
 ### Added
@@ -1299,6 +2725,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - tournaments component count 3->4 (DisputeModal added)
 - Developer docs updated (v1.9, v2.0, v3.5, v5.7)
 
+
+## [3.4.7] - 2026-04-14
+
+### Added
+- Dynamic QuickPlay category seeding: buildSeedData() reads Game.gameCategory
+  to auto-create configs with correct Social/Esport defaults
+- SocialGameTypeDto: DOU_DIZHU + OTHER enum values, socialGameTypeCustom field
+- Admin QuickPlay: category toggle (Esport<->Social), social game type selector,
+  developer-configured awareness banner, session duration for social
+- CreateRoomModal category-aware: reads game.gameCategory, shows correct
+  SocialGameSettings or EsportGameSettings component
+- GameWithLobbyStats.gameCategory field in lobby API interface
+
+### Fixed
+- EsportGameSettings Custom button in ChipPlusFreeInput (was onClick={() => {}),
+  now sets value to non-preset to reveal free input field
+- GameDetailPage + GlobalLobbyPage now pass category to CreateRoomModal
+- Admin QuickPlay can switch game category inline with auto-seeded defaults
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
+- Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 ## [3.4.6] - 2026-04-13
 
 ### Added
@@ -1320,6 +2769,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Dispute 4-layer context, L5/L6/L7 fixes, admin inline edit, free mode placement, socket notifications
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.0, v2.1, v3.6, v5.8)
+
+## [3.4.7] - 2026-04-14
+
+### Added
+- Dynamic QuickPlay category seeding: buildSeedData() reads Game.gameCategory
+  to auto-create configs with correct Social/Esport defaults
+- SocialGameTypeDto: DOU_DIZHU + OTHER enum values, socialGameTypeCustom field
+- Admin QuickPlay: category toggle (Esport<->Social), social game type selector,
+  developer-configured awareness banner, session duration for social
+- CreateRoomModal category-aware: reads game.gameCategory, shows correct
+  SocialGameSettings or EsportGameSettings component
+- GameWithLobbyStats.gameCategory field in lobby API interface
+
+### Fixed
+- EsportGameSettings Custom button in ChipPlusFreeInput (was onClick={() => {}),
+  now sets value to non-preset to reveal free input field
+- GameDetailPage + GlobalLobbyPage now pass category to CreateRoomModal
+- Admin QuickPlay can switch game category inline with auto-seeded defaults
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
+- Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 ## [2.x.x] - Previous Versions
 
 Previous versions were platform-specific SDKs (Unity, Unreal Engine).

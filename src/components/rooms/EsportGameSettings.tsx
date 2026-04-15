@@ -206,7 +206,9 @@ function ChipPlusFreeInput({ presets, value, disabled, onSelect, inputMin, input
             {formatPreset ? formatPreset(p) : String(p)}
           </Chip>
         ))}
-        <Chip selected={isCustom} disabled={disabled} onClick={() => {}}>Custom</Chip>
+        <Chip selected={isCustom} disabled={disabled} onClick={() => {
+  if (!isCustom) { onSelect(inputMin ?? 0); }
+}}>Custom</Chip>
       </div>
       {isCustom && (
         <div className="flex items-center gap-2">

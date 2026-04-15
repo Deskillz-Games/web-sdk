@@ -2,10 +2,26 @@
 
 ## Big 2 | Mahjong | Thirteen Cards (Chinese Poker)
 
-**Version:** 2.0
-**Date:** April 13, 2026
+**Version:** 2.1
+**Date:** April 14, 2026
 **Applies to:** All three React/Vite standalone games
-**SDK:** DeskillzBridge v3.4.6 + @deskillz/game-ui v3.4.6
+**SDK:** DeskillzBridge v3.4.7 + @deskillz/game-ui v3.4.7
+
+**Changelog v2.1 (April 14, 2026):**
+- QUICKPLAY: Dynamic category seeding -- QuickPlayConfig auto-created with correct
+  Social/Esport defaults based on Game.gameCategory (no manual DB fixes needed)
+- QUICKPLAY: SocialGameTypeDto updated: DOU_DIZHU + OTHER + socialGameTypeCustom
+- ADMIN: QuickPlay category toggle (Esport<->Social) in edit mode with
+  auto-seeded defaults, social game type selector, developer-configured banner
+- CREATEROOM: Category-aware private room creation -- reads game.gameCategory,
+  shows SocialGameSettings for social games, EsportGameSettings for esport
+- ESPORT: Custom button fix in ChipPlusFreeInput (entry fee, duration, rounds,
+  player count) -- clicking Custom now opens the free input field
+- LOBBY: GameWithLobbyStats.gameCategory added, GameDetailPage + GlobalLobbyPage
+  now pass category to CreateRoomModal
+- BACKEND: quick-play.service.ts buildSeedData() seeds from Game model
+- BACKEND: quick-play.dto.ts DOU_DIZHU + OTHER + socialGameTypeCustom
+- FRONTEND: quick-play.ts API types updated with socialGameTypeCustom + OTHER enum
 
 **Changelog v2.0 (April 13, 2026):**
 - DISPUTE ENHANCEMENT: DisputeModal rewritten with 4-layer match context:

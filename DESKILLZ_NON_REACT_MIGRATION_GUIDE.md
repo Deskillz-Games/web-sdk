@@ -2,10 +2,21 @@
 
 ## Dou Dizhu | Bubble Battle | Candy Duel
 
-**Version:** 2.1
-**Date:** April 13, 2026
+**Version:** 2.2
+**Date:** April 14, 2026
 **For:** Developers of existing non-React standalone games
 **Applies to:** Dou Dizhu (PixiJS), Bubble Battle (Canvas/TypeScript), Candy Duel (Canvas/TypeScript)
+
+**Changelog v2.2 (April 14, 2026):**
+- QUICKPLAY: Dynamic category seeding -- new games auto-create QuickPlayConfig
+  with correct Esport/Social defaults from Game.gameCategory
+- QUICKPLAY: SocialGameTypeDto now includes DOU_DIZHU + OTHER + socialGameTypeCustom
+- CREATEROOM: Category-aware private room creation -- CreateRoomModal reads
+  game.gameCategory and shows correct settings component (Social vs Esport)
+- ESPORT: Custom button fix in EsportGameSettings ChipPlusFreeInput --
+  clicking Custom now correctly shows the free input field
+- ADMIN: QuickPlay admin panel supports category toggle, social game type
+  selector, and developer-configured awareness banner
 
 **Changelog v2.1 (April 13, 2026):**
 - DISPUTE ENHANCEMENT: DisputeModal rewritten with 4-layer match context

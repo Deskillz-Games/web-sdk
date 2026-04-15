@@ -1,9 +1,9 @@
 # DESKILLZ STANDALONE GAME UI BUILD HANDOFF
 ## Universal UI Guide for Self-Sufficient Game Apps
 
-**Version:** 3.6
-**Date:** April 13, 2026
-**SDK Version:** Deskillz SDK v3.4.6 + @deskillz/game-ui v3.4.6
+**Version:** 3.7
+**Date:** April 14, 2026
+**SDK Version:** Deskillz SDK v3.4.7 + @deskillz/game-ui v3.4.7
 **Architecture:** Self-Sufficient (No External App Dependency)
 **Supported Game Types:** Esports (Competitive) + Social Games (Cash Game + Tournament)
 **Supported Web Engine:** React/Vite only (all standalone web games)
@@ -11,6 +11,24 @@
 ---
 
 ## CHANGELOG
+
+### v3.7 (April 14, 2026)
+- QUICKPLAY: Dynamic category seeding from Game.gameCategory on auto-create
+  (buildSeedData seeds Social defaults: 4 players, $0.25-$5 tiers, 5% rake,
+  90s timeout, 20 min session; Esport defaults: 1v1, $1-$25 tiers, 10% fee)
+- QUICKPLAY DTO: DOU_DIZHU + OTHER added to SocialGameTypeDto, socialGameTypeCustom
+  field added for developer-defined custom game types
+- ADMIN QUICKPLAY: Category toggle (Esport<->Social) in edit mode, social game
+  type dropdown with OTHER custom input, developer-configured awareness banner,
+  session duration field for social games
+- CREATEROOM: Category-aware on main deskillz.games app -- GameDetailPage and
+  GlobalLobbyPage now pass game.gameCategory to CreateRoomModal so social games
+  show SocialGameSettings and esport games show EsportGameSettings
+- ESPORT SETTINGS: Fixed ChipPlusFreeInput Custom button (was onClick={() => {}),
+  now sets value to non-preset to reveal free input field
+- LOBBY API: GameWithLobbyStats interface now includes gameCategory field
+- BACKEND: formatConfig() returns socialGameTypeCustom, updateConfig/updateConfigAdmin
+  sync socialGameType + socialGameTypeCustom back to Game model
 
 ### v3.6 (April 13, 2026)
 - DISPUTE ENHANCEMENT: DisputeModal rewritten with 4-layer match context:

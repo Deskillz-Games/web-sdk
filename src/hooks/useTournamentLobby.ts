@@ -225,7 +225,7 @@ export function useTournamentLobby(
       } else if (booking === 'ELIMINATED') {
         setStatus('ELIMINATED')
         setCurrentTable(null)
-      } else if (booking === 'CHAMPION' || booking === 'WINNER') {
+      } else if (booking === 'CHAMPION' || booking === 'WINNER' || booking === 'WON') {
         setStatus('CHAMPION')
         setCurrentTable(null)
       } else if (booking === 'ADVANCING' || booking === 'WAITING_NEXT_ROUND') {
