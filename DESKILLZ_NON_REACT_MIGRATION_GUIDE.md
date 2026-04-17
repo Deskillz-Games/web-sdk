@@ -484,6 +484,31 @@ await bridge.createRoom({
 });
 ```
 
+### Step 10d -- Esport Match Modes (v3.4.9)
+
+Pass `esportMatchMode` in `bridge.createRoom()` instead of the legacy `mode` field.
+`EsportGameSettings` handles mode selection automatically based on capability flags.
+
+```typescript
+await bridge.createRoom({
+  entryFee: 5,
+  esportMatchMode: 'BLITZ_1V1', // specific mode
+  hostRole: 'PLAYER',
+});
+```
+
+| Mode | Description | Capability Flag |
+|------|-------------|-----------------|
+| `BLITZ_1V1` | Simultaneous 1v1, own screens | `supportsBlitz1v1` |
+| `DUEL_1V1` | Real-time 1v1, same map | `supportsDuel1v1` |
+| `TURN_BASED` | Turn-based, shared board | `supportsTurnBased` |
+| `ASYNC` | Score-attack, play before deadline | `supportsAsync` |
+| `SYNC` | Real-time queue matching | `supportsSync` |
+| `SINGLE_PLAYER` | Solo score attack | `supportsSinglePlayerMode` |
+
+**Candy Duel:** `supportsBlitz1v1=true`, `supportsTurnBased=true`
+**Bubble Battle:** `supportsBlitz1v1=true`, `supportsDuel1v1=true`
+
 ### Step 11 -- Verify + build
 
 ```powershell

@@ -124,6 +124,7 @@ export interface CreateEsportRoomOpts {
   format?: string;
   visibility?: 'PUBLIC_LISTED' | 'PRIVATE_CODE' | 'UNLISTED';
   hostRole?: 'PLAYER' | 'SPECTATOR';
+  esportMatchMode?: 'ASYNC' | 'SYNC' | 'BLITZ_1V1' | 'DUEL_1V1' | 'TURN_BASED' | 'SINGLE_PLAYER';
 }
 
 /** Options for creating a social game room */
@@ -2195,6 +2196,7 @@ export class DeskillzBridge {
       visibility: opts.visibility || 'PUBLIC_LISTED',
       gameCategory: 'ESPORTS',
       ...(opts.hostRole && { hostRole: opts.hostRole }),
+      ...(opts.esportMatchMode && { esportMatchMode: opts.esportMatchMode }),
     });
 
     const room = this.normalizeRoom(res, false);

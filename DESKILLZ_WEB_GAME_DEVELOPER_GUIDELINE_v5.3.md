@@ -1646,16 +1646,16 @@ All endpoints use `/api/v1/` prefix:
 NEVER display "bot", "AI", or "NPC" in player-facing UI.
 Show: "Filling match..." — nothing more.
 
-### EsportMatchMode Enum (v3.0)
+### EsportMatchMode Enum (v3.4.9)
 
-| Value | Description |
-|-------|-------------|
-| `ASYNC` | Players play at their own pace, scores compared at deadline |
-| `SYNC` | Players queue and match in real-time |
-| `BLITZ_1V1` | Fast-paced 1v1 match, short time limit (e.g. Candy Duel 60s) |
-| `DUEL_1V1` | Standard 1v1 duel, full match duration (e.g. Bubble Battle) |
-| `SINGLE_PLAYER` | Solo score attack, no opponent, ranked by score |
-| `TURN_BASED` | Players take turns, not real-time (strategy/board/card games) |
+| Value | Description | Example |
+|-------|-------------|---------|
+| `ASYNC` | Play at own pace, scores compared at deadline | Puzzle, runner |
+| `SYNC` | Queue and match in real-time | Fighting, racing |
+| `BLITZ_1V1` | Simultaneous 1v1, both play on own screens | Bubble Battle blitz, Candy Duel blitz |
+| `DUEL_1V1` | Real-time 1v1, both on same map simultaneously | Bubble Battle duel |
+| `TURN_BASED` | Turn-based on shared board, both must be online | Candy Duel duel |
+| `SINGLE_PLAYER` | Solo score attack, no opponent | Practice mode |
 
 ### Deskillz Platform Colors
 
@@ -2139,16 +2139,39 @@ GET /api/v1/tournaments/my-registrations
   NOTE: Route order matters — my-registrations MUST be before :id routes
 ```
 
-### Tournament Creation (EsportMatchMode)
+### EsportMatchMode Reference (Tournaments + Private Rooms)
 
-When creating tournaments via `CreateTournamentModal`, the `esportMatchMode` field maps to:
+The `esportMatchMode` field is used in both tournament creation (`CreateTournamentModal`)
+and private room creation (`bridge.createRoom()`). It replaces the legacy binary
+`SYNC`/`ASYNC` mode field with specific gameplay semantics.
 
-| Mode | Description | Use Case |
-|------|-------------|----------|
-| `ASYNC` | Scores submitted at own pace | Puzzle, runner, high-score games |
-| `SYNC` | Real-time queue matching | Fighting, racing, vs games |
-| `BLITZ_1V1` | Fast 1v1, short timer | Quick casual duels |
-| `DUEL_1V1` | Standard 1v1 | Competitive head-to-head |
+| Mode | Description | Example Game | Capability Flag |
+|------|-------------|-------------|-----------------|
+| `ASYNC` | Score-attack, play before deadline | Puzzle, runner | `supportsAsync` |
+| `SYNC` | Real-time rolling matches | Fighting, racing | `supportsSync` |
+| `BLITZ_1V1` | Fast 1v1, both play simultaneously on own screens | Bubble Battle, Candy Duel | `supportsBlitz1v1` |
+| `DUEL_1V1` | Real-time 1v1, both players on same map | Bubble Battle duel | `supportsDuel1v1` |
+| `TURN_BASED` | Turn-based on shared board, both online | Candy Duel duel, card games | `supportsTurnBased` |
+| `SINGLE_PLAYER` | Solo score attack, no opponent | Practice, training | `supportsSinglePlayerMode` |
+
+**CRITICAL: Match the right mode to your game.**
+- Candy Duel "Duel" is `TURN_BASED` (not `DUEL_1V1`) -- players take turns on shared board
+- Bubble Battle "Duel" is `DUEL_1V1` -- both players play simultaneously on same map
+- Both games' "Blitz" mode is `BLITZ_1V1` -- simultaneous play on separate screens
+
+**Private room creation:**
+```typescript
+await bridge.createRoom({
+  entryFee: 5,
+  esportMatchMode: 'BLITZ_1V1', // specific mode
+  // legacy 'mode' field is auto-derived: ASYNC->ASYNC, everything else->SYNC
+})
+```
+
+**Capability flags in Developer Portal:**
+Set the correct flags in My Games > Edit > Gameplay tab. `EsportGameSettings`
+only shows modes where the flag is `true`. If only one mode is available,
+it auto-selects and the selector is hidden.
 
 Social games always use `SYNC` mode (locked by backend validation).
 

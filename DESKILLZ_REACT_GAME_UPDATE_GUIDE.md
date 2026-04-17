@@ -659,12 +659,12 @@ const handleCreateRoom = async () => {
     entryCurrency: gameConfig.entryCurrency,
     minPlayers: gameConfig.minPlayers,
     maxPlayers: gameConfig.maxPlayers,
-    mode: gameConfig.mode,
     matchDuration: gameConfig.matchDurationSeconds,
     roundsCount: gameConfig.roundsCount,
     prizeDistribution: gameConfig.prizeDistribution,
     visibility: gameConfig.visibility,
-    hostRole: gameConfig.hostRole, // 'PLAYER' | 'SPECTATOR'
+    hostRole: gameConfig.hostRole,             // 'PLAYER' | 'SPECTATOR'
+    esportMatchMode: gameConfig.esportMatchMode, // 'BLITZ_1V1' | 'DUEL_1V1' | 'TURN_BASED' | etc.
   })
 }
 
@@ -1066,6 +1066,28 @@ import logo from './assets/logo.png';
 | `src/assets/` | `import x from './assets/file'` |
 
 Never mix the two approaches.
+
+## ESPORT MATCH MODES (v3.4.9)
+
+The `esportMatchMode` field replaces the legacy binary `SYNC`/`ASYNC` mode.
+`EsportGameSettings` automatically shows only modes where the capability flag
+is `true` in the Developer Portal.
+
+| Mode | Description | Capability Flag |
+|------|-------------|-----------------|
+| `BLITZ_1V1` | Simultaneous 1v1, own screens | `supportsBlitz1v1` |
+| `DUEL_1V1` | Real-time 1v1, same map | `supportsDuel1v1` |
+| `TURN_BASED` | Turn-based, shared board | `supportsTurnBased` |
+| `ASYNC` | Score-attack, play before deadline | `supportsAsync` |
+| `SYNC` | Real-time queue matching | `supportsSync` |
+| `SINGLE_PLAYER` | Solo score attack | `supportsSinglePlayerMode` |
+
+**Common mistakes:**
+- Candy Duel "Duel" is `TURN_BASED` (NOT `DUEL_1V1`) -- players take turns
+- Bubble Battle "Duel" is `DUEL_1V1` -- both play simultaneously on same map
+- Both games' "Blitz" is `BLITZ_1V1`
+
+Set capabilities in Developer Portal > My Games > Edit > Gameplay tab.
 
 ---
 

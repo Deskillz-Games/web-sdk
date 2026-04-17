@@ -770,8 +770,9 @@ Create Room modal supports two modes for social games:
 ```typescript
 // Esport room (entry-fee based, fixed payout)
 await bridge.createRoom({
-  entryFee, maxPlayers, currency, mode, matchDuration,
-  hostRole  // 'PLAYER' | 'SPECTATOR' — SPECTATOR does not occupy a seat
+  entryFee, maxPlayers, currency, matchDuration,
+  esportMatchMode,  // 'BLITZ_1V1' | 'DUEL_1V1' | 'TURN_BASED' | 'ASYNC' | 'SYNC' | 'SINGLE_PLAYER'
+  hostRole,         // 'PLAYER' | 'SPECTATOR'
 })
 
 // Social room -- Cash Game
@@ -779,7 +780,7 @@ await bridge.createSocialRoom({
   socialMode: 'CASH_GAME',
   gameType, pointValue, rakePercent, rakeCap, pointTarget,
   maxBid, springBonus, turnTimerSeconds, currency,
-  visibility, hostRole  // replaces hostAsPlayer (backward compatible)
+  visibility, hostRole
 })
 
 // Social room -- Tournament
@@ -787,14 +788,30 @@ await bridge.createSocialRoom({
   socialMode: 'TOURNAMENT',
   gameType, entryFee, entryCurrency, prizeDistribution,
   numberOfTables, seatsPerTable, pointTarget, turnTimerSeconds,
-  visibility, hostRole  // replaces hostAsPlayer (backward compatible)
+  visibility, hostRole
 })
 ```
+
+> **esportMatchMode** replaces the legacy `mode` (SYNC/ASYNC) field for
+> esport rooms. The backend auto-derives legacy mode for backward compat
+> (ASYNC stays ASYNC, everything else maps to SYNC). Social rooms always
+> use SYNC.
 
 > **hostRole vs hostAsPlayer:** The new `hostRole: 'PLAYER' | 'SPECTATOR'`
 > field is preferred over the boolean `hostAsPlayer`. Both are accepted --
 > `hostRole` takes precedence when both are sent. When SPECTATOR, the host
 > receives all socket events but does not consume a player seat.
+
+### EsportMatchMode Quick Reference
+
+| Mode | Description | Capability Flag |
+|------|-------------|-----------------|
+| `BLITZ_1V1` | Simultaneous 1v1, own screens | `supportsBlitz1v1` |
+| `DUEL_1V1` | Real-time 1v1, same map | `supportsDuel1v1` |
+| `TURN_BASED` | Turn-based, shared board, both online | `supportsTurnBased` |
+| `ASYNC` | Score-attack, play before deadline | `supportsAsync` |
+| `SYNC` | Real-time queue matching | `supportsSync` |
+| `SINGLE_PLAYER` | Solo score attack | `supportsSinglePlayerMode` |
 
 ### Room Join
 
