@@ -13,7 +13,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -27,7 +28,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -56,7 +98,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -70,7 +113,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -100,7 +184,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -114,7 +199,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -143,7 +269,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -157,7 +284,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -187,7 +355,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -201,7 +370,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -230,7 +440,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -244,7 +455,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -274,7 +526,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -288,7 +541,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -317,7 +611,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -331,7 +626,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -356,7 +692,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -370,7 +707,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -399,7 +777,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -413,7 +792,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -443,7 +863,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -457,7 +878,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -486,7 +948,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -500,7 +963,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -530,7 +1034,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -544,7 +1049,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -573,7 +1119,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -587,7 +1134,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -617,7 +1205,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -631,7 +1220,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -660,7 +1290,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -674,7 +1305,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -704,7 +1376,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -718,7 +1391,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -747,7 +1461,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -761,7 +1476,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -791,7 +1547,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -805,7 +1562,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -834,7 +1632,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -848,7 +1647,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -878,7 +1718,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -892,7 +1733,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -921,7 +1803,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -935,7 +1818,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -965,7 +1889,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -979,7 +1904,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -1008,7 +1974,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -1022,7 +1989,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -1047,7 +2055,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -1061,7 +2070,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -1090,7 +2140,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -1104,7 +2155,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -1134,7 +2226,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -1148,7 +2241,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -1177,7 +2311,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -1191,7 +2326,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -1221,7 +2397,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -1235,7 +2412,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -1264,7 +2482,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -1278,7 +2497,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -1308,7 +2568,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -1322,7 +2583,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -1351,7 +2653,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -1365,7 +2668,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -1396,7 +2740,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -1410,7 +2755,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -1439,7 +2825,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -1453,7 +2840,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -1483,7 +2911,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -1497,7 +2926,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -1526,7 +2996,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -1540,7 +3011,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -1570,7 +3082,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -1584,7 +3097,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -1613,7 +3167,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -1627,7 +3182,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -1657,7 +3253,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -1671,7 +3268,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -1700,7 +3338,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -1714,7 +3353,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -1739,7 +3419,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -1753,7 +3434,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -1782,7 +3504,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -1796,7 +3519,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -1826,7 +3590,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -1840,7 +3605,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -1869,7 +3675,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -1883,7 +3690,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -1913,7 +3761,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -1927,7 +3776,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -1956,7 +3846,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -1970,7 +3861,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -2000,7 +3932,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -2014,7 +3947,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -2043,7 +4017,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -2057,7 +4032,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -2087,7 +4103,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -2101,7 +4118,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -2130,7 +4188,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -2144,7 +4203,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -2174,7 +4274,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -2188,7 +4289,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -2217,7 +4359,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -2231,7 +4374,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -2261,7 +4445,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -2275,7 +4460,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -2304,7 +4530,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -2318,7 +4545,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -2348,7 +4616,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -2362,7 +4631,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -2391,7 +4701,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -2405,7 +4716,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -2430,7 +4782,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -2444,7 +4797,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -2473,7 +4867,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -2487,7 +4882,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -2517,7 +4953,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -2531,7 +4968,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -2560,7 +5038,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -2574,7 +5053,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -2604,7 +5124,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -2618,7 +5139,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -2647,7 +5209,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -2661,7 +5224,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -2691,7 +5295,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -2705,7 +5310,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -2734,7 +5380,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -2748,7 +5395,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -2769,7 +5457,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -2783,7 +5472,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -2812,7 +5542,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -2826,7 +5557,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -2856,7 +5628,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -2870,7 +5643,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -2899,7 +5713,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -2913,7 +5728,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -2943,7 +5799,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -2957,7 +5814,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -2986,7 +5884,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -3000,7 +5899,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -3030,7 +5970,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -3044,7 +5985,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -3073,7 +6055,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -3087,7 +6070,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -3112,7 +6136,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -3126,7 +6151,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -3155,7 +6221,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -3169,7 +6236,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -3199,7 +6307,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -3213,7 +6322,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -3242,7 +6392,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -3256,7 +6407,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -3286,7 +6478,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -3300,7 +6493,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -3329,7 +6563,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -3343,7 +6578,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -3373,7 +6649,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -3387,7 +6664,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -3416,7 +6734,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -3430,7 +6749,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -3460,7 +6820,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -3474,7 +6835,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -3503,7 +6905,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -3517,7 +6920,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -3547,7 +6991,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -3561,7 +7006,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -3590,7 +7076,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -3604,7 +7091,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -3634,7 +7162,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -3648,7 +7177,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -3677,7 +7247,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -3691,7 +7262,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -3721,7 +7333,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -3735,7 +7348,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -3764,7 +7418,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -3778,7 +7433,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -3803,7 +7499,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -3817,7 +7514,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -3846,7 +7584,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -3860,7 +7599,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -3890,7 +7670,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -3904,7 +7685,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -3933,7 +7755,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -3947,7 +7770,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -3977,7 +7841,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -3991,7 +7856,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -4020,7 +7926,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -4034,7 +7941,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -4064,7 +8012,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -4078,7 +8027,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -4107,7 +8097,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -4121,7 +8112,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -4152,7 +8184,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -4166,7 +8199,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -4195,7 +8269,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -4209,7 +8284,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -4239,7 +8355,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -4253,7 +8370,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -4282,7 +8440,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -4296,7 +8455,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -4326,7 +8526,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -4340,7 +8541,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -4369,7 +8611,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -4383,7 +8626,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -4413,7 +8697,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -4427,7 +8712,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -4456,7 +8782,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -4470,7 +8797,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -4495,7 +8863,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -4509,7 +8878,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -4538,7 +8948,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -4552,7 +8963,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -4582,7 +9034,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -4596,7 +9049,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -4625,7 +9119,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -4639,7 +9134,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -4669,7 +9205,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -4683,7 +9220,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -4712,7 +9290,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -4726,7 +9305,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -4756,7 +9376,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -4770,7 +9391,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -4799,7 +9461,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -4813,7 +9476,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -4843,7 +9547,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -4857,7 +9562,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -4886,7 +9632,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -4900,7 +9647,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -4930,7 +9718,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -4944,7 +9733,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -4973,7 +9803,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -4987,7 +9818,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -5017,7 +9889,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -5031,7 +9904,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -5060,7 +9974,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -5074,7 +9989,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -5104,7 +10060,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -5118,7 +10075,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -5147,7 +10145,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -5161,7 +10160,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -5186,7 +10226,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -5200,7 +10241,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -5229,7 +10311,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -5243,7 +10326,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -5273,7 +10397,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -5287,7 +10412,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -5316,7 +10482,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -5330,7 +10497,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -5360,7 +10568,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -5374,7 +10583,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -5403,7 +10653,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -5417,7 +10668,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -5447,7 +10739,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -5461,7 +10754,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -5490,7 +10824,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -5504,7 +10839,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -5615,7 +10991,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -5629,7 +11006,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -5658,7 +11076,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -5672,7 +11091,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -5702,7 +11162,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -5716,7 +11177,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -5745,7 +11247,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -5759,7 +11262,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -5789,7 +11333,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -5803,7 +11348,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -5832,7 +11418,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -5846,7 +11433,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -5876,7 +11504,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -5890,7 +11519,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -5919,7 +11589,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -5933,7 +11604,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -5958,7 +11670,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -5972,7 +11685,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -6001,7 +11755,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -6015,7 +11770,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -6045,7 +11841,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -6059,7 +11856,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -6088,7 +11926,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -6102,7 +11941,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -6132,7 +12012,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -6146,7 +12027,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -6175,7 +12097,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -6189,7 +12112,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -6219,7 +12183,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -6233,7 +12198,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -6262,7 +12268,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -6276,7 +12283,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -6306,7 +12354,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -6320,7 +12369,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -6349,7 +12439,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -6363,7 +12454,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -6393,7 +12525,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -6407,7 +12540,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -6436,7 +12610,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -6450,7 +12625,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -6480,7 +12696,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -6494,7 +12711,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -6523,7 +12781,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -6537,7 +12796,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -6567,7 +12867,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -6581,7 +12882,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -6610,7 +12952,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -6624,7 +12967,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -6649,7 +13033,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -6663,7 +13048,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -6692,7 +13118,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -6706,7 +13133,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -6736,7 +13204,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -6750,7 +13219,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -6779,7 +13289,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -6793,7 +13304,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -6823,7 +13375,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -6837,7 +13390,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -6866,7 +13460,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -6880,7 +13475,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -6910,7 +13546,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -6924,7 +13561,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -6953,7 +13631,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -6967,7 +13646,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -6998,7 +13718,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -7012,7 +13733,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -7041,7 +13803,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -7055,7 +13818,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -7085,7 +13889,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -7099,7 +13904,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -7128,7 +13974,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -7142,7 +13989,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -7172,7 +14060,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -7186,7 +14075,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -7215,7 +14145,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -7229,7 +14160,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -7259,7 +14231,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -7273,7 +14246,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -7302,7 +14316,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -7316,7 +14331,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -7341,7 +14397,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -7355,7 +14412,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -7384,7 +14482,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -7398,7 +14497,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -7428,7 +14568,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -7442,7 +14583,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -7471,7 +14653,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -7485,7 +14668,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -7515,7 +14739,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -7529,7 +14754,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -7558,7 +14824,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -7572,7 +14839,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -7602,7 +14910,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -7616,7 +14925,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -7645,7 +14995,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -7659,7 +15010,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -7689,7 +15081,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -7703,7 +15096,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -7732,7 +15166,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -7746,7 +15181,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -7776,7 +15252,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -7790,7 +15267,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -7819,7 +15337,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -7833,7 +15352,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -7863,7 +15423,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -7877,7 +15438,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -7906,7 +15508,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -7920,7 +15523,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -7950,7 +15594,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -7964,7 +15609,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -7993,7 +15679,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -8007,7 +15694,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -8032,7 +15760,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -8046,7 +15775,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -8075,7 +15845,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -8089,7 +15860,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -8119,7 +15931,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -8133,7 +15946,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -8162,7 +16016,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -8176,7 +16031,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -8206,7 +16102,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -8220,7 +16117,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -8249,7 +16187,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -8263,7 +16202,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -8293,7 +16273,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -8307,7 +16288,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -8336,7 +16358,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -8350,7 +16373,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -8371,7 +16435,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -8385,7 +16450,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -8414,7 +16520,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -8428,7 +16535,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -8458,7 +16606,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -8472,7 +16621,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -8501,7 +16691,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -8515,7 +16706,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -8545,7 +16777,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -8559,7 +16792,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -8588,7 +16862,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -8602,7 +16877,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -8632,7 +16948,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -8646,7 +16963,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -8675,7 +17033,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -8689,7 +17048,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -8714,7 +17114,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -8728,7 +17129,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -8757,7 +17199,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -8771,7 +17214,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -8801,7 +17285,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -8815,7 +17300,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -8844,7 +17370,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -8858,7 +17385,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -8888,7 +17456,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -8902,7 +17471,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -8931,7 +17541,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -8945,7 +17556,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -8975,7 +17627,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -8989,7 +17642,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -9018,7 +17712,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -9032,7 +17727,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -9062,7 +17798,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -9076,7 +17813,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -9105,7 +17883,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -9119,7 +17898,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -9149,7 +17969,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -9163,7 +17984,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -9192,7 +18054,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -9206,7 +18069,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -9236,7 +18140,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -9250,7 +18155,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -9279,7 +18225,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -9293,7 +18240,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -9323,7 +18311,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -9337,7 +18326,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -9366,7 +18396,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -9380,7 +18411,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -9405,7 +18477,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -9419,7 +18492,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -9448,7 +18562,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -9462,7 +18577,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -9492,7 +18648,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -9506,7 +18663,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -9535,7 +18733,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -9549,7 +18748,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -9579,7 +18819,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -9593,7 +18834,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -9622,7 +18904,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -9636,7 +18919,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -9666,7 +18990,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -9680,7 +19005,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -9709,7 +19075,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -9723,7 +19090,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -9754,7 +19162,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -9768,7 +19177,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -9797,7 +19247,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -9811,7 +19262,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -9841,7 +19333,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -9855,7 +19348,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -9884,7 +19418,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -9898,7 +19433,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -9928,7 +19504,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -9942,7 +19519,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -9971,7 +19589,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -9985,7 +19604,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -10015,7 +19675,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -10029,7 +19690,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -10058,7 +19760,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -10072,7 +19775,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -10097,7 +19841,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -10111,7 +19856,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -10140,7 +19926,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -10154,7 +19941,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -10184,7 +20012,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -10198,7 +20027,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -10227,7 +20097,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -10241,7 +20112,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -10271,7 +20183,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -10285,7 +20198,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -10314,7 +20268,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -10328,7 +20283,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -10358,7 +20354,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -10372,7 +20369,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -10401,7 +20439,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -10415,7 +20454,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -10445,7 +20525,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -10459,7 +20540,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -10488,7 +20610,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -10502,7 +20625,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -10532,7 +20696,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -10546,7 +20711,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -10575,7 +20781,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -10589,7 +20796,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -10619,7 +20867,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -10633,7 +20882,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -10662,7 +20952,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -10676,7 +20967,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -10706,7 +21038,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -10720,7 +21053,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -10749,7 +21123,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -10763,7 +21138,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -10788,7 +21204,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -10802,7 +21219,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -10831,7 +21289,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -10845,7 +21304,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -10875,7 +21375,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -10889,7 +21390,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -10918,7 +21460,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -10932,7 +21475,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -10962,7 +21546,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -10976,7 +21561,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -11005,7 +21631,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -11019,7 +21646,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -11049,7 +21717,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
 
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -11063,7 +21732,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
@@ -11092,7 +21802,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 
-## [3.4.9] - 2026-04-17
+
+## [3.4.10] - 2026-04-17
 
 ### Added
 - hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
@@ -11106,7 +21817,48 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - QuickPlayCard esportPrizeType field documented in config table
 
 ### Changed
+- SSO token handoff from main app to standalone games
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+## [3.4.9] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts Ã¢â‚¬â€ host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
 - Sync from packages/game-ui
+- React Game Update Guide v2.3 (hostRole examples, asset path rules)
+- Non-React Migration Guide v2.3 (asset path rules, hostRole section)
+- Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)
+- Web Game Developer Guideline v5.10 (asset path rules section)
+- Synced components, hooks, types from packages/game-ui
+
+## [3.4.10] - 2026-04-17
+
+### Added
+- hostRole: 'PLAYER' | 'SPECTATOR' on CreateEsportRoomOpts and
+  CreateSocialRoomOpts â€” host can spectate without occupying a player seat
+- DeskillzBridge createRoom/createSocialRoom pass hostRole in POST body
+- Migration #41: SPECTATING added to PrivateRoomPlayerStatus enum
+- Backend CreateRoomDto + CreateSocialRoomDto accept hostRole field
+  (overrides hostAsPlayer boolean when both sent, backward compatible)
+- Asset path rules documented: public/ assets use import.meta.env.BASE_URL,
+  src/ assets use normal import statements
+- QuickPlayCard esportPrizeType field documented in config table
+
+### Changed
+- SSO token handoff from main app to standalone games
 - React Game Update Guide v2.3 (hostRole examples, asset path rules)
 - Non-React Migration Guide v2.3 (asset path rules, hostRole section)
 - Standalone Build Handoff v3.8 (hostRole, prizeType, asset path rules)

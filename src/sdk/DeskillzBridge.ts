@@ -958,6 +958,11 @@ export class DeskillzBridge {
     }
 
     try {
+      // SSO handoff: if the main app launched us with ?token=... in the URL,
+      // consume it into storage so restoreSession() uses the fresh token.
+      // Must run BEFORE restoreSession so the user is not re-prompted to log in.
+      this.consumeSSOToken();
+
       // Attempt session restore from stored tokens
       await this.restoreSession();
 
@@ -968,6 +973,59 @@ export class DeskillzBridge {
       this.log('Init error (non-critical):', err);
       this.isInitialized = true;
       this.emit('initialized', { success: true, mode: 'live' });
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // SSO TOKEN HANDOFF
+  // ---------------------------------------------------------------------------
+
+  /**
+   * Reads a JWT from the URL query string (?token=...) that was placed there
+   * by the main Deskillz app when launching this game, saves it into the
+   * TokenManager, and scrubs the token from the visible URL.
+   *
+   * Flow:
+   *   Main app -> navigates to gameUrl?matchId=X&token=JWT
+   *   Bridge.initialize() -> consumeSSOToken() saves JWT to localStorage
+   *   restoreSession() -> uses stored JWT to call GET /api/v1/users/me
+   *   URL is rewritten to strip 'token' so it doesn't leak via history/screenshot
+   *
+   * Safe no-op if:
+   *   - No ?token= present (normal reload / direct launch)
+   *   - window / location / history unavailable (SSR / tests)
+   *   - User already has a stored access token (we still overwrite with the
+   *     newer SSO token to keep sessions consistent with the main app)
+   */
+  private consumeSSOToken(): void {
+    if (typeof window === 'undefined' || !window.location) return;
+
+    try {
+      const url = new URL(window.location.href);
+      const ssoToken = url.searchParams.get('token');
+      if (!ssoToken) return;
+
+      // Save the SSO token. We intentionally do not set a refresh token here;
+      // the main app retains it, and the Bridge will use normal refresh flow
+      // against /api/v1/auth/refresh if the access token expires.
+      this.tokens.setTokens(ssoToken);
+      this.log('SSO token consumed from URL');
+
+      // Scrub token from the visible URL. Keep other params (matchId, etc.)
+      // so the game can still read them.
+      url.searchParams.delete('token');
+      const cleaned =
+        url.pathname +
+        (url.searchParams.toString() ? `?${url.searchParams.toString()}` : '') +
+        url.hash;
+
+      try {
+        window.history.replaceState({}, '', cleaned);
+      } catch {
+        // history API unavailable -- non-fatal, token still consumed
+      }
+    } catch (err) {
+      this.log('SSO token consumption failed (non-fatal):', err);
     }
   }
 
