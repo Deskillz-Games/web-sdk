@@ -123,6 +123,7 @@ export interface CreateEsportRoomOpts {
   minPlayers?: number;
   format?: string;
   visibility?: 'PUBLIC_LISTED' | 'PRIVATE_CODE' | 'UNLISTED';
+  hostRole?: 'PLAYER' | 'SPECTATOR';
 }
 
 /** Options for creating a social game room */
@@ -139,6 +140,7 @@ export interface CreateSocialRoomOpts {
   turnTimerSeconds?: number;
   gameType?: 'MAHJONG' | 'BIG_TWO' | 'CHINESE_POKER_13';
   visibility?: 'PUBLIC_LISTED' | 'PRIVATE_CODE' | 'UNLISTED';
+  hostRole?: 'PLAYER' | 'SPECTATOR';
 }
 
 export interface GameScorePayload {
@@ -2192,6 +2194,7 @@ export class DeskillzBridge {
       entryCurrency: opts.currency || 'USDT',
       visibility: opts.visibility || 'PUBLIC_LISTED',
       gameCategory: 'ESPORTS',
+      ...(opts.hostRole && { hostRole: opts.hostRole }),
     });
 
     const room = this.normalizeRoom(res, false);
@@ -2225,6 +2228,7 @@ export class DeskillzBridge {
       minBuyIn: opts.minBuyIn ?? opts.pointValue * 100,
       maxBuyIn: opts.maxBuyIn,
       turnTimerSeconds: opts.turnTimerSeconds ?? 60,
+      ...(opts.hostRole && { hostRole: opts.hostRole }),
     });
 
     const room = this.normalizeRoom(res, true);

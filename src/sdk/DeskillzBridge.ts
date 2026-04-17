@@ -123,6 +123,7 @@ export interface CreateEsportRoomOpts {
   minPlayers?: number;
   format?: string;
   visibility?: 'PUBLIC_LISTED' | 'PRIVATE_CODE' | 'UNLISTED';
+  hostRole?: 'PLAYER' | 'SPECTATOR';
 }
 
 /** Options for creating a social game room */
@@ -139,6 +140,7 @@ export interface CreateSocialRoomOpts {
   turnTimerSeconds?: number;
   gameType?: 'MAHJONG' | 'BIG_TWO' | 'CHINESE_POKER_13';
   visibility?: 'PUBLIC_LISTED' | 'PRIVATE_CODE' | 'UNLISTED';
+  hostRole?: 'PLAYER' | 'SPECTATOR';
 }
 
 export interface GameScorePayload {
@@ -398,6 +400,112 @@ export interface QuickPlayMatchData {
   players: Array<{ id: string; rating: number }>;
   npcCount?: number;
 }
+
+// =============================================================================
+// TOURNAMENT SCHEDULE TYPES
+// =============================================================================
+
+export interface TournamentSchedulePlayer {
+  userId: string;
+  username: string;
+  avatarUrl?: string;
+  seatNumber: number;
+  isNPC: boolean;
+  status: string;
+  finalScore: number | null;
+  finalRank: number | null;
+  isWinner: boolean;
+  roundWins?: number;
+}
+
+export interface TournamentScheduleTable {
+  id: string;
+  tableNumber: number;
+  seats: number;
+  filledSeats: number;
+  npcCount: number;
+  status: string;
+  matchRoundsCount: number;
+  currentMatchRound: number;
+  winnerId: string | null;
+  winnerScore: number | null;
+  players: TournamentSchedulePlayer[];
+}
+
+export interface TournamentScheduleRound {
+  id: string;
+  roundNumber: number;
+  totalTables: number;
+  playersRemaining: number;
+  status: string;
+  checkinOpensAt: string | null;
+  startsAt: string | null;
+  endsAt: string | null;
+  tables: TournamentScheduleTable[];
+}
+
+export interface TournamentSchedule {
+  tournamentId: string;
+  name: string;
+  totalRounds: number;
+  currentRound: number;
+  seatsPerTable: number;
+  playersAdvancePerTable: number;
+  matchRoundsCount: number;
+  estimatedDurationMins: number;
+  scheduledStart: string;
+  status: string;
+  rounds: TournamentScheduleRound[];
+}
+
+export interface TournamentPlayerStatus {
+  tournamentId: string;
+  tournamentName: string;
+  isRegistered: boolean;
+  bookingStatus: string;
+  currentRound: number;
+  totalRounds: number;
+  eliminatedInRound?: number | null;
+  canCheckin: boolean;
+  checkinOpensAt?: string | null;
+  checkinDeadline?: string | null;
+  secondsUntilCheckin?: number | null;
+  currentTable: {
+    tableId: string;
+    tableNumber: number;
+    seatNumber: number;
+    status: string;
+    players: TournamentSchedulePlayer[];
+  } | null;
+  schedule: {
+    scheduledStart: string;
+    registrationCloses: string;
+    estimatedFinish: string;
+    estimatedDurationMins: number;
+  };
+}
+
+// =============================================================================
+// DISPUTE TYPES
+// =============================================================================
+
+export interface DisputeRecord {
+  id: string;
+  disputeType: 'TOURNAMENT' | 'QUICK_PLAY' | 'PRIVATE_ROOM';
+  tournamentId: string | null;
+  tournamentName: string | null;
+  matchId: string | null;
+  roomCode: string | null;
+  reason: string;
+  description: string;
+  evidence: string[];
+  status: 'OPEN' | 'UNDER_REVIEW' | 'RESOLVED' | 'DISMISSED';
+  resolution: string | null;
+  reviewerName: string | null;
+  resolvedAt: string | null;
+  createdAt: string;
+}
+
 // =============================================================================
 // EVENT SYSTEM
 // =============================================================================
@@ -1262,7 +1370,7 @@ export class DeskillzBridge {
       const result = await this.http.get<{
         matches: MatchRecord[];
         pagination: { page: number; limit: number; total: number };
-      }>('/api/v1/users/match-history', { page, limit });
+      }>('/api/v1/matches/history/me', { page, limit });
       return result.matches;
     } catch (err) {
       this.log('Get match history error:', err);
@@ -1516,17 +1624,11 @@ export class DeskillzBridge {
   async getPublicRooms(): Promise<any[]> {
     try {
       const params: Record<string, string> = { gameId: this.config.gameId };
-      const result = await this.http.get<{ rooms: any[] }>('/api/v1/private-rooms/public', params);
-      return result.rooms || [];
+      const result = await this.http.get<any>('/api/v1/private-rooms', params);
+      return Array.isArray(result) ? result : result.rooms || [];
     } catch (err) {
       this.log('Get public rooms error:', err);
-      // Fallback: try listing all rooms
-      try {
-        const result = await this.http.get<any[]>('/api/v1/private-rooms', { gameId: this.config.gameId });
-        return Array.isArray(result) ? result : [];
-      } catch {
-        return [];
-      }
+      return [];
     }
   }
 
@@ -1623,6 +1725,166 @@ export class DeskillzBridge {
       return await this.http.get<TournamentRegistration[]>(
         '/api/v1/tournaments/my-registrations',
       );
+    } catch {
+      return [];
+    }
+  }
+
+  /**
+   * Get tournament bracket schedule with rounds, tables, and player assignments.
+   * Used by TournamentLobbyCard to show bracket progress, table assignments,
+   * and round transitions during live tournament play.
+   */
+  async getTournamentSchedule(tournamentId: string): Promise<TournamentSchedule> {
+    return this.http.get<TournamentSchedule>(
+      `/api/v1/tournaments/${tournamentId}/schedule`,
+    );
+  }
+
+  // ---------------------------------------------------------------------------
+  // DISPUTES (v3.4.4)
+  // ---------------------------------------------------------------------------
+
+  /**
+   * File a dispute against a tournament or QuickPlay match.
+   * POST /api/v1/disputes
+   */
+  async fileDispute(params: {
+    disputeType: 'TOURNAMENT' | 'QUICK_PLAY' | 'PRIVATE_ROOM';
+    tournamentId?: string;
+    matchId?: string;
+    roomCode?: string;
+    reason: string;
+    description: string;
+    evidence?: string[];
+  }): Promise<DisputeRecord> {
+    this.ensureAuthenticated();
+    return this.http.post<DisputeRecord>('/api/v1/disputes', params);
+  }
+
+  /**
+   * Get all disputes filed by the current user.
+   * GET /api/v1/disputes/me
+   */
+  async getMyDisputes(status?: string): Promise<DisputeRecord[]> {
+    if (this._isGuest || !this._isAuthenticated) return [];
+    try {
+      const query = status ? `?status=${status}` : '';
+      return await this.http.get<DisputeRecord[]>(`/api/v1/disputes/me${query}`);
+    } catch {
+      return [];
+    }
+  }
+
+  /**
+   * Get dispute details by ID (own disputes only).
+   * GET /api/v1/disputes/:id
+   */
+  async getDisputeDetails(disputeId: string): Promise<DisputeRecord> {
+    return this.http.get<DisputeRecord>(`/api/v1/disputes/${disputeId}`);
+  }
+
+  /**
+   * Add evidence to an existing open dispute.
+   * POST /api/v1/disputes/:id/evidence
+   */
+  async addDisputeEvidence(disputeId: string, evidence: string[]): Promise<{ success: boolean; evidenceCount: number }> {
+    return this.http.post(`/api/v1/disputes/${disputeId}/evidence`, { evidence });
+  }
+
+
+  // ---------------------------------------------------------------------------
+  // DISPUTE CONTEXT HELPERS
+  // ---------------------------------------------------------------------------
+
+  /**
+   * Persist last completed match context to localStorage.
+   * Called automatically after score submission or match completion.
+   * Enables DisputeModal to auto-suggest the most recent match.
+   */
+  persistLastMatch(data: {
+    matchId: string;
+    tournamentId?: string;
+    roomCode?: string;
+    gameId?: string;
+    disputeType: 'TOURNAMENT' | 'QUICK_PLAY' | 'PRIVATE_ROOM';
+    opponentName?: string;
+    completedAt: string;
+  }): void {
+    try {
+      localStorage.setItem('deskillz_last_match', JSON.stringify(data));
+    } catch {}
+  }
+
+  /**
+   * Get last completed match context from localStorage.
+   */
+  getLastMatch(): {
+    matchId: string;
+    tournamentId?: string;
+    roomCode?: string;
+    gameId?: string;
+    disputeType: 'TOURNAMENT' | 'QUICK_PLAY' | 'PRIVATE_ROOM';
+    opponentName?: string;
+    completedAt: string;
+  } | null {
+    try {
+      const raw = localStorage.getItem('deskillz_last_match');
+      if (!raw) return null;
+      const data = JSON.parse(raw);
+      // Expire after 7 days
+      if (data.completedAt) {
+        const age = Date.now() - new Date(data.completedAt).getTime();
+        if (age > 7 * 24 * 60 * 60 * 1000) {
+          localStorage.removeItem('deskillz_last_match');
+          return null;
+        }
+      }
+      return data;
+    } catch {
+      return null;
+    }
+  }
+
+  /**
+   * Fetch recent matches formatted for dispute context selection.
+   * Returns last 10 matches with all identifiers needed for DisputeModal.
+   */
+  async getRecentMatchesForDispute(): Promise<Array<{
+    matchId: string;
+    tournamentId: string | null;
+    matchType: string;
+    opponentName: string;
+    myScore: number | null;
+    isWinner: boolean;
+    playedAt: string;
+    gameName: string;
+  }>> {
+    if (this._isGuest || !this._isAuthenticated) return [];
+    try {
+      const result = await this.http.get<{
+        matches: Array<{
+          matchId: string;
+          tournamentId?: string;
+          matchType?: string;
+          opponent?: { username: string };
+          myScore?: number;
+          isWinner: boolean;
+          playedAt: string;
+          game?: { name: string };
+        }>;
+      }>('/api/v1/matches/history/me', { limit: 10 });
+      const matches = result.matches || (Array.isArray(result) ? result : []);
+      return matches.map((m: any) => ({
+        matchId: m.matchId,
+        tournamentId: m.tournamentId || null,
+        matchType: m.matchType || 'QUICK_PLAY',
+        opponentName: m.opponent?.username || 'Unknown',
+        myScore: m.myScore ?? null,
+        isWinner: !!m.isWinner,
+        playedAt: m.playedAt,
+        gameName: m.game?.name || 'Game',
+      }));
     } catch {
       return [];
     }
@@ -1932,6 +2194,7 @@ export class DeskillzBridge {
       entryCurrency: opts.currency || 'USDT',
       visibility: opts.visibility || 'PUBLIC_LISTED',
       gameCategory: 'ESPORTS',
+      ...(opts.hostRole && { hostRole: opts.hostRole }),
     });
 
     const room = this.normalizeRoom(res, false);
@@ -1965,6 +2228,7 @@ export class DeskillzBridge {
       minBuyIn: opts.minBuyIn ?? opts.pointValue * 100,
       maxBuyIn: opts.maxBuyIn,
       turnTimerSeconds: opts.turnTimerSeconds ?? 60,
+      ...(opts.hostRole && { hostRole: opts.hostRole }),
     });
 
     const room = this.normalizeRoom(res, true);
@@ -2044,6 +2308,39 @@ export class DeskillzBridge {
     if (this._isGuest || !this.currentRoom) return { success: true, amount: 0 };
 
     return this.http.post(`/api/v1/private-rooms/${this.currentRoom.id}/cash-out`);
+  }
+
+  /** POST /api/v1/private-rooms/:roomId/rebuy -- rebuy chips when balance is 0 */
+  async roomRebuy(amount: number, currency: string = 'USDT'): Promise<{ success: boolean; pointBalance: number }> {
+    if (this._isGuest || !this.currentRoom) return { success: true, pointBalance: amount };
+
+    return this.http.post(`/api/v1/private-rooms/${this.currentRoom.id}/rebuy`, { amount, currency });
+  }
+
+  // ---------------------------------------------------------------------------
+  // ROUND & SETTLEMENT (Social Games)
+  // ---------------------------------------------------------------------------
+
+  /** POST /api/v1/private-rooms/rounds/submit -- submit round results from game */
+  async submitRound(payload: {
+    roomId: string;
+    roundNumber: number;
+    playerResults: Array<{ playerId: string; score: number; pointsWon: number }>;
+  }): Promise<{ success: boolean; roundId: string }> {
+    if (this._isGuest) {
+      this.log('Round submitted (local only):', payload);
+      return { success: true, roundId: `mock_round_${Date.now()}` };
+    }
+
+    return this.http.post('/api/v1/private-rooms/rounds/submit', payload);
+  }
+
+  /** POST /api/v1/private-rooms/:roomId/settlement/trigger -- host triggers manual settlement */
+  async triggerSettlement(roomId?: string): Promise<{ success: boolean }> {
+    const id = roomId || this.currentRoom?.id;
+    if (this._isGuest || !id) return { success: true };
+
+    return this.http.post(`/api/v1/private-rooms/${id}/settlement/trigger`);
   }
 
   // ---------------------------------------------------------------------------
@@ -2326,6 +2623,60 @@ export class DeskillzBridge {
     return result;
   }
 
+  // ---------------------------------------------------------------------------
+  // QUICK PLAY SOCIAL (Cash game rooms via QuickPlay)
+  // ---------------------------------------------------------------------------
+
+  /** POST /api/v1/lobby/quick-play/social/create -- create a social quick-play room */
+  async createSocialQuickPlay(params: {
+    gameId?: string;
+    pointValueUsd: number;
+    currency: string;
+    seatsPerTable?: number;
+  }): Promise<{ success: boolean; roomId: string; roomCode: string }> {
+    this.ensureAuthenticated();
+
+    if (this._isGuest) {
+      return { success: true, roomId: `mock_room_${Date.now()}`, roomCode: 'MOCK-0000' };
+    }
+
+    return this.http.post('/api/v1/lobby/quick-play/social/create', {
+      gameId: params.gameId || this.config.gameId,
+      ...params,
+    });
+  }
+
+  /** POST /api/v1/lobby/quick-play/social/:roomId/round -- submit social QP round */
+  async submitSocialQuickPlayRound(roomId: string, payload: {
+    roundNumber: number;
+    playerResults: Array<{ playerId: string; score: number; pointsWon: number }>;
+  }): Promise<{ success: boolean }> {
+    if (this._isGuest) return { success: true };
+
+    return this.http.post(`/api/v1/lobby/quick-play/social/${roomId}/round`, payload);
+  }
+
+  /** POST /api/v1/lobby/quick-play/social/:roomId/rebuy -- rebuy in social QP */
+  async socialQuickPlayRebuy(roomId: string, amount: number): Promise<{ success: boolean; pointBalance: number }> {
+    if (this._isGuest) return { success: true, pointBalance: amount };
+
+    return this.http.post(`/api/v1/lobby/quick-play/social/${roomId}/rebuy`, { amount });
+  }
+
+  /** POST /api/v1/lobby/quick-play/social/:roomId/cashout -- cash out of social QP */
+  async socialQuickPlayCashout(roomId: string): Promise<{ success: boolean; amount: number }> {
+    if (this._isGuest) return { success: true, amount: 0 };
+
+    return this.http.post(`/api/v1/lobby/quick-play/social/${roomId}/cashout`);
+  }
+
+  /** POST /api/v1/lobby/quick-play/social/:roomId/end -- end social QP game */
+  async endSocialQuickPlay(roomId: string): Promise<{ success: boolean }> {
+    if (this._isGuest) return { success: true };
+
+    return this.http.post(`/api/v1/lobby/quick-play/social/${roomId}/end`);
+  }
+
   getCurrentQuickPlayMatch(): QuickPlayLaunchData | null {
     return this._currentQuickPlayMatch;
   }
@@ -2458,7 +2809,12 @@ export class DeskillzBridge {
     supportsSinglePlayer: boolean;
     supportsSync: boolean;
     supportsAsync: boolean;
+    supportsBlitz1v1: boolean;
+    supportsDuel1v1: boolean;
+    supportsSinglePlayerMode: boolean;
+    supportsTurnBased: boolean;
     supportsSingleElimination: boolean;
+    maxTournamentSize: number;
     minPlayers: number;
     maxPlayers: number;
     minMatchDurationSeconds: number;
@@ -2467,7 +2823,10 @@ export class DeskillzBridge {
     const id = gameId || this.config.gameId;
     const fallback = {
       supports1v1: true, supportsFFA: true, supportsSinglePlayer: true,
-      supportsSync: true, supportsAsync: true, supportsSingleElimination: true,
+      supportsSync: true, supportsAsync: true,
+      supportsBlitz1v1: false, supportsDuel1v1: false,
+      supportsSinglePlayerMode: false, supportsTurnBased: false,
+      supportsSingleElimination: true, maxTournamentSize: 256,
       minPlayers: 2, maxPlayers: 32, minMatchDurationSeconds: 0, maxMatchDurationSeconds: 0,
     };
     if (!id) return fallback;
@@ -2480,7 +2839,12 @@ export class DeskillzBridge {
         supportsSinglePlayer:      g.supportsSinglePlayer ?? false,
         supportsSync:              g.supportsSync ?? true,
         supportsAsync:             g.supportsAsync ?? true,
+        supportsBlitz1v1:          g.supportsBlitz1v1 ?? false,
+        supportsDuel1v1:           g.supportsDuel1v1 ?? false,
+        supportsSinglePlayerMode:  g.supportsSinglePlayerMode ?? false,
+        supportsTurnBased:         g.supportsTurnBased ?? false,
         supportsSingleElimination: g.supportsSingleElimination ?? true,
+        maxTournamentSize:         g.maxTournamentSize ?? 256,
         minPlayers:                g.minPlayers ?? 2,
         maxPlayers:                g.maxPlayers ?? 32,
         minMatchDurationSeconds:   g.minMatchDurationSeconds ?? 0,

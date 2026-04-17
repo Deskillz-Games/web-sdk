@@ -2,7 +2,7 @@
 
 ## Dou Dizhu | Bubble Battle | Candy Duel
 
-**Version:** 2.2
+**Version:** 2.3
 **Date:** April 14, 2026
 **For:** Developers of existing non-React standalone games
 **Applies to:** Dou Dizhu (PixiJS), Bubble Battle (Canvas/TypeScript), Candy Duel (Canvas/TypeScript)
@@ -448,6 +448,42 @@ DELETE: Any DeskillzUI.showLobby() / hideLobby() calls
 DELETE: The old entry point that called DeskillzUI.renderLobby()
 ```
 
+### Step 10b -- Asset Path Rules (CRITICAL)
+
+Games hosted on R2 subdirectories and APK WebViews break with wrong asset paths.
+
+**Files in `public/` -- use `import.meta.env.BASE_URL`:**
+
+```typescript
+// CORRECT
+const icon = `${import.meta.env.BASE_URL}assets/sprites/fox.png`;
+
+// WRONG -- breaks on R2
+<img src="./assets/sprites/fox.png" />
+
+// WRONG -- Vite cannot import from public/
+import icon from '../assets/sprites/fox.png';
+```
+
+**Files in `src/assets/` -- use normal `import`:**
+
+```typescript
+import logo from './assets/logo.png';
+```
+
+### Step 10c -- Host Role (Spectator Support)
+
+When calling `bridge.createRoom()` or `bridge.createSocialRoom()`, pass
+`hostRole: 'PLAYER'` or `hostRole: 'SPECTATOR'`. When SPECTATOR, the host
+does not occupy a player seat but still receives all room socket events.
+
+```typescript
+await bridge.createRoom({
+  ...config,
+  hostRole: config.hostRole, // 'PLAYER' | 'SPECTATOR'
+});
+```
+
 ### Step 11 -- Verify + build
 
 ```powershell
@@ -686,7 +722,7 @@ See React Game Update Guide v1.5 Step 11 for full details and rationale.
 
 ---
 
-*Migration Guide v2.0 -- April 13, 2026*
+*Migration Guide v2.3 -- April 17, 2026*
 *Applies to: Dou Dizhu, Bubble Battle, Candy Duel*
 *For React game updates (Big 2, Mahjong, Thirteen Cards):*
-*see DESKILLZ_REACT_GAME_UPDATE_GUIDE.md v1.3*
+*see DESKILLZ_REACT_GAME_UPDATE_GUIDE.md v2.3*

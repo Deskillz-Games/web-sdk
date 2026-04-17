@@ -2,7 +2,7 @@
 
 ## Big 2 | Mahjong | Thirteen Cards (Chinese Poker)
 
-**Version:** 2.1
+**Version:** 2.3
 **Date:** April 14, 2026
 **Applies to:** All three React/Vite standalone games
 **SDK:** DeskillzBridge v3.4.7 + @deskillz/game-ui v3.4.7
@@ -509,11 +509,11 @@ const handleCreateRoom = async () => {
       maxBid: gameConfig.maxBid,
       springBonus: gameConfig.springBonus,
       visibility: gameConfig.visibility,
-      hostAsPlayer: gameConfig.hostRole === 'PLAYER',
+      hostRole: gameConfig.hostRole,               // 'PLAYER' | 'SPECTATOR'
       currency: gameConfig.currency,
     })
   } else {
-    // Tournament — bracket structure with entry fee and prize pool
+    // Tournament -- bracket structure with entry fee and prize pool
     await DeskillzBridge.getInstance().createSocialRoom({
       gameType: gameConfig.gameType,
       socialMode: 'TOURNAMENT',
@@ -525,7 +525,7 @@ const handleCreateRoom = async () => {
       pointTarget: gameConfig.pointTarget,
       turnTimerSeconds: gameConfig.turnTimerSeconds,
       visibility: gameConfig.visibility,
-      hostAsPlayer: gameConfig.hostRole === 'PLAYER',
+      hostRole: gameConfig.hostRole,               // 'PLAYER' | 'SPECTATOR'
     })
   }
 }
@@ -664,6 +664,7 @@ const handleCreateRoom = async () => {
     roundsCount: gameConfig.roundsCount,
     prizeDistribution: gameConfig.prizeDistribution,
     visibility: gameConfig.visibility,
+    hostRole: gameConfig.hostRole, // 'PLAYER' | 'SPECTATOR'
   })
 }
 
@@ -1034,6 +1035,40 @@ await bridge.addDisputeEvidence('dispute-uuid', [
 ```
 
 
+## ASSET PATH RULES (CRITICAL)
+
+Games are hosted on Cloudflare R2 subdirectories and wrapped in APK WebViews.
+Both break if asset paths are wrong.
+
+**Files in `public/` -- use `import.meta.env.BASE_URL`:**
+
+```typescript
+// CORRECT -- works on Vercel, R2, APK WebView
+const icon = `${import.meta.env.BASE_URL}assets/sprites/fox.png`;
+
+// WRONG -- breaks on R2 subdirectory hosting
+<img src="./assets/sprites/fox.png" />
+
+// WRONG -- Vite cannot import files from public/
+import icon from '../assets/sprites/fox.png';
+```
+
+**Files in `src/assets/` -- use normal `import`:**
+
+```typescript
+// CORRECT for src/ assets only
+import logo from './assets/logo.png';
+```
+
+| Asset location | How to reference |
+|---------------|-----------------|
+| `public/` | `${import.meta.env.BASE_URL}path/to/file` |
+| `src/assets/` | `import x from './assets/file'` |
+
+Never mix the two approaches.
+
+---
+
 ## STEP 9 -- VERIFY AND BUILD
 
 ```powershell
@@ -1276,7 +1311,7 @@ on R2 but `index.html` registers `deskillz-sw.js` (ours), not `sw.js` (Workbox).
 
 ---
 
-*React Game Update Guide v1.9 -- April 13, 2026*
+*React Game Update Guide v2.3 -- April 17, 2026*
 *Applies to: Big 2, Mahjong, Thirteen Cards (Chinese Poker)*
 *For non-React migration (Dou Dizhu, Bubble Battle, Candy Duel):*
-*see DESKILLZ_NON_REACT_MIGRATION_GUIDE.md v1.4*
+*see DESKILLZ_NON_REACT_MIGRATION_GUIDE.md v2.3*

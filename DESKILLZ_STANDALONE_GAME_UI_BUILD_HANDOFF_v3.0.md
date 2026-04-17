@@ -1,8 +1,8 @@
 # DESKILLZ STANDALONE GAME UI BUILD HANDOFF
 ## Universal UI Guide for Self-Sufficient Game Apps
 
-**Version:** 3.7
-**Date:** April 14, 2026
+**Version:** 3.8
+**Date:** April 17, 2026
 **SDK Version:** Deskillz SDK v3.4.7 + @deskillz/game-ui v3.4.7
 **Architecture:** Self-Sufficient (No External App Dependency)
 **Supported Game Types:** Esports (Competitive) + Social Games (Cash Game + Tournament)
@@ -647,7 +647,7 @@ The card reads `config.gameCategory` and branches automatically:
 IDLE       Entry fee chips (from esportEntryFeeTiers)
            Player mode chips (from esportPlayerModes) — only if > 1 mode
            Currency dropdown (from esportCurrencies)
-           Prize preview + rake % info
+           Prize preview + platform fee % + prize type + duration (2x2 grid)
            [Play Now] button
            |
            v
@@ -769,24 +769,32 @@ Create Room modal supports two modes for social games:
 
 ```typescript
 // Esport room (entry-fee based, fixed payout)
-await bridge.createRoom({ entryFee, maxPlayers, currency, mode, matchDuration })
+await bridge.createRoom({
+  entryFee, maxPlayers, currency, mode, matchDuration,
+  hostRole  // 'PLAYER' | 'SPECTATOR' — SPECTATOR does not occupy a seat
+})
 
-// Social room — Cash Game
+// Social room -- Cash Game
 await bridge.createSocialRoom({
   socialMode: 'CASH_GAME',
   gameType, pointValue, rakePercent, rakeCap, pointTarget,
   maxBid, springBonus, turnTimerSeconds, currency,
-  visibility, hostAsPlayer
+  visibility, hostRole  // replaces hostAsPlayer (backward compatible)
 })
 
-// Social room — Tournament
+// Social room -- Tournament
 await bridge.createSocialRoom({
   socialMode: 'TOURNAMENT',
   gameType, entryFee, entryCurrency, prizeDistribution,
   numberOfTables, seatsPerTable, pointTarget, turnTimerSeconds,
-  visibility, hostAsPlayer
+  visibility, hostRole  // replaces hostAsPlayer (backward compatible)
 })
 ```
+
+> **hostRole vs hostAsPlayer:** The new `hostRole: 'PLAYER' | 'SPECTATOR'`
+> field is preferred over the boolean `hostAsPlayer`. Both are accepted --
+> `hostRole` takes precedence when both are sent. When SPECTATOR, the host
+> receives all socket events but does not consume a player seat.
 
 ### Room Join
 
@@ -1237,6 +1245,27 @@ VITE_APP_VERSION=1.0.0
 
 Cloud Build replaces `YOUR_GAME_ID` and `YOUR_API_KEY` automatically.
 Delete `.env.local` before running `npm run build` for Cloud Build submission.
+
+### Asset Path Rules (CRITICAL for R2 + APK)
+
+| Asset location | How to reference | Example |
+|---------------|-----------------|---------|
+| `public/` | `${import.meta.env.BASE_URL}path` | `${import.meta.env.BASE_URL}assets/audio/win.mp3` |
+| `src/assets/` | `import x from './assets/file'` | `import logo from './assets/logo.png'` |
+
+```typescript
+// CORRECT for public/ assets
+const icon = `${import.meta.env.BASE_URL}assets/sprites/fox.png`;
+
+// WRONG -- breaks on R2 subdirectory
+<img src="./assets/sprites/fox.png" />
+
+// WRONG -- Vite cannot import from public/
+import icon from '../assets/sprites/fox.png';
+```
+
+Never mix the two approaches. `base: './'` in vite.config.ts makes
+`import.meta.env.BASE_URL` resolve to `'./'` at build time.
 
 ### ZIP Command (with deskillz-sw.js hash stamp)
 
@@ -1913,7 +1942,8 @@ automatically. All options are config-driven.
 | `esportEntryFeeTiers` | Entry fee chips | Esport |
 | `esportPlayerModes` | Player mode chips (hidden if 1 mode) | Esport |
 | `esportCurrencies` | Currency dropdown | Esport |
-| `esportPlatformFee` | Rake % info row | Esport |
+| `esportPlatformFee` | Platform fee % info row | Esport |
+| `esportPrizeType` | Prize type label (WINNER_TAKES_ALL / TOP_HEAVY / EVEN_SPLIT) | Esport |
 | `matchDurationSecs` | Match duration info | Esport |
 | `socialPointValueTiers` | Point value dropdown | Social |
 | `socialCurrencies` | Currency dropdown | Social |
@@ -2002,5 +2032,5 @@ CURRENT TASK:
 
 ---
 
-*Document End — Version 2.9*
-*All standalone web games: React/Vite + DeskillzBridge.ts + @deskillz/game-ui v3.4.3*
+*Document End -- Version 3.8*
+*All standalone web games: React/Vite + DeskillzBridge.ts + @deskillz/game-ui v3.4.8*

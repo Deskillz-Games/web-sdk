@@ -2,7 +2,7 @@
 
 ## Complete Integration Reference for HTML5/JavaScript Game Developers
 
-**Version:** 5.9
+**Version:** 5.10
 **Date:** April 14, 2026
 **SDK Version:** DeskillzBridge v3.4.7 + @deskillz/game-ui ES module v3.4.7
 **Web Engine:** React/Vite only -- all standalone web games
@@ -1019,6 +1019,54 @@ window.location.href = `deskillz://results?matchId=${matchData.matchId}`;
 | Audio | MP3, OGG | 2MB each | 128kbps stereo |
 | Fonts | WOFF2 | 200KB each | Subset unused glyphs |
 | Sprites | Atlas PNG | 2048x2048 | TexturePacker |
+
+### Asset Path Rules (CRITICAL for R2 + APK)
+
+Games are hosted on Cloudflare R2 subdirectories and wrapped in APK WebViews.
+Both break if asset paths are wrong. Follow these rules exactly:
+
+**Files in `public/` -- use `import.meta.env.BASE_URL`:**
+
+Assets in the `public/` folder are NOT processed by Vite. They are copied
+as-is to the build output. You cannot `import` them and bare `./` strings
+in JSX may break depending on where the game is hosted.
+
+```typescript
+// CORRECT -- works on Vercel, R2 subdirectory, APK WebView
+const icon = `${import.meta.env.BASE_URL}assets/sprites/fox.png`;
+<img src={icon} />
+
+// WRONG -- breaks on R2 subdirectory hosting
+<img src="./assets/sprites/fox.png" />
+
+// WRONG -- Vite cannot import files from public/
+import icon from '../assets/sprites/fox.png';
+```
+
+Why it works: `base: './'` in `vite.config.ts` sets `import.meta.env.BASE_URL`
+to `'./'` at build time. The resulting path is always relative to wherever
+the game is hosted.
+
+**Files in `src/assets/` -- use normal `import`:**
+
+Assets inside `src/` ARE processed by Vite (hashed, optimized, bundled).
+Normal imports work correctly because Vite rewrites the path at build time.
+
+```typescript
+// CORRECT for src/ assets only
+import logo from './assets/logo.png';
+<img src={logo} />
+```
+
+**The simple rule:**
+
+| Asset location | How to reference | Example |
+|---------------|-----------------|---------|
+| `public/` | `${import.meta.env.BASE_URL}path/to/file` | `${import.meta.env.BASE_URL}assets/audio/win.mp3` |
+| `src/assets/` | `import x from './assets/file'` | `import logo from './assets/logo.png'` |
+
+Never mix the two approaches. If you move a file from `public/` to `src/assets/`
+(or vice versa), update every reference.
 
 ---
 
@@ -2586,9 +2634,9 @@ Workbox generates `sw.js` separately -- the browser ignores it.
 
 ---
 
-*Document End — Version 5.2*
-*Web engine: React/Vite only — all standalone games*
-*@deskillz/game-ui: v3.4.3 — QuickPlayCard esport + social flows*
+*Document End -- Version 5.10*
+*Web engine: React/Vite only -- all standalone games*
+*@deskillz/game-ui: v3.4.8 -- QuickPlayCard esport + social flows*
 *Non-React migration: see DESKILLZ_NON_REACT_MIGRATION_GUIDE.md*
 *Production Backend: https://newdeskillzgames-production.up.railway.app*
 *For support: developer-support@deskillz.games*
