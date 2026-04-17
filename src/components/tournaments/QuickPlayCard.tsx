@@ -37,7 +37,7 @@
 import { useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
-  Zap, X, Loader2, AlertCircle, Trophy,
+  Zap, X, Loader2, AlertCircle, Trophy, Award,
   Users, Timer, CircleDollarSign, Coins,
   ChevronRight, Plus, Clock,
 } from 'lucide-react'
@@ -86,6 +86,12 @@ function timerColor(secs: number): string {
   if (secs > 30) return 'text-green-400'
   if (secs > 15) return 'text-yellow-400'
   return 'text-red-400 animate-pulse'
+}
+
+const PRIZE_TYPE_LABELS: Record<string, string> = {
+  WINNER_TAKES_ALL: 'Winner Takes All',
+  TOP_HEAVY: 'Top Heavy',
+  EVEN_SPLIT: 'Even Split',
 }
 
 // =============================================================================
@@ -342,15 +348,19 @@ function EsportIdleState({ config, qp }: { config: QuickPlayConfig; qp: QuickPla
         </div>
       )}
 
-      {/* Info row -- adjusted for free */}
-      <div className="grid grid-cols-3 gap-2 text-xs">
+      {/* Info grid -- 2 rows x 2 cols */}
+      <div className="grid grid-cols-2 gap-x-4 gap-y-2 text-xs">
         <div className="flex items-center gap-1.5 text-green-400">
           <Trophy className="w-3.5 h-3.5" />
           <span className="font-semibold">{qp.selectedFee === 0 ? 'For fun' : `Win: ${prize}`}</span>
         </div>
         <div className="flex items-center gap-1.5 text-white/40">
           <CircleDollarSign className="w-3.5 h-3.5" />
-          <span>{qp.selectedFee === 0 ? 'No rake' : `${config.esportPlatformFee ?? 10}% rake`}</span>
+          <span>{qp.selectedFee === 0 ? 'No fee' : `${config.esportPlatformFee ?? 10}% platform fee`}</span>
+        </div>
+        <div className="flex items-center gap-1.5 text-white/40">
+          <Award className="w-3.5 h-3.5" />
+          <span>{PRIZE_TYPE_LABELS[config.esportPrizeType] ?? 'Winner Takes All'}</span>
         </div>
         <div className="flex items-center gap-1.5 text-white/40">
           <Timer className="w-3.5 h-3.5" />

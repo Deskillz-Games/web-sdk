@@ -1,4 +1,4 @@
-﻿# Changelog
+# Changelog
 
 All notable changes to this project will be documented in this file.
 
@@ -11,6 +11,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.7] - 2026-04-14
 
 ### Added
@@ -33,6 +56,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.6] - 2026-04-13
 
 ### Added
@@ -55,6 +101,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.0, v2.1, v3.6, v5.8)
 
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.7] - 2026-04-14
 
 ### Added
@@ -77,6 +146,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.5] - 2026-04-13
 
 ### Added
@@ -94,6 +186,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Developer docs updated (v1.9, v2.0, v3.5, v5.7)
 
 
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.7] - 2026-04-14
 
 ### Added
@@ -116,6 +231,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.6] - 2026-04-13
 
 ### Added
@@ -138,6 +276,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.0, v2.1, v3.6, v5.8)
 
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.7] - 2026-04-14
 
 ### Added
@@ -160,6 +321,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.4] - 2026-04-13
 
 ### Added
@@ -182,6 +366,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.7] - 2026-04-14
 
 ### Added
@@ -204,6 +411,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.6] - 2026-04-13
 
 ### Added
@@ -226,6 +456,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.0, v2.1, v3.6, v5.8)
 
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.7] - 2026-04-14
 
 ### Added
@@ -248,6 +501,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.5] - 2026-04-13
 
 ### Added
@@ -265,6 +541,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Developer docs updated (v1.9, v2.0, v3.5, v5.7)
 
 
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.7] - 2026-04-14
 
 ### Added
@@ -287,6 +586,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.6] - 2026-04-13
 
 ### Added
@@ -309,6 +631,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.0, v2.1, v3.6, v5.8)
 
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.7] - 2026-04-14
 
 ### Added
@@ -331,6 +676,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.4] - 2026-04-12
 
 ### Added
@@ -354,6 +722,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.7] - 2026-04-14
 
 ### Added
@@ -376,6 +767,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.6] - 2026-04-13
 
 ### Added
@@ -398,6 +812,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.0, v2.1, v3.6, v5.8)
 
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.7] - 2026-04-14
 
 ### Added
@@ -420,6 +857,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.5] - 2026-04-13
 
 ### Added
@@ -437,6 +897,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Developer docs updated (v1.9, v2.0, v3.5, v5.7)
 
 
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.7] - 2026-04-14
 
 ### Added
@@ -459,6 +942,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.6] - 2026-04-13
 
 ### Added
@@ -481,6 +987,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.0, v2.1, v3.6, v5.8)
 
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.7] - 2026-04-14
 
 ### Added
@@ -503,6 +1032,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.4] - 2026-04-13
 
 ### Added
@@ -525,6 +1077,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.7] - 2026-04-14
 
 ### Added
@@ -547,6 +1122,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.6] - 2026-04-13
 
 ### Added
@@ -569,6 +1167,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.0, v2.1, v3.6, v5.8)
 
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.7] - 2026-04-14
 
 ### Added
@@ -591,6 +1212,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.5] - 2026-04-13
 
 ### Added
@@ -608,6 +1252,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Developer docs updated (v1.9, v2.0, v3.5, v5.7)
 
 
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.7] - 2026-04-14
 
 ### Added
@@ -630,6 +1297,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.6] - 2026-04-13
 
 ### Added
@@ -652,6 +1342,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.0, v2.1, v3.6, v5.8)
 
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.7] - 2026-04-14
 
 ### Added
@@ -674,6 +1387,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.3] - 2026-04-11
 
 ### Changed
@@ -687,6 +1423,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.7] - 2026-04-14
 
 ### Added
@@ -709,6 +1468,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.6] - 2026-04-13
 
 ### Added
@@ -731,6 +1513,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.0, v2.1, v3.6, v5.8)
 
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.7] - 2026-04-14
 
 ### Added
@@ -753,6 +1558,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.5] - 2026-04-13
 
 ### Added
@@ -770,6 +1598,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Developer docs updated (v1.9, v2.0, v3.5, v5.7)
 
 
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.7] - 2026-04-14
 
 ### Added
@@ -792,6 +1643,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.6] - 2026-04-13
 
 ### Added
@@ -814,6 +1688,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.0, v2.1, v3.6, v5.8)
 
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.7] - 2026-04-14
 
 ### Added
@@ -836,6 +1733,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.4] - 2026-04-13
 
 ### Added
@@ -858,6 +1778,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.7] - 2026-04-14
 
 ### Added
@@ -880,6 +1823,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.6] - 2026-04-13
 
 ### Added
@@ -902,6 +1868,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.0, v2.1, v3.6, v5.8)
 
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.7] - 2026-04-14
 
 ### Added
@@ -924,6 +1913,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.5] - 2026-04-13
 
 ### Added
@@ -941,6 +1953,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Developer docs updated (v1.9, v2.0, v3.5, v5.7)
 
 
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.7] - 2026-04-14
 
 ### Added
@@ -963,6 +1998,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.6] - 2026-04-13
 
 ### Added
@@ -985,6 +2043,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.0, v2.1, v3.6, v5.8)
 
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.7] - 2026-04-14
 
 ### Added
@@ -1007,6 +2088,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.4] - 2026-04-12
 
 ### Added
@@ -1030,6 +2134,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.7] - 2026-04-14
 
 ### Added
@@ -1052,6 +2179,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.6] - 2026-04-13
 
 ### Added
@@ -1074,6 +2224,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.0, v2.1, v3.6, v5.8)
 
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.7] - 2026-04-14
 
 ### Added
@@ -1096,6 +2269,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.5] - 2026-04-13
 
 ### Added
@@ -1113,6 +2309,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Developer docs updated (v1.9, v2.0, v3.5, v5.7)
 
 
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.7] - 2026-04-14
 
 ### Added
@@ -1135,6 +2354,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.6] - 2026-04-13
 
 ### Added
@@ -1157,6 +2399,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.0, v2.1, v3.6, v5.8)
 
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.7] - 2026-04-14
 
 ### Added
@@ -1179,6 +2444,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.4] - 2026-04-13
 
 ### Added
@@ -1201,6 +2489,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.7] - 2026-04-14
 
 ### Added
@@ -1223,6 +2534,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.6] - 2026-04-13
 
 ### Added
@@ -1245,6 +2579,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.0, v2.1, v3.6, v5.8)
 
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.7] - 2026-04-14
 
 ### Added
@@ -1267,6 +2624,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.5] - 2026-04-13
 
 ### Added
@@ -1284,6 +2664,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Developer docs updated (v1.9, v2.0, v3.5, v5.7)
 
 
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.7] - 2026-04-14
 
 ### Added
@@ -1306,6 +2709,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.6] - 2026-04-13
 
 ### Added
@@ -1328,6 +2754,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.0, v2.1, v3.6, v5.8)
 
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.7] - 2026-04-14
 
 ### Added
@@ -1350,6 +2799,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.0.0] - 2026-02-03
 
 ### Added
@@ -1453,6 +2925,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.7] - 2026-04-14
 
 ### Added
@@ -1475,6 +2970,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.6] - 2026-04-13
 
 ### Added
@@ -1497,6 +3015,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.0, v2.1, v3.6, v5.8)
 
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.7] - 2026-04-14
 
 ### Added
@@ -1519,6 +3060,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.5] - 2026-04-13
 
 ### Added
@@ -1536,6 +3100,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Developer docs updated (v1.9, v2.0, v3.5, v5.7)
 
 
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.7] - 2026-04-14
 
 ### Added
@@ -1558,6 +3145,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.6] - 2026-04-13
 
 ### Added
@@ -1580,6 +3190,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.0, v2.1, v3.6, v5.8)
 
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.7] - 2026-04-14
 
 ### Added
@@ -1602,6 +3235,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.4] - 2026-04-13
 
 ### Added
@@ -1624,6 +3280,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.7] - 2026-04-14
 
 ### Added
@@ -1646,6 +3325,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.6] - 2026-04-13
 
 ### Added
@@ -1668,6 +3370,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.0, v2.1, v3.6, v5.8)
 
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.7] - 2026-04-14
 
 ### Added
@@ -1690,6 +3415,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.5] - 2026-04-13
 
 ### Added
@@ -1707,6 +3455,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Developer docs updated (v1.9, v2.0, v3.5, v5.7)
 
 
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.7] - 2026-04-14
 
 ### Added
@@ -1729,6 +3500,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.6] - 2026-04-13
 
 ### Added
@@ -1751,6 +3545,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.0, v2.1, v3.6, v5.8)
 
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.7] - 2026-04-14
 
 ### Added
@@ -1773,6 +3590,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.4] - 2026-04-12
 
 ### Added
@@ -1796,6 +3636,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.7] - 2026-04-14
 
 ### Added
@@ -1818,6 +3681,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.6] - 2026-04-13
 
 ### Added
@@ -1840,6 +3726,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.0, v2.1, v3.6, v5.8)
 
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.7] - 2026-04-14
 
 ### Added
@@ -1862,6 +3771,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.5] - 2026-04-13
 
 ### Added
@@ -1879,6 +3811,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Developer docs updated (v1.9, v2.0, v3.5, v5.7)
 
 
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.7] - 2026-04-14
 
 ### Added
@@ -1901,6 +3856,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.6] - 2026-04-13
 
 ### Added
@@ -1923,6 +3901,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.0, v2.1, v3.6, v5.8)
 
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.7] - 2026-04-14
 
 ### Added
@@ -1945,6 +3946,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.4] - 2026-04-13
 
 ### Added
@@ -1967,6 +3991,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.7] - 2026-04-14
 
 ### Added
@@ -1989,6 +4036,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.6] - 2026-04-13
 
 ### Added
@@ -2011,6 +4081,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.0, v2.1, v3.6, v5.8)
 
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.7] - 2026-04-14
 
 ### Added
@@ -2033,6 +4126,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.5] - 2026-04-13
 
 ### Added
@@ -2050,6 +4166,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Developer docs updated (v1.9, v2.0, v3.5, v5.7)
 
 
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.7] - 2026-04-14
 
 ### Added
@@ -2072,6 +4211,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.6] - 2026-04-13
 
 ### Added
@@ -2094,6 +4256,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.0, v2.1, v3.6, v5.8)
 
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.7] - 2026-04-14
 
 ### Added
@@ -2116,6 +4301,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.3] - 2026-04-11
 
 ### Changed
@@ -2129,6 +4337,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.7] - 2026-04-14
 
 ### Added
@@ -2151,6 +4382,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.6] - 2026-04-13
 
 ### Added
@@ -2173,6 +4427,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.0, v2.1, v3.6, v5.8)
 
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.7] - 2026-04-14
 
 ### Added
@@ -2195,6 +4472,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.5] - 2026-04-13
 
 ### Added
@@ -2212,6 +4512,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Developer docs updated (v1.9, v2.0, v3.5, v5.7)
 
 
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.7] - 2026-04-14
 
 ### Added
@@ -2234,6 +4557,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.6] - 2026-04-13
 
 ### Added
@@ -2256,6 +4602,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.0, v2.1, v3.6, v5.8)
 
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.7] - 2026-04-14
 
 ### Added
@@ -2278,6 +4647,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.4] - 2026-04-13
 
 ### Added
@@ -2300,6 +4692,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.7] - 2026-04-14
 
 ### Added
@@ -2322,6 +4737,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.6] - 2026-04-13
 
 ### Added
@@ -2344,6 +4782,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.0, v2.1, v3.6, v5.8)
 
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.7] - 2026-04-14
 
 ### Added
@@ -2366,6 +4827,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.5] - 2026-04-13
 
 ### Added
@@ -2383,6 +4867,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Developer docs updated (v1.9, v2.0, v3.5, v5.7)
 
 
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.7] - 2026-04-14
 
 ### Added
@@ -2405,6 +4912,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.6] - 2026-04-13
 
 ### Added
@@ -2427,6 +4957,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.0, v2.1, v3.6, v5.8)
 
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.7] - 2026-04-14
 
 ### Added
@@ -2449,6 +5002,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.4] - 2026-04-12
 
 ### Added
@@ -2472,6 +5048,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.7] - 2026-04-14
 
 ### Added
@@ -2494,6 +5093,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.6] - 2026-04-13
 
 ### Added
@@ -2516,6 +5138,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.0, v2.1, v3.6, v5.8)
 
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.7] - 2026-04-14
 
 ### Added
@@ -2538,6 +5183,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.5] - 2026-04-13
 
 ### Added
@@ -2555,6 +5223,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Developer docs updated (v1.9, v2.0, v3.5, v5.7)
 
 
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.7] - 2026-04-14
 
 ### Added
@@ -2577,6 +5268,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.6] - 2026-04-13
 
 ### Added
@@ -2599,6 +5313,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.0, v2.1, v3.6, v5.8)
 
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.7] - 2026-04-14
 
 ### Added
@@ -2621,6 +5358,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.4] - 2026-04-13
 
 ### Added
@@ -2643,6 +5403,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.7] - 2026-04-14
 
 ### Added
@@ -2665,6 +5448,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.6] - 2026-04-13
 
 ### Added
@@ -2687,6 +5493,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.0, v2.1, v3.6, v5.8)
 
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.7] - 2026-04-14
 
 ### Added
@@ -2709,6 +5538,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.5] - 2026-04-13
 
 ### Added
@@ -2726,6 +5578,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Developer docs updated (v1.9, v2.0, v3.5, v5.7)
 
 
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.7] - 2026-04-14
 
 ### Added
@@ -2748,6 +5623,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.6] - 2026-04-13
 
 ### Added
@@ -2770,6 +5668,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.0, v2.1, v3.6, v5.8)
 
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [3.4.7] - 2026-04-14
 
 ### Added
@@ -2792,6 +5713,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sync from packages/game-ui
 - Synced components, hooks, types from packages/game-ui
 - Developer docs updated (v2.1, v2.2, v3.7, v5.9)
+
+## [3.4.8] - 2026-04-17
+
+### Fixed
+- QuickPlayCard esport info row: "rake" label changed to "platform fee"
+  (rake is a social/poker term, esport games use platform fee)
+- QuickPlayCard free entry label: "No rake" changed to "No fee"
+- PostCSS isolation: added css.postcss:{} to game-ui vite.config.ts
+  to prevent inheriting frontend PostCSS config during SDK builds
+
+### Added
+- QuickPlayCard esport prize type row showing WINNER_TAKES_ALL /
+  TOP_HEAVY / EVEN_SPLIT from QuickPlayConfig.esportPrizeType
+- PRIZE_TYPE_LABELS helper map for human-readable prize type display
+- Award icon (lucide-react) for prize type indicator
+- Esport info grid changed from 3-col single row to 2x2 layout
+  (Row 1: Win prize + Platform fee, Row 2: Prize type + Duration)
+- wallet-config.ts: explicit public RPC URLs per chain (fixes
+  eth.merkle.io CORS errors), BSC Testnet chain + token addresses
+
+### Changed
+- Sync from packages/game-ui
+- Synced components, hooks, types from packages/game-ui
 ## [2.x.x] - Previous Versions
 
 Previous versions were platform-specific SDKs (Unity, Unreal Engine).
