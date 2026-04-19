@@ -2,10 +2,42 @@
 
 ## Dou Dizhu | Bubble Battle | Candy Duel
 
-**Version:** 2.3
-**Date:** April 14, 2026
+**Version:** 2.5
+**Date:** April 18, 2026
 **For:** Developers of existing non-React standalone games
 **Applies to:** Dou Dizhu (PixiJS), Bubble Battle (Canvas/TypeScript), Candy Duel (Canvas/TypeScript)
+**SDK:** DeskillzBridge v3.4.11 + @deskillz/game-ui v3.4.11
+
+**Changelog v2.5 (April 18, 2026):**
+- CREATEROOM: createDefaultSocialGameConfig accepts an OPTIONAL third arg
+  `qpConfig: SocialQuickPlayDefaults`; createDefaultEsportGameConfig accepts
+  an OPTIONAL second arg `qpConfig: EsportQuickPlayDefaults`. Both seed
+  form defaults from the developer's QuickPlayConfig (entry fees, rake,
+  turn timer, tiers, etc.). null/undefined keeps the pre-v3.4.11 hardcoded
+  defaults. See the 3-edit patch in "Step 10 -- Adopting v3.4.11 qpConfig
+  defaults" below. Since these 3 games are the primary esport/social bridge
+  users, adopting the patch after React migration completes is recommended.
+- NEW EXPORTS: SocialQuickPlayDefaults + EsportQuickPlayDefaults type
+  interfaces + SOCIAL_GAMES constant, all re-exported from @deskillz/game-ui.
+- BACKFILLED EXPORTS: DisputeModal, TournamentLobbyCard + useTournamentLobby,
+  useAgeVerification hook + UseAgeVerificationOptions/Result,
+  QuickPlayStatus, AvailableGame, QuickPlayQueueState.
+- AGE VERIFICATION: useAgeVerification now takes an injected checkVerified
+  function -- pass `() => bridge.checkAgeVerified()` in your standalone game.
+
+**Changelog v2.4 (April 18, 2026):**
+- SSO TOKEN HANDOFF: DeskillzBridge.initialize() now consumes `?token=` from
+  the launch URL and strips it from the visible URL before restoreSession()
+  runs. Eliminates re-login when the main Deskillz app deep-links into a
+  standalone game.
+- NO ACTION REQUIRED: your game picks this up automatically after upgrading
+  `@deskillz/web-sdk` to v3.4.11 -- consumption happens inside
+  Bridge.initialize() which your main.tsx already calls. Direct launches
+  without `?token=` fall through to the existing restoreSession() flow
+  unchanged.
+
+**Changelog v2.3 (April 14, 2026):**
+- No functional change; republished with SDK v3.4.9 sync
 
 **Changelog v2.2 (April 14, 2026):**
 - QUICKPLAY: Dynamic category seeding -- new games auto-create QuickPlayConfig
@@ -508,6 +540,81 @@ await bridge.createRoom({
 
 **Candy Duel:** `supportsBlitz1v1=true`, `supportsTurnBased=true`
 **Bubble Battle:** `supportsBlitz1v1=true`, `supportsDuel1v1=true`
+
+### Step 10e -- Adopting v3.4.11 qpConfig defaults (OPTIONAL)
+
+**Only after** your React migration is working and you have a CreateRoomScreen
+in React. This step upgrades the Create Room defaults from hardcoded SDK
+constants to the developer's configured QuickPlayConfig values.
+
+**Fully backward compatible.** If you skip this, v3.4.11 behaves identically
+to v3.4.10 in your game. Adopt when ready for a better host experience.
+
+**Three edits in CreateRoomScreen.tsx:**
+
+1. **Fetch qpConfig on mount:**
+
+```typescript
+import type { QuickPlayConfig } from '@deskillz/game-ui'
+
+const [qpConfig, setQpConfig] = useState<QuickPlayConfig | null>(null)
+
+useEffect(() => {
+  const gameId = DeskillzBridge.getInstance().getConfig().gameId
+  fetch(`${import.meta.env.VITE_API_BASE_URL}/api/v1/quick-play/games/${gameId}`)
+    .then((r) => r.ok ? r.json() : null)
+    .then(setQpConfig)
+    .catch(() => setQpConfig(null))  // 404 is fine
+}, [])
+```
+
+2. **Re-seed the config draft when qpConfig lands.** Pick the one
+for your game category:
+
+**Bubble Battle / Candy Duel (esport):**
+
+```typescript
+import {
+  createDefaultEsportGameConfig,
+  type EsportQuickPlayDefaults,
+  type EsportGameConfig,
+} from '@deskillz/game-ui'
+
+const [esportConfig, setEsportConfig] = useState<EsportGameConfig>(
+  () => createDefaultEsportGameConfig(undefined, null)
+)
+
+useEffect(() => {
+  if (!qpConfig) return
+  const defaults: EsportQuickPlayDefaults = qpConfig
+  setEsportConfig(createDefaultEsportGameConfig(undefined, defaults))
+}, [qpConfig])
+```
+
+**Dou Dizhu (social):**
+
+```typescript
+import {
+  createDefaultSocialGameConfig,
+  type SocialQuickPlayDefaults,
+  type SocialGameConfig,
+} from '@deskillz/game-ui'
+
+const [socialConfig, setSocialConfig] = useState<SocialGameConfig>(
+  () => createDefaultSocialGameConfig(undefined, undefined, null)
+)
+
+useEffect(() => {
+  if (!qpConfig) return
+  const defaults: SocialQuickPlayDefaults = qpConfig
+  setSocialConfig(createDefaultSocialGameConfig(undefined, undefined, defaults))
+}, [qpConfig])
+```
+
+3. **Test.** Open Create Room in your game; network tab should show a GET
+`/api/v1/quick-play/games/:gameId` on mount. If the game has a
+QuickPlayConfig row, form fields reflect the developer's values; if 404,
+form uses SDK hardcoded defaults (pre-v3.4.11 behavior).
 
 ### Step 11 -- Verify + build
 

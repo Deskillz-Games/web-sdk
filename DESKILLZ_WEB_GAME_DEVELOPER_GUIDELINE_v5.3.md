@@ -2,10 +2,53 @@
 
 ## Complete Integration Reference for HTML5/JavaScript Game Developers
 
-**Version:** 5.10
-**Date:** April 14, 2026
-**SDK Version:** DeskillzBridge v3.4.7 + @deskillz/game-ui ES module v3.4.7
+**Version:** 5.12
+**Date:** April 18, 2026
+**SDK Version:** DeskillzBridge v3.4.11 + @deskillz/game-ui ES module v3.4.11
 **Web Engine:** React/Vite only -- all standalone web games
+
+**Changelog v5.12 (April 18, 2026):**
+- CREATEROOM DEFAULTS: createDefaultSocialGameConfig accepts an optional 3rd
+  arg `qpConfig: SocialQuickPlayDefaults` and createDefaultEsportGameConfig
+  accepts an optional 2nd arg `qpConfig: EsportQuickPlayDefaults`. Seeds
+  form defaults from the developer's QuickPlayConfig row (rake %, rake cap,
+  turn timer, point value / entry fee tiers, currencies, platform fee,
+  min/max players). null/undefined falls back to pre-v3.4.11 hardcoded
+  defaults -- fully backward compatible. Adopt by fetching GET
+  /api/v1/quick-play/games/:gameId on CreateRoomScreen mount and passing
+  the result.
+- NEW EXPORTS: SocialQuickPlayDefaults + EsportQuickPlayDefaults type
+  interfaces, SOCIAL_GAMES constant (game-type metadata list).
+- BACKFILLED EXPORTS: DisputeModal (v3.4.5 file-level export, never in
+  barrel until now), TournamentLobbyCard + useTournamentLobby + full type
+  surface (v3.4.4, ditto), useAgeVerification parameterized hook +
+  UseAgeVerificationOptions + UseAgeVerificationResult, QuickPlayStatus +
+  AvailableGame + QuickPlayQueueState.
+- AGE VERIFICATION: useAgeVerification is now a parameterized hook --
+  standalone games pass `() => bridge.checkAgeVerified()` as the
+  checkVerified option. LocalStorage cache key `deskillz_age_verified`
+  preserved from prior implementation.
+- STRICT ERROR HANDLING: BuyInModal, CashOutModal, RebuyModal,
+  PauseRequestModal, AgeVerificationModal use `err: unknown` with typed
+  narrowing instead of loose `err: any`. No user-visible change.
+
+**Changelog v5.11 (April 18, 2026):**
+- SSO TOKEN HANDOFF: DeskillzBridge.initialize() consumes `?token=` from
+  the launch URL into TokenManager BEFORE restoreSession() runs, then
+  strips the token from the visible URL via history.replaceState() so it
+  does not leak via screenshots, browser history, or document.referrer.
+  Eliminates re-login when the main Deskillz app deep-links into a
+  standalone game. Other query params (matchId, gameSessionId, custom
+  params) are preserved.
+- HOSTROLE: CreateEsportRoomOpts and CreateSocialRoomOpts accept
+  `hostRole: 'PLAYER' | 'SPECTATOR'` (replaces boolean hostAsPlayer,
+  backward compatible). Migration #41 adds SPECTATING to the
+  PrivateRoomPlayerStatus enum.
+- NO GAME-DEV ACTION REQUIRED for SSO -- consumption happens inside
+  Bridge.initialize() which every integration already calls. Direct
+  launches without `?token=` fall through to normal restoreSession()
+  using prior localStorage tokens. hostRole adoption is also optional --
+  omitting it keeps the pre-v3.4.9 PLAYER behavior.
 
 **Changelog v5.9 (April 14, 2026):**
 - QUICKPLAY: Dynamic category seeding -- QuickPlayConfig auto-created with
@@ -2657,9 +2700,158 @@ Workbox generates `sw.js` separately -- the browser ignores it.
 
 ---
 
-*Document End -- Version 5.10*
+## 25. QUICKPLAYCONFIG CREATE ROOM DEFAULTS (v3.4.11)
+
+Starting in SDK v3.4.11, the host-facing Create Room form can seed its
+defaults from the developer's `QuickPlayConfig` row instead of the old
+hardcoded SDK constants.
+
+### Why adopt
+
+Before v3.4.11, when a player hosted a private room in your game, the form
+defaulted to hardcoded SDK constants (5% rake, $5 rake cap, 30s turn
+timer, etc.) regardless of what you had configured in the Developer
+Portal's Quick Play tab. Hosts had to manually change every field on
+every room creation.
+
+After v3.4.11 + this patch, the form defaults mirror your QuickPlayConfig,
+so the host sees your canonical Cash Game / Quick Play settings pre-filled
+and can tweak from there.
+
+### Backward compatibility
+
+Fully backward compatible. If you never adopt this pattern, v3.4.11
+behaves identically to v3.4.10 at runtime. The qpConfig arg is optional
+and falls back to pre-v3.4.11 hardcoded defaults when omitted.
+
+### Function signatures
+
+```typescript
+// Social games (Big 2, Mahjong, Thirteen Cards, Dou Dizhu)
+createDefaultSocialGameConfig(
+  minPlayersOverride?: number,
+  gameTypeOverride?: SocialGameType,
+  qpConfig?: SocialQuickPlayDefaults | null,  // NEW in v3.4.11
+): SocialGameConfig
+
+// Esport games (Bubble Battle, Candy Duel, puzzles, arcade)
+createDefaultEsportGameConfig(
+  capabilitiesOverride?: GameCapabilities,
+  qpConfig?: EsportQuickPlayDefaults | null,  // NEW in v3.4.11
+): EsportGameConfig
+```
+
+### SocialQuickPlayDefaults fields
+
+| Field                   | Description                                        |
+|-------------------------|----------------------------------------------------|
+| socialPointValueTiers   | USD-per-point tiers; first tier is the default    |
+| socialRakePercent       | Host rake per round (e.g. 5 means 5%)             |
+| socialRakeCapUsd        | Max rake per round in USD                          |
+| socialTurnTimerSeconds  | Default turn timer                                 |
+| socialMinPlayers        | Minimum players per table                          |
+| socialMaxPlayers        | Maximum players per table                          |
+
+### EsportQuickPlayDefaults fields
+
+| Field                | Description                                           |
+|----------------------|-------------------------------------------------------|
+| esportEntryFeeTiers  | USD entry fee tiers; first is the default             |
+| esportCurrencies     | Accepted currencies; first is the default             |
+| esportPlatformFee    | Platform fee percentage (e.g. 10 means 10%)           |
+| esportMinPlayers     | Minimum players for the tournament                    |
+| esportMaxPlayers     | Maximum players for the tournament                    |
+
+### Adoption pattern -- three edits in CreateRoomScreen.tsx
+
+```typescript
+import { useState, useEffect } from 'react'
+import {
+  SocialGameSettings,
+  createDefaultSocialGameConfig,
+  type SocialGameConfig,
+  type SocialQuickPlayDefaults,
+  type QuickPlayConfig,
+  DeskillzBridge,
+} from '@deskillz/game-ui'
+
+export default function CreateRoomScreen() {
+  const gameId = DeskillzBridge.getInstance().getConfig().gameId
+
+  // EDIT 1: Fetch QuickPlayConfig on mount (public endpoint -- no JWT required)
+  const [qpConfig, setQpConfig] = useState<QuickPlayConfig | null>(null)
+  useEffect(() => {
+    fetch(`${import.meta.env.VITE_API_BASE_URL}/api/v1/quick-play/games/${gameId}`)
+      .then((r) => (r.ok ? r.json() : null))
+      .then(setQpConfig)
+      .catch(() => setQpConfig(null))
+  }, [gameId])
+
+  // EDIT 2: Seed form state with SDK hardcoded defaults initially (qpConfig null)
+  const [socialConfig, setSocialConfig] = useState<SocialGameConfig>(
+    () => createDefaultSocialGameConfig(undefined, undefined, null),
+  )
+
+  // EDIT 3: Re-seed once qpConfig lands (single useEffect; structurally compat)
+  useEffect(() => {
+    if (!qpConfig) return
+    const defaults: SocialQuickPlayDefaults = qpConfig
+    setSocialConfig(createDefaultSocialGameConfig(undefined, undefined, defaults))
+  }, [qpConfig])
+
+  return (
+    <SocialGameSettings
+      config={socialConfig}
+      onChange={setSocialConfig}
+      capabilities={DEFAULT_CAPABILITIES}
+    />
+  )
+}
+```
+
+For esport games, substitute `createDefaultEsportGameConfig` + 2-arg form:
+
+```typescript
+const [esportConfig, setEsportConfig] = useState<EsportGameConfig>(
+  () => createDefaultEsportGameConfig(undefined, null),
+)
+
+useEffect(() => {
+  if (!qpConfig) return
+  const defaults: EsportQuickPlayDefaults = qpConfig
+  setEsportConfig(createDefaultEsportGameConfig(undefined, defaults))
+}, [qpConfig])
+```
+
+### Testing checklist
+
+- [ ] GET `/api/v1/quick-play/games/:gameId` fires on CreateRoomScreen mount
+- [ ] If 200 OK: form fields reflect your QuickPlayConfig values
+- [ ] If 404 (no QuickPlayConfig row yet): form uses pre-v3.4.11 hardcoded
+      defaults, no console error
+- [ ] Host can still edit any field; defaults are seeds not locks
+
+### Pitfalls
+
+- **Endpoint path** is `/api/v1/quick-play/games/:gameId` (public, no auth).
+  Do NOT use `/api/v1/admin/quick-play/games/:gameId` which returns 401.
+- **Three placeholders required for social call.** Pass `undefined` for
+  the first two args when only seeding from qpConfig:
+  `createDefaultSocialGameConfig(undefined, undefined, qpConfig)`.
+  Calling `createDefaultSocialGameConfig(qpConfig)` would pass qpConfig
+  as a minPlayers override and produce wrong defaults.
+- **QuickPlayConfig is a structural superset** of both SocialQuickPlayDefaults
+  and EsportQuickPlayDefaults -- TypeScript accepts direct assignment with
+  no cast.
+- **gameId timing** -- if `DeskillzBridge.getInstance().getConfig().gameId`
+  is `undefined` on mount (bridge still initializing), wait for the bridge
+  init event or use `import.meta.env.VITE_GAME_ID` directly.
+
+---
+
+*Document End -- Version 5.12*
 *Web engine: React/Vite only -- all standalone games*
-*@deskillz/game-ui: v3.4.8 -- QuickPlayCard esport + social flows*
+*@deskillz/game-ui: v3.4.11 -- QuickPlayConfig defaults + backfilled exports*
 *Non-React migration: see DESKILLZ_NON_REACT_MIGRATION_GUIDE.md*
 *Production Backend: https://newdeskillzgames-production.up.railway.app*
 *For support: developer-support@deskillz.games*

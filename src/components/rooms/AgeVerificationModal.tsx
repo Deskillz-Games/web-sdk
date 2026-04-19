@@ -2,8 +2,20 @@
 // AgeVerificationModal.tsx -- packages/game-ui/src/components/rooms/AgeVerificationModal.tsx
 //
 // Modal for verifying user is 21+ before creating/hosting social game rooms.
-// Uses onVerify callback prop -- the parent calls bridge.verifyAge().
+// Uses onVerify callback prop -- the parent calls bridge.verifyAge() or
+// hostApi.verifyAge() and the modal awaits the promise.
 // No direct API dependency -- pure props-in/JSX-out.
+//
+// Also exports a useAgeVerification() hook that accepts injected check/verify
+// functions so it can be shared between standalone games (which use the
+// bridge) and the main app (which uses hostApi).
+//
+// GAP 20 (Path B, Batch 5): This SDK file is now the single source of truth.
+// Main app imports via '@sdk/components/rooms/AgeVerificationModal' alias.
+// Previous main-app copy deleted. hostApi dependency was eliminated via
+// dependency injection on useAgeVerification. Strict err: unknown error
+// handling ported up. Completes GAP 20 -- all 9 rooms sacred files now
+// live at packages/game-ui/src/components/rooms/ as single source of truth.
 // =============================================================================
 
 import { useState, useCallback } from 'react'
@@ -50,8 +62,9 @@ export default function AgeVerificationModal({
       setIsVerified(true)
       // Auto-close after success animation
       setTimeout(() => onClose(), 1500)
-    } catch (err: any) {
-      setError(err?.response?.data?.message || err?.message || 'Verification failed. Please try again.')
+    } catch (err: unknown) {
+      const error = err as { response?: { data?: { message?: string } }; message?: string }
+      setError(error.response?.data?.message || error.message || 'Verification failed. Please try again.')
     } finally {
       setIsSubmitting(false)
     }
@@ -235,4 +248,88 @@ export default function AgeVerificationModal({
       </div>
     </AnimatePresence>
   )
+}
+
+// =============================================================================
+// useAgeVerification -- parameterized hook shared between main app and games
+// -----------------------------------------------------------------------------
+// The main app injects hostApi.checkAgeVerified + hostApi.verifyAge;
+// standalone games inject bridge.checkAgeVerified + bridge.verifyAge.
+// LocalStorage caching is keyed by 'deskillz_age_verified' so it works across
+// both environments (same key used by main app pre-GAP-20).
+//
+// Example (main app):
+//   const { isVerified, checkVerification, markVerified } = useAgeVerification({
+//     checkVerified: async () => (await hostApi.checkAgeVerified()).isVerified,
+//   })
+//
+// Example (standalone game):
+//   const bridge = DeskillzBridge.getInstance()
+//   const { isVerified, checkVerification, markVerified } = useAgeVerification({
+//     checkVerified: () => bridge.checkAgeVerified(),
+//   })
+// =============================================================================
+
+const AGE_VERIFIED_STORAGE_KEY = 'deskillz_age_verified'
+
+export interface UseAgeVerificationOptions {
+  /** Server-side check -- returns true if current user is age verified. */
+  checkVerified: () => Promise<boolean>
+  /** Optional: override the localStorage key (default: 'deskillz_age_verified'). */
+  storageKey?: string
+}
+
+export interface UseAgeVerificationResult {
+  /** null = not yet checked; true/false = determined */
+  isVerified: boolean | null
+  isLoading: boolean
+  /** Runs the cached-then-server check, populates isVerified. Returns the final value. */
+  checkVerification: () => Promise<boolean>
+  /** Marks verified locally (for post-verify-modal-success flows). */
+  markVerified: () => void
+}
+
+export function useAgeVerification(
+  options: UseAgeVerificationOptions,
+): UseAgeVerificationResult {
+  const { checkVerified, storageKey = AGE_VERIFIED_STORAGE_KEY } = options
+  const [isVerified, setIsVerified] = useState<boolean | null>(null)
+  const [isLoading, setIsLoading] = useState(false)
+
+  const checkVerification = useCallback(async (): Promise<boolean> => {
+    setIsLoading(true)
+    try {
+      // Fast path: localStorage cache hit.
+      const cached = typeof window !== 'undefined'
+        ? window.localStorage.getItem(storageKey)
+        : null
+      if (cached === 'true') {
+        setIsVerified(true)
+        return true
+      }
+
+      // Slow path: server check via injected function.
+      const verified = await checkVerified()
+      if (verified && typeof window !== 'undefined') {
+        window.localStorage.setItem(storageKey, 'true')
+      }
+      setIsVerified(verified)
+      return verified
+    } catch {
+      // Fail closed -- safer to re-prompt than to accidentally bypass the gate.
+      setIsVerified(false)
+      return false
+    } finally {
+      setIsLoading(false)
+    }
+  }, [checkVerified, storageKey])
+
+  const markVerified = useCallback(() => {
+    if (typeof window !== 'undefined') {
+      window.localStorage.setItem(storageKey, 'true')
+    }
+    setIsVerified(true)
+  }, [storageKey])
+
+  return { isVerified, isLoading, checkVerification, markVerified }
 }

@@ -4,6 +4,11 @@
 // Modal for requesting and voting on game pauses in social games.
 // Three states: RequestPauseModal, VoteOnPauseModal, PauseStatusModal.
 // No bridge dependency -- all actions via callback props.
+//
+// GAP 20 (Path B, Batch 4b): This SDK file is now the single source of truth.
+// Main app imports via '@sdk/components/rooms/PauseRequestModal' alias.
+// Previous main-app copy deleted. Strict err: unknown error handling ported
+// up from the main-app copy for improved TypeScript safety.
 // =============================================================================
 
 import { useState, useEffect, useCallback } from 'react'
@@ -153,8 +158,9 @@ function RequestPauseModal({
     try {
       await onSubmit(reason.trim() || undefined)
       onClose()
-    } catch (err: any) {
-      setError(err?.response?.data?.message || err?.message || 'Failed to request pause')
+    } catch (err: unknown) {
+      const error = err as { response?: { data?: { message?: string } }; message?: string }
+      setError(error.response?.data?.message || error.message || 'Failed to request pause')
     } finally { setIsSubmitting(false) }
   }, [canRequestPause, reason, onSubmit, onClose])
 

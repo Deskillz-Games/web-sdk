@@ -1,6 +1,16 @@
 // =============================================================================
 // SocialGameSettings.tsx -- packages/game-ui/src/components/rooms/SocialGameSettings.tsx
 //
+// v3.4.11 changes (backward compatible):
+//   - createDefaultSocialGameConfig accepts an optional 3rd `qpConfig` argument.
+//     When provided, developer-configured values from QuickPlayConfig
+//     (rake %, rake cap, point value tier, turn timer, player min/max) are
+//     used as defaults instead of the previous hardcoded constants. When
+//     omitted, behavior is identical to v3.3.3 -- every existing caller
+//     continues to work unchanged.
+//   - SocialQuickPlayDefaults interface added alongside SocialGameConfig.
+//     Structural -- any object with the listed optional fields can be passed.
+//
 // v3.3.3 changes:
 //   - Added playersAdvancePerTable: 1 | 2 to SocialGameConfig
 //   - Added tiebreakRule: 'MOST_ROUNDS_WON' | 'SUDDEN_DEATH' | 'RANDOM_DRAW'
@@ -72,6 +82,33 @@ export interface SocialGameSettingsProps {
   disabled?: boolean
   className?: string
   lockedGameType?: SocialGameType
+}
+
+/**
+ * Developer-configured Quick Play defaults pulled from the game's
+ * QuickPlayConfig row. Pass to createDefaultSocialGameConfig() to let
+ * the developer's settings drive the initial form state.
+ *
+ * This type is structurally compatible with the backend's QuickPlayConfig
+ * DTO -- you can pass a full QuickPlayConfig object directly without any
+ * mapping. All fields are optional; missing fields fall back to the
+ * previous hardcoded defaults.
+ *
+ * v3.4.11 addition.
+ */
+export interface SocialQuickPlayDefaults {
+  /** List of point value tiers in ascending order. First tier is used as default. */
+  socialPointValueTiers?: number[] | null
+  /** Rake percentage per round (e.g. 5 means 5%). */
+  socialRakePercent?: number | null
+  /** Maximum rake charged per round in USD. */
+  socialRakeCapUsd?: number | null
+  /** Default turn timer in seconds. */
+  socialTurnTimerSeconds?: number | null
+  /** Minimum players required per table. */
+  socialMinPlayers?: number | null
+  /** Maximum players allowed per table. */
+  socialMaxPlayers?: number | null
 }
 
 // =============================================================================
@@ -830,20 +867,40 @@ export default function SocialGameSettings({
 export function createDefaultSocialGameConfig(
   gameType?: SocialGameType,
   capabilities?: GameCapabilities,
+  /**
+   * Optional developer-configured Quick Play defaults. When provided,
+   * its values override the hardcoded fallbacks below. When omitted
+   * (undefined or null), behavior is identical to previous versions.
+   * v3.4.11 addition -- backward compatible.
+   */
+  qpConfig?: SocialQuickPlayDefaults | null,
 ): SocialGameConfig {
   const gt  = gameType || 'BIG_TWO'
   const d   = GAME_DEFAULTS[gt] || GAME_DEFAULTS.BIG_TWO
   const cap = capabilities || DEFAULT_CAPABILITIES
   const supportsSuddenDeath = (cap.minPlayers || d.minPlayers) <= 2
 
+  // Resolve per-field defaults: developer's QuickPlayConfig (when present)
+  // takes precedence over the previous hardcoded fallbacks.
+  const firstPointValueTier =
+    qpConfig?.socialPointValueTiers && qpConfig.socialPointValueTiers.length > 0
+      ? qpConfig.socialPointValueTiers[0]
+      : undefined
+  const pointValueUsd    = firstPointValueTier ?? 0.25
+  const rakePercentage   = qpConfig?.socialRakePercent ?? 5
+  const rakeCapPerRound  = qpConfig?.socialRakeCapUsd ?? 5
+  const turnTimerSeconds = qpConfig?.socialTurnTimerSeconds ?? d.turnTimer
+  const minPlayers       = qpConfig?.socialMinPlayers ?? d.minPlayers
+  const maxPlayers       = qpConfig?.socialMaxPlayers ?? d.maxPlayers
+
   return {
     socialMode:             'CASH_GAME',
     gameType:               gt,
     mahjongVariant:         gt === 'MAHJONG' ? 'HONG_KONG' : undefined,
-    pointValueUsd:          0.25,
-    rakePercentage:         5,
-    rakeCapPerRound:        5,
-    turnTimerSeconds:       d.turnTimer,
+    pointValueUsd,
+    rakePercentage,
+    rakeCapPerRound,
+    turnTimerSeconds,
     pointTarget:            gt === 'MAHJONG' ? 4 : d.pointTarget,
     maxRounds:              undefined,
     maxBid:                 d.maxBid,
@@ -853,13 +910,13 @@ export function createDefaultSocialGameConfig(
     prizePool:              0,
     prizeDistribution:      { '1': 50, '2': 30, '3': 20 },
     numberOfTables:         1,
-    minPlayersPerTable:     d.minPlayers,
+    minPlayersPerTable:     minPlayers,
     tableBreakRule:         'REBALANCE',
-    seatsPerTable:          d.maxPlayers,
+    seatsPerTable:          maxPlayers,
     playersAdvancePerTable: 1,
     tiebreakRule:           'MOST_ROUNDS_WON',
-    minPlayers:             d.minPlayers,
-    maxPlayers:             d.maxPlayers,
+    minPlayers,
+    maxPlayers,
     currency:               'USDT_BSC',
     visibility:             'PRIVATE_CODE',
     hostRole:               'PLAYER',

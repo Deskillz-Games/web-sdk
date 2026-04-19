@@ -1,6 +1,16 @@
 // =============================================================================
 // EsportGameSettings.tsx -- packages/game-ui/src/components/rooms/EsportGameSettings.tsx
 //
+// v3.4.11 changes (backward compatible):
+//   - createDefaultEsportGameConfig accepts an optional 2nd `qpConfig` argument.
+//     When provided, developer-configured values from QuickPlayConfig
+//     (entry fee tier, currency, platform fee, player min/max) are used
+//     as defaults instead of the previous hardcoded constants. When omitted,
+//     behavior is identical to v3.3.3 -- every existing caller continues to
+//     work unchanged.
+//   - EsportQuickPlayDefaults interface added alongside EsportGameConfig.
+//     Structural -- any object with the listed optional fields can be passed.
+//
 // v3.3.3 changes:
 //   - Added GameCapabilities prop -- hides/disables unsupported options
 //   - Single Elimination card hidden if !capabilities.supportsSingleElimination
@@ -62,6 +72,31 @@ export interface EsportGameSettingsProps {
   disabled?: boolean
   className?: string
   currencies?: string[]
+}
+
+/**
+ * Developer-configured Quick Play defaults pulled from the game's
+ * QuickPlayConfig row. Pass to createDefaultEsportGameConfig() to let
+ * the developer's settings drive the initial form state.
+ *
+ * This type is structurally compatible with the backend's QuickPlayConfig
+ * DTO -- you can pass a full QuickPlayConfig object directly without any
+ * mapping. All fields are optional; missing fields fall back to the
+ * previous hardcoded defaults.
+ *
+ * v3.4.11 addition.
+ */
+export interface EsportQuickPlayDefaults {
+  /** List of entry fee tiers in ascending order. First tier is used as default. */
+  esportEntryFeeTiers?: number[] | null
+  /** List of accepted currencies. First entry is used as default. */
+  esportCurrencies?: string[] | null
+  /** Platform fee percentage (e.g. 10 means 10%). */
+  esportPlatformFee?: number | null
+  /** Minimum players required for the tournament. */
+  esportMinPlayers?: number | null
+  /** Maximum players allowed in the tournament. */
+  esportMaxPlayers?: number | null
 }
 
 // =============================================================================
@@ -671,14 +706,41 @@ export default function EsportGameSettings({
 
 export function createDefaultEsportGameConfig(
   capabilities?: GameCapabilities,
+  /**
+   * Optional developer-configured Quick Play defaults. When provided,
+   * its values override the hardcoded fallbacks below. When omitted
+   * (undefined or null), behavior is identical to previous versions.
+   * v3.4.11 addition -- backward compatible.
+   */
+  qpConfig?: EsportQuickPlayDefaults | null,
 ): EsportGameConfig {
   const cap    = capabilities || DEFAULT_CAPABILITIES
   const format: TournamentFormat = cap.supportsSingleElimination
     ? 'SINGLE_ELIMINATION'
     : cap.supportsFFA ? 'FFA' : 'SINGLE_ELIMINATION'
+
+  // Resolve per-field defaults: developer's QuickPlayConfig (when present)
+  // takes precedence over the previous hardcoded fallbacks.
+  const firstEntryFeeTier =
+    qpConfig?.esportEntryFeeTiers && qpConfig.esportEntryFeeTiers.length > 0
+      ? qpConfig.esportEntryFeeTiers[0]
+      : undefined
+  const firstCurrency =
+    qpConfig?.esportCurrencies && qpConfig.esportCurrencies.length > 0
+      ? qpConfig.esportCurrencies[0]
+      : undefined
+  const entryFee           = firstEntryFeeTier ?? 5
+  const entryCurrency      = firstCurrency ?? 'USDT_BSC'
+  const platformFeePercent = qpConfig?.esportPlatformFee ?? 10
+  const devMinPlayers      = qpConfig?.esportMinPlayers ?? cap.minPlayers
+  const devMaxPlayers      = qpConfig?.esportMaxPlayers ?? cap.minPlayers
+
+  // Player count must satisfy tournament-format rules (SE requires power-of-2,
+  // minimum 4). The developer's esportMinPlayers is a lower bound; we still
+  // clamp up to the next valid SE bracket size.
   const players = format === 'SINGLE_ELIMINATION'
-    ? Math.max(MIN_SE_SIZE, isPowerOf2(cap.minPlayers) ? cap.minPlayers : nextPowerOf2(cap.minPlayers))
-    : cap.minPlayers
+    ? Math.max(MIN_SE_SIZE, isPowerOf2(devMinPlayers) ? devMinPlayers : nextPowerOf2(devMinPlayers))
+    : devMinPlayers
   const mode: GameMode = cap.supportsSync ? 'SYNC'
     : cap.supportsAsync ? 'ASYNC'
     : cap.supportsBlitz1v1 ? 'BLITZ_1V1'
@@ -689,16 +751,16 @@ export function createDefaultEsportGameConfig(
   const duration = cap.minMatchDurationSeconds > 0 ? cap.minMatchDurationSeconds : 180
 
   return {
-    entryFee:             5,
-    entryCurrency:        'USDT_BSC',
+    entryFee,
+    entryCurrency,
     minPlayers:           players,
-    maxPlayers:           players,
+    maxPlayers:           Math.max(players, devMaxPlayers),
     mode,
     matchDurationSeconds: duration,
     roundsCount:          1,
     prizeDistribution:    { '1': 100 },
     visibility:           'PUBLIC_LISTED',
     tournamentFormat:     format,
-    platformFeePercent:   10,
+    platformFeePercent,
   }
 }

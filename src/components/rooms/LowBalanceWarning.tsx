@@ -5,6 +5,11 @@
 // Three urgency levels: medium (<=20pts), high (<=15pts), critical (<=10pts).
 // Includes: floating toast, inline variant, and useLowBalanceDetection hook.
 // No bridge dependency -- pure props-in/JSX-out.
+//
+// GAP 20 (Path B, Batch 4b): This SDK file is now the single source of truth.
+// Main app imports via '@sdk/components/rooms/LowBalanceWarning' alias.
+// Previous main-app copy deleted (was cosmetic drift only -- same hooks,
+// same logic, same JSX structure).
 // =============================================================================
 
 import { useState, useCallback, useEffect, useRef } from 'react'

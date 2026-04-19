@@ -5,6 +5,11 @@
 // Shared across all standalone social games (Big 2, Mahjong, etc.)
 // Backdrop is NOT dismissible -- player must choose rebuy or leave.
 // No bridge dependency -- pure props-in/JSX-out display component.
+//
+// GAP 20 (Path B, Batch 4a): This SDK file is now the single source of truth.
+// Main app imports via '@sdk/components/rooms/RebuyModal' alias.
+// Previous main-app copy deleted. Strict err: unknown error handling ported
+// up from the main-app copy for improved TypeScript safety.
 // =============================================================================
 
 import { useState, useCallback, useMemo } from 'react'
@@ -114,8 +119,9 @@ export default function RebuyModal({
     setError(null)
     try {
       await onRebuy(rebuyAmount)
-    } catch (err: any) {
-      setError(err?.response?.data?.message || err?.message || 'Rebuy failed. Please try again.')
+    } catch (err: unknown) {
+      const error = err as { response?: { data?: { message?: string } }; message?: string }
+      setError(error.response?.data?.message || error.message || 'Rebuy failed. Please try again.')
     } finally {
       setIsSubmitting(false)
     }

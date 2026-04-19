@@ -2,10 +2,51 @@
 
 ## Big 2 | Mahjong | Thirteen Cards (Chinese Poker)
 
-**Version:** 2.3
-**Date:** April 14, 2026
+**Version:** 2.5
+**Date:** April 18, 2026
 **Applies to:** All three React/Vite standalone games
-**SDK:** DeskillzBridge v3.4.7 + @deskillz/game-ui v3.4.7
+**SDK:** DeskillzBridge v3.4.11 + @deskillz/game-ui v3.4.11
+
+**Changelog v2.5 (April 18, 2026):**
+- CREATEROOM: createDefaultSocialGameConfig accepts an OPTIONAL third arg
+  `qpConfig: SocialQuickPlayDefaults` that seeds the form defaults from the
+  developer's QuickPlayConfig (rake %, rake cap in USD, turn timer, point
+  value tiers, min/max players). null/undefined falls back to the pre-v3.4.11
+  hardcoded defaults. Adopt by fetching GET /api/v1/quick-play/games/:gameId
+  on Create Room mount and passing the result -- fully backward compatible.
+  See the 3-edit patch in "Step 8 -- qpConfig-driven defaults" below.
+- NEW EXPORTS: SocialQuickPlayDefaults + EsportQuickPlayDefaults type
+  interfaces. SOCIAL_GAMES constant (game-type metadata list with labels,
+  icons, descriptions) re-exported so games can render their own game-type
+  pickers without duplicating the list.
+- BACKFILLED EXPORTS that existed as file-level named exports but were
+  never re-exported from the SDK barrel: DisputeModal (v3.4.5),
+  TournamentLobbyCard + useTournamentLobby (v3.4.4), useAgeVerification hook
+  + UseAgeVerificationOptions/UseAgeVerificationResult, QuickPlayStatus,
+  AvailableGame, QuickPlayQueueState.
+- AGE VERIFICATION: useAgeVerification is now a parameterized hook that
+  takes an injected checkVerified function -- pass
+  `() => bridge.checkAgeVerified()` so the hook works in the standalone
+  game environment without pulling in main-app API clients.
+- STRICT ERROR HANDLING: internal modals (BuyIn/CashOut/Rebuy/PauseRequest/
+  AgeVerification) now use strict `err: unknown` with type narrowing.
+  No user-visible change; TypeScript type safety only.
+
+**Changelog v2.4 (April 18, 2026):**
+- SSO TOKEN HANDOFF: DeskillzBridge.initialize() now reads `?token=` from
+  the launch URL and consumes it into TokenManager BEFORE restoreSession()
+  runs. Eliminates the re-login flow when the main Deskillz app deep-links
+  into a standalone game. After consumption, the token is stripped from
+  the visible URL via history.replaceState() so it does not leak via
+  screenshots, browser history, or document.referrer.
+- NO ACTION REQUIRED: third-party game integrations pick this up
+  automatically by upgrading their `@deskillz/web-sdk` dependency --
+  consumption happens inside Bridge.initialize() which every integration
+  already calls. Direct launches without `?token=` fall through to the
+  existing restoreSession() flow unchanged.
+
+**Changelog v2.3 (April 14, 2026):**
+- No functional change; republished with SDK v3.4.9 sync
 
 **Changelog v2.1 (April 14, 2026):**
 - QUICKPLAY: Dynamic category seeding -- QuickPlayConfig auto-created with correct
@@ -688,6 +729,85 @@ const handleCreateRoom = async () => {
 | TurnTimer (per-turn) | Not needed -- match has a total duration set at creation |
 | PauseRequestModal | Not needed -- esport matches don't pause |
 | SocialGameSettings | Replaced by EsportGameSettings |
+
+---
+
+## STEP 7c -- QPCONFIG-DRIVEN DEFAULTS (SDK v3.4.11)
+
+**New in SDK v3.4.11.** When a host creates a private room, the form can
+now default to the developer's QuickPlayConfig values (rake %, rake cap,
+turn timer, point value / entry fee tiers, currencies, min/max players)
+instead of the old hardcoded SDK constants.
+
+**Fully backward compatible.** If you skip this step your game still works
+-- it just uses the pre-v3.4.11 hardcoded defaults. Adopt it to give
+hosts a better starting point that matches your Developer Portal settings.
+
+### Three edits to your Create Room screen
+
+**1. Fetch the config on mount.** In your CreateRoomScreen.tsx, add:
+
+```typescript
+import type { QuickPlayConfig } from '@deskillz/game-ui'
+
+const [qpConfig, setQpConfig] = useState<QuickPlayConfig | null>(null)
+
+useEffect(() => {
+  const gameId = DeskillzBridge.getInstance().getConfig().gameId
+  // Public endpoint -- no JWT required.
+  fetch(`${API_BASE_URL}/api/v1/quick-play/games/${gameId}`)
+    .then((r) => r.ok ? r.json() : null)
+    .then(setQpConfig)
+    .catch(() => setQpConfig(null))  // 404 is fine -- falls back to SDK defaults
+}, [])
+```
+
+**2. Pass to createDefaultSocialGameConfig** (social games only):
+
+```typescript
+import {
+  createDefaultSocialGameConfig,
+  type SocialQuickPlayDefaults,
+  type SocialGameConfig,
+} from '@deskillz/game-ui'
+
+const [socialConfig, setSocialConfig] = useState<SocialGameConfig>(
+  () => createDefaultSocialGameConfig(undefined, undefined, null)
+)
+
+useEffect(() => {
+  if (!qpConfig) return
+  const defaults: SocialQuickPlayDefaults = qpConfig
+  setSocialConfig(createDefaultSocialGameConfig(undefined, undefined, defaults))
+}, [qpConfig])
+```
+
+**3. Same pattern for esport (if your game has esport rooms):**
+
+```typescript
+import {
+  createDefaultEsportGameConfig,
+  type EsportQuickPlayDefaults,
+  type EsportGameConfig,
+} from '@deskillz/game-ui'
+
+const [esportConfig, setEsportConfig] = useState<EsportGameConfig>(
+  () => createDefaultEsportGameConfig(undefined, null)
+)
+
+useEffect(() => {
+  if (!qpConfig) return
+  const defaults: EsportQuickPlayDefaults = qpConfig
+  setEsportConfig(createDefaultEsportGameConfig(undefined, defaults))
+}, [qpConfig])
+```
+
+### Pitfalls
+
+- **Three undefined placeholders** -- the social call is `createDefaultSocialGameConfig(undefined, undefined, qpConfig)`. Do NOT call it as `createDefaultSocialGameConfig(qpConfig)` -- that would pass qpConfig as minPlayers override and produce wrong defaults.
+- **Public endpoint only** -- use `/api/v1/quick-play/games/:gameId`, not the admin path `/api/v1/admin/quick-play/games/:gameId` (which returns 401 for unauthenticated game launches).
+- **404 is normal** -- if the game has no QuickPlayConfig row yet, the endpoint returns 404. Catch it and let qpConfig stay null; the form then uses SDK hardcoded defaults (same as pre-v3.4.11).
+- **gameId availability** -- if `DeskillzBridge.getInstance().getConfig().gameId` returns undefined at mount time, wait for the bridge init event or use `import.meta.env.VITE_GAME_ID` directly.
 
 ---
 
