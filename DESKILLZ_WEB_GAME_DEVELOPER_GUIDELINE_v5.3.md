@@ -2,10 +2,51 @@
 
 ## Complete Integration Reference for HTML5/JavaScript Game Developers
 
-**Version:** 5.13
+**Version:** 5.14
 **Date:** April 19, 2026
-**SDK Version:** DeskillzBridge v3.4.12 + @deskillz/game-ui ES module v3.4.12
+**SDK Version:** DeskillzBridge v3.4.12 + @deskillz/game-ui ES module v3.4.13
 **Web Engine:** React/Vite only -- all standalone web games
+
+**Changelog v5.14 (April 19, 2026):**
+- REJOIN MODAL SHARED COMPONENT (SDK v3.4.13): `@deskillz/game-ui`
+  now exports a shared `RejoinModal` component and `useRejoinModal`
+  hook for handling the v3.4.12 `roomReconnect` event. Standalone
+  games no longer need to build their own "Rejoin?" prompt -- one
+  import + one JSX mount at app root covers the full flow.
+- NEW SDK EXPORTS: `RejoinModal` (default), `useRejoinModal`,
+  `RejoinSessionPayload`, `RejoinBridgeLike`, `RejoinModalProps`,
+  `RejoinModalCopy`, `UseRejoinModalOptions`, `UseRejoinModalResult`.
+- DEPENDENCY-INJECTED BRIDGE: the hook takes a `bridge` prop
+  conforming to `RejoinBridgeLike` (just `.on()` + optional
+  `.getActiveSession()`). No singleton coupling -- easier to test
+  and works with any bridge wiring pattern.
+- ESPORT + SOCIAL SUPPORT: default modal copy branches on
+  `payload.gameCategory`. "Cash game" for social, "match" for
+  esport. Games can override via the `copy` prop if they want
+  custom wording.
+- OPTIONAL `onNavigate` OVERRIDE: default navigation is
+  `window.location.href = deepLink` (full reload). Pass a custom
+  function (e.g. react-router `navigate()`) for smoother SPA UX.
+- ADOPTION PATTERN (game `App.tsx` or `main.tsx`):
+  ```tsx
+  import { RejoinModal, useRejoinModal } from '@deskillz/game-ui'
+  const bridge = DeskillzBridge.getInstance()
+  const rejoin = useRejoinModal({ bridge })
+  return <><Routes>...</Routes><RejoinModal {...rejoin} /></>
+  ```
+- ON-DEMAND RECHECK: `rejoin.recheck()` lets games trigger an
+  explicit session check (e.g. "Resume last game" button). Returns
+  the payload and displays the modal automatically if a session is
+  found.
+- NO BRIDGE CHANGES: DeskillzBridge stays at v3.4.12. Only the
+  game-ui package bumps to v3.4.13.
+- ENCODING FIX: SDK `package.json` had accumulated mojibake from
+  previous releases -- em-dashes had round-tripped through
+  UTF-8/Windows-1252 multiple times. Cleaned to pure ASCII in
+  v3.4.13 and restamped. No behavioral change; cosmetic only.
+- BACKWARD COMPATIBLE: games on the v5.13 raw-event pattern (see
+  previous changelog) continue to work unchanged. RejoinModal
+  adoption is opt-in per game.
 
 **Changelog v5.13 (April 19, 2026):**
 - SESSION RESUME ON CRASH (GAP 9): `DeskillzBridge.initialize()` now

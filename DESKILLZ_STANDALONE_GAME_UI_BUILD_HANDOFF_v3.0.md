@@ -1,9 +1,9 @@
 # DESKILLZ STANDALONE GAME UI BUILD HANDOFF
 ## Universal UI Guide for Self-Sufficient Game Apps
 
-**Version:** 3.12
+**Version:** 3.13
 **Date:** April 19, 2026
-**SDK Version:** Deskillz SDK v3.4.12 + @deskillz/game-ui v3.4.12
+**SDK Version:** Deskillz SDK v3.4.12 + @deskillz/game-ui v3.4.13
 **Architecture:** Self-Sufficient (No External App Dependency)
 **Supported Game Types:** Esports (Competitive) + Social Games (Cash Game + Tournament)
 **Supported Web Engine:** React/Vite only (all standalone web games)
@@ -11,6 +11,61 @@
 ---
 
 ## CHANGELOG
+
+### v3.13 (April 19, 2026) -- RejoinModal Shared Component (SDK v3.4.13)
+
+- **New shared modal `RejoinModal`** + `useRejoinModal` hook exported
+  from `@deskillz/game-ui`. Subscribes to the bridge `roomReconnect`
+  event (shipped in v3.12 / SDK v3.4.12), renders a "Rejoin Game?"
+  prompt with room + game details, and navigates to the embedded
+  deep link on confirm. Works for both esport and social games --
+  copy auto-branches on `payload.gameCategory`.
+- **One-edit integration at app root** (standalone React games):
+  ```tsx
+  import { RejoinModal, useRejoinModal } from '@deskillz/game-ui'
+  import { DeskillzBridge } from './sdk/DeskillzBridge'
+
+  function App() {
+    const bridge = DeskillzBridge.getInstance()
+    const rejoin = useRejoinModal({ bridge })
+    return (
+      <>
+        <Routes>...</Routes>
+        <RejoinModal {...rejoin} />
+      </>
+    )
+  }
+  ```
+- **Dependency-injected bridge**: hook takes a `bridge` conforming to
+  `RejoinBridgeLike` (just `.on()` + optional `.getActiveSession()`).
+  No singleton import in the SDK -- keeps the package decoupled from
+  any specific bridge wiring.
+- **Optional `onNavigate` override**: default uses
+  `window.location.href = deepLink` (full page reload). Pass
+  react-router `navigate()` for smoother SPA UX.
+- **Optional custom copy** via `copy` prop -- override title,
+  subtitle, description, or button labels while keeping default
+  esport/social branching.
+- **`recheck()` for on-demand re-checks** (e.g. "Resume last game"
+  button in lobby). Returns `Promise<RejoinSessionPayload | null>`,
+  displays the modal automatically if a session is found.
+- **New exports from `@deskillz/game-ui`**:
+  - `RejoinModal` (default export from `components/rooms/RejoinModal`)
+  - `useRejoinModal` (named export)
+  - `RejoinSessionPayload` (type, flat room + launch info)
+  - `RejoinBridgeLike` (minimal bridge interface)
+  - `RejoinModalProps`, `RejoinModalCopy`
+  - `UseRejoinModalOptions`, `UseRejoinModalResult`
+- **No bridge changes**: DeskillzBridge stays at v3.4.12. Only the
+  game-ui package bumps to v3.4.13. Games adopting RejoinModal only
+  need to bump the `@deskillz/game-ui` dependency.
+- **Mojibake cleanup**: SDK `package.json` had corrupt em-dashes
+  from a prior encoding round-trip; cleaned to pure ASCII in v3.4.13.
+- **Backward compatibility**: games staying on the v3.12 DIY handler
+  pattern are unaffected. Adoption is per-game at team pace.
+- **Applies to (esport + social, ALL standalone games)**: Big 2,
+  Thirteen Cards, Mahjong, Dou Dizhu (post-migration), Bubble Battle
+  (post-migration), Candy Duel (post-migration).
 
 ### v3.12 (April 19, 2026) -- Session Resume on Crash (GAP 9)
 

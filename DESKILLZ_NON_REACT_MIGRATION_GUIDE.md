@@ -2,11 +2,41 @@
 
 ## Dou Dizhu | Bubble Battle | Candy Duel
 
-**Version:** 2.6
+**Version:** 2.7
 **Date:** April 19, 2026
 **For:** Developers of existing non-React standalone games
 **Applies to:** Dou Dizhu (PixiJS), Bubble Battle (Canvas/TypeScript), Candy Duel (Canvas/TypeScript)
-**SDK:** DeskillzBridge v3.4.12 + @deskillz/game-ui v3.4.12
+**SDK:** DeskillzBridge v3.4.12 + @deskillz/game-ui v3.4.13
+
+**Changelog v2.7 (April 19, 2026):**
+- REJOIN MODAL SHARED COMPONENT (SDK v3.4.13): `@deskillz/game-ui` now
+  ships `RejoinModal` + `useRejoinModal` for React-based adoption of
+  the `roomReconnect` event (see v2.6 changelog). **This is a React
+  component, so non-React games keep using the v2.6 DIY handler
+  pattern.** The underlying `roomReconnect` event and
+  `ActiveSessionPayload` are unchanged -- only the optional UI
+  helper is new, and it's only usable in React game shells.
+
+  **For non-React games**, continue to use:
+  ```ts
+  bridge.on('roomReconnect', (_type, data) => {
+    const p = data as ActiveSessionPayload;
+    if (confirm(`Rejoin ${p.roomName}?`)) {
+      window.location.href = p.deepLink;
+    }
+  });
+  ```
+
+  Or build a native DOM modal matching your game's visual style.
+
+- If you are mid-migration to React/Vite (per this guide), adopt
+  `RejoinModal` in the new React app root instead of rebuilding a
+  DOM prompt. See the React Game Update Guide "Step 7d -- RejoinModal
+  adoption" for the 1-edit integration pattern.
+- NO BRIDGE CHANGES: DeskillzBridge stays at v3.4.12. Only the
+  game-ui package bumps to v3.4.13.
+- BACKWARD COMPATIBLE: games on the v2.6 handler pattern are
+  unaffected.
 
 **Changelog v2.6 (April 19, 2026):**
 - SESSION RESUME ON CRASH (GAP 9): DeskillzBridge.initialize() now emits

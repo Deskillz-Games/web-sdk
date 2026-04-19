@@ -2,10 +2,55 @@
 
 ## Big 2 | Mahjong | Thirteen Cards (Chinese Poker)
 
-**Version:** 2.6
+**Version:** 2.7
 **Date:** April 19, 2026
 **Applies to:** All three React/Vite standalone games
-**SDK:** DeskillzBridge v3.4.12 + @deskillz/game-ui v3.4.12
+**SDK:** DeskillzBridge v3.4.12 + @deskillz/game-ui v3.4.13
+
+**Changelog v2.7 (April 19, 2026):**
+- REJOIN MODAL (GAP 9 continuation, SDK v3.4.13): `@deskillz/game-ui`
+  now exports a shared `RejoinModal` component + `useRejoinModal` hook
+  so standalone games do NOT need to build their own rejoin prompt.
+  The hook subscribes to the bridge `roomReconnect` event on mount,
+  the component renders the modal with room + game details, and on
+  confirm navigates to the deepLink. Works for both esport and social
+  games -- modal copy branches on `payload.gameCategory`.
+
+  ```tsx
+  import { RejoinModal, useRejoinModal } from '@deskillz/game-ui'
+  import { DeskillzBridge } from './sdk/DeskillzBridge'
+
+  function App() {
+    const bridge = DeskillzBridge.getInstance()
+    const rejoin = useRejoinModal({ bridge })
+    return (
+      <>
+        <Routes>...</Routes>
+        <RejoinModal {...rejoin} />
+      </>
+    )
+  }
+  ```
+
+- NEW EXPORTS: `RejoinModal` (default), `useRejoinModal`,
+  `RejoinSessionPayload`, `RejoinBridgeLike`, `RejoinModalProps`,
+  `RejoinModalCopy`, `UseRejoinModalOptions`, `UseRejoinModalResult`.
+- DEPENDENCY-INJECTED BRIDGE: the hook takes a `bridge` prop
+  conforming to `RejoinBridgeLike` (just `.on()` + optional
+  `.getActiveSession()`). No singleton coupling in the SDK -- easier
+  to test and mock.
+- OPTIONAL NAVIGATION OVERRIDE: by default `onConfirm` sets
+  `window.location.href = deepLink` (full reload). Pass a custom
+  `onNavigate` to use react-router `navigate()` for smoother UX.
+- OPTIONAL CUSTOM COPY: the modal ships with defaults that adapt to
+  esport vs social automatically. Override any label via the `copy`
+  prop if you want different wording per game.
+- BACKWARD COMPATIBLE: games staying on the pre-v3.4.13 DIY handler
+  pattern (see v2.6 changelog) continue to work unchanged. Adopt when
+  ready -- see "Step 7d -- RejoinModal adoption" below.
+- PACKAGE.JSON MOJIBAKE CLEANED: the SDK's own package.json had
+  corrupt em-dashes from a prior encoding round-trip; restored to
+  pure ASCII in v3.4.13.
 
 **Changelog v2.6 (April 19, 2026):**
 - SESSION RESUME ON CRASH (GAP 9): DeskillzBridge.initialize() now checks
@@ -845,6 +890,111 @@ useEffect(() => {
 - **Public endpoint only** -- use `/api/v1/quick-play/games/:gameId`, not the admin path `/api/v1/admin/quick-play/games/:gameId` (which returns 401 for unauthenticated game launches).
 - **404 is normal** -- if the game has no QuickPlayConfig row yet, the endpoint returns 404. Catch it and let qpConfig stay null; the form then uses SDK hardcoded defaults (same as pre-v3.4.11).
 - **gameId availability** -- if `DeskillzBridge.getInstance().getConfig().gameId` returns undefined at mount time, wait for the bridge init event or use `import.meta.env.VITE_GAME_ID` directly.
+
+---
+
+## STEP 7d -- REJOIN MODAL (SDK v3.4.13)
+
+**Applies to all games -- esport AND social.** Handles the browser-crash-mid-match case.
+
+### What it does
+
+If a player's browser crashes while in a match, re-opening the game and logging back in normally does nothing -- the launchToken expires after 5 min. This step mounts a shared modal at the app root that listens for DeskillzBridge's `roomReconnect` event and prompts the player to rejoin. The bridge auto-refreshes the launchToken if it expired, so the embedded deep link always works.
+
+Before v3.4.13, games had to build their own modal using the raw event + payload (see v2.6 / Step 7d pattern from prior release). v3.4.13 ships a shared component so every game gets a consistent UX with zero custom UI code.
+
+### One edit to your app root
+
+Mount `<RejoinModal />` once in `App.tsx` (or `main.tsx`, wherever your routes and global modals live):
+
+```tsx
+import { RejoinModal, useRejoinModal } from '@deskillz/game-ui'
+import { DeskillzBridge } from './sdk/DeskillzBridge'
+import { useNavigate } from 'react-router-dom'
+
+export default function App() {
+  const navigate = useNavigate()
+  const bridge = DeskillzBridge.getInstance()
+
+  // Subscribes to 'roomReconnect' on mount, unsubscribes on unmount.
+  // Uses react-router navigate() instead of window.location.href so the
+  // SPA doesn't do a full page reload.
+  const rejoin = useRejoinModal({
+    bridge,
+    onNavigate: (deepLink) => {
+      const url = new URL(deepLink)
+      navigate(`${url.pathname}${url.search}`)
+    },
+  })
+
+  return (
+    <>
+      <Routes>
+        {/* ...your existing routes... */}
+      </Routes>
+      <RejoinModal {...rejoin} />
+    </>
+  )
+}
+```
+
+That's it. The hook handles the bridge subscription, the component handles the UI, and the modal auto-closes on confirm or dismiss.
+
+### Optional: "Resume last game" button in lobby
+
+For players who dismissed the initial prompt, you can offer a manual recheck in your lobby:
+
+```tsx
+const rejoin = useRejoinModal({ bridge })
+
+<button
+  onClick={() => rejoin.recheck()}
+  disabled={rejoin.isChecking}
+>
+  {rejoin.isChecking ? 'Checking...' : 'Resume last game'}
+</button>
+```
+
+No extra mount needed -- the same `<RejoinModal {...rejoin} />` from above will display the prompt when `recheck()` resolves to an active session.
+
+### Customizing the modal copy
+
+Defaults work out of the box and auto-branch on `payload.gameCategory`:
+
+- Social: "Your cash game [room] in [game] is still running..."
+- Esport: "Your match [room] in [game] is still in progress..."
+
+If you want different wording, pass a `copy` prop:
+
+```tsx
+<RejoinModal
+  {...rejoin}
+  copy={{
+    title: 'Come Back!',
+    confirmLabel: 'Jump Back In',
+    dismissLabel: 'Later',
+  }}
+/>
+```
+
+### Pitfalls
+
+- **Do NOT wrap `<RejoinModal />` in `<AuthGuard>` or any auth-required route.** It must mount unconditionally at the app root. If placed behind an auth gate, a user who crashed mid-match will land on the login screen and the modal will never mount.
+- **Bridge must exist before `useRejoinModal` runs.** If your bridge singleton is initialized in `main.tsx` before `<App />` mounts, you're fine. If bridge init is deferred (async config fetch etc.), guard the hook call -- `useRejoinModal({ bridge: null })` will throw.
+- **Token re-issuance is automatic.** The embedded launchToken in `payload.deepLink` is always valid when the event fires -- the backend reissues if the stored one expired. Games don't need to refresh tokens themselves.
+- **Dismissing does NOT end the session.** The session stays active on the backend. Player can rejoin from any future login -- the modal re-fires on next auth. Only explicit leave / cash-out removes the session.
+
+### Testing checklist
+
+- [ ] Start a match, close the browser tab mid-match
+- [ ] Re-open and log back in -- "Rejoin Game?" modal appears within 2s post-auth
+- [ ] Modal shows correct room name, room code, game name
+- [ ] For social games: copy says "cash game". For esport: "match"
+- [ ] Confirm "Rejoin Now" -- lands back in the game via deep link
+- [ ] Start another match, close browser, wait 10+ min for launchToken expiry
+- [ ] Re-open -- modal still appears (backend reissued launchToken)
+- [ ] Dismiss with "Not Now" -- next login still shows it (session still active)
+- [ ] Fully quit via cash-out -- next login does NOT show modal
 
 ---
 
