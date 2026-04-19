@@ -31,7 +31,6 @@
     "isolatedModules": true,
     "noEmit": true,
     "outDir": "dist",
-    "baseUrl": ".",
     "paths": {
       "@deskillz/web-sdk": ["./src/index.ts"],
       "@deskillz/web-sdk/*": ["./src/*"]

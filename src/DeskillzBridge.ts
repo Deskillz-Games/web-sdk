@@ -508,6 +508,52 @@ export interface DisputeRecord {
 }
 
 // =============================================================================
+// GAP 9 -- ACTIVE SESSION RESUME (v3.4.12)
+// =============================================================================
+
+/**
+ * Payload emitted with the 'roomReconnect' event when the bridge detects an
+ * active in-match session on initialize() (or when checkForActiveSession()
+ * is called manually). The deepLink embeds a current, valid launchToken so
+ * the game can resume without additional API calls.
+ *
+ * Games should listen for 'roomReconnect' and prompt the player to rejoin,
+ * e.g. show a "Rejoin Game?" modal and on confirm, navigate to the deep
+ * link or call their own in-game resume flow.
+ *
+ * isReissued === true means the backend minted a fresh launchToken during
+ * the check (the previous one had expired). Either way, launchToken is
+ * valid and embedded in deepLink.
+ */
+export interface ActiveSessionPayload {
+  roomId: string;
+  roomCode: string;
+  roomName: string;
+  gameCategory?: 'ESPORTS' | 'SOCIAL';
+  gameId: string;
+  gameName: string;
+  deepLink: string;
+  launchToken: string;
+  tokenExpiresAt: string;
+  isReissued: boolean;
+}
+
+interface MyActiveRaw {
+  room: {
+    id: string;
+    roomCode: string;
+    name: string;
+    gameCategory?: 'ESPORTS' | 'SOCIAL';
+    game: { id: string; name: string; iconUrl: string | null };
+    [key: string]: unknown;
+  };
+  deepLink: string;
+  launchToken: string;
+  tokenExpiresAt: string;
+  isReissued: boolean;
+}
+
+// =============================================================================
 // EVENT SYSTEM
 // =============================================================================
 
@@ -543,7 +589,9 @@ export type BridgeEventType =
   | 'tournamentCheckedIn'     // Successfully checked in
   | 'tournamentCheckinOpen'   // Check-in window just opened (T-30 min)
   | 'tournamentDQNoShow'      // Player was DQ'd for no-show (entry forfeited)
-  | 'tournamentStarting';     // Tournament about to start
+  | 'tournamentStarting'      // Tournament about to start
+  // GAP 9 (v3.4.12) -- Session resume on crash
+  | 'roomReconnect';          // Active in-match session detected on bridge init
 
 export type BridgeEventCallback = (type: BridgeEventType, data: unknown) => void;
 
@@ -969,6 +1017,15 @@ export class DeskillzBridge {
       this.isInitialized = true;
       this.emit('initialized', { success: true, mode: 'live' });
       this.log('Bridge ready (live mode)');
+
+      // GAP 9 (v3.4.12) -- after init completes, check for an active in-match
+      // session. Fire-and-forget so a slow/failing check never blocks init.
+      // Only runs for authenticated users. Emits 'roomReconnect' if found.
+      if (this._isAuthenticated) {
+        this.checkForActiveSession().catch((err) => {
+          this.log('Active session check failed (non-fatal):', err);
+        });
+      }
     } catch (err) {
       this.log('Init error (non-critical):', err);
       this.isInitialized = true;
@@ -1057,6 +1114,70 @@ export class DeskillzBridge {
     } catch (err) {
       this.log('Session restore failed (token may be expired):', err);
     }
+  }
+
+  // ---------------------------------------------------------------------------
+  // GAP 9 -- ACTIVE SESSION RESUME (v3.4.12)
+  // ---------------------------------------------------------------------------
+  //
+  // Called from initialize() post-auth to detect if the player has a room in
+  // LAUNCHING or IN_PROGRESS status. If so, emits 'roomReconnect' with a
+  // ready-to-use deep link + fresh launchToken so the game can prompt the
+  // player to rejoin after a browser crash / closed tab.
+  //
+  // Backend endpoint: GET /api/v1/private-rooms/my-active
+  //   - Returns ActiveSessionPayload shape (flattened from backend response)
+  //   - Returns null if the user has no active session
+  //   - Re-issues launchToken automatically if the stored one has expired
+  //
+  // Safe to call multiple times. Fire-and-forget from initialize() -- never
+  // blocks or throws. Exposed via public getActiveSession() for on-demand use
+  // (e.g. game-level "Resume last game" button).
+  // ---------------------------------------------------------------------------
+
+  private async checkForActiveSession(): Promise<ActiveSessionPayload | null> {
+    if (!this._isAuthenticated) return null;
+
+    try {
+      const raw = await this.http.get<MyActiveRaw | null>('/api/v1/private-rooms/my-active');
+      if (!raw || !raw.room) return null;
+
+      const payload: ActiveSessionPayload = {
+        roomId: raw.room.id,
+        roomCode: raw.room.roomCode,
+        roomName: raw.room.name,
+        gameCategory: raw.room.gameCategory,
+        gameId: raw.room.game.id,
+        gameName: raw.room.game.name,
+        deepLink: raw.deepLink,
+        launchToken: raw.launchToken,
+        tokenExpiresAt: raw.tokenExpiresAt,
+        isReissued: raw.isReissued,
+      };
+
+      this.log('[GAP9] Active session detected:', payload.roomId, payload.isReissued ? '(token re-issued)' : '');
+      this.emit('roomReconnect', payload);
+      return payload;
+    } catch (err) {
+      // 404 / no active session / network failure -- all silent, non-fatal.
+      this.log('[GAP9] checkForActiveSession failed (non-fatal):', err);
+      return null;
+    }
+  }
+
+  /**
+   * Public helper for on-demand active-session checks. Games can call this
+   * from a "Resume last game" button or after regaining network. Returns
+   * the payload if an active session was found (and also emits
+   * 'roomReconnect' for consistency), or null otherwise.
+   *
+   * The bridge already calls this once automatically during initialize()
+   * after session restore -- you only need this if you want to re-check
+   * later (e.g. after a manual login or a network outage).
+   */
+  async getActiveSession(): Promise<ActiveSessionPayload | null> {
+    this.ensureInitialized();
+    return this.checkForActiveSession();
   }
 
   // ---------------------------------------------------------------------------

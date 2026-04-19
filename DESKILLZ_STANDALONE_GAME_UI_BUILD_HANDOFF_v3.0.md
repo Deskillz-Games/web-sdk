@@ -1,9 +1,9 @@
 # DESKILLZ STANDALONE GAME UI BUILD HANDOFF
 ## Universal UI Guide for Self-Sufficient Game Apps
 
-**Version:** 3.11
-**Date:** April 18, 2026
-**SDK Version:** Deskillz SDK v3.4.11 + @deskillz/game-ui v3.4.11
+**Version:** 3.12
+**Date:** April 19, 2026
+**SDK Version:** Deskillz SDK v3.4.12 + @deskillz/game-ui v3.4.12
 **Architecture:** Self-Sufficient (No External App Dependency)
 **Supported Game Types:** Esports (Competitive) + Social Games (Cash Game + Tournament)
 **Supported Web Engine:** React/Vite only (all standalone web games)
@@ -11,6 +11,55 @@
 ---
 
 ## CHANGELOG
+
+### v3.12 (April 19, 2026) -- Session Resume on Crash (GAP 9)
+
+- **New bridge event `roomReconnect`** fires automatically from
+  `DeskillzBridge.initialize()` when the player has an active in-match
+  session. Games can listen for it and prompt the player to rejoin
+  after a browser crash or accidentally closed tab. No new API calls,
+  no initialization changes, fully opt-in.
+- **New type `ActiveSessionPayload`** exported from SDK index:
+  ```
+  {
+    roomId: string;
+    roomCode: string;
+    roomName: string;
+    gameCategory?: 'ESPORTS' | 'SOCIAL';
+    gameId: string;
+    gameName: string;
+    deepLink: string;       // ready-to-navigate launch URL
+    launchToken: string;    // embedded in deepLink
+    tokenExpiresAt: string; // ISO timestamp
+    isReissued: boolean;    // true if backend minted a fresh token
+  }
+  ```
+- **New public helper `bridge.getActiveSession()`**: `Promise<ActiveSessionPayload | null>`
+  for on-demand re-checks (e.g. "Resume last game" button, post-network-
+  recovery). Emits `roomReconnect` on success, returns null if no active
+  session. Must be called after `initialize()`.
+- **Token re-issuance is automatic.** If the launchToken has expired
+  (5 min TTL), the backend mints a fresh one during the `my-active`
+  check and sets `isReissued: true` on the payload. Games don't need
+  any special handling -- the deepLink always contains a valid token.
+- **Backend endpoint**: `GET /api/v1/private-rooms/my-active`
+  (JwtAuthGuard). Returns `ActiveSessionResponse` or `null`. Filters
+  by room status IN (LAUNCHING, IN_PROGRESS) AND caller is host OR
+  PrivateRoomPlayer with status=PLAYING.
+- **Integration pattern** (standalone game main.tsx):
+  ```tsx
+  const bridge = DeskillzBridge.getInstance(config);
+  bridge.on('roomReconnect', (_type, data) => {
+    const payload = data as ActiveSessionPayload;
+    // Show your own rejoin UI; on confirm:
+    window.location.href = payload.deepLink;
+  });
+  await bridge.initialize();
+  ```
+- **Fire-and-forget guarantee**: the rejoin check runs after
+  `initialized` fires, and a slow / failed check never blocks init.
+- **Backward compatibility**: games that don't listen for the new
+  event are unaffected.
 
 ### v3.11 (April 18, 2026)
 - CREATEROOM DEFAULTS: createDefaultSocialGameConfig accepts an optional 3rd

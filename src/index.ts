@@ -26,6 +26,8 @@ export type {
   MatchRecord,
   UpdateProfilePayload,
   TransactionResult,
+  // GAP 9 (v3.4.12): session resume payload for 'roomReconnect' event
+  ActiveSessionPayload,
 } from './DeskillzBridge';
 // =============================================================================
 // CORE

@@ -2,11 +2,39 @@
 
 ## Dou Dizhu | Bubble Battle | Candy Duel
 
-**Version:** 2.5
-**Date:** April 18, 2026
+**Version:** 2.6
+**Date:** April 19, 2026
 **For:** Developers of existing non-React standalone games
 **Applies to:** Dou Dizhu (PixiJS), Bubble Battle (Canvas/TypeScript), Candy Duel (Canvas/TypeScript)
-**SDK:** DeskillzBridge v3.4.11 + @deskillz/game-ui v3.4.11
+**SDK:** DeskillzBridge v3.4.12 + @deskillz/game-ui v3.4.12
+
+**Changelog v2.6 (April 19, 2026):**
+- SESSION RESUME ON CRASH (GAP 9): DeskillzBridge.initialize() now emits
+  a new `roomReconnect` event when the player has an active in-match
+  session (room in LAUNCHING or IN_PROGRESS status). Lets non-React
+  games show a "Rejoin?" prompt after a browser crash / closed tab.
+
+  ```ts
+  const bridge = DeskillzBridge.getInstance({ gameId, gameKey, apiBaseUrl });
+  bridge.on('roomReconnect', (_type, data) => {
+    const p = data as ActiveSessionPayload;
+    if (confirm(`Rejoin ${p.roomName}?`)) {
+      window.location.href = p.deepLink;
+    }
+  });
+  await bridge.initialize();
+  ```
+
+- NEW TYPE: `ActiveSessionPayload` with flat fields (roomId, roomCode,
+  roomName, gameCategory, gameId, gameName, deepLink, launchToken,
+  tokenExpiresAt, isReissued) -- exported from SDK index.
+- NEW HELPER: `bridge.getActiveSession()` for on-demand re-checks.
+- EXPIRED TOKENS AUTO-RENEWED: if the stored launchToken has timed out
+  (5 min TTL), the backend mints a fresh one during the check and sets
+  `isReissued: true`.
+- ZERO-CONFIG OPT-IN: no initialization changes, no extra API calls,
+  no new dependencies. Just add the event listener.
+- BACKWARD COMPATIBLE: games that ignore the event are unaffected.
 
 **Changelog v2.5 (April 18, 2026):**
 - CREATEROOM: createDefaultSocialGameConfig accepts an OPTIONAL third arg

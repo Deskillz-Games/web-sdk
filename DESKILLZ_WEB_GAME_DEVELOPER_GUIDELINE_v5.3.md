@@ -2,10 +2,32 @@
 
 ## Complete Integration Reference for HTML5/JavaScript Game Developers
 
-**Version:** 5.12
-**Date:** April 18, 2026
-**SDK Version:** DeskillzBridge v3.4.11 + @deskillz/game-ui ES module v3.4.11
+**Version:** 5.13
+**Date:** April 19, 2026
+**SDK Version:** DeskillzBridge v3.4.12 + @deskillz/game-ui ES module v3.4.12
 **Web Engine:** React/Vite only -- all standalone web games
+
+**Changelog v5.13 (April 19, 2026):**
+- SESSION RESUME ON CRASH (GAP 9): `DeskillzBridge.initialize()` now
+  emits a new `roomReconnect` BridgeEvent when it detects an active
+  in-match session. Listener receives an `ActiveSessionPayload` with
+  the room info + a deep link + a fresh launchToken ready to navigate
+  to. Fully opt-in -- games that don't attach a listener see no
+  behavior change.
+- NEW BRIDGE EVENT: `'roomReconnect'` added to `BridgeEventType`
+  union. Payload shape is `ActiveSessionPayload` (flattened room +
+  launch info for ergonomic event handlers).
+- NEW PUBLIC BRIDGE METHOD: `bridge.getActiveSession(): Promise<ActiveSessionPayload | null>`
+  for on-demand active-session checks after `initialize()`.
+- NEW BACKEND ENDPOINT: `GET /api/v1/private-rooms/my-active`
+  (JwtAuthGuard). Reference implementation in `private-room.service.ts
+  getMyActiveSession()`. Returns `null` if no active session.
+- AUTOMATIC TOKEN RENEWAL: the backend re-issues launchToken if the
+  stored one has expired (5 min TTL), and sets `isReissued: true` on
+  the payload so the game UI can message this if desired ("Your
+  previous session expired -- we've refreshed your entry").
+- FIRE-AND-FORGET: the init-time check is non-blocking. `initialized`
+  fires first; `roomReconnect` follows if applicable.
 
 **Changelog v5.12 (April 18, 2026):**
 - CREATEROOM DEFAULTS: createDefaultSocialGameConfig accepts an optional 3rd

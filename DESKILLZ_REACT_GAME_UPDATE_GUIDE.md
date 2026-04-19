@@ -2,10 +2,47 @@
 
 ## Big 2 | Mahjong | Thirteen Cards (Chinese Poker)
 
-**Version:** 2.5
-**Date:** April 18, 2026
+**Version:** 2.6
+**Date:** April 19, 2026
 **Applies to:** All three React/Vite standalone games
-**SDK:** DeskillzBridge v3.4.11 + @deskillz/game-ui v3.4.11
+**SDK:** DeskillzBridge v3.4.12 + @deskillz/game-ui v3.4.12
+
+**Changelog v2.6 (April 19, 2026):**
+- SESSION RESUME ON CRASH (GAP 9): DeskillzBridge.initialize() now checks
+  for an active in-match session (PrivateRoom in LAUNCHING or IN_PROGRESS)
+  after auth restore, and emits a new `roomReconnect` event if one is
+  found. Zero-config opt-in: just add a listener.
+
+  ```tsx
+  useEffect(() => {
+    const bridge = DeskillzBridge.getInstance(config);
+    const off = bridge.on('roomReconnect', (_type, data) => {
+      const payload = data as ActiveSessionPayload;
+      // Show your own "Rejoin?" prompt, then on confirm:
+      window.location.href = payload.deepLink;
+    });
+    return () => off();
+  }, []);
+  ```
+
+- NEW PAYLOAD TYPE: `ActiveSessionPayload` exported from the SDK index.
+  Shape: { roomId, roomCode, roomName, gameCategory, gameId, gameName,
+  deepLink, launchToken, tokenExpiresAt, isReissued }. Fields are flat
+  (not nested) for ergonomic use in event handlers.
+- NEW PUBLIC HELPER: `bridge.getActiveSession(): Promise<ActiveSessionPayload | null>`
+  lets games re-check on-demand (e.g. "Resume last game" button, post-
+  network-recovery re-check). Also emits `roomReconnect` for consistency
+  with the init-time flow.
+- TOKEN AUTO-RENEWAL: If the backend sees an expired launchToken on the
+  my-active check, it mints a fresh 5-minute token and sets
+  `isReissued: true` on the payload. The deepLink embeds the fresh token.
+- BACKEND ENDPOINT: GET /api/v1/private-rooms/my-active (JwtAuthGuard).
+  No client-side call needed -- the bridge handles it. Games that want
+  to call it directly can use the endpoint via bridge.http.get().
+- FIRE-AND-FORGET: the init-time check never blocks `initialized`.
+  Games can rely on `initialized` firing first as before.
+- BACKWARD COMPATIBLE: games that don't listen for `roomReconnect` are
+  unaffected. The event simply fires and is ignored.
 
 **Changelog v2.5 (April 18, 2026):**
 - CREATEROOM: createDefaultSocialGameConfig accepts an OPTIONAL third arg
