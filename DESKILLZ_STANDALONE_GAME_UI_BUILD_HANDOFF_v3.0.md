@@ -1,9 +1,9 @@
 # DESKILLZ STANDALONE GAME UI BUILD HANDOFF
 ## Universal UI Guide for Self-Sufficient Game Apps
 
-**Version:** 3.13
+**Version:** 3.14
 **Date:** April 19, 2026
-**SDK Version:** Deskillz SDK v3.4.12 + @deskillz/game-ui v3.4.13
+**SDK Version:** Deskillz SDK v3.5.0 + @deskillz/game-ui v3.5.0
 **Architecture:** Self-Sufficient (No External App Dependency)
 **Supported Game Types:** Esports (Competitive) + Social Games (Cash Game + Tournament)
 **Supported Web Engine:** React/Vite only (all standalone web games)
@@ -11,6 +11,25 @@
 ---
 
 ## CHANGELOG
+
+### v3.14 (April 21, 2026) -- SDK v3.5.0 Tournament Leave + Room Invites
+
+- **Tournament Leave / Unregister:** New bridge method
+  `bridge.leaveTournament(tournamentId)` -- DELETE /api/v1/tournaments/:id/leave.
+  `useEnrollmentStatus` adds `leave()` callback. `TournamentCard` adds
+  `onLeave` prop with "Unregister" button + confirmation dialog in REGISTERED
+  state. New socket event `tournament:left` -> `tournamentLeft` for
+  cross-platform sync.
+- **Room Invites:** 3 new bridge methods: `invitePlayer()`, `getMyInvites()`,
+  `respondToInvite()`. Host can invite friends to private rooms from standalone
+  games. Accept auto-joins the room.
+- **InviteNotificationBanner:** NEW shared component in
+  `components/rooms/InviteNotificationBanner.tsx`. Polls pending invites every
+  30s, shows Accept/Decline banners. components/rooms count: 9 -> 10.
+- **Cross-Platform Deep Links:** `?roomCode=XXX` (auto-join room),
+  `?matchId=XXX` (auto-connect match), `?action=quickplay` query params.
+- **DeskillzBridge v3.5.0:** 3,254 lines. 4 new methods, 1 new event, 1 new
+  socket listener. Backward compatible.
 
 ### v3.13 (April 19, 2026) -- RejoinModal Shared Component (SDK v3.4.13)
 
@@ -738,7 +757,7 @@ const registrations = await bridge.getMyRegistrations()
 ### useEnrollmentStatus Hook
 
 ```typescript
-const { status, dqCountdown, loading, register, checkIn } =
+const { status, dqCountdown, loading, register, checkIn, leave } =
   useEnrollmentStatus(tournamentId, { enabled: true })
 
 // status: 'NOT_REGISTERED' | 'REGISTERED' | 'CHECKIN_OPEN' | 'CHECKED_IN'
@@ -759,9 +778,71 @@ No manual socket wiring needed.
 | `tournament:checkin-open` | `tournamentCheckinOpen` | T-30: window opens |
 | `tournament:dq-noshow` | `tournamentDQNoShow` | T-10: no-show DQ'd |
 | `tournament:starting` | `tournamentStarting` | T-0: tournament starts |
+| `tournament:left` | `tournamentLeft` | Player left/unregistered (v3.5.0) |
 
 ---
 
+
+### 8.5 Tournament Leave / Unregister (v3.5.0)
+
+Players can leave a tournament before it starts (SCHEDULED or OPEN status only).
+Entry fee is refunded via the `process-refund` Bull queue.
+
+```typescript
+const { status, dqCountdown, loading, register, checkIn, leave } =
+  useEnrollmentStatus(tournament.id)
+
+// TournamentCard -- wire onLeave:
+<TournamentCard
+  tournament={tournament}
+  userStatus={status}
+  dqCountdown={dqCountdown}
+  enrollmentLoading={loading}
+  onRegister={() => register()}
+  onCheckIn={() => checkIn()}
+  onLeave={() => leave()}       // <-- NEW v3.5.0
+/>
+```
+
+When status is `REGISTERED`, an "Unregister" button appears with a
+confirmation dialog. Only renders when `onLeave` is provided.
+
+**Restrictions:** Only works when tournament status is SCHEDULED or OPEN.
+After check-in opens (T-30), leaving is no longer possible.
+
+### 8.6 Room Invites (v3.5.0)
+
+```typescript
+// Host sends invite
+bridge.invitePlayer(roomId, { username: 'player2' }, 'Join my game!')
+
+// Player checks pending invites
+const invites = await bridge.getMyInvites()
+
+// Accept (auto-joins room) or decline
+await bridge.respondToInvite(inviteId, true)
+await bridge.respondToInvite(inviteId, false)
+```
+
+**InviteNotificationBanner** -- mount in lobby:
+
+```tsx
+import InviteNotificationBanner from '../components/rooms/InviteNotificationBanner'
+
+<InviteNotificationBanner
+  onAccepted={(room) => navigate('/room/' + room.roomCode)}
+/>
+```
+
+### 8.7 Cross-Platform Deep Links (v3.5.0)
+
+| Param | Source | Action |
+|-------|--------|--------|
+| `?roomCode=XXX` | Room invite | Auto-join via `bridge.joinRoom(code)` |
+| `?matchId=XXX&token=YYY` | Match launch | Navigate to game screen |
+| `?action=quickplay` | QuickPlay link | Navigate to QuickPlay page |
+
+---
 ## 9. QUICKPLAY PAGE
 
 ### The Core Principle
@@ -1310,6 +1391,7 @@ Use these variables in your own CSS for consistent branding.
 | `tournamentCheckinOpen` | T-30: check-in window opened |
 | `tournamentDQNoShow` | T-10: player DQ'd for no-show |
 | `tournamentStarting` | T-0: tournament starting |
+| `tournamentLeft` | Player left/unregistered (v3.5.0) |
 
 ### QuickPlay Events
 
@@ -1362,6 +1444,10 @@ Section 14 for the complete table (50+ endpoints).
 | GET | `/tournaments/my-registrations` | v3.0 All user registrations |
 | GET | `/quick-play/games/:gameId` | v3.0 QuickPlay config |
 | POST | `/private-rooms/social` | Social room creation |
+| DELETE | `/tournaments/:id/leave` | v3.5.0 Unregister + refund |
+| POST | `/private-rooms/:roomId/invite` | v3.5.0 Invite player |
+| GET | `/private-rooms/invites/my` | v3.5.0 Pending invites |
+| POST | `/private-rooms/invites/:id/respond` | v3.5.0 Accept/decline |
 | GET | `/host/dashboard` | Returns `esportsTierInfo`, `earnings` |
 | GET | `/host/profile` | v3.2 Auto-creates host profile |
 | GET | `/host/earnings` | v3.2 Earnings summary |
@@ -2341,5 +2427,5 @@ CURRENT TASK:
 
 ---
 
-*Document End -- Version 3.11*
-*All standalone web games: React/Vite + DeskillzBridge.ts + @deskillz/game-ui v3.4.11*
+*Document End -- Version 3.14*
+*All standalone web games: React/Vite + DeskillzBridge v3.5.0 + @deskillz/game-ui v3.5.0*

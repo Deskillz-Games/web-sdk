@@ -32,6 +32,7 @@ export interface UseEnrollmentStatusResult {
   error: string | null
   register: () => Promise<void>
   checkIn: () => Promise<void>
+  leave: () => Promise<void>
   refresh: () => Promise<void>
 }
 
@@ -119,12 +120,17 @@ export function useEnrollmentStatus(
       toast.error('You missed check-in. Your entry has been forfeited.')
     }
     const onStarting = (d: any) => { if (d?.tournamentId === tournamentId) setStatus('STARTING') }
+    const onLeft = (d: any) => {
+      if (d?.tournamentId !== tournamentId) return
+      setStatus('NOT_REGISTERED')
+    }
 
     bridge.on('tournamentRegistered', onRegistered)
     bridge.on('tournamentCheckedIn', onCheckedIn)
     bridge.on('tournamentCheckinOpen', onCheckinOpen)
     bridge.on('tournamentDQNoShow', onDQ)
     bridge.on('tournamentStarting', onStarting)
+    bridge.on('tournamentLeft', onLeft)
 
     return () => {
       bridge.off?.('tournamentRegistered', onRegistered)
@@ -132,6 +138,7 @@ export function useEnrollmentStatus(
       bridge.off?.('tournamentCheckinOpen', onCheckinOpen)
       bridge.off?.('tournamentDQNoShow', onDQ)
       bridge.off?.('tournamentStarting', onStarting)
+      bridge.off?.('tournamentLeft', onLeft)
     }
   }, [tournamentId, enabled])
 
@@ -163,5 +170,19 @@ export function useEnrollmentStatus(
     } finally { setLoading(false) }
   }, [tournamentId])
 
-  return { status, dqCountdown, loading, error, register, checkIn, refresh: fetchStatus }
+  const leave = useCallback(async () => {
+    setLoading(true); setError(null)
+    try {
+      const bridge = getBridge()
+      if (!bridge) throw new Error('Bridge not initialized')
+      await bridge.leaveTournament(tournamentId)
+      setStatus('NOT_REGISTERED')
+      toast.success('Unregistered. Your entry fee will be refunded.')
+    } catch (err: any) {
+      const msg = err?.message || 'Failed to unregister'
+      setError(msg); toast.error(msg)
+    } finally { setLoading(false) }
+  }, [tournamentId])
+
+  return { status, dqCountdown, loading, error, register, checkIn, leave, refresh: fetchStatus }
 }

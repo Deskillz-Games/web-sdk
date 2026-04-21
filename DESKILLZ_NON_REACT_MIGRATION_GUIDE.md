@@ -2,11 +2,23 @@
 
 ## Dou Dizhu | Bubble Battle | Candy Duel
 
-**Version:** 2.7
+**Version:** 2.8
 **Date:** April 19, 2026
 **For:** Developers of existing non-React standalone games
 **Applies to:** Dou Dizhu (PixiJS), Bubble Battle (Canvas/TypeScript), Candy Duel (Canvas/TypeScript)
-**SDK:** DeskillzBridge v3.4.12 + @deskillz/game-ui v3.4.13
+**SDK:** DeskillzBridge v3.5.0 + @deskillz/game-ui v3.5.0
+
+**Changelog v2.8 (April 21, 2026):**
+- TOURNAMENT LEAVE (v3.5.0): `bridge.leaveTournament(tournamentId)`
+  (DELETE /api/v1/tournaments/:id/leave). After React migration, wire
+  `onLeave` on `TournamentCard` and `leave()` from `useEnrollmentStatus`.
+  `tournament:left` socket for cross-platform sync.
+- ROOM INVITES (v3.5.0): `invitePlayer()`, `getMyInvites()`,
+  `respondToInvite()`. After React migration, mount
+  `InviteNotificationBanner` in lobby.
+- CROSS-PLATFORM DEEP LINKS: `?roomCode=XXX`, `?matchId=XXX`,
+  `?action=quickplay` in React App.tsx.
+- DESKILLZBRIDGE v3.5.0: 3,254 lines. Backward compatible.
 
 **Changelog v2.7 (April 19, 2026):**
 - REJOIN MODAL SHARED COMPONENT (SDK v3.4.13): `@deskillz/game-ui` now
@@ -912,7 +924,7 @@ See React Game Update Guide v1.5 Step 11 for full details and rationale.
 
 ---
 
-*Migration Guide v2.3 -- April 17, 2026*
+*Migration Guide v2.8 -- April 21, 2026*
 *Applies to: Dou Dizhu, Bubble Battle, Candy Duel*
 *For React game updates (Big 2, Mahjong, Thirteen Cards):*
 *see DESKILLZ_REACT_GAME_UPDATE_GUIDE.md v2.3*

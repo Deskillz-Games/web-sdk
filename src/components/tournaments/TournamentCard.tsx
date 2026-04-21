@@ -45,6 +45,7 @@ export interface TournamentCardProps {
   enrollmentLoading?: boolean
   onRegister?: (tournamentId: string) => void
   onCheckIn?: (tournamentId: string) => void
+  onLeave?: (tournamentId: string) => void
   onJoin?: (tournamentId: string) => void
   onViewResults?: (tournamentId: string) => void
   appUrl?: string
@@ -212,7 +213,7 @@ function DQWarningBanner({ status, dqCountdown }: { status: UserEnrollmentStatus
 // =============================================================================
 
 function EnrollmentButton({
-  tournament, status, loading, appUrl, onRegister, onCheckIn, onJoin, onViewResults,
+  tournament, status, loading, appUrl, onRegister, onCheckIn, onLeave, onJoin, onViewResults,
 }: {
   tournament: Tournament
   status: UserEnrollmentStatus
@@ -220,6 +221,7 @@ function EnrollmentButton({
   appUrl?: string
   onRegister?: (id: string) => void
   onCheckIn?: (id: string) => void
+  onLeave?: (id: string) => void
   onJoin?: (id: string) => void
   onViewResults?: (id: string) => void
 }) {
@@ -234,9 +236,24 @@ function EnrollmentButton({
       )
     case 'REGISTERED':
       return (
-        <Button variant="secondary" size="sm" disabled className="w-full opacity-60 cursor-not-allowed">
-          <CheckCircle2 className="w-4 h-4" />Registered - Waiting
-        </Button>
+        <div className="space-y-2 w-full">
+          <Button variant="secondary" size="sm" disabled className="w-full opacity-60 cursor-not-allowed">
+            <CheckCircle2 className="w-4 h-4" />Registered - Waiting
+          </Button>
+          {onLeave && (
+            <Button
+              variant="ghost" size="sm" isLoading={loading}
+              onClick={() => {
+                if (window.confirm('Leave this tournament? Your entry fee will be refunded.')) {
+                  onLeave(id)
+                }
+              }}
+              className="w-full text-red-400 hover:text-red-300 hover:bg-red-500/10"
+            >
+              Unregister
+            </Button>
+          )}
+        </div>
       )
     case 'CHECKIN_OPEN':
       return (
@@ -462,6 +479,7 @@ export default function TournamentCard({
   enrollmentLoading = false,
   onRegister,
   onCheckIn,
+  onLeave,
   onJoin,
   onViewResults,
   appUrl,
@@ -571,6 +589,7 @@ export default function TournamentCard({
           appUrl={appUrl}
           onRegister={onRegister}
           onCheckIn={onCheckIn}
+          onLeave={onLeave}
           onJoin={onJoin}
           onViewResults={onViewResults}
         />

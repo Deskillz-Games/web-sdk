@@ -508,6 +508,52 @@ export interface DisputeRecord {
 }
 
 // =============================================================================
+// GAP 9 -- ACTIVE SESSION RESUME (v3.4.12)
+// =============================================================================
+
+/**
+ * Payload emitted with the 'roomReconnect' event when the bridge detects an
+ * active in-match session on initialize() (or when checkForActiveSession()
+ * is called manually). The deepLink embeds a current, valid launchToken so
+ * the game can resume without additional API calls.
+ *
+ * Games should listen for 'roomReconnect' and prompt the player to rejoin,
+ * e.g. show a "Rejoin Game?" modal and on confirm, navigate to the deep
+ * link or call their own in-game resume flow.
+ *
+ * isReissued === true means the backend minted a fresh launchToken during
+ * the check (the previous one had expired). Either way, launchToken is
+ * valid and embedded in deepLink.
+ */
+export interface ActiveSessionPayload {
+  roomId: string;
+  roomCode: string;
+  roomName: string;
+  gameCategory?: 'ESPORTS' | 'SOCIAL';
+  gameId: string;
+  gameName: string;
+  deepLink: string;
+  launchToken: string;
+  tokenExpiresAt: string;
+  isReissued: boolean;
+}
+
+interface MyActiveRaw {
+  room: {
+    id: string;
+    roomCode: string;
+    name: string;
+    gameCategory?: 'ESPORTS' | 'SOCIAL';
+    game: { id: string; name: string; iconUrl: string | null };
+    [key: string]: unknown;
+  };
+  deepLink: string;
+  launchToken: string;
+  tokenExpiresAt: string;
+  isReissued: boolean;
+}
+
+// =============================================================================
 // EVENT SYSTEM
 // =============================================================================
 
@@ -543,7 +589,10 @@ export type BridgeEventType =
   | 'tournamentCheckedIn'     // Successfully checked in
   | 'tournamentCheckinOpen'   // Check-in window just opened (T-30 min)
   | 'tournamentDQNoShow'      // Player was DQ'd for no-show (entry forfeited)
-  | 'tournamentStarting';     // Tournament about to start
+  | 'tournamentStarting'      // Tournament about to start
+  | 'tournamentLeft'          // Successfully left / unregistered from a tournament
+  // GAP 9 (v3.4.12) -- Session resume on crash
+  | 'roomReconnect';          // Active in-match session detected on bridge init
 
 export type BridgeEventCallback = (type: BridgeEventType, data: unknown) => void;
 
@@ -818,6 +867,11 @@ class RealtimeService {
         this.emit('tournamentStarting', data);
       });
 
+      this.socket.on('tournament:left', (data: unknown) => {
+        if (this.config.debug) console.log('[DeskillzBridge] Tournament: Left', data);
+        this.emit('tournamentLeft', data);
+      });
+
       // --- Cash game table assignment events (v3.3) ---
 
       this.socket.on('room:table-assigned', (data: {
@@ -969,6 +1023,15 @@ export class DeskillzBridge {
       this.isInitialized = true;
       this.emit('initialized', { success: true, mode: 'live' });
       this.log('Bridge ready (live mode)');
+
+      // GAP 9 (v3.4.12) -- after init completes, check for an active in-match
+      // session. Fire-and-forget so a slow/failing check never blocks init.
+      // Only runs for authenticated users. Emits 'roomReconnect' if found.
+      if (this._isAuthenticated) {
+        this.checkForActiveSession().catch((err) => {
+          this.log('Active session check failed (non-fatal):', err);
+        });
+      }
     } catch (err) {
       this.log('Init error (non-critical):', err);
       this.isInitialized = true;
@@ -1057,6 +1120,70 @@ export class DeskillzBridge {
     } catch (err) {
       this.log('Session restore failed (token may be expired):', err);
     }
+  }
+
+  // ---------------------------------------------------------------------------
+  // GAP 9 -- ACTIVE SESSION RESUME (v3.4.12)
+  // ---------------------------------------------------------------------------
+  //
+  // Called from initialize() post-auth to detect if the player has a room in
+  // LAUNCHING or IN_PROGRESS status. If so, emits 'roomReconnect' with a
+  // ready-to-use deep link + fresh launchToken so the game can prompt the
+  // player to rejoin after a browser crash / closed tab.
+  //
+  // Backend endpoint: GET /api/v1/private-rooms/my-active
+  //   - Returns ActiveSessionPayload shape (flattened from backend response)
+  //   - Returns null if the user has no active session
+  //   - Re-issues launchToken automatically if the stored one has expired
+  //
+  // Safe to call multiple times. Fire-and-forget from initialize() -- never
+  // blocks or throws. Exposed via public getActiveSession() for on-demand use
+  // (e.g. game-level "Resume last game" button).
+  // ---------------------------------------------------------------------------
+
+  private async checkForActiveSession(): Promise<ActiveSessionPayload | null> {
+    if (!this._isAuthenticated) return null;
+
+    try {
+      const raw = await this.http.get<MyActiveRaw | null>('/api/v1/private-rooms/my-active');
+      if (!raw || !raw.room) return null;
+
+      const payload: ActiveSessionPayload = {
+        roomId: raw.room.id,
+        roomCode: raw.room.roomCode,
+        roomName: raw.room.name,
+        gameCategory: raw.room.gameCategory,
+        gameId: raw.room.game.id,
+        gameName: raw.room.game.name,
+        deepLink: raw.deepLink,
+        launchToken: raw.launchToken,
+        tokenExpiresAt: raw.tokenExpiresAt,
+        isReissued: raw.isReissued,
+      };
+
+      this.log('[GAP9] Active session detected:', payload.roomId, payload.isReissued ? '(token re-issued)' : '');
+      this.emit('roomReconnect', payload);
+      return payload;
+    } catch (err) {
+      // 404 / no active session / network failure -- all silent, non-fatal.
+      this.log('[GAP9] checkForActiveSession failed (non-fatal):', err);
+      return null;
+    }
+  }
+
+  /**
+   * Public helper for on-demand active-session checks. Games can call this
+   * from a "Resume last game" button or after regaining network. Returns
+   * the payload if an active session was found (and also emits
+   * 'roomReconnect' for consistency), or null otherwise.
+   *
+   * The bridge already calls this once automatically during initialize()
+   * after session restore -- you only need this if you want to re-check
+   * later (e.g. after a manual login or a network outage).
+   */
+  async getActiveSession(): Promise<ActiveSessionPayload | null> {
+    this.ensureInitialized();
+    return this.checkForActiveSession();
   }
 
   // ---------------------------------------------------------------------------
@@ -1756,6 +1883,20 @@ export class DeskillzBridge {
   }
 
   /**
+   * Leave / unregister from a tournament.
+   * Only works while tournament status is SCHEDULED or OPEN (before it starts).
+   * Entry fee is refunded via the process-refund queue.
+   *
+   * Endpoint: DELETE /api/v1/tournaments/:id/leave
+   */
+  async leaveTournament(tournamentId: string): Promise<void> {
+    this.ensureAuthenticated();
+    if (this._isGuest) throw new Error('Guests cannot leave tournaments');
+    await this.http.delete(`/api/v1/tournaments/${tournamentId}/leave`);
+    this.emit('tournamentLeft', { tournamentId });
+  }
+
+  /**
    * Get the current player's enrollment status for a specific tournament.
    * Returns button state, DQ countdown, check-in window times, and seat info.
    * Used to drive TournamentCard enrollment button state machine.
@@ -2401,6 +2542,88 @@ export class DeskillzBridge {
     if (this._isGuest || !id) return { success: true };
 
     return this.http.post(`/api/v1/private-rooms/${id}/settlement/trigger`);
+  }
+
+  // ---------------------------------------------------------------------------
+  // ROOM INVITES (v3.5 — CANCEL/ROOM gap fix)
+  // ---------------------------------------------------------------------------
+
+  /**
+   * Invite a player to the current (or specified) private room.
+   * Endpoint: POST /api/v1/private-rooms/:roomId/invite
+   *
+   * @param roomId - Room ID (defaults to currentRoom)
+   * @param target - Object with username OR odid of the player to invite
+   * @param message - Optional invite message
+   */
+  async invitePlayer(
+    roomId: string | undefined,
+    target: { username?: string; odid?: string },
+    message?: string,
+  ): Promise<{ id: string; status: string }> {
+    this.ensureAuthenticated();
+    if (this._isGuest) throw new Error('Guests cannot send invites');
+
+    const id = roomId || this.currentRoom?.id;
+    if (!id) throw new Error('No room ID provided and no current room');
+
+    return this.http.post(`/api/v1/private-rooms/${id}/invite`, {
+      ...target,
+      ...(message && { message }),
+    });
+  }
+
+  /**
+   * Get the current player's pending room invites.
+   * Endpoint: GET /api/v1/private-rooms/invites/my
+   */
+  async getMyInvites(): Promise<Array<{
+    id: string;
+    roomId: string;
+    roomCode: string;
+    roomName: string;
+    hostUsername: string;
+    gameName: string;
+    message: string | null;
+    createdAt: string;
+  }>> {
+    if (this._isGuest || !this._isAuthenticated) return [];
+    try {
+      return await this.http.get('/api/v1/private-rooms/invites/my');
+    } catch {
+      return [];
+    }
+  }
+
+  /**
+   * Accept or decline a room invite.
+   * Accepting auto-joins the room.
+   * Endpoint: POST /api/v1/private-rooms/invites/:inviteId/respond
+   *
+   * @param inviteId - Invite ID
+   * @param accept - true to accept (joins room), false to decline
+   */
+  async respondToInvite(
+    inviteId: string,
+    accept: boolean,
+  ): Promise<PrivateRoom | { success: boolean }> {
+    this.ensureAuthenticated();
+    if (this._isGuest) throw new Error('Guests cannot respond to invites');
+
+    const result = await this.http.post<PrivateRoom | { success: boolean }>(
+      `/api/v1/private-rooms/invites/${inviteId}/respond`,
+      { accept },
+    );
+
+    // If accepted, the response is the full room — track it
+    if (accept && result && 'id' in result) {
+      const room = result as PrivateRoom;
+      this.currentRoom = room;
+      if (this.realtime.isConnected) this.realtime.subscribeRoom(room.id);
+      this.emit('roomJoined', { room });
+    }
+
+    return result;
   }
 
   // ---------------------------------------------------------------------------

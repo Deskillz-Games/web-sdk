@@ -590,6 +590,7 @@ export type BridgeEventType =
   | 'tournamentCheckinOpen'   // Check-in window just opened (T-30 min)
   | 'tournamentDQNoShow'      // Player was DQ'd for no-show (entry forfeited)
   | 'tournamentStarting'      // Tournament about to start
+  | 'tournamentLeft'          // Successfully left / unregistered from a tournament
   // GAP 9 (v3.4.12) -- Session resume on crash
   | 'roomReconnect';          // Active in-match session detected on bridge init
 
@@ -864,6 +865,11 @@ class RealtimeService {
       this.socket.on('tournament:starting', (data: unknown) => {
         if (this.config.debug) console.log('[DeskillzBridge] Tournament: Starting', data);
         this.emit('tournamentStarting', data);
+      });
+
+      this.socket.on('tournament:left', (data: unknown) => {
+        if (this.config.debug) console.log('[DeskillzBridge] Tournament: Left', data);
+        this.emit('tournamentLeft', data);
       });
 
       // --- Cash game table assignment events (v3.3) ---
@@ -1877,6 +1883,20 @@ export class DeskillzBridge {
   }
 
   /**
+   * Leave / unregister from a tournament.
+   * Only works while tournament status is SCHEDULED or OPEN (before it starts).
+   * Entry fee is refunded via the process-refund queue.
+   *
+   * Endpoint: DELETE /api/v1/tournaments/:id/leave
+   */
+  async leaveTournament(tournamentId: string): Promise<void> {
+    this.ensureAuthenticated();
+    if (this._isGuest) throw new Error('Guests cannot leave tournaments');
+    await this.http.delete(`/api/v1/tournaments/${tournamentId}/leave`);
+    this.emit('tournamentLeft', { tournamentId });
+  }
+
+  /**
    * Get the current player's enrollment status for a specific tournament.
    * Returns button state, DQ countdown, check-in window times, and seat info.
    * Used to drive TournamentCard enrollment button state machine.
@@ -2522,6 +2542,88 @@ export class DeskillzBridge {
     if (this._isGuest || !id) return { success: true };
 
     return this.http.post(`/api/v1/private-rooms/${id}/settlement/trigger`);
+  }
+
+  // ---------------------------------------------------------------------------
+  // ROOM INVITES (v3.5 — CANCEL/ROOM gap fix)
+  // ---------------------------------------------------------------------------
+
+  /**
+   * Invite a player to the current (or specified) private room.
+   * Endpoint: POST /api/v1/private-rooms/:roomId/invite
+   *
+   * @param roomId - Room ID (defaults to currentRoom)
+   * @param target - Object with username OR odid of the player to invite
+   * @param message - Optional invite message
+   */
+  async invitePlayer(
+    roomId: string | undefined,
+    target: { username?: string; odid?: string },
+    message?: string,
+  ): Promise<{ id: string; status: string }> {
+    this.ensureAuthenticated();
+    if (this._isGuest) throw new Error('Guests cannot send invites');
+
+    const id = roomId || this.currentRoom?.id;
+    if (!id) throw new Error('No room ID provided and no current room');
+
+    return this.http.post(`/api/v1/private-rooms/${id}/invite`, {
+      ...target,
+      ...(message && { message }),
+    });
+  }
+
+  /**
+   * Get the current player's pending room invites.
+   * Endpoint: GET /api/v1/private-rooms/invites/my
+   */
+  async getMyInvites(): Promise<Array<{
+    id: string;
+    roomId: string;
+    roomCode: string;
+    roomName: string;
+    hostUsername: string;
+    gameName: string;
+    message: string | null;
+    createdAt: string;
+  }>> {
+    if (this._isGuest || !this._isAuthenticated) return [];
+    try {
+      return await this.http.get('/api/v1/private-rooms/invites/my');
+    } catch {
+      return [];
+    }
+  }
+
+  /**
+   * Accept or decline a room invite.
+   * Accepting auto-joins the room.
+   * Endpoint: POST /api/v1/private-rooms/invites/:inviteId/respond
+   *
+   * @param inviteId - Invite ID
+   * @param accept - true to accept (joins room), false to decline
+   */
+  async respondToInvite(
+    inviteId: string,
+    accept: boolean,
+  ): Promise<PrivateRoom | { success: boolean }> {
+    this.ensureAuthenticated();
+    if (this._isGuest) throw new Error('Guests cannot respond to invites');
+
+    const result = await this.http.post<PrivateRoom | { success: boolean }>(
+      `/api/v1/private-rooms/invites/${inviteId}/respond`,
+      { accept },
+    );
+
+    // If accepted, the response is the full room — track it
+    if (accept && result && 'id' in result) {
+      const room = result as PrivateRoom;
+      this.currentRoom = room;
+      if (this.realtime.isConnected) this.realtime.subscribeRoom(room.id);
+      this.emit('roomJoined', { room });
+    }
+
+    return result;
   }
 
   // ---------------------------------------------------------------------------

@@ -2,9 +2,9 @@
 
 ## Complete Integration Reference for HTML5/JavaScript Game Developers
 
-**Version:** 5.14
+**Version:** 5.15
 **Date:** April 19, 2026
-**SDK Version:** DeskillzBridge v3.4.12 + @deskillz/game-ui ES module v3.4.13
+**SDK Version:** DeskillzBridge v3.5.0 + @deskillz/game-ui v3.5.0
 **Web Engine:** React/Vite only -- all standalone web games
 
 **Changelog v5.14 (April 19, 2026):**
@@ -785,6 +785,14 @@ bridge.addDisputeEvidence(id, arr)    // POST /api/v1/disputes/:id/evidence
 // Realtime
 bridge.onRealtimeEvent(event, handler)
 bridge.sendRealtimeMessage(event, data)
+
+// Tournament Leave (v3.5.0 -- NEW)
+bridge.leaveTournament(tournamentId)   // DELETE /api/v1/tournaments/:id/leave
+
+// Room Invites (v3.5.0 -- NEW)
+bridge.invitePlayer(roomId, target, message)  // POST /api/v1/private-rooms/:roomId/invite
+bridge.getMyInvites()                         // GET /api/v1/private-rooms/invites/my
+bridge.respondToInvite(inviteId, accept)       // POST /api/v1/private-rooms/invites/:inviteId/respond
 ```
 
 ---
@@ -1677,7 +1685,11 @@ All endpoints use `/api/v1/` prefix:
 | POST | `/private-rooms/:id/buy-in` | Social buy-in |
 | POST | `/private-rooms/:id/cash-out` | Social cash-out |
 | GET | `/private-rooms/public` | List public rooms by gameId |
+| POST | `/private-rooms/:roomId/invite` | **v3.5.0** Invite player |
+| GET | `/private-rooms/invites/my` | **v3.5.0** Pending invites |
+| POST | `/private-rooms/invites/:id/respond` | **v3.5.0** Accept/decline |
 | **Quick Play** | | |
+| DELETE | `/tournaments/:id/leave` | **v3.5.0** Unregister + refund |
 | GET | `/quick-play/games/:gameId` | **v3.0** QuickPlay config for game |
 | POST | `/lobby/quick-play/join` | Join matchmaking queue |
 | POST | `/lobby/quick-play/leave` | Leave queue |
@@ -1719,6 +1731,7 @@ All endpoints use `/api/v1/` prefix:
 | `tournament:checkin-open` | S->C | Backend | T-30: check-in window opens |
 | `tournament:dq-noshow` | S->C | Backend | T-10: player DQ'd for no-show |
 | `tournament:starting` | S->C | Backend | Tournament starting now |
+| `tournament:left` | S->C | Backend | Player left/unregistered (v3.5.0) |
 | **Quick Play** | | | |
 | `quick-play:searching` | S->C | Bridge | Queue search started |
 | `quick-play:found` | S->C | Bridge | Opponent found |
@@ -2084,6 +2097,7 @@ Add these to the `BridgeEventType` union in `DeskillzBridge.ts`:
 | 'tournamentCheckinOpen'
 | 'tournamentDQNoShow'
 | 'tournamentStarting'
+| 'tournamentLeft'          // Player left/unregistered (v3.5.0)
 | 'quickPlayLobbyUpdate'    // For available games board
 ```
 
@@ -2098,6 +2112,7 @@ These are wired inside `DeskillzBridge.connectRealtime()`:
 | `tournament:checkin-open` | `tournamentCheckinOpen` |
 | `tournament:dq-noshow` | `tournamentDQNoShow` |
 | `tournament:starting` | `tournamentStarting` |
+| `tournament:left` | `tournamentLeft` |
 
 ### App.tsx Wiring (Required for v3.0)
 
@@ -2202,7 +2217,7 @@ import { useEnrollmentStatus } from '../hooks/useEnrollmentStatus';
 
 function TournamentRow({ tournament }) {
   const enrollment = useEnrollmentStatus(tournament.id);
-  // Returns: { status, dqCountdown, loading, register, checkIn, refresh }
+  // Returns: { status, dqCountdown, loading, register, checkIn, leave, refresh }
 
   // DQ countdown (live seconds remaining from checkinClosesAt)
   if (enrollment.dqCountdown !== null) {
@@ -2220,7 +2235,7 @@ function TournamentRow({ tournament }) {
 | Status | Button Label | Color | Action |
 |--------|-------------|-------|--------|
 | `NOT_REGISTERED` | "Register" | Blue | Calls `enrollment.register()` |
-| `REGISTERED` | "Registered" | Gray | Disabled — shows checkin opens time |
+| `REGISTERED` | "Registered" + "Unregister" | Gray + Red link | `enrollment.leave()` (v3.5.0) — shows checkin opens time |
 | `CHECKIN_OPEN` | "Check In Now" | Amber + DQ timer | Calls `enrollment.checkIn()` |
 | `CHECKED_IN` | "Checked In" | Green | Disabled — shows starting time |
 | `STARTING` | "Enter Now" | Green pulse | Navigates to match |
@@ -2912,9 +2927,9 @@ useEffect(() => {
 
 ---
 
-*Document End -- Version 5.12*
+*Document End -- Version 5.15*
 *Web engine: React/Vite only -- all standalone games*
-*@deskillz/game-ui: v3.4.11 -- QuickPlayConfig defaults + backfilled exports*
+*@deskillz/game-ui: v3.5.0 -- tournament leave + room invites + InviteNotificationBanner*
 *Non-React migration: see DESKILLZ_NON_REACT_MIGRATION_GUIDE.md*
 *Production Backend: https://newdeskillzgames-production.up.railway.app*
 *For support: developer-support@deskillz.games*

@@ -2,10 +2,23 @@
 
 ## Big 2 | Mahjong | Thirteen Cards (Chinese Poker)
 
-**Version:** 2.7
+**Version:** 2.8
 **Date:** April 19, 2026
 **Applies to:** All three React/Vite standalone games
-**SDK:** DeskillzBridge v3.4.12 + @deskillz/game-ui v3.4.13
+**SDK:** DeskillzBridge v3.5.0 + @deskillz/game-ui v3.5.0
+
+**Changelog v2.8 (April 21, 2026):**
+- TOURNAMENT LEAVE (v3.5.0): `bridge.leaveTournament(tournamentId)`
+  (DELETE /api/v1/tournaments/:id/leave). `useEnrollmentStatus` adds `leave()`.
+  `TournamentCard` adds `onLeave` prop -- "Unregister" button with confirmation
+  in REGISTERED state. `tournament:left` socket event for cross-platform sync.
+- ROOM INVITES (v3.5.0): `invitePlayer()`, `getMyInvites()`,
+  `respondToInvite()` bridge methods. Accept auto-joins room.
+- INVITE NOTIFICATION BANNER (v3.5.0): NEW `InviteNotificationBanner.tsx`
+  in `components/rooms/`. Mount in lobby. Polls every 30s.
+- CROSS-PLATFORM DEEP LINKS (v3.5.0): Handle `?roomCode=XXX`,
+  `?matchId=XXX`, `?action=quickplay` in App.tsx.
+- DESKILLZBRIDGE v3.5.0: 3,254 lines. Backward compatible.
 
 **Changelog v2.7 (April 19, 2026):**
 - REJOIN MODAL (GAP 9 continuation, SDK v3.4.13): `@deskillz/game-ui`
@@ -1640,7 +1653,7 @@ on R2 but `index.html` registers `deskillz-sw.js` (ours), not `sw.js` (Workbox).
 
 ---
 
-*React Game Update Guide v2.3 -- April 17, 2026*
+*React Game Update Guide v2.8 -- April 21, 2026*
 *Applies to: Big 2, Mahjong, Thirteen Cards (Chinese Poker)*
 *For non-React migration (Dou Dizhu, Bubble Battle, Candy Duel):*
 *see DESKILLZ_NON_REACT_MIGRATION_GUIDE.md v2.3*
