@@ -61,6 +61,11 @@ export interface QuickPlayConfig {
   socialRakePercent: number
   socialRakeCapUsd: number
   socialAutoCashout: boolean
+  socialWinCondition: SocialWinCondition
+  socialPointTargets: number[]
+  socialRoundTargets: number[]
+  socialDefaultTarget: number
+  socialAllowFreePlay: boolean
   matchmakingTimeoutSecs: number
   matchDurationSecs: number | null
   sessionDurationMins: number | null
@@ -126,6 +131,17 @@ export type CryptoCurrency = typeof CryptoCurrency[keyof typeof CryptoCurrency]
 
 export type SocialGameType =
   | 'BIG_TWO' | 'MAHJONG' | 'CHINESE_POKER_13' | 'DOU_DIZHU'
+
+export type SocialWinCondition =
+  | 'FIRST_TO_POINTS' | 'FIXED_ROUNDS' | 'TIMED_SESSION' | 'SINGLE_GAME' | 'OPEN_ENDED'
+
+export const WIN_CONDITION_LABELS: Record<string, string> = {
+  FIRST_TO_POINTS: 'First to Points',
+  FIXED_ROUNDS: 'Fixed Rounds',
+  TIMED_SESSION: 'Timed Session',
+  SINGLE_GAME: 'Single Game',
+  OPEN_ENDED: 'Open-Ended',
+}
 
 export const CURRENCY_LABELS: Record<string, string> = {
   BNB: 'BNB',

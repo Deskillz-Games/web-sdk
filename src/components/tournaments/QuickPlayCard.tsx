@@ -48,8 +48,10 @@ import {
   QuickPlayConfig,
   CryptoCurrency,
   SocialGameType,
+  SocialWinCondition,
   CURRENCY_LABELS,
   SOCIAL_GAME_LABELS,
+  WIN_CONDITION_LABELS,
   formatPlayerMode,
 } from '../../bridge-types'
 import {
@@ -426,6 +428,47 @@ function SocialIdleState({ config, qp }: { config: QuickPlayConfig; qp: QuickPla
         selected={qp.selectedCurrency}
         onChange={qp.setSelectedCurrency}
       />
+
+      {/* Game Rules / Win Condition (v3.5.1) */}
+      {config.socialWinCondition && config.socialWinCondition !== 'OPEN_ENDED' && (
+        <div className="space-y-2">
+          <label className="block text-[10px] uppercase tracking-wider text-gray-500">
+            {config.socialWinCondition === 'FIRST_TO_POINTS' ? 'Target Score' :
+             config.socialWinCondition === 'FIXED_ROUNDS' ? 'Rounds' :
+             WIN_CONDITION_LABELS[config.socialWinCondition] ?? 'Game Rule'}
+          </label>
+          <select
+            value={qp.selectedTarget ?? config.socialDefaultTarget ?? 0}
+            onChange={(e) => qp.setSelectedTarget?.(parseInt(e.target.value, 10))}
+            className="w-full px-4 py-3 rounded-xl bg-[#1a1a2e] border border-white/10 text-white text-sm focus:outline-none focus:border-purple-500/50 appearance-none"
+          >
+            {(config.socialWinCondition === 'FIRST_TO_POINTS'
+              ? safeArray<number>(config.socialPointTargets, [100, 200, 500])
+              : config.socialWinCondition === 'FIXED_ROUNDS'
+                ? safeArray<number>(config.socialRoundTargets, [4, 8, 16])
+                : []
+            ).map((t) => (
+              <option key={t} value={t}>
+                {config.socialWinCondition === 'FIRST_TO_POINTS'
+                  ? `First to ${t} pts`
+                  : `${t} rounds`}
+              </option>
+            ))}
+          </select>
+        </div>
+      )}
+      {config.socialWinCondition === 'SINGLE_GAME' && (
+        <div className="px-3 py-2 rounded-lg bg-yellow-500/10 border border-yellow-500/20 text-xs text-yellow-300">
+          Single game — one hand only
+        </div>
+      )}
+
+      {/* Free Play indicator */}
+      {config.socialAllowFreePlay && qp.selectedFee === 0 && (
+        <div className="px-3 py-2 rounded-lg bg-green-500/10 border border-green-500/20 text-xs text-green-300">
+          Free Play — no buy-in, just for fun
+        </div>
+      )}
 
       {/* Buy-in preview + rake info */}
       <div className="p-3 rounded-lg bg-white/5 border border-white/10 text-xs space-y-1.5">

@@ -62,11 +62,13 @@ export interface QuickPlayQueueState {
   selectedFee: number        // Esport: entry fee | Social: point value
   selectedMode: number       // Esport: player count (2 = 1v1, 4 = FFA-4)
   selectedCurrency: string   // e.g. 'USDT_BSC'
+  selectedTarget: number     // Social: win condition target (point/round count)
 
   // Setters called by dropdowns/chips in the UI
   setSelectedFee: (fee: number) => void
   setSelectedMode: (mode: number) => void
   setSelectedCurrency: (currency: string) => void
+  setSelectedTarget: (target: number) => void
 
   // State machine
   status: QuickPlayStatus
@@ -116,6 +118,7 @@ export function useQuickPlayQueue(gameId: string): QuickPlayQueueState {
   const [selectedFee, setSelectedFee]           = useState(0)
   const [selectedMode, setSelectedMode]         = useState(2)
   const [selectedCurrency, setSelectedCurrency] = useState('USDT_BSC')
+  const [selectedTarget, setSelectedTarget]     = useState(0)
   const [status, setStatus]                     = useState<QuickPlayStatus>('idle')
   const [searchTimer, setSearchTimer]           = useState(0)
   const [playersInQueue, setPlayersInQueue]     = useState(0)
@@ -150,6 +153,16 @@ export function useQuickPlayQueue(gameId: string): QuickPlayQueueState {
         setSelectedFee(fees[0] ?? (isEsport ? 1 : 0.25))
         setSelectedMode(isEsport ? (modes[0] ?? 2) : (cfg.socialMinPlayers ?? 4))
         setSelectedCurrency(currs[0] ?? 'USDT_BSC')
+
+        // Social: set default win condition target from config
+        if (!isEsport && cfg.socialWinCondition && cfg.socialWinCondition !== 'OPEN_ENDED') {
+          const targets = cfg.socialWinCondition === 'FIRST_TO_POINTS'
+            ? safeArray<number>(cfg.socialPointTargets, [100])
+            : safeArray<number>(cfg.socialRoundTargets, [4])
+          const defaultIdx = cfg.socialDefaultTarget ?? 0
+          setSelectedTarget(defaultIdx > 0 && defaultIdx < targets.length ? targets[defaultIdx] : targets[0] ?? 0)
+        }
+
         setConfigLoading(false)
       })
       .catch(() => setConfigLoading(false))
@@ -339,8 +352,8 @@ export function useQuickPlayQueue(gameId: string): QuickPlayQueueState {
 
   return {
     config, configLoading,
-    selectedFee, selectedMode, selectedCurrency,
-    setSelectedFee, setSelectedMode, setSelectedCurrency,
+    selectedFee, selectedMode, selectedCurrency, selectedTarget,
+    setSelectedFee, setSelectedMode, setSelectedCurrency, setSelectedTarget,
     status, searchTimer, playersInQueue, totalRequired, matchData, error,
     availableGames,
     joinQueue, createGame, joinGame, leaveQueue, resetError,
