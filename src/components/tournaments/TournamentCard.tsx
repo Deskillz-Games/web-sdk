@@ -76,6 +76,17 @@ function formatCountdown(seconds: number): string {
   return `${m}:${String(s).padStart(2, '0')}`
 }
 
+/** Format raw currency codes for display: USDT_TRON -> USDT (Tron), USDC_BSC -> USDC (BSC) */
+function formatCurrencyLabel(raw: string | undefined | null): string {
+  if (!raw) return ''
+  const parts = raw.split('_')
+  if (parts.length === 1) return parts[0]
+  const symbol = parts[0]
+  const network = parts.slice(1).join('_')
+  const networkLabel: Record<string, string> = { BSC: 'BSC', TRON: 'Tron' }
+  return `${symbol} (${networkLabel[network] || network})`
+}
+
 // =============================================================================
 // MODE BADGE — standard Tailwind only
 // =============================================================================
@@ -367,7 +378,7 @@ function StatsGrid({ tournament }: { tournament: Tournament }) {
       <StatBox
         icon={<Trophy className="w-3.5 h-3.5 text-green-400" />}
         label="Prize Pool"
-        value={tournament.prizePool > 0 ? `${tournament.prizePool} ${tournament.prizeCurrency}` : 'TBD'}
+        value={tournament.prizePool > 0 ? `${tournament.prizePool} ${formatCurrencyLabel(tournament.prizeCurrency)}` : 'TBD'}
         valueClassName="text-green-400"
         borderColor="border-green-500/20"
       />
@@ -376,7 +387,7 @@ function StatsGrid({ tournament }: { tournament: Tournament }) {
         label="Entry"
         value={tournament.entryFee === 0
           ? <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-green-500/20 text-green-400 text-xs font-bold uppercase tracking-wide border border-green-500/30">Free</span>
-          : `${tournament.entryFee} ${tournament.entryCurrency}`
+          : `${tournament.entryFee} ${formatCurrencyLabel(tournament.entryCurrency)}`
         }
         valueClassName={tournament.entryFee === 0 ? '' : undefined}
         borderColor={tournament.entryFee === 0 ? 'border-green-500/20' : 'border-white/10'}
@@ -558,7 +569,7 @@ export default function TournamentCard({
               </>
             ) : (
               <>
-                <span className="text-green-400">{tournament.prizePool} {tournament.prizeCurrency}</span>
+                <span className="text-green-400">{tournament.prizePool} {formatCurrencyLabel(tournament.prizeCurrency)}</span>
                 <span>•</span>
                 <span>{tournament.currentPlayers}/{tournament.maxPlayers} players</span>
                 <span>•</span>
