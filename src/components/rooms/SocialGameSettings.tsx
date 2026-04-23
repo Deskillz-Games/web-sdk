@@ -1,6 +1,15 @@
 // =============================================================================
 // SocialGameSettings.tsx -- packages/game-ui/src/components/rooms/SocialGameSettings.tsx
 //
+// v3.5.2 changes (backward compatible):
+//   - Added SocialWinCondition type ('FIRST_TO_POINTS' | 'FIXED_ROUNDS' |
+//     'TIMED_SESSION' | 'SINGLE_GAME' | 'OPEN_ENDED').
+//   - SocialQuickPlayDefaults: added socialWinCondition, socialPointTargets,
+//     socialRoundTargets, socialDefaultTarget, socialAllowFreePlay fields.
+//   - SocialGameConfig: added winCondition, winConditionTarget, allowFreePlay.
+//   - createDefaultSocialGameConfig: resolves win-condition from qpConfig,
+//     falls back to 'OPEN_ENDED' when not configured.
+//
 // v3.4.11 changes (backward compatible):
 //   - createDefaultSocialGameConfig accepts an optional 3rd `qpConfig` argument.
 //     When provided, developer-configured values from QuickPlayConfig
@@ -37,6 +46,7 @@ export type SocialGameType    = 'BIG_TWO' | 'MAHJONG' | 'CHINESE_POKER_13' | 'DO
 export type SocialMode        = 'CASH_GAME' | 'TOURNAMENT'
 export type RoomVisibility    = 'PUBLIC_LISTED' | 'PRIVATE_CODE'
 export type HostRole          = 'PLAYER' | 'MONITOR'
+export type SocialWinCondition = 'FIRST_TO_POINTS' | 'FIXED_ROUNDS' | 'TIMED_SESSION' | 'SINGLE_GAME' | 'OPEN_ENDED'
 export type TableBreakRule    = 'REBALANCE' | 'CLOSE'
 export type TiebreakRule      = 'MOST_ROUNDS_WON' | 'SUDDEN_DEATH' | 'RANDOM_DRAW'
 
@@ -72,6 +82,10 @@ export interface SocialGameConfig {
   currency: string
   visibility: RoomVisibility
   hostRole: HostRole
+  // Win condition (v3.5.2)
+  winCondition: SocialWinCondition
+  winConditionTarget?: number
+  allowFreePlay: boolean
 }
 
 export interface SocialGameSettingsProps {
@@ -109,6 +123,16 @@ export interface SocialQuickPlayDefaults {
   socialMinPlayers?: number | null
   /** Maximum players allowed per table. */
   socialMaxPlayers?: number | null
+  /** Win condition type. When set, Create Room form uses this instead of hardcoded default. v3.5.2 */
+  socialWinCondition?: SocialWinCondition | null
+  /** Available point targets for FIRST_TO_POINTS win condition. v3.5.2 */
+  socialPointTargets?: number[] | null
+  /** Available round targets for FIXED_ROUNDS win condition. v3.5.2 */
+  socialRoundTargets?: number[] | null
+  /** Default target value (points or rounds depending on win condition). v3.5.2 */
+  socialDefaultTarget?: number | null
+  /** Whether players can start a free-play (no entry fee) room. v3.5.2 */
+  socialAllowFreePlay?: boolean | null
 }
 
 // =============================================================================
@@ -893,6 +917,14 @@ export function createDefaultSocialGameConfig(
   const minPlayers       = qpConfig?.socialMinPlayers ?? d.minPlayers
   const maxPlayers       = qpConfig?.socialMaxPlayers ?? d.maxPlayers
 
+  // Win-condition defaults: developer config takes precedence (v3.5.2)
+  const winCondition     = qpConfig?.socialWinCondition ?? 'OPEN_ENDED'
+  const winConditionTarget = qpConfig?.socialDefaultTarget ?? (
+    winCondition === 'FIRST_TO_POINTS' ? (d.pointTarget ?? 100) :
+    winCondition === 'FIXED_ROUNDS' ? 8 : undefined
+  )
+  const allowFreePlay    = qpConfig?.socialAllowFreePlay ?? false
+
   return {
     socialMode:             'CASH_GAME',
     gameType:               gt,
@@ -920,5 +952,8 @@ export function createDefaultSocialGameConfig(
     currency:               'USDT_BSC',
     visibility:             'PRIVATE_CODE',
     hostRole:               'PLAYER',
+    winCondition,
+    winConditionTarget,
+    allowFreePlay,
   }
 }
