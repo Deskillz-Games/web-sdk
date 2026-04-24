@@ -952,6 +952,7 @@ export class DeskillzBridge {
   protected currentUser: DeskillzUser | null = null;
   protected currentRoom: PrivateRoom | null = null;
   protected listeners: BridgeEventCallback[] = [];
+  protected _eventHandlers: Map<string, Set<Function>> = new Map();
   protected realtimeCleanups: Array<() => void> = [];
   protected currentTableAssignment: { tableId: string; seatNumber: number; tableName: string } | null = null;
   onTableAssigned: ((data: { tableId: string; seatNumber: number; tableName: string }) => void) | null = null;
@@ -3145,17 +3146,50 @@ export class DeskillzBridge {
 
   // ---------------------------------------------------------------------------
   // EVENT SYSTEM
+  // Supports two call styles:
+  //   1) on(callback)           -- global listener, receives (type, data)
+  //   2) on('eventName', handler) -- targeted listener, receives (data)
+  // The sacred SDK hooks (useEnrollmentStatus, useQuickPlayQueue,
+  // InviteNotificationBanner) use style 2. Game-level code uses style 1.
   // ---------------------------------------------------------------------------
 
-  on(callback: BridgeEventCallback): () => void {
-    this.listeners.push(callback);
-    return () => { this.listeners = this.listeners.filter((l) => l !== callback); };
+  on(callbackOrEvent: BridgeEventCallback | string, handler?: Function): () => void {
+    if (typeof callbackOrEvent === 'function') {
+      // Style 1: on(callback) -- global listener
+      this.listeners.push(callbackOrEvent as BridgeEventCallback);
+      return () => { this.listeners = this.listeners.filter((l) => l !== callbackOrEvent); };
+    }
+    // Style 2: on('event', handler) -- targeted listener
+    const event = callbackOrEvent as string;
+    if (typeof handler !== 'function') {
+      console.warn('[DeskillzBridge] on() called with event name but no handler:', event);
+      return () => {};
+    }
+    if (!this._eventHandlers.has(event)) {
+      this._eventHandlers.set(event, new Set());
+    }
+    this._eventHandlers.get(event)!.add(handler);
+    return () => { this._eventHandlers.get(event)?.delete(handler); };
+  }
+
+  off(event: string, handler: Function): void {
+    this._eventHandlers.get(event)?.delete(handler);
   }
 
   protected emit(type: BridgeEventType, data: unknown): void {
+    // Fire global listeners (style 1)
     for (const cb of this.listeners) {
       try { cb(type, data); }
       catch (err) { console.error('[DeskillzBridge] Event listener error:', err); }
+    }
+    // Fire targeted listeners (style 2)
+    // Array.from snapshot: allows off() during emit without mutating Set mid-iteration
+    const handlers = this._eventHandlers.get(type);
+    if (handlers) {
+      for (const h of Array.from(handlers)) {
+        try { h(data); }
+        catch (err) { console.error(`[DeskillzBridge] Event handler error (${type}):`, err); }
+      }
     }
   }
 
@@ -3237,6 +3271,7 @@ export class DeskillzBridge {
     this.cleanupQuickPlayListeners();
     this.disconnectRealtime();
     this.listeners = [];
+    this._eventHandlers.clear();
     this.tokens.clearTokens();
     this.isInitialized = false;
     this._isAuthenticated = false;
