@@ -3,9 +3,9 @@
 // Path: src/components/tournaments/TournamentCard.tsx
 //
 // Unified card for ALL tournament types:
-//   ESPORT             — cyan border, entry fee, prize pool, player count
-//   SOCIAL_TOURNAMENT  — purple border, same stats
-//   CASH_GAME          — pink border, buy-in range, rake %, table count
+//   ESPORT             -- cyan border, entry fee, prize pool, player count
+//   SOCIAL_TOURNAMENT  -- purple border, same stats
+//   CASH_GAME          -- pink border, buy-in range, rake %, table count
 //
 // v3.1.0: All custom Tailwind tokens (neon-*, gaming-*, primary-*) replaced
 // with standard Tailwind utility classes. No JIT compilation required.
@@ -28,6 +28,9 @@ import {
   Table2,
   Smartphone,
   Apple,
+  Lock,
+  CalendarClock,
+  Settings,
 } from 'lucide-react'
 import { cn } from '../../utils'
 import Button from '../ui/Button'
@@ -52,6 +55,8 @@ export interface TournamentCardProps {
   compact?: boolean
   platforms?: string[]
   className?: string
+  /** Current user ID for organizer detection (standalone games pass from bridge) */
+  currentUserId?: string | null
 }
 
 // =============================================================================
@@ -76,6 +81,42 @@ function formatCountdown(seconds: number): string {
   return `${m}:${String(s).padStart(2, '0')}`
 }
 
+function formatDate(iso: string): string {
+  if (!iso) return ''
+  const d = new Date(iso)
+  if (isNaN(d.getTime())) return ''
+  return d.toLocaleDateString(undefined, {
+    month: 'short',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+  })
+}
+
+type RegistrationWindowState = 'NOT_YET_OPEN' | 'OPEN' | 'CLOSED' | 'ORGANIZER'
+
+function getRegistrationWindowState(
+  tournament: Tournament,
+  currentUserId?: string | null,
+): RegistrationWindowState {
+  if (currentUserId && tournament.createdById === currentUserId) {
+    return 'ORGANIZER'
+  }
+  const now = new Date()
+  if (tournament.registrationOpenDate) {
+    const openDate = new Date(tournament.registrationOpenDate)
+    if (!isNaN(openDate.getTime()) && now < openDate) return 'NOT_YET_OPEN'
+  }
+  if (tournament.registrationCloseDate) {
+    const closeDate = new Date(tournament.registrationCloseDate)
+    if (!isNaN(closeDate.getTime()) && now > closeDate) return 'CLOSED'
+  }
+  if (tournament.status === 'IN_PROGRESS' || tournament.status === 'COMPLETED' || tournament.status === 'CANCELLED') {
+    return 'CLOSED'
+  }
+  return 'OPEN'
+}
+
 /** Format raw currency codes for display: USDT_TRON -> USDT (Tron), USDC_BSC -> USDC (BSC) */
 function formatCurrencyLabel(raw: string | undefined | null): string {
   if (!raw) return ''
@@ -88,7 +129,7 @@ function formatCurrencyLabel(raw: string | undefined | null): string {
 }
 
 // =============================================================================
-// MODE BADGE — standard Tailwind only
+// MODE BADGE -- standard Tailwind only
 // =============================================================================
 
 function ModeBadge({ tournament }: { tournament: Tournament }) {
@@ -156,7 +197,7 @@ function EnrollmentBadge({ status }: { status: UserEnrollmentStatus }) {
 }
 
 // =============================================================================
-// STAT BOX — standard Tailwind only (was: bg-gaming-darker, border-gaming-border)
+// STAT BOX -- standard Tailwind only (was: bg-gaming-darker, border-gaming-border)
 // =============================================================================
 
 function StatBox({
@@ -224,12 +265,13 @@ function DQWarningBanner({ status, dqCountdown }: { status: UserEnrollmentStatus
 // =============================================================================
 
 function EnrollmentButton({
-  tournament, status, loading, appUrl, onRegister, onCheckIn, onLeave, onJoin, onViewResults,
+  tournament, status, loading, appUrl, registrationWindow, onRegister, onCheckIn, onLeave, onJoin, onViewResults,
 }: {
   tournament: Tournament
   status: UserEnrollmentStatus
   loading: boolean
   appUrl?: string
+  registrationWindow: RegistrationWindowState
   onRegister?: (id: string) => void
   onCheckIn?: (id: string) => void
   onLeave?: (id: string) => void
@@ -237,6 +279,43 @@ function EnrollmentButton({
   onViewResults?: (id: string) => void
 }) {
   const id = tournament.id
+
+  if (tournament.status === 'CANCELLED') {
+    return <Button variant="ghost" size="sm" disabled className="w-full opacity-60 cursor-not-allowed">Cancelled</Button>
+  }
+  if (tournament.status === 'COMPLETED') {
+    return <Button variant="ghost" size="sm" disabled className="w-full opacity-60 cursor-not-allowed">Completed</Button>
+  }
+
+  // Organizer: cannot register for own tournament
+  if (registrationWindow === 'ORGANIZER') {
+    return (
+      <Button variant="secondary" size="sm" disabled className="w-full opacity-60 cursor-not-allowed">
+        <Settings className="w-4 h-4" />
+        You are the organizer
+      </Button>
+    )
+  }
+
+  // Registration not yet open
+  if (registrationWindow === 'NOT_YET_OPEN' && status === 'NOT_REGISTERED') {
+    return (
+      <Button variant="ghost" size="sm" disabled className="w-full opacity-60 cursor-not-allowed">
+        <Lock className="w-4 h-4" />
+        Registration Opens {formatDate(tournament.registrationOpenDate || '')}
+      </Button>
+    )
+  }
+
+  // Registration closed
+  if (registrationWindow === 'CLOSED' && status === 'NOT_REGISTERED') {
+    return (
+      <Button variant="ghost" size="sm" disabled className="w-full opacity-60 cursor-not-allowed">
+        <Lock className="w-4 h-4" />
+        Registration Closed
+      </Button>
+    )
+  }
 
   switch (status) {
     case 'NOT_REGISTERED':
@@ -332,7 +411,7 @@ function EnrollmentButton({
 }
 
 // =============================================================================
-// STATS GRID — standard Tailwind only
+// STATS GRID -- standard Tailwind only
 // =============================================================================
 
 function StatsGrid({ tournament }: { tournament: Tournament }) {
@@ -408,7 +487,7 @@ function StatsGrid({ tournament }: { tournament: Tournament }) {
 }
 
 // =============================================================================
-// PROGRESS BAR — standard Tailwind only (was: bg-gaming-darker, neon-green, neon-cyan)
+// PROGRESS BAR -- standard Tailwind only (was: bg-gaming-darker, neon-green, neon-cyan)
 // =============================================================================
 
 function ProgressBar({ tournament }: { tournament: Tournament }) {
@@ -450,7 +529,7 @@ function ProgressBar({ tournament }: { tournament: Tournament }) {
 }
 
 // =============================================================================
-// PLATFORM BUTTONS — standard Tailwind only
+// PLATFORM BUTTONS -- standard Tailwind only
 // =============================================================================
 
 function PlatformButtons({ gameId, platforms }: { gameId: string; platforms: string[] }) {
@@ -477,10 +556,10 @@ function PlatformButtons({ gameId, platforms }: { gameId: string; platforms: str
 }
 
 // =============================================================================
-// TOURNAMENT CARD — main export
+// TOURNAMENT CARD -- main export
 // Card background and borders use standard Tailwind only.
 // Left accent border tracks card type via inline style (color value from
-// tokens/colors.css variables — works without Tailwind JIT).
+// tokens/colors.css variables -- works without Tailwind JIT).
 // =============================================================================
 
 export default function TournamentCard({
@@ -497,10 +576,13 @@ export default function TournamentCard({
   compact = false,
   platforms,
   className,
+  currentUserId,
 }: TournamentCardProps) {
   const isCashGame = tournament.gameCategory === 'SOCIAL' && tournament.socialMode === 'CASH_GAME'
 
-  // Left border accent via inline style — avoids custom Tailwind token dependency
+  const registrationWindow = getRegistrationWindowState(tournament, currentUserId)
+
+  // Left border accent via inline style -- avoids custom Tailwind token dependency
   const accentColor = useMemo(() => {
     if (isCashGame)                              return 'rgba(236,72,153,0.5)'  // pink
     if (tournament.gameCategory === 'SOCIAL')   return 'rgba(168,85,247,0.5)'  // purple
@@ -509,6 +591,7 @@ export default function TournamentCard({
   }, [isCashGame, tournament.gameCategory, tournament.mode])
 
   const showDQWarning = userStatus === 'REGISTERED' || userStatus === 'CHECKIN_OPEN'
+  const hasRegDates = !!(tournament.registrationOpenDate || tournament.registrationCloseDate)
 
   return (
     <motion.div
@@ -532,6 +615,9 @@ export default function TournamentCard({
             <div className="flex items-center gap-2 flex-wrap">
               <ModeBadge tournament={tournament} />
               <EnrollmentBadge status={userStatus} />
+              {registrationWindow === 'ORGANIZER' && (
+                <Badge variant="info" size="sm">Organizer</Badge>
+              )}
             </div>
             <h3 className="font-semibold text-white text-base leading-tight truncate">
               {tournament.name}
@@ -545,9 +631,17 @@ export default function TournamentCard({
             {tournament.status === 'IN_PROGRESS' && (
               <Badge variant="danger" size="sm" pulse>LIVE</Badge>
             )}
+            {tournament.status === 'SCHEDULED' && registrationWindow === 'NOT_YET_OPEN' && (
+              <Badge variant="default" size="sm">Scheduled</Badge>
+            )}
             {(tournament.status === 'SCHEDULED' || tournament.status === 'OPEN') &&
+              registrationWindow === 'OPEN' &&
               tournament.currentPlayers < tournament.maxPlayers && (
                 <Badge variant="info" size="sm">Open</Badge>
+              )}
+            {(tournament.status === 'SCHEDULED' || tournament.status === 'OPEN') &&
+              registrationWindow === 'CLOSED' && (
+                <Badge variant="warning" size="sm">Reg. Closed</Badge>
               )}
             {tournament.currentPlayers >= tournament.maxPlayers && (
               <Badge variant="default" size="sm">Full</Badge>
@@ -579,6 +673,29 @@ export default function TournamentCard({
           </div>
         )}
 
+        {/* REGISTRATION WINDOW INFO */}
+        {!compact && hasRegDates && registrationWindow !== 'ORGANIZER' && (
+          <div className={cn(
+            'flex items-center gap-2 p-2.5 rounded-lg text-xs',
+            registrationWindow === 'NOT_YET_OPEN'
+              ? 'bg-purple-500/10 border border-purple-500/20 text-purple-300'
+              : registrationWindow === 'CLOSED'
+                ? 'bg-white/5 border border-white/10 text-white/40'
+                : 'bg-cyan-500/5 border border-cyan-500/15 text-white/60',
+          )}>
+            <CalendarClock className="w-3.5 h-3.5 shrink-0" />
+            {registrationWindow === 'NOT_YET_OPEN' && tournament.registrationOpenDate && (
+              <span>Registration opens <strong>{formatDate(tournament.registrationOpenDate)}</strong></span>
+            )}
+            {registrationWindow === 'OPEN' && tournament.registrationCloseDate && (
+              <span>Registration closes <strong>{formatDate(tournament.registrationCloseDate)}</strong></span>
+            )}
+            {registrationWindow === 'CLOSED' && tournament.registrationCloseDate && (
+              <span>Registration closed {formatDate(tournament.registrationCloseDate)}</span>
+            )}
+          </div>
+        )}
+
         {/* PROGRESS BAR */}
         {!compact && !isCashGame && <ProgressBar tournament={tournament} />}
 
@@ -598,6 +715,7 @@ export default function TournamentCard({
           status={userStatus}
           loading={enrollmentLoading}
           appUrl={appUrl}
+          registrationWindow={registrationWindow}
           onRegister={onRegister}
           onCheckIn={onCheckIn}
           onLeave={onLeave}

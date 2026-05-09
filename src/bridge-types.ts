@@ -1,10 +1,10 @@
 // =============================================================================
-// bridge-types.ts — packages/game-ui/src/bridge-types.ts
+// bridge-types.ts -- packages/game-ui/src/bridge-types.ts
 //
 // Type definitions that mirror DeskillzBridge exports.
 // These are used by the game-ui package at build time.
 // At runtime, the actual DeskillzBridge singleton from the game is used
-// via window.DeskillzBridge — no import needed.
+// via window.DeskillzBridge -- no import needed.
 // =============================================================================
 
 export type TournamentEnrollmentStatus =
@@ -114,6 +114,11 @@ export interface Tournament {
   prizePoolType?: 'DYNAMIC' | 'GUARANTEED'
   serviceFeePercent?: number
   createdAt: string
+  // Registration window dates
+  registrationOpenDate?: string
+  registrationCloseDate?: string
+  // Tournament creator (organizer) ID
+  createdById?: string
 }
 
 // =============================================================================
