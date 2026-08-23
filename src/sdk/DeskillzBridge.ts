@@ -1016,7 +1016,7 @@ export class DeskillzBridge {
       // SSO handoff: if the main app launched us with ?token=... in the URL,
       // consume it into storage so restoreSession() uses the fresh token.
       // Must run BEFORE restoreSession so the user is not re-prompted to log in.
-      this.consumeSSOToken();
+      await this.consumeSSOToken();
 
       // Attempt session restore from stored tokens
       await this.restoreSession();
@@ -1061,7 +1061,7 @@ export class DeskillzBridge {
    *   - User already has a stored access token (we still overwrite with the
    *     newer SSO token to keep sessions consistent with the main app)
    */
-  private consumeSSOToken(): void {
+  private async consumeSSOToken(): Promise<void> {
     if (typeof window === 'undefined' || !window.location) return;
 
     try {
@@ -1069,11 +1069,26 @@ export class DeskillzBridge {
       const ssoToken = url.searchParams.get('token');
       if (!ssoToken) return;
 
-      // Save the SSO token. We intentionally do not set a refresh token here;
-      // the main app retains it, and the Bridge will use normal refresh flow
-      // against /api/v1/auth/refresh if the access token expires.
-      this.tokens.setTokens(ssoToken);
-      this.log('SSO token consumed from URL');
+      if (ssoToken.split('.').length === 3) {
+        // Legacy path: a full JWT was placed in the URL by the main app.
+        // We intentionally do not set a refresh token here; the main app
+        // retains it and the Bridge uses /api/v1/auth/refresh if needed.
+        this.tokens.setTokens(ssoToken);
+        this.log('SSO token (JWT) consumed from URL');
+      } else {
+        // Launch-token path (v3.5.x): the URL carries a single-use uuid
+        // bound to (player, match). Exchange it for a short-lived, game-scoped
+        // access token. A failed exchange (expired / already used / offline)
+        // must not destroy an existing valid session, so only replace the
+        // stored token on success.
+        const exchanged = await this.exchangeLaunchToken(ssoToken);
+        if (exchanged) {
+          this.tokens.setTokens(exchanged);
+          this.log('Launch token exchanged for game access token');
+        } else {
+          this.log('Launch token exchange failed; keeping existing session (if any)');
+        }
+      }
 
       // Scrub token from the visible URL. Keep other params (matchId, etc.)
       // so the game can still read them.
@@ -1090,6 +1105,29 @@ export class DeskillzBridge {
       }
     } catch (err) {
       this.log('SSO token consumption failed (non-fatal):', err);
+    }
+  }
+
+  /**
+   * POST /api/v1/auth/launch/exchange -- trade a single-use launch token for
+   * a short-lived access token. Uses raw fetch (no Authorization header, no
+   * 401-refresh interceptor) because this runs before any session exists.
+   * Returns null on any failure; never throws.
+   */
+  private async exchangeLaunchToken(launchToken: string): Promise<string | null> {
+    try {
+      const res = await fetch(`${this.config.apiBaseUrl}/api/v1/auth/launch/exchange`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ token: launchToken }),
+      });
+      if (!res.ok) return null;
+      const json = await res.json().catch(() => null);
+      const data = json && typeof json === 'object' && 'data' in json ? json.data : json;
+      const accessToken = data?.accessToken;
+      return typeof accessToken === 'string' && accessToken.length > 0 ? accessToken : null;
+    } catch {
+      return null;
     }
   }
 
@@ -2644,6 +2682,19 @@ export class DeskillzBridge {
         score: payload.score,
         metadata: payload.metadata,
       });
+    }
+
+    // Private ESPORTS room match (v3.5.x): the backend ranks and settles the
+    // room once every active player has submitted. roomId comes from the
+    // payload, or from the room this Bridge instance joined.
+    const roomId = payload.roomId ?? this.currentRoom?.id;
+    if (roomId) {
+      const result = await this.http.post<{ roomId: string; status: string; pendingPlayers: number }>(
+        `/api/v1/private-rooms/${roomId}/score`,
+        { score: payload.score },
+      );
+      this.log('Room score submitted:', result?.status, 'pending:', result?.pendingPlayers);
+      return { success: true };
     }
 
     // Non-tournament scoring handled server-side via socket events
