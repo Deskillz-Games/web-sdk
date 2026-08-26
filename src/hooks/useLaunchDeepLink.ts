@@ -36,7 +36,7 @@
 //   }
 // =============================================================================
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 export const LAUNCH_SS_MATCH_ID      = 'deskillz_pending_matchId'
 export const LAUNCH_SS_TOURNAMENT_ID = 'deskillz_pending_tournamentId'
@@ -153,8 +153,57 @@ export function useLaunchDeepLink(options: UseLaunchDeepLinkOptions): void {
   } = options
   const done = useRef(false)
 
+  // N66: the prop is a render-time snapshot; on a cold launch it is taken
+  // before DeskillzBridge.initialize() has exchanged the launch token, and
+  // no re-render follows. Track the bridge ourselves until it reports auth.
+  const [bridgeAuthed, setBridgeAuthed] = useState<boolean>(() => {
+    try {
+      return !!getBridge()?.getIsAuthenticated?.()
+    } catch {
+      return false
+    }
+  })
+  const authed = isAuthenticated || bridgeAuthed
+
   useEffect(() => {
-    if (done.current || !isAuthenticated) return
+    if (authed || done.current) return
+    const bridge = getBridge()
+    if (!bridge) return
+
+    let stopped = false
+    const offs: Array<() => void> = []
+    let timer: ReturnType<typeof setInterval> | null = null
+
+    const stop = () => {
+      if (stopped) return
+      stopped = true
+      if (timer) clearInterval(timer)
+      for (const off of offs) {
+        try { off() } catch { /* noop */ }
+      }
+    }
+    const check = () => {
+      let ok = false
+      try { ok = !!bridge.getIsAuthenticated?.() } catch { ok = false }
+      if (ok) {
+        stop()
+        setBridgeAuthed(true)
+      }
+    }
+
+    for (const ev of ['initialized', 'authenticated']) {
+      try {
+        const off = bridge.on?.(ev, check)
+        if (typeof off === 'function') offs.push(off)
+      } catch { /* bridge without .on() -- poll covers it */ }
+    }
+    timer = setInterval(check, 500)
+    check()
+    return stop
+  }, [authed])
+
+  useEffect(() => {
+    if (done.current || !authed) return
     const params = peekLaunchParams()
     if (!params.matchId && !params.roomCode) return
     if (onBeforeNavigate && onBeforeNavigate(params) === false) return
@@ -189,5 +238,5 @@ export function useLaunchDeepLink(options: UseLaunchDeepLinkOptions): void {
       .catch((err: any) => {
         console.warn('[LaunchDeepLink] Auto-join room failed:', err?.message ?? err)
       })
-  }, [isAuthenticated]) // eslint-disable-line react-hooks/exhaustive-deps
+  }, [authed]) // eslint-disable-line react-hooks/exhaustive-deps
 }
