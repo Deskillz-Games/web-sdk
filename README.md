@@ -1,4 +1,4 @@
-<!-- sdk-version: v3.5.4 | released: 2026-08-25 -->
+<!-- sdk-version: v3.6.0 | released: 2026-08-28 -->
 # Deskillz Web SDK
 
 Framework-agnostic SDK for integrating competitive gaming tournaments with cryptocurrency prizes into web applications.
@@ -12,7 +12,9 @@ Framework-agnostic SDK for integrating competitive gaming tournaments with crypt
 - **Full TypeScript Support** - Complete type definitions for all APIs
 - **Real-Time Updates** - WebSocket-based matchmaking, lobby, and tournament events
 - **Cryptocurrency Payments** - Support for BNB, USDT, USDC on BSC and TRON networks
-- **Anti-Cheat Protection** - HMAC-SHA256 score signing built-in
+- **Anti-Cheat Score Signing** - HMAC-SHA256 per-session score signatures built into the bridge
+- **Tournament Deep-Link Launch** - Single-use launch token capture and exchange
+- **Per-Game Isolation** - Namespaced auth tokens and service worker caches (multi-game safe)
 - **Tree-Shakeable** - Only bundle what you use
 - **Two Integration Modes** - Full SDK or simplified Bridge pattern
 
@@ -20,10 +22,35 @@ Framework-agnostic SDK for integrating competitive gaming tournaments with crypt
 
 | Approach | Best For | Files Needed |
 |----------|----------|-------------|
-| **DeskillzBridge** (Recommended) | Game developers building standalone web games | 1 file: `DeskillzBridge.ts` (1,172 lines) |
+| **DeskillzBridge** (Recommended) | Game developers building standalone web games | 3 files (see File Inventory below) |
 | **Full DeskillzSDK** | Advanced integrations needing individual service access | Full `src/` folder (~13,500 lines across 45 files) |
 
-Most game developers should use the **DeskillzBridge** approach. It bundles everything into a single file with zero npm dependencies (socket.io-client is optional for realtime).
+Most game developers should use the **DeskillzBridge** approach. It bundles everything into a single bridge file with zero npm dependencies (socket.io-client is optional for realtime).
+
+---
+
+## File Inventory (Bridge Integration)
+
+| File | From (this repo) | To (your game) | Ownership |
+|------|------------------|----------------|-----------|
+| `DeskillzBridge.ts` | `src/sdk/DeskillzBridge.ts` | `src/sdk/DeskillzBridge.ts` | **SDK-owned. Never modify at game level.** Wholesale-replaced on each SDK release. |
+| `useLaunchDeepLink.ts` | `src/hooks/useLaunchDeepLink.ts` | `src/hooks/useLaunchDeepLink.ts` | SDK-owned React hook for the launch contract. |
+| `deskillz-sw.js` | `public/deskillz-sw.js` | `public/deskillz-sw.js` | **SDK-owned. Never modify at game level.** |
+
+Rules that keep six games on one SDK:
+
+- `DeskillzBridge.ts` and `deskillz-sw.js` are canonical in **this repo** (deskillz-web-sdk). Do not fork, patch, or hand-edit copies inside a game. When a new SDK version drops, replace the files wholesale.
+- If your game needs custom behavior, **extend** the bridge in your own subclass file (see "Extend for Your Game" below). Never edit `DeskillzBridge.ts` itself.
+- The service worker is named `deskillz-sw.js`, not `sw.js`. Workbox and some build tooling overwrite `sw.js`; the distinct name prevents the collision.
+- The Vite SW-version plugin ships as `vite-plugin-sw-version.mjs`. Use the `.mjs` file. Do not keep a `.ts` copy of the plugin in the game repo (esbuild's compile cache can serve stale plugin code from `.ts`).
+
+### Quick copy (PowerShell, from the monorepo root)
+
+```powershell
+Copy-Item deskillz-web-sdk\src\sdk\DeskillzBridge.ts      your-game\src\sdk\
+Copy-Item deskillz-web-sdk\src\hooks\useLaunchDeepLink.ts your-game\src\hooks\
+Copy-Item deskillz-web-sdk\public\deskillz-sw.js          your-game\public\
+```
 
 ---
 
@@ -31,14 +58,18 @@ Most game developers should use the **DeskillzBridge** approach. It bundles ever
 
 ### 1. Copy Files
 
-Copy `DeskillzBridge.ts` from `src/` into your game project:
+Copy the three files listed in the File Inventory into your game project:
 
 ```
 your-game/
+  public/
+    deskillz-sw.js           # Copy from deskillz-web-sdk/public/  (do not modify)
   src/
     sdk/
-      DeskillzBridge.ts      # Copy from deskillz-web-sdk/src/
+      DeskillzBridge.ts      # Copy from deskillz-web-sdk/src/sdk/ (do not modify)
       YourGameBridge.ts      # You create this (extends DeskillzBridge)
+    hooks/
+      useLaunchDeepLink.ts   # Copy from deskillz-web-sdk/src/hooks/
 ```
 
 ### 2. Optional: Install socket.io-client
@@ -49,23 +80,53 @@ npm install socket.io-client
 
 This is only needed if your game uses realtime multiplayer features. The bridge degrades gracefully without it.
 
-### 3. Initialize
+### 3. Initialize -- EXACTLY ONCE
+
+Create the bridge and initialize it in your app entry point (`main.tsx`), **before** React renders, and expose the instance on `window` for shared hooks:
 
 ```typescript
+// main.tsx
 import { DeskillzBridge } from './sdk/DeskillzBridge';
 
+// 1. Capture ?launch= / ?token= params BEFORE anything can mutate the URL.
+DeskillzBridge.captureLaunchParams();
+
+// 2. Create the singleton.
 const bridge = DeskillzBridge.getInstance({
-  gameId: 'YOUR_GAME_ID',       // From developer portal
-  gameKey: 'YOUR_API_KEY',      // From developer portal (Cloud Build auto-injects)
+  gameId: 'YOUR_GAME_ID',       // Placeholder -- Cloud Build injects the real value
+  gameKey: 'YOUR_API_KEY',      // Placeholder -- Cloud Build injects the real value
   apiBaseUrl: 'https://api.deskillz.games',
   socketUrl: 'wss://ws.deskillz.games/lobby',
   debug: true,
 });
 
+// 3. Required: shared hooks resolve the bridge through this global.
+(window as any).DeskillzBridge = { getInstance: () => bridge };
+
+// 4. Initialize exactly once. The bridge is single-flight internally:
+//    concurrent callers await the same in-flight promise, and a completed
+//    initialize() is never re-run. Do NOT try to "re-initialize" on
+//    remount, hot-reload, or route change.
 await bridge.initialize();
 ```
 
-### 4. Authenticate
+Rules:
+
+- Call `initialize()` **exactly once** per page load. The single-flight guard makes accidental duplicates harmless, but code that intentionally calls it twice is a bug.
+- **Never** call `DeskillzBridge.getInstance()` at module top level in any file other than `main.tsx`. Module-level calls run before `main.tsx` configures the singleton and will throw or produce a mis-configured instance. Inside components/hooks, resolve it lazily via `window.DeskillzBridge.getInstance()`.
+- Remove React `StrictMode` from standalone games. StrictMode double-invokes effects in development and masks or manufactures lifecycle bugs around initialization.
+
+### 4. The Launch Contract (Tournament Deep Links)
+
+When the Deskillz platform launches your game for a tournament or private room match, it opens your hosted `index.html` with a **single-use launch token** in the URL. The contract:
+
+1. `DeskillzBridge.captureLaunchParams()` runs first thing in `main.tsx` (before React, before routing). It snapshots and strips the launch params from the URL.
+2. The bridge exchanges the launch token for a session **exactly once**. Launch tokens are single-use on the server: a second exchange attempt fails with an auth error. This is why duplicate `initialize()` calls and page reloads during launch are forbidden.
+3. In React games, mount `useLaunchDeepLink()` near the root. It tracks bridge `initialized` / `authenticated` events and routes the player into tournament mode when the exchange completes. Treat any `authed` prop as a seed only -- the hook maintains its own state from bridge events.
+4. **Never auto-reload on a launch page.** Service-worker update flows (`updatefound`, `controllerchange`) must not call `location.reload()` while launch params are present or a match is active -- a reload burns the single-use token and strands the player. The canonical SW registration block ships with a query-string guard for this; do not remove it. In-app "update available" prompts must also be suppressed on launch pages.
+5. Match end: submit the score (see Score Signing), then return the player to the platform. Do not reload into a fresh session.
+
+### 5. Authenticate (Standalone / Non-Launch Sessions)
 
 ```typescript
 // Email/password login
@@ -83,7 +144,28 @@ const signMessage = async (msg: string) =>
 const walletUser = await bridge.loginWithWallet(accounts[0], 56, signMessage);
 ```
 
-### 5. Use Platform Features
+Auth tokens are stored in `localStorage` under **per-game namespaced keys** (keyed by `gameId`), so multiple Deskillz games on the same origin never clobber each other's sessions. On first run after upgrading, the bridge copies any legacy un-namespaced tokens forward automatically; the legacy keys themselves are removed in a later cleanup release -- do not depend on them.
+
+### 6. Score Signing (Anti-Cheat)
+
+During launch-token exchange the server issues a per-session `scoreSecret`. The bridge holds it in memory and signs every score submission with HMAC-SHA256 automatically:
+
+```typescript
+await bridge.submitScore({
+  gameId: 'your-game',
+  tournamentId: 't-123',
+  score: 15000,
+});
+// The bridge attaches: signature, timestamp, nonce -- you never handle the secret.
+```
+
+Rules:
+
+- Never log, persist, or transmit the `scoreSecret` yourself. It lives only in bridge memory for the session.
+- Server verification runs in `log` mode (signatures verified and logged) or `enforce` mode (unsigned/invalid submissions rejected). Build against enforce: always submit through `bridge.submitScore()` -- never hand-roll the HTTP call.
+- One score submission per player per match session. Retries are handled inside the bridge.
+
+### 7. Use Platform Features
 
 ```typescript
 // Wallet
@@ -100,15 +182,19 @@ const room = await bridge.createRoom({ entryFee: 5, maxPlayers: 4, isSocialGame:
 await bridge.joinRoom('ABC123');
 await bridge.roomBuyIn(100, 'USDT');
 
-// Score Submission
-await bridge.submitScore({ gameId: 'your-game', tournamentId: 't-123', score: 15000 });
-
 // Realtime Events
 bridge.connectRealtime();
 bridge.onRealtimeEvent('match:found', (data) => console.log('Match!', data));
 ```
 
-### 6. Extend for Your Game
+Event subscription supports both styles -- two-arg named events and a single catch-all callback:
+
+```typescript
+bridge.on('authenticated', (user) => { /* ... */ });   // named
+bridge.on((event, data) => { /* ... */ });             // catch-all
+```
+
+### 8. Extend for Your Game
 
 ```typescript
 import { DeskillzBridge, type BridgeConfig } from './DeskillzBridge';
@@ -137,6 +223,18 @@ export class MahjongBridge extends DeskillzBridge {
   }
 }
 ```
+
+---
+
+## Service Worker and Caching
+
+The canonical service worker is `public/deskillz-sw.js` (SDK-owned).
+
+- **Cache naming:** caches are namespaced per game and per build as `dsk2-<scopekey>-<buildhash>`. The scope key is derived from the hosting path, so multiple games under one origin (e.g. `hosted/<gameId>/pwa/`) never share or evict each other's caches. When verifying in DevTools, check that the cache name **contains** your build hash (other suffixes may follow it).
+- **Legacy purge:** the first load after upgrading from the old `dsk-` scheme performs a one-time purge of legacy `dsk-*` caches and logs it to the console. This is expected -- once per browser profile per game.
+- **Registration:** register `deskillz-sw.js` from the canonical guarded block in `index.html`. The guard skips reload-on-update behavior when launch params are present (see Launch Contract rule 4).
+- **Relative paths:** all asset paths and the SW registration use `./` relative prefixes (never `/`). This is required for R2 subdirectory hosting, APK WebView (`base: './'` in `vite.config.ts`), Electron `file://`, and iOS PWA scope resolution.
+- **Build versioning:** `vite-plugin-sw-version.mjs` stamps the build hash into the SW at build time. Keep the plugin as `.mjs`.
 
 ---
 
@@ -211,13 +309,13 @@ gameId: 'YOUR_GAME_ID',
 gameKey: 'YOUR_API_KEY',
 ```
 
-Cloud Build will **NOT** detect or replace custom strings like `'demo-key'`, `'my-api-key'`, or `process.env.API_KEY`.
+Cloud Build will **NOT** detect or replace custom strings like `'demo-key'`, `'my-api-key'`, or `process.env.API_KEY`. Never put real credentials in `.env` or source -- placeholders only.
 
 ---
 
-## Critical Integration Rules (Lessons from Big 2)
+## Critical Integration Rules
 
-These rules were discovered during the Big 2 web game integration and apply to ALL web games:
+These rules were discovered during real game integrations (Big 2, Candy Duel, Thirteen Cards) and apply to ALL web games:
 
 ### 1. Never Use Dynamic Import for the SDK
 
@@ -229,7 +327,15 @@ const sdkModule = await import('@deskillz/web-sdk');
 import { DeskillzBridge } from './sdk/DeskillzBridge';
 ```
 
-### 2. Wallet Connect Requires a Real Signer
+### 2. Initialize Exactly Once, From main.tsx Only
+
+`initialize()` is single-flight, but the contract is one call per page load, made from `main.tsx`. Never call `getInstance()` at module top level outside `main.tsx`, and never re-initialize on remount or route change.
+
+### 3. Never Auto-Reload on a Launch Page
+
+No `location.reload()` from SW update handlers, update prompts, or error recovery while launch params are present or a match is active. Launch tokens are single-use; a reload burns them.
+
+### 4. Wallet Connect Requires a Real Signer
 
 ```typescript
 // WRONG - falls back to guest mode silently:
@@ -242,7 +348,7 @@ const signMessage = async (msg: string) =>
 await bridge.loginWithWallet(accounts[0], 56, signMessage);
 ```
 
-### 3. Use register() for Registration, login() for Login
+### 5. Use register() for Registration, login() for Login
 
 ```typescript
 // WRONG - creates no account, username is lost:
@@ -252,7 +358,7 @@ await bridge.login(email, password);
 await bridge.register(username, email, password);
 ```
 
-### 4. Initialize Wallet Balance to Zero
+### 6. Initialize Wallet Balance to Zero
 
 ```typescript
 // WRONG - fake balance before any API call:
@@ -264,11 +370,19 @@ const [state, setState] = useState({ walletBalance: 0 });
 const balance = await bridge.getWalletBalance();
 ```
 
-### 5. Wire All Handlers to Real Bridge Methods
+### 7. Wire All Handlers to Real Bridge Methods
 
 Every UI button (deposit, withdraw, stats, history, wallet connect) must call the corresponding bridge method. Toast-only stubs are not acceptable even for MVP.
 
-### 6. Verify Live Mode After Login
+### 8. Always Submit Scores Through the Bridge
+
+`bridge.submitScore()` attaches the HMAC signature. Hand-rolled fetch calls to the score endpoint will be rejected once enforce mode is on.
+
+### 9. Use ./ Relative Paths Everywhere
+
+All asset URLs, the SW registration, the manifest `start_url`, and `base` in `vite.config.ts` use `./` relative paths. Absolute `/` paths break subdirectory hosting, APK WebView, and iOS PWA.
+
+### 10. Verify Live Mode After Login
 
 ```typescript
 const bridge = DeskillzBridge.getInstance();
@@ -348,7 +462,7 @@ try {
 - Safari 13.1+
 - Edge 80+
 
-Requires Web Crypto API for score signing (Full SDK only).
+Requires Web Crypto API (used for HMAC-SHA256 score signing).
 
 ---
 

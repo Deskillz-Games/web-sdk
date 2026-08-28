@@ -600,26 +600,55 @@ export type BridgeEventCallback = (type: BridgeEventType, data: unknown) => void
 // TOKEN MANAGER (localStorage-based JWT storage)
 // =============================================================================
 
-const ACCESS_KEY = 'deskillz_access_token';
-const REFRESH_KEY = 'deskillz_refresh_token';
+// H5 per-game token namespace: every standalone game shares the same R2
+// origin, so un-namespaced localStorage keys let any game (including a
+// future third-party game) read another game's tokens. Keys are suffixed
+// with ::<gameId>. Legacy un-namespaced values are COPIED forward once
+// (never deleted) so games still on the old SDK keep their sessions
+// during the mixed-deployment window.
+const LEGACY_ACCESS_KEY = 'deskillz_access_token';
+const LEGACY_REFRESH_KEY = 'deskillz_refresh_token';
 
 class TokenManager {
+  private accessKey: string;
+  private refreshKey: string;
+
+  constructor(gameId?: string) {
+    const ns = gameId ? '::' + gameId : '';
+    this.accessKey = LEGACY_ACCESS_KEY + ns;
+    this.refreshKey = LEGACY_REFRESH_KEY + ns;
+    if (ns) this.migrateLegacy();
+  }
+
+  private migrateLegacy(): void {
+    try {
+      if (!localStorage.getItem(this.accessKey)) {
+        const a = localStorage.getItem(LEGACY_ACCESS_KEY);
+        if (a) localStorage.setItem(this.accessKey, a);
+      }
+      if (!localStorage.getItem(this.refreshKey)) {
+        const r = localStorage.getItem(LEGACY_REFRESH_KEY);
+        if (r) localStorage.setItem(this.refreshKey, r);
+      }
+    } catch { /* storage unavailable */ }
+  }
+
   getAccessToken(): string | null {
-    try { return localStorage.getItem(ACCESS_KEY); } catch { return null; }
+    try { return localStorage.getItem(this.accessKey); } catch { return null; }
   }
   getRefreshToken(): string | null {
-    try { return localStorage.getItem(REFRESH_KEY); } catch { return null; }
+    try { return localStorage.getItem(this.refreshKey); } catch { return null; }
   }
   setTokens(access: string, refresh?: string): void {
     try {
-      localStorage.setItem(ACCESS_KEY, access);
-      if (refresh) localStorage.setItem(REFRESH_KEY, refresh);
+      localStorage.setItem(this.accessKey, access);
+      if (refresh) localStorage.setItem(this.refreshKey, refresh);
     } catch { /* storage unavailable */ }
   }
   clearTokens(): void {
     try {
-      localStorage.removeItem(ACCESS_KEY);
-      localStorage.removeItem(REFRESH_KEY);
+      localStorage.removeItem(this.accessKey);
+      localStorage.removeItem(this.refreshKey);
     } catch { /* storage unavailable */ }
   }
   isAuthenticated(): boolean {
@@ -965,7 +994,7 @@ export class DeskillzBridge {
   protected constructor(config: BridgeConfig) {
     this.config = config;
     this.resolved = resolveConfig(config);
-    this.tokens = new TokenManager();
+    this.tokens = new TokenManager(config.gameId);
     this.http = new HttpClient(this.resolved, this.tokens, () => {
       this.log('Forced logout - tokens expired');
       this._isAuthenticated = false;
@@ -1000,8 +1029,27 @@ export class DeskillzBridge {
   // INITIALIZATION
   // ---------------------------------------------------------------------------
 
+  // N79b single-flight: concurrent initialize() calls before the first
+  // completes must share one promise. Without this, both callers pass the
+  // isInitialized guard and consumeSSOToken() POSTs the single-use launch
+  // token to /auth/launch/exchange twice (200 then 401), stranding the
+  // player on the Sign In screen on a cold launch.
+  private initPromise: Promise<void> | null = null;
+
+  // H4: per-launch score signing material from /auth/launch/exchange.
+  private launchMatchId: string | null = null;
+  private launchScoreSecret: string | null = null;
+
   async initialize(): Promise<void> {
     if (this.isInitialized) return;
+    if (this.initPromise) return this.initPromise;
+    this.initPromise = this.doInitialize().finally(() => {
+      this.initPromise = null;
+    });
+    return this.initPromise;
+  }
+
+  private async doInitialize(): Promise<void> {
 
     this.log('Initializing DeskillzBridge...');
 
@@ -1125,7 +1173,14 @@ export class DeskillzBridge {
       const json = await res.json().catch(() => null);
       const data = json && typeof json === 'object' && 'data' in json ? json.data : json;
       const accessToken = data?.accessToken;
-      return typeof accessToken === 'string' && accessToken.length > 0 ? accessToken : null;
+      if (typeof accessToken === 'string' && accessToken.length > 0) {
+        // H4: keep the per-(user, match) score signing material from the
+        // exchange response so submitScore() can sign tournament scores.
+        if (typeof data?.matchId === 'string') this.launchMatchId = data.matchId;
+        if (typeof data?.scoreSecret === 'string') this.launchScoreSecret = data.scoreSecret;
+        return accessToken;
+      }
+      return null;
     } catch {
       return null;
     }
@@ -2678,6 +2733,30 @@ export class DeskillzBridge {
     this.log('Submitting score:', payload);
 
     if (payload.tournamentId) {
+      // H4: sign with the per-launch scoreSecret when available. Message
+      // format must match backend verifyScoreSignature():
+      // gameId:matchId:score:timestamp:userId, HMAC-SHA256 hex.
+      const matchId = this.launchMatchId;
+      const secret = this.launchScoreSecret;
+      const userId = this.currentUser?.id;
+      if (matchId && secret && userId) {
+        try {
+          const timestamp = Date.now();
+          const signature = await this.hmacSha256Hex(
+            secret,
+            [this.config.gameId, matchId, String(payload.score), String(timestamp), userId].join(':'),
+          );
+          return await this.http.post(`/api/v1/tournaments/${payload.tournamentId}/score`, {
+            score: payload.score,
+            metadata: payload.metadata,
+            matchId,
+            timestamp,
+            signature,
+          });
+        } catch (err) {
+          this.log('Score signing failed; submitting unsigned:', err);
+        }
+      }
       return this.http.post(`/api/v1/tournaments/${payload.tournamentId}/score`, {
         score: payload.score,
         metadata: payload.metadata,
@@ -2700,6 +2779,16 @@ export class DeskillzBridge {
     // Non-tournament scoring handled server-side via socket events
     this.log('Score recorded (non-tournament):', payload.score);
     return { success: true };
+  }
+
+  /** H4: HMAC-SHA256 hex helper (WebCrypto). */
+  private async hmacSha256Hex(secret: string, message: string): Promise<string> {
+    const enc = new TextEncoder();
+    const key = await crypto.subtle.importKey(
+      'raw', enc.encode(secret), { name: 'HMAC', hash: 'SHA-256' }, false, ['sign'],
+    );
+    const sig = await crypto.subtle.sign('HMAC', key, enc.encode(message));
+    return Array.from(new Uint8Array(sig)).map((b) => b.toString(16).padStart(2, '0')).join('');
   }
 
    // ---------------------------------------------------------------------------
