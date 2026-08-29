@@ -612,11 +612,14 @@ const LEGACY_REFRESH_KEY = 'deskillz_refresh_token';
 class TokenManager {
   private accessKey: string;
   private refreshKey: string;
+  private sessionKey: string;
+  private sessionActive = false;
 
   constructor(gameId?: string) {
     const ns = gameId ? '::' + gameId : '';
     this.accessKey = LEGACY_ACCESS_KEY + ns;
     this.refreshKey = LEGACY_REFRESH_KEY + ns;
+    this.sessionKey = LEGACY_ACCESS_KEY + ns + '::session';
     if (ns) this.migrateLegacy();
   }
 
@@ -634,18 +637,43 @@ class TokenManager {
   }
 
   getAccessToken(): string | null {
+    // H6: launch sessions are tab-scoped. sessionStorage wins over
+    // localStorage so two tabs in one profile can hold different players.
+    try {
+      const s = sessionStorage.getItem(this.sessionKey);
+      if (s) return s;
+    } catch { /* storage unavailable */ }
     try { return localStorage.getItem(this.accessKey); } catch { return null; }
   }
   getRefreshToken(): string | null {
     try { return localStorage.getItem(this.refreshKey); } catch { return null; }
   }
   setTokens(access: string, refresh?: string): void {
+    // H6: while a launch session owns this tab, token updates (e.g. a
+    // 401 -> refresh mid-match) stay tab-scoped and never leak into the
+    // shared localStorage identity.
+    if (this.sessionActive || this.hasSessionToken()) {
+      try { sessionStorage.setItem(this.sessionKey, access); } catch { /* storage unavailable */ }
+      return;
+    }
     try {
       localStorage.setItem(this.accessKey, access);
       if (refresh) localStorage.setItem(this.refreshKey, refresh);
     } catch { /* storage unavailable */ }
   }
+
+  // H6: bind a single-use launch exchange result to THIS tab only.
+  setSessionTokens(access: string): void {
+    this.sessionActive = true;
+    try { sessionStorage.setItem(this.sessionKey, access); } catch { /* storage unavailable */ }
+  }
+
+  private hasSessionToken(): boolean {
+    try { return !!sessionStorage.getItem(this.sessionKey); } catch { return false; }
+  }
   clearTokens(): void {
+    this.sessionActive = false;
+    try { sessionStorage.removeItem(this.sessionKey); } catch { /* storage unavailable */ }
     try {
       localStorage.removeItem(this.accessKey);
       localStorage.removeItem(this.refreshKey);
@@ -1131,7 +1159,7 @@ export class DeskillzBridge {
         // stored token on success.
         const exchanged = await this.exchangeLaunchToken(ssoToken);
         if (exchanged) {
-          this.tokens.setTokens(exchanged);
+          this.tokens.setSessionTokens(exchanged);
           this.log('Launch token exchanged for game access token');
         } else {
           this.log('Launch token exchange failed; keeping existing session (if any)');
