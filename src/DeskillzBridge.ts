@@ -1238,6 +1238,7 @@ export class DeskillzBridge {
         this._isAuthenticated = true;
         this._isGuest = false;
         this.log('Session restored for:', user.username);
+        if (!this.isRealtimeConnected) this.connectRealtime(); // N216
       }
     } catch (err) {
       this.log('Session restore failed (token may be expired):', err);
