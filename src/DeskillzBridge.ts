@@ -832,6 +832,8 @@ class RealtimeService {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private socket: any = null;
   private _isConnected = false;
+  // N250: handlers registered before the socket exists, attached in connect()
+  private preSocketHandlers: Array<{ event: string; handler: (...args: unknown[]) => void }> = [];
   private config: ResolvedConfig;
   private tokens: TokenManager;
 
@@ -841,17 +843,31 @@ class RealtimeService {
   }
 
   async connect(): Promise<void> {
+    // N250b: single-socket guarantee -- a second connect() used to stack
+    // a parallel socket (v20 gateway log: multiple live socket ids per
+    // user). Reuse the one instance; socket.io reconnection manages it.
+    if (this.socket) {
+      if (!this.socket.connected) this.socket.connect();
+      return;
+    }
     try {
       const { io } = await import('socket.io-client');
-      const token = this.tokens.getAccessToken();
 
       this.socket = io(this.config.socketUrl, {
-        auth: { token },
+        // N250c: callback auth -- a fresh token on EVERY (re)connect
+        // attempt. The old static capture replayed the launch token
+        // forever; once expired, every reconnect bounced (jwt expired).
+        auth: (cb: (data: object) => void) => cb({ token: this.tokens.getAccessToken() }),
         transports: ['websocket', 'polling'],
         reconnection: true,
         reconnectionAttempts: 10,
         reconnectionDelay: 1000,
       });
+
+      // N250: attach handlers registered before the socket existed --
+      // this is what revives the P1-8 reconnect rescue in every game.
+      for (const h of this.preSocketHandlers) this.socket.on(h.event, h.handler);
+      this.preSocketHandlers = [];
 
       this.socket.on('connect', () => {
         this._isConnected = true;
@@ -968,8 +984,17 @@ class RealtimeService {
   }
 
   on(event: string, handler: (...args: unknown[]) => void): () => void {
-    this.socket?.on(event, handler);
-    return () => { this.socket?.off(event, handler); };
+    // N250: pre-socket registrations were silently lost (socket?.on on
+    // null). Buffer them; connect() attaches at socket creation.
+    if (this.socket) {
+      this.socket.on(event, handler);
+    } else {
+      this.preSocketHandlers.push({ event, handler });
+    }
+    return () => {
+      this.socket?.off(event, handler);
+      this.preSocketHandlers = this.preSocketHandlers.filter((h) => h.handler !== handler);
+    };
   }
 
   sendChat(roomId: string, message: string): void {
