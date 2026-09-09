@@ -3225,9 +3225,39 @@ export class DeskillzBridge {
     return cleanup;
   }
 
+  // N243: pending-send queue -- see sendRealtimeMessage.
+  private pendingRealtimeSends: Array<{ event: string; data: unknown; ts: number }> = [];
+  private realtimeFlushHooked = false;
+
+  private hookRealtimeFlush(): void {
+    if (this.realtimeFlushHooked) return;
+    this.realtimeFlushHooked = true;
+    // Socket exists by the time a send is queued (connectRealtime ran),
+    // so this on() attaches to a live socket instance.
+    this.realtime.on('connect', () => this.flushPendingRealtimeSends());
+  }
+
+  private flushPendingRealtimeSends(): void {
+    if (this.pendingRealtimeSends.length === 0) return;
+    const now = Date.now();
+    const queued = this.pendingRealtimeSends.filter((m) => now - m.ts < 30000);
+    this.pendingRealtimeSends = [];
+    for (const m of queued) this.sendRealtimeMessage(m.event, m.data);
+    this.log('Flushed ' + queued.length + ' queued realtime send(s)');
+  }
+
   sendRealtimeMessage(event: string, data: unknown): void {
     if (!this.realtime.isConnected) {
-      this.log('Realtime send skipped (not connected):', event);
+      // N243: queue instead of drop -- launch-time sends raced the socket
+      // connect (match:join_room + the host's first broadcasts vanished).
+      // Flushed FIFO on connect; bounded so a dead socket cannot leak.
+      this.hookRealtimeFlush();
+      if (this.pendingRealtimeSends.length < 50) {
+        this.pendingRealtimeSends.push({ event, data, ts: Date.now() });
+        this.log('Realtime send queued (not connected):', event);
+      } else {
+        this.log('Realtime send dropped (queue full):', event);
+      }
       return;
     }
 
