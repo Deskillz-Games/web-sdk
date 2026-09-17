@@ -230,13 +230,16 @@ function StatBox({
 // DQ WARNING BANNER
 // =============================================================================
 
-function DQWarningBanner({ status, dqCountdown }: { status: UserEnrollmentStatus; dqCountdown?: number | null }) {
+function DQWarningBanner({ status, dqCountdown, tournament }: { status: UserEnrollmentStatus; dqCountdown?: number | null; tournament: Tournament }) {
+  // N217: the check-in window is organizer-configurable (N213, min 5);
+  // render the tournament's real value instead of the old hardcoded 30.
+  const checkinMin = (tournament as { checkinWindowMinutes?: number | null }).checkinWindowMinutes ?? 30
   if (status === 'REGISTERED') {
     return (
       <div className="flex items-start gap-2 p-3 rounded-lg bg-amber-500/10 border border-amber-500/20 text-sm">
         <AlertTriangle className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
         <p className="text-amber-300">
-          Check-in opens 30 min before start.{' '}
+          Check-in opens {checkinMin} min before start.{' '}
           <span className="font-semibold">Missing check-in = disqualification.</span>
         </p>
       </div>
@@ -706,7 +709,7 @@ export default function TournamentCard({
 
         {/* DQ WARNING */}
         {showDQWarning && (
-          <DQWarningBanner status={userStatus} dqCountdown={dqCountdown} />
+          <DQWarningBanner status={userStatus} dqCountdown={dqCountdown} tournament={tournament} />
         )}
 
         {/* ACTION BUTTON */}

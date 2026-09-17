@@ -5,7 +5,7 @@
 //
 // ESPORTS flow:
 //   Player selects entry fee + player mode + currency (all from admin config)
-//   -> "Play Now" -> joins matchmaking queue -> NPC fills if needed -> match
+//   -> "Play Now" -> joins matchmaking queue -> table fills -> match
 //
 // SOCIAL flow:
 //   Player selects point value + currency (all from admin config)
@@ -38,7 +38,7 @@ export type QuickPlayStatus =
   | 'idle'       // Config loaded, showing selectors
   | 'searching'  // Esport: in matchmaking queue
   | 'waiting'    // Social: created a game, waiting for others to join
-  | 'filling'    // NPC fill in progress
+  | 'filling'    // Table filling
   | 'found'      // Match ready — auto-navigate
   | 'error'      // Error with retry
 
@@ -49,7 +49,7 @@ export interface AvailableGame {
   currency: string         // e.g. 'USDT_BSC'
   currentPlayers: number   // Seats filled
   maxPlayers: number       // Total seats e.g. 4
-  secondsRemaining: number // Seconds until NPC fill kicks in
+  secondsRemaining: number // Seconds until the table fills
   mode: string             // 'single' | '100pts' etc
 }
 
@@ -203,7 +203,7 @@ export function useQuickPlayQueue(gameId: string): QuickPlayQueueState {
       setAvailableGames(games as AvailableGame[])
     }
 
-    // NPC fill started
+    // Table filling (SDK 3.7.0 P2: quickPlayFilling)
     const onFilling = (d: any) => {
       if (d?.gameId !== gameId) return
       setStatus('filling')
@@ -218,7 +218,7 @@ export function useQuickPlayQueue(gameId: string): QuickPlayQueueState {
       setStatus('found')
     }
 
-    // Match ready (NPC-filled)
+    // Match starting
     const onStarting = (d: any) => {
       if (d?.gameId !== gameId) return
       setMatchData(d)
@@ -234,7 +234,7 @@ export function useQuickPlayQueue(gameId: string): QuickPlayQueueState {
 
     bridge.on('quickPlaySearching',   onSearching)
     bridge.on('quickPlayLobbyUpdate', onLobbyUpdate)
-    bridge.on('quickPlayNPCFilling',  onFilling)
+    bridge.on('quickPlayFilling',     onFilling)
     bridge.on('quickPlayFound',       onFound)
     bridge.on('quickPlayStarting',    onStarting)
     bridge.on('quickPlayLeft',        onLeft)
@@ -242,7 +242,7 @@ export function useQuickPlayQueue(gameId: string): QuickPlayQueueState {
     return () => {
       bridge.off?.('quickPlaySearching',   onSearching)
       bridge.off?.('quickPlayLobbyUpdate', onLobbyUpdate)
-      bridge.off?.('quickPlayNPCFilling',  onFilling)
+      bridge.off?.('quickPlayFilling',     onFilling)
       bridge.off?.('quickPlayFound',       onFound)
       bridge.off?.('quickPlayStarting',    onStarting)
       bridge.off?.('quickPlayLeft',        onLeft)

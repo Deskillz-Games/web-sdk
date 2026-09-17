@@ -50,7 +50,7 @@ const DISPUTE_REASONS = [
   { value: 'WRONG_SCORE', label: 'Wrong Score', description: 'My score was recorded incorrectly' },
   { value: 'CHEATING', label: 'Suspected Cheating', description: 'Another player may have cheated' },
   { value: 'DISCONNECTION', label: 'Disconnection', description: 'I was disconnected during the match' },
-  { value: 'NPC_ISSUE', label: 'Opponent Issue', description: 'Something was wrong with my opponent' },
+  { value: 'OPPONENT_ISSUE', label: 'Opponent Issue', description: 'Something was wrong with my opponent' }, // SDK 3.7.0 P2
   { value: 'PAYMENT_ISSUE', label: 'Payment Issue', description: 'Entry fee or prize payout problem' },
   { value: 'UNFAIR_MATCHMAKING', label: 'Unfair Match', description: 'Skill gap was too large' },
   { value: 'OTHER', label: 'Other', description: 'Something else went wrong' },

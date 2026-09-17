@@ -68,8 +68,7 @@ export interface QuickPlayConfig {
   socialAllowFreePlay: boolean
   matchmakingTimeoutSecs: number
   matchDurationSecs: number | null
-  sessionDurationMins: number | null
-  npcFillEnabled: boolean
+  sessionDurationMins: number | null // SDK 3.7.0 P2
 }
 
 export interface QuickPlayLaunchData {
@@ -81,7 +80,7 @@ export interface QuickPlayLaunchData {
   entryFee: number
   currency: string
   prizePool: number
-  players: Array<{ id: string; username: string; isNPC: boolean }>
+  players: Array<{ id: string; username: string }>
   matchDurationSecs: number | null
 }
 

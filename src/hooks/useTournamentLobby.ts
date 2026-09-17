@@ -38,8 +38,7 @@ export interface TablePlayer {
   username: string
   avatarUrl?: string
   seatNumber: number
-  isNPC: boolean
-  status: string
+  status: string // SDK 3.7.0 P2
 }
 
 export interface CurrentTableInfo {
@@ -186,7 +185,6 @@ export function useTournamentLobby(
               username: p.username,
               avatarUrl: p.avatarUrl,
               seatNumber: p.seatNumber,
-              isNPC: p.isNPC,
               status: p.status,
             })),
           }
@@ -216,7 +214,6 @@ export function useTournamentLobby(
               username: p.username,
               avatarUrl: p.avatarUrl,
               seatNumber: p.seatNumber,
-              isNPC: p.isNPC,
               status: p.status,
             })),
           })
