@@ -15,7 +15,7 @@
 //     gameId: 'your-game-id',
 //     gameKey: 'YOUR_API_KEY',
 //     apiBaseUrl: 'https://api.deskillz.games',
-//     socketUrl: 'wss://ws.deskillz.games/lobby',
+//     socketUrl: 'wss://api.deskillz.games',
 //     debug: true,
 //   });
 //
@@ -60,7 +60,7 @@ function resolveConfig(cfg: BridgeConfig): ResolvedConfig {
     gameId: cfg.gameId,
     gameKey: cfg.gameKey,
     apiBaseUrl: (cfg.apiBaseUrl || 'https://api.deskillz.games').replace(/\/$/, ''),
-    socketUrl: cfg.socketUrl || 'wss://ws.deskillz.games/lobby',
+    socketUrl: cfg.socketUrl || 'wss://api.deskillz.games', // SDK 3.7.0 P1
     debug: cfg.debug ?? false,
     timeout: 120_000,
   };
@@ -83,6 +83,48 @@ export interface WalletBalance {
   total: number;
   currency: string;
   balances: Array<{ currency: string; amount: number; usdValue: number }>;
+}
+
+// SDK 3.7.0 P1: raw row from GET /api/v1/wallet/balances[/:currency].
+interface WalletBalanceRow {
+  currency: string;
+  total?: string;
+  available?: string;
+  pending?: string;
+  balance?: number;
+  usdValue?: number;
+}
+
+/** Row returned by getLeaderboard(). */
+export interface GameLeaderboardEntry {
+  rank: number;
+  userId: string;
+  username: string;
+  avatarUrl: string | null;
+  wins: number;
+  totalEarnings: number;
+  isCurrentUser: boolean;
+}
+
+interface LeaderboardApiRow {
+  rank: number;
+  userId: string;
+  username: string;
+  avatarUrl?: string | null;
+  matchesWon?: number;
+  earnings?: string;
+}
+
+/** Finite number from a number or decimal string; anything else is 0. */
+function toAmount(value: unknown): number {
+  const n = typeof value === 'number' ? value : Number(value);
+  return Number.isFinite(n) ? n : 0;
+}
+
+/** Stablecoins count 1:1 in USD when the server sends no USD value. */
+function estimateUsdValue(currency: string, amount: number): number {
+  const symbol = String(currency).toUpperCase().split('_')[0];
+  return symbol === 'USDT' || symbol === 'USDC' ? amount : 0;
 }
 
 export interface PrivateRoom {
@@ -309,8 +351,6 @@ export interface QuickPlayConfig {
   matchmakingTimeoutSecs: number;
   matchDurationSecs: number | null;
   sessionDurationMins: number | null;
-  // NPC (internal — not shown to players)
-  npcFillEnabled: boolean;
 }
 
 export interface QuickPlayJoinParams {
@@ -361,7 +401,7 @@ export interface QuickPlayLaunchData {
   entryFee: number;
   currency: string;
   prizePool: number;
-  players: Array<{ id: string; username: string; isNPC: boolean }>;
+  players: Array<{ id: string; username: string }>;
   matchDurationSecs: number | null;
 }
 
@@ -387,7 +427,6 @@ export interface QuickPlayMatchResult {
     score: number | null;
     rank: number | null;
     prizeWon: number;
-    isNPC: boolean;
   }>;
   winnerId: string | null;
   completedAt: string | null;
@@ -399,19 +438,66 @@ export interface QuickPlayMatchData {
   entryFee: number;
   currency: string;
   players: Array<{ id: string; rating: number }>;
-  npcCount?: number;
 }
 
 // =============================================================================
 // TOURNAMENT SCHEDULE TYPES
 // =============================================================================
 
+// SDK 3.7.0 P1: GET /api/v1/tournaments/:id/my-launch
+export interface MyLaunchSeat {
+  id: string;
+  username: string;
+  seatNumber: number;
+}
+
+export interface MyLaunchLive {
+  live: true;
+  matchId: string;
+  token: string;
+  deepLink: string | null;
+  webLink: string | null;
+  tournamentId: string;
+  roundNumber: number;
+  tableNumber: number;
+  gameName: string;
+  gameSlug: string | null;
+  gameplayMode: string | null;
+  gameRuleVariant: string | null;
+  mahjongVariant: string | null;
+  /** The seat that runs the game engine for this table. */
+  hostUserId: string | null;
+  players: MyLaunchSeat[];
+}
+
+export interface MyLaunchLobby {
+  live: false;
+  tournamentId: string;
+  phase: 'CHECKIN' | 'SEATED' | 'ABORTED';
+  scheduledStart: string | null;
+  checkinOpensAt: string | null;
+  checkinClosesAt: string | null;
+  tableSize: number;
+  tableNumber?: number;
+  lobbyLink?: string | null;
+  abortReason?: 'CANCELLED' | 'DQ_NO_SHOW' | 'NOT_REGISTERED' | 'ENDED';
+  me: { userId: string; checkedIn: boolean; seatNumber?: number };
+  roster: Array<{
+    userId: string;
+    username: string;
+    avatarUrl: string | null;
+    checkedInAt: string | null;
+    seatNumber?: number;
+  }>;
+}
+
+export type MyLaunchResponse = MyLaunchLive | MyLaunchLobby;
+
 export interface TournamentSchedulePlayer {
   userId: string;
   username: string;
   avatarUrl?: string;
   seatNumber: number;
-  isNPC: boolean;
   status: string;
   finalScore: number | null;
   finalRank: number | null;
@@ -424,7 +510,6 @@ export interface TournamentScheduleTable {
   tableNumber: number;
   seats: number;
   filledSeats: number;
-  npcCount: number;
   status: string;
   matchRoundsCount: number;
   currentMatchRound: number;
@@ -577,7 +662,7 @@ export type BridgeEventType =
   | 'playerLeft'
   | 'quickPlaySearching'
   | 'quickPlayFound'
-  | 'quickPlayNPCFilling'
+  | 'quickPlayFilling'
   | 'quickPlayStarting'
   | 'quickPlayLeft'
   | 'quickPlayMatchLaunched'
@@ -888,8 +973,8 @@ class RealtimeService {
     if (this.config.debug) console.log('[DeskillzBridge] QP: Match Found', data);
   });
 
-  this.socket.on('quick-play:npc-filling', (data: unknown) => {
-    if (this.config.debug) console.log('[DeskillzBridge] QP: NPC Filling', data);
+  this.socket.on('quick-play:filling', (data: unknown) => {
+    if (this.config.debug) console.log('[DeskillzBridge] QP: Filling', data);
   });
 
   this.socket.on('quick-play:starting', (data: unknown) => {
@@ -1528,21 +1613,19 @@ export class DeskillzBridge {
     }
 
     try {
-      const allBalances = await this.http.get<
-        Array<{ currency: string; balance: number; usdValue: number }>
-      >('/api/v1/wallet/balances');
-
-      // Compute total from balances (wallet/total endpoint returns 404)
-      const totalUsd = allBalances.reduce((sum, b) => sum + (b.usdValue || 0), 0);
+      // SDK 3.7.0 P1 (N386b): rows are {currency, total, available, pending}
+      // decimal strings, plus balance/usdValue numbers. Spendable = available.
+      const rows = await this.http.get<WalletBalanceRow[]>('/api/v1/wallet/balances');
+      const balances = (Array.isArray(rows) ? rows : []).map((b) => {
+        const amount = toAmount(b.balance ?? b.available);
+        const usdValue = b.usdValue != null ? toAmount(b.usdValue) : estimateUsdValue(b.currency, amount);
+        return { currency: b.currency, amount, usdValue };
+      });
 
       const result: WalletBalance = {
-        total: totalUsd,
+        total: balances.reduce((sum, b) => sum + b.usdValue, 0),
         currency: 'USD',
-        balances: allBalances.map((b) => ({
-          currency: b.currency,
-          amount: b.balance,
-          usdValue: b.usdValue,
-        })),
+        balances,
       };
 
       this.emit('walletUpdated', result);
@@ -1557,8 +1640,10 @@ export class DeskillzBridge {
     if (this._isGuest || !this._isAuthenticated) return 0;
 
     try {
-      const result = await this.http.get<{ balance: number }>(`/api/v1/wallet/balances/${currency}`);
-      return result.balance;
+      const row = await this.http.get<WalletBalanceRow>(
+        `/api/v1/wallet/balances/${encodeURIComponent(currency)}`,
+      );
+      return toAmount(row?.balance ?? row?.available);
     } catch (err) {
       this.log('Balance fetch error for', currency, ':', err);
       return 0;
@@ -1713,25 +1798,50 @@ export class DeskillzBridge {
   }
 
   // ---------------------------------------------------------------------------
+  // MY LAUNCH (SDK 3.7.0 P1)
+  // ---------------------------------------------------------------------------
+
+  /**
+   * The caller's state for a tournament: { live: false, phase, roster, ... }
+   * before the table starts, or { live: true, webLink, deepLink, hostUserId,
+   * players, ... } once it is live. Null in guest mode or on error.
+   */
+  async getMyLaunch(tournamentId: string): Promise<MyLaunchResponse | null> {
+    if (this._isGuest || !this._isAuthenticated) return null;
+    try {
+      return await this.http.get<MyLaunchResponse>(
+        `/api/v1/tournaments/${encodeURIComponent(tournamentId)}/my-launch`,
+      );
+    } catch (err) {
+      this.log('getMyLaunch error:', err);
+      return null;
+    }
+  }
+
+  // ---------------------------------------------------------------------------
   // LEADERBOARD
   // ---------------------------------------------------------------------------
 
-  async getLeaderboard(limit = 20): Promise<
-    Array<{ rank: number; username: string; wins: number; totalEarnings: number; isCurrentUser?: boolean }>
-  > {
+  /**
+   * This game's leaderboard (SDK 3.7.0 P1, N387).
+   * GET /api/v1/leaderboard/game/:gameId -> { entries, pagination }.
+   * period: 'daily' | 'weekly' | 'monthly' | 'all_time' (default).
+   */
+  async getLeaderboard(limit = 20, period = 'all_time'): Promise<GameLeaderboardEntry[]> {
     try {
-      const params: Record<string, string> = {
-        gameId: this.config.gameId,
-        limit: String(limit),
-      };
-      const result = await this.http.get<
-        Array<{ rank: number; username: string; wins: number; totalEarnings: number; userId?: string }>
-      >('/api/v1/leaderboard/global', params);
-
+      const page = await this.http.get<{ entries?: LeaderboardApiRow[] }>(
+        `/api/v1/leaderboard/game/${encodeURIComponent(this.config.gameId)}`,
+        { limit: String(limit), period },
+      );
       const myId = this.currentUser?.id;
-      return (result || []).map((entry) => ({
-        ...entry,
-        isCurrentUser: myId ? entry.userId === myId : false,
+      return (Array.isArray(page?.entries) ? page.entries : []).map((row) => ({
+        rank: Number(row.rank) || 0,
+        userId: row.userId,
+        username: row.username,
+        avatarUrl: row.avatarUrl ?? null,
+        wins: Number(row.matchesWon) || 0,
+        totalEarnings: toAmount(row.earnings),
+        isCurrentUser: myId ? row.userId === myId : false,
       }));
     } catch (err) {
       this.log('Get leaderboard error:', err);
@@ -2993,8 +3103,8 @@ export class DeskillzBridge {
         currency: 'USDT_BSC',
         prizePool: 1.80,
         players: [
-          { id: this.currentUser?.id || 'guest', username: this.currentUser?.username || 'Guest', isNPC: false },
-          { id: 'npc-1', username: 'BotPlayer', isNPC: true },
+          { id: this.currentUser?.id || 'guest', username: this.currentUser?.username || 'Guest' },
+          { id: 'guest-opponent', username: 'Opponent' },
         ],
         matchDurationSecs: 120,
       };
@@ -3040,8 +3150,8 @@ export class DeskillzBridge {
           prizePool: 1.80,
           platformFee: 0.20,
           players: [
-            { id: 'guest', username: 'Guest', score, rank: 1, prizeWon: 1.80, isNPC: false },
-            { id: 'npc-1', username: 'BotPlayer', score: score - 50, rank: 2, prizeWon: 0, isNPC: true },
+            { id: 'guest', username: 'Guest', score, rank: 1, prizeWon: 1.80 },
+            { id: 'guest-opponent', username: 'Opponent', score: score - 50, rank: 2, prizeWon: 0 },
           ],
           winnerId: 'guest',
           completedAt: new Date().toISOString(),
@@ -3170,8 +3280,8 @@ export class DeskillzBridge {
       this.cleanupQuickPlayListeners();
     });
 
-    const onNPCFilling = this.onRealtimeEvent('quick-play:npc-filling', (data) => {
-      this.emit('quickPlayNPCFilling', data);
+    const onFilling = this.onRealtimeEvent('quick-play:filling', (data) => {
+      this.emit('quickPlayFilling', data);
     });
 
     const onStarting = this.onRealtimeEvent('quick-play:starting', (data) => {
@@ -3199,7 +3309,7 @@ export class DeskillzBridge {
     });
 
     this._quickPlayCleanups = [
-      onSearching, onFound, onNPCFilling, onStarting,
+      onSearching, onFound, onFilling, onStarting,
       onMatchLaunched, onScoreSubmitted, onMatchCompleted, onLobbyUpdate,
     ];
   }
