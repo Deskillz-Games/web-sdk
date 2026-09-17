@@ -28,6 +28,12 @@ export type {
   TransactionResult,
   // GAP 9 (v3.4.12): session resume payload for 'roomReconnect' event
   ActiveSessionPayload,
+  // SDK 3.7.0 P3: getMyLaunch() and getLeaderboard() result types
+  MyLaunchResponse,
+  MyLaunchLive,
+  MyLaunchLobby,
+  MyLaunchSeat,
+  GameLeaderboardEntry,
 } from './DeskillzBridge';
 // =============================================================================
 // CORE

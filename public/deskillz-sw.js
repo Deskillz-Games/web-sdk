@@ -44,7 +44,8 @@ var CACHE_STATIC  = 'dsk2-static-'  + SCOPE_KEY + '-' + BUILD_HASH;
 var CACHE_DYNAMIC = 'dsk2-dynamic-' + SCOPE_KEY + '-' + BUILD_HASH;
 
 // Pre-cache shell files (resolved against the SW scope -- N54)
-var PRECACHE_URLS = ['./', './index.html', './manifest.json'].map(function (u) {
+// SDK 3.7.0 P3 (N332): the bare scope URL ('./') is a directory, not a fetchable asset.
+var PRECACHE_URLS = ['./index.html', './manifest.json'].map(function (u) {
   try {
     return new URL(u, self.registration.scope).toString();
   } catch (e) {

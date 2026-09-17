@@ -23,7 +23,7 @@ export type {
   QuickPlayStatusItem,
   QuickPlaySearchingData,
   QuickPlayFoundData,
-  QuickPlayNPCFillingData,
+  QuickPlayFillingData,
   QuickPlayStartingData,
 } from './quick-play-types';
 
@@ -35,8 +35,8 @@ export type {
  * Service for Quick Play instant matchmaking.
  *
  * Quick Play allows players to tap "Play Now" and get matched instantly
- * against other players. If not enough humans join within the timeout,
- * NPC bots fill remaining slots.
+ * against other players. If the queue is not full within the timeout,
+ * the remaining seats are filled so the match can start.
  *
  * Supports two game categories:
  * - **Esport:** 1v1, FFA-3, FFA-4 with entry fees, winner-takes-all prizes
@@ -45,8 +45,8 @@ export type {
  * Socket events (listen via `sdk.realtime.on(event, handler)`):
  * - `quick-play:searching`  - Joined queue, searching for opponents
  * - `quick-play:found`      - Match found with all human players
- * - `quick-play:npc-filling` - NPC bots filling remaining slots
- * - `quick-play:starting`   - Match launching (humans + NPCs ready)
+ * - `quick-play:filling`    - Remaining seats being filled (SDK 3.7.0 P3)
+ * - `quick-play:starting`   - Match launching (all seats ready)
  *
  * All endpoints require authentication.
  * All paths use /api/v1/lobby/quick-play/ prefix.
@@ -94,8 +94,8 @@ export class QuickPlayService {
    * a match is created immediately (check `result.matchId`). Otherwise,
    * the player waits and receives socket events as the queue progresses.
    *
-   * NPC fill is automatically scheduled after the game's configured timeout
-   * (typically 20 seconds).
+   * Seat filling is scheduled automatically after the game's configured
+   * timeout (typically 20 seconds).
    *
    * @param params - Game ID, entry fee, player count, and currency.
    * @returns Queue position, estimated wait, and optional immediate match ID.
@@ -121,7 +121,7 @@ export class QuickPlayService {
    * Leave the current Quick Play matchmaking queue.
    *
    * Removes the player from any active Quick Play queue and cancels
-   * pending NPC fill jobs. Safe to call even if not currently in a queue.
+   * pending seat-fill jobs. Safe to call even if not currently in a queue.
    *
    * @returns `{ success: true }` if removed, `{ success: false }` if not in queue.
    */

@@ -350,7 +350,7 @@ export class DeskillzSDK {
    * Quick Play matchmaking service.
    * Handles joining/leaving the instant matchmaking queue and status polling.
    *
-   * Esport games: entry-fee queue with NPC fill on timeout.
+   * Esport games: entry-fee queue; open seats fill on timeout (SDK 3.7.0 P3).
    * Social games: create/join board with point values and rake.
    * All endpoints use /api/v1/lobby/quick-play/ prefix. Auth required.
    * 3 endpoints total (join, leave, status).

@@ -122,20 +122,19 @@ export interface QuickPlayFoundData {
 }
 
 /**
- * Data for 'quick-play:npc-filling' event.
- * Emitted when NPC bots are being added to fill remaining slots.
+ * Data for 'quick-play:filling' event (SDK 3.7.0 P3).
+ * Emitted while the remaining seats are being filled.
  */
-export interface QuickPlayNPCFillingData {
+export interface QuickPlayFillingData {
   queueKey: string;
   gameId: string;
-  npcsAdding: number;
   totalPlayers: number;
   requiredPlayers: number;
 }
 
 /**
  * Data for 'quick-play:starting' event.
- * Emitted when the match is about to launch (humans + NPCs assembled).
+ * Emitted when the match is about to launch (all seats assembled).
  */
 export interface QuickPlayStartingData {
   matchId: string;
@@ -146,5 +145,4 @@ export interface QuickPlayStartingData {
     id: string;
     rating: number;
   }>;
-  npcCount: number;
 }
