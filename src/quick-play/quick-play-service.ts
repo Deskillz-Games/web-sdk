@@ -94,8 +94,7 @@ export class QuickPlayService {
    * a match is created immediately (check `result.matchId`). Otherwise,
    * the player waits and receives socket events as the queue progresses.
    *
-   * Seat filling is scheduled automatically after the game's configured
-   * timeout (typically 20 seconds).
+   * Listen for the quick play socket events to follow the queue.
    *
    * @param params - Game ID, entry fee, player count, and currency.
    * @returns Queue position, estimated wait, and optional immediate match ID.
@@ -120,8 +119,8 @@ export class QuickPlayService {
   /**
    * Leave the current Quick Play matchmaking queue.
    *
-   * Removes the player from any active Quick Play queue and cancels
-   * pending seat-fill jobs. Safe to call even if not currently in a queue.
+   * Removes the player from any active Quick Play queue. Safe to call even
+   * if not currently in a queue.
    *
    * @returns `{ success: true }` if removed, `{ success: false }` if not in queue.
    */

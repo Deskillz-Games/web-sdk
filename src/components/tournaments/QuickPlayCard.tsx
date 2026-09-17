@@ -13,7 +13,7 @@
 // SOCIAL — 6 states:
 //   idle      Dropdown selectors (point value, currency) + live Available
 //             Games board + Create Game button
-//   waiting   Created a game — seat fill dots + Cancel
+//   waiting   Created a game — seat dots + Cancel
 //   filling   "Filling match..."
 //   found     "Match Found!" + auto-navigate via onMatchStart
 //   error     Error message + Try Again
@@ -28,7 +28,7 @@
 //   Point value and currency are <select> dropdowns (scalable, clean)
 //   Social: AvailableGamesBoard shows live open games from socket
 //   Social: "Create Game" creates a game others can join
-//   Social: "waiting" state shows seat fill progress
+//   Social: "waiting" state shows seats taken
 //   Esport: entry fee + mode stay as chips (few options, faster to scan)
 //   No useNavigate — navigation via onMatchStart callback only
 //   No custom Tailwind tokens (neon-*, gaming-*)
