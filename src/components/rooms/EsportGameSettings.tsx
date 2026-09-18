@@ -30,6 +30,7 @@ import {
 } from 'lucide-react'
 import { cn } from '../../utils'
 import { GameCapabilities, DEFAULT_CAPABILITIES } from '../../types/GameCapabilities'
+import { ENTRY_CURRENCIES, filterEntryCurrencies } from '../../entry-currencies' // D-C1
 
 // =============================================================================
 // TYPES
@@ -107,7 +108,8 @@ const ENTRY_FEE_PRESETS = [0, 1, 5, 10, 25, 50, 100, 250, 500]
 const DURATION_PRESETS = [60, 120, 180, 300, 600, 900, 1800]
 const ROUNDS_PRESETS = [1, 3, 5, 7]
 const FFA_PLAYER_PRESETS    = [2, 3, 4, 6, 8, 10, 16, 32, 64]
-const DEFAULT_CURRENCIES    = ['USDT_BSC', 'USDC_BSC', 'BNB', 'USDT_TRON', 'USDC_TRON']
+// D-C1: entry fees are stablecoin only; BNB stays a wallet/gas currency.
+const DEFAULT_CURRENCIES    = [...ENTRY_CURRENCIES]
 const CURRENCY_LABELS: Record<string, string> = {
   BNB: 'BNB', USDT_BSC: 'USDT (BSC)', USDT_TRON: 'USDT (TRC20)',
   USDC_BSC: 'USDC (BSC)', USDC_TRON: 'USDC (TRC20)',
@@ -315,7 +317,27 @@ export default function EsportGameSettings({
   const cap  = capabilities || DEFAULT_CAPABILITIES
   const isSE = config.tournamentFormat === 'SINGLE_ELIMINATION'
   const isFFA = config.tournamentFormat === 'FFA'
-  const availableCurrencies = currencies || DEFAULT_CURRENCIES
+  // D-C1: the `currencies` prop comes from the developer's QuickPlayConfig,
+  // which for a game configured before this rule can still list BNB -- so it
+  // is intersected with the platform entry currencies, not trusted. A stored
+  // entryCurrency outside the resulting list is shown disabled rather than
+  // silently swapped.
+  const availableCurrencies = filterEntryCurrencies(currencies || DEFAULT_CURRENCIES)
+  const currencyOptions: { value: string; label: string; disabled: boolean }[] = [
+    ...availableCurrencies.map((c) => ({
+      value: c as string,
+      label: CURRENCY_LABELS[c] || c,
+      disabled: false,
+    })),
+    ...(config.entryCurrency &&
+    !(availableCurrencies as readonly string[]).includes(config.entryCurrency)
+      ? [{
+          value: config.entryCurrency,
+          label: `${CURRENCY_LABELS[config.entryCurrency] || config.entryCurrency} (legacy)`,
+          disabled: true,
+        }]
+      : []),
+  ]
 
   // How many format options are available
   const formatCount = [cap.supportsSingleElimination, cap.supportsFFA].filter(Boolean).length
@@ -468,8 +490,8 @@ export default function EsportGameSettings({
         <div className={S.selectWrap}>
           <select value={config.entryCurrency} onChange={(e) => update({ entryCurrency: e.target.value })}
             disabled={disabled} className={S.select}>
-            {availableCurrencies.map((c) => (
-              <option key={c} value={c}>{CURRENCY_LABELS[c] || c}</option>
+            {currencyOptions.map((c) => (
+              <option key={c.value} value={c.value} disabled={c.disabled}>{c.label}</option>
             ))}
           </select>
           <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500 pointer-events-none" />
@@ -725,10 +747,9 @@ export function createDefaultEsportGameConfig(
     qpConfig?.esportEntryFeeTiers && qpConfig.esportEntryFeeTiers.length > 0
       ? qpConfig.esportEntryFeeTiers[0]
       : undefined
-  const firstCurrency =
-    qpConfig?.esportCurrencies && qpConfig.esportCurrencies.length > 0
-      ? qpConfig.esportCurrencies[0]
-      : undefined
+  // D-C1: the developer's first configured currency could be BNB on a config
+  // written before this rule; filter before using it as the default.
+  const firstCurrency = filterEntryCurrencies(qpConfig?.esportCurrencies)[0]
   const entryFee           = firstEntryFeeTier ?? 5
   const entryCurrency      = firstCurrency ?? 'USDT_BSC'
   const platformFeePercent = qpConfig?.esportPlatformFee ?? 10

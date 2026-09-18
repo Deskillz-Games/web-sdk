@@ -37,6 +37,7 @@ import {
 } from 'lucide-react'
 import { cn } from '../../utils'
 import { GameCapabilities, DEFAULT_CAPABILITIES } from '../../types/GameCapabilities'
+import { currencyOptionsWithLegacy } from '../../entry-currencies' // D-C1
 
 // =============================================================================
 // TYPES
@@ -198,13 +199,9 @@ const ENTRY_FEE_PRESETS    = [0, 1, 5, 10, 25, 50, 100]
 
 const TIMER_PRESETS = [15, 30, 45, 60, 90, 120]
 
-const CURRENCIES = [
-  { value: 'USDT_BSC',  label: 'USDT (BEP-20)' },
-  { value: 'USDC_BSC',  label: 'USDC (BEP-20)' },
-  { value: 'BNB',       label: 'BNB' },
-  { value: 'USDT_TRON', label: 'USDT (TRC-20)' },
-  { value: 'USDC_TRON', label: 'USDC (TRC-20)' },
-]
+// D-C1: the currency list now comes from ../../entry-currencies (stablecoins
+// only). BNB stays a wallet/gas currency, and a room created before this rule
+// still shows its stored value as a disabled "(legacy)" chip.
 
 const TABLE_BREAK_RULES: { value: TableBreakRule; label: string; description: string }[] = [
   { value: 'REBALANCE', label: 'Rebalance',    description: 'Move players to other tables when one drops below minimum.' },
@@ -797,8 +794,8 @@ export default function SocialGameSettings({
       <div className={S.section}>
         <label className={S.label}>Currency</label>
         <div className={S.chipGrid}>
-          {CURRENCIES.map((c) => (
-            <Chip key={c.value} selected={config.currency === c.value} disabled={disabled} onClick={() => update({ currency: c.value, entryCurrency: c.value })}>{c.label}</Chip>
+          {currencyOptionsWithLegacy(config.currency).map((c) => (
+            <Chip key={c.value} selected={config.currency === c.value} disabled={disabled || c.disabled} onClick={() => update({ currency: c.value, entryCurrency: c.value })}>{c.label}</Chip>
           ))}
         </div>
       </div>
