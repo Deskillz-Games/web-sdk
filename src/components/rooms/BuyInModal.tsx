@@ -10,9 +10,16 @@
 // Main app imports via '@sdk/components/rooms/BuyInModal' alias.
 // Previous main-app copy deleted. Strict err: unknown error handling ported
 // up from the main-app copy for improved TypeScript safety.
+//
+// N419-P1 (3.7.3): the pay-with picker is built from ENTRY_CURRENCIES (D-C1),
+// merged with the caller's balance rows. Every entry currency is listed; one
+// the player does not hold shows 0.00 and blocks confirm. A room created
+// before D-C1 keeps its stored currency as a selectable "(legacy)" row so it
+// can run to completion. With no balance rows at all the balances are
+// unknown: the picker still shows and the server decides sufficiency.
 // =============================================================================
 
-import { useState, useCallback, useMemo } from 'react'
+import { useState, useCallback, useMemo, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   X,
@@ -26,6 +33,12 @@ import {
   ChevronDown,
 } from 'lucide-react'
 import { cn } from '../../utils'
+import {
+  ENTRY_CURRENCIES,
+  CURRENCY_LABEL,
+  currencyLabel,
+  isEntryCurrency,
+} from '../../entry-currencies' // N419
 
 // =============================================================================
 // TYPES
@@ -61,6 +74,17 @@ export interface BuyInModalProps {
 
 const QUICK_BUY_MULTIPLIERS = [50, 100, 200, 500]
 
+// N419: one row of the pay-with picker.
+interface PayOption {
+  currency: string
+  label: string
+  symbol: string
+  balance: number
+  /** false for a legacy non-stablecoin row: its balance is not in USD, so it
+   *  cannot be compared with the USD buy-in amount on the client. */
+  usdPegged: boolean
+}
+
 // =============================================================================
 // COMPONENT
 // =============================================================================
@@ -84,14 +108,63 @@ export default function BuyInModal({
     return Math.floor(buyInAmount / config.pointValueUsd)
   }, [buyInAmount, config.pointValueUsd])
 
-  const selectedWallet = useMemo(() => {
-    return walletBalances.find((w) => w.currency === selectedCurrency)
-  }, [walletBalances, selectedCurrency])
+  // N419: no rows at all means the caller never loaded balances -- unknown,
+  // not zero. Figures are hidden and the server decides sufficiency.
+  const balancesKnown = walletBalances.length > 0
+
+  const payOptions = useMemo<PayOption[]>(() => {
+    const held = new Map<string, WalletBalanceItem>()
+    for (const row of walletBalances) held.set(row.currency, row)
+
+    const toOption = (currency: string, legacy: boolean): PayOption => {
+      const row = held.get(currency)
+      const label = currencyLabel(currency)
+      return {
+        currency,
+        label: legacy ? `${label} (legacy)` : label,
+        symbol: row?.symbol || currency.split('_')[0],
+        balance: row ? Number(row.balance) || 0 : 0,
+        usdPegged: !legacy,
+      }
+    }
+
+    const options = ENTRY_CURRENCIES.map((currency) => toOption(currency, false))
+    const stored = config.entryCurrency
+    // A known platform currency only: an unknown string would be rejected by
+    // the API, so it is never offered.
+    if (
+      stored &&
+      !isEntryCurrency(stored) &&
+      Object.prototype.hasOwnProperty.call(CURRENCY_LABEL, stored)
+    ) {
+      options.push(toOption(stored, true))
+    }
+    return options
+  }, [walletBalances, config.entryCurrency])
+
+  // Always a member of payOptions, whatever the stored state holds.
+  const activeCurrency = useMemo(() => {
+    return payOptions.some((o) => o.currency === selectedCurrency)
+      ? selectedCurrency
+      : ENTRY_CURRENCIES[0]
+  }, [payOptions, selectedCurrency])
+
+  const selectedOption = useMemo(() => {
+    return payOptions.find((o) => o.currency === activeCurrency)
+  }, [payOptions, activeCurrency])
 
   const hasSufficientBalance = useMemo(() => {
-    if (!selectedWallet) return true
-    return selectedWallet.balance >= buyInAmount
-  }, [selectedWallet, buyInAmount])
+    if (!balancesKnown || !selectedOption || !selectedOption.usdPegged) return true
+    return selectedOption.balance >= buyInAmount
+  }, [balancesKnown, selectedOption, buyInAmount])
+
+  // The component stays mounted while closed, so re-sync to the room's
+  // currency each time it opens (or the room changes underneath it).
+  useEffect(() => {
+    if (!isOpen) return
+    setSelectedCurrency(config.entryCurrency)
+    setCurrencyDropdownOpen(false)
+  }, [isOpen, config.entryCurrency])
 
   const isValidAmount = useMemo(() => {
     if (buyInAmount < config.minBuyIn) return false
@@ -130,14 +203,14 @@ export default function BuyInModal({
     setIsSubmitting(true)
     setError(null)
     try {
-      await onConfirm(buyInAmount, selectedCurrency)
+      await onConfirm(buyInAmount, activeCurrency)
     } catch (err: unknown) {
       const error = err as { response?: { data?: { message?: string } }; message?: string }
       setError(error.response?.data?.message || error.message || 'Buy-in failed. Please try again.')
     } finally {
       setIsSubmitting(false)
     }
-  }, [isValidAmount, hasSufficientBalance, buyInAmount, selectedCurrency, config.minBuyIn, onConfirm])
+  }, [isValidAmount, hasSufficientBalance, buyInAmount, activeCurrency, config.minBuyIn, onConfirm])
 
   const handleClose = useCallback(() => {
     if (!isSubmitting) {
@@ -288,7 +361,7 @@ export default function BuyInModal({
             </div>
 
             {/* Currency Selection */}
-            {walletBalances.length > 0 && (
+            {payOptions.length > 0 && (
               <div>
                 <label className="block text-sm font-medium text-gray-300 mb-2">
                   <Wallet className="w-4 h-4 inline mr-1" />
@@ -307,10 +380,12 @@ export default function BuyInModal({
                     )}
                   >
                     <div className="flex items-center gap-3">
-                      <span className="font-medium text-white">{selectedCurrency}</span>
-                      {selectedWallet && (
+                      <span className="font-medium text-white">
+                        {selectedOption?.label ?? activeCurrency}
+                      </span>
+                      {balancesKnown && selectedOption && (
                         <span className="text-sm text-gray-400">
-                          Balance: {selectedWallet.symbol}{selectedWallet.balance.toFixed(2)}
+                          Balance: {selectedOption.symbol}{selectedOption.balance.toFixed(2)}
                         </span>
                       )}
                     </div>
@@ -324,24 +399,27 @@ export default function BuyInModal({
 
                   {currencyDropdownOpen && (
                     <div className="absolute z-20 w-full mt-2 bg-[#1a1a2e] border border-gray-700 rounded-xl shadow-xl overflow-hidden">
-                      {walletBalances.map((wallet) => (
+                      {payOptions.map((option) => (
                         <button
-                          key={wallet.currency}
+                          key={option.currency}
                           type="button"
                           onClick={() => {
-                            setSelectedCurrency(wallet.currency)
+                            setSelectedCurrency(option.currency)
                             setCurrencyDropdownOpen(false)
+                            setError(null)
                           }}
                           className={cn(
                             'w-full flex items-center justify-between p-4 transition-colors',
                             'hover:bg-purple-500/10',
-                            selectedCurrency === wallet.currency && 'bg-purple-500/20',
+                            activeCurrency === option.currency && 'bg-purple-500/20',
                           )}
                         >
-                          <span className="font-medium text-white">{wallet.currency}</span>
-                          <span className="text-sm text-gray-400">
-                            {wallet.symbol}{wallet.balance.toFixed(2)}
-                          </span>
+                          <span className="font-medium text-white">{option.label}</span>
+                          {balancesKnown && (
+                            <span className="text-sm text-gray-400">
+                              {option.symbol}{option.balance.toFixed(2)}
+                            </span>
+                          )}
                         </button>
                       ))}
                     </div>
@@ -358,7 +436,8 @@ export default function BuyInModal({
                   <p className="text-sm font-medium text-red-300">Insufficient Balance</p>
                   <p className="text-xs text-red-400/80 mt-1">
                     You need ${buyInAmount.toFixed(2)} but only have{' '}
-                    {selectedWallet?.symbol}{selectedWallet?.balance.toFixed(2) || '0.00'}.
+                    {selectedOption?.symbol}{(selectedOption?.balance ?? 0).toFixed(2)}{' '}
+                    in {selectedOption?.label ?? activeCurrency}.
                     Please deposit more funds.
                   </p>
                 </div>
