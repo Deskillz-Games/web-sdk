@@ -7,6 +7,10 @@
 // realtime, event system, and guest fallbacks.
 // No external npm dependencies (socket.io-client is optional).
 // All endpoints use /api/v1/ prefix.
+// 3.7.4 (P7c 1d): N432 room currency (no bare 'USDT'), N393 round payloads,
+// N397 withdraw per design 6.1 + quote / cancel, transactions / stats /
+// history mapped to the real responses, N473 deposit claim + deposit
+// address, N420-P6 host-withdraw methods removed, N534 verifyAge body.
 //
 // USAGE:
 //   import { DeskillzBridge } from './sdk/DeskillzBridge';
@@ -121,6 +125,25 @@ function toAmount(value: unknown): number {
   return Number.isFinite(n) ? n : 0;
 }
 
+/** [N397] a linked WalletAccount id (the withdraw walletId). */
+const WALLET_ID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+/** [N397] EVM addresses compare case-insensitively; Tron base58 is case-sensitive (rule 38). */
+function sameAddress(a: string, b: string): boolean {
+  return /^0x/i.test(a) ? a.toLowerCase() === b.toLowerCase() : a === b;
+}
+
+/** [N420-P6] { currency: amount } from the host earnings block, numbers only. */
+function hostByCurrency(raw: unknown): Record<string, number> {
+  const out: Record<string, number> = {};
+  if (!raw || typeof raw !== 'object' || Array.isArray(raw)) return out;
+  for (const [k, v] of Object.entries(raw as Record<string, unknown>)) {
+    const n = Number(v);
+    if (/^[A-Z0-9_]{2,16}$/.test(k) && Number.isFinite(n)) out[k] = n;
+  }
+  return out;
+}
+
 /** Stablecoins count 1:1 in USD when the server sends no USD value. */
 function estimateUsdValue(currency: string, amount: number): number {
   const symbol = String(currency).toUpperCase().split('_')[0];
@@ -204,6 +227,9 @@ export interface PlayerStats {
   bestStreak: number;
   avgScore: number;
   tournamentWins: number;
+  /** [N397] from GET users/:id/stats */
+  skillRating?: number;
+  tournamentsPlayed?: number;
 }
 
 export interface MatchRecord {
@@ -232,7 +258,42 @@ export interface TransactionResult {
   success: boolean;
   txHash?: string;
   message?: string;
+  /** [N397] the ledger transaction id (cancelWithdrawal takes it) */
+  transactionId?: string;
+  status?: string;
 }
+
+/** [N397] GET /api/v1/wallet/withdraw/quote (design 6.1). */
+export interface WithdrawQuote {
+  currency: string;
+  chain: string;
+  amount: number;
+  fee: number;
+  net: number;
+  minimum: number;
+  available: number;
+  sufficient: boolean;
+  autoApprove: boolean;
+  holdReason: string | null;
+  destination: { walletId: string; address: string } | null;
+  enabled: boolean;
+}
+
+/** [N473] GET /api/v1/wallet/deposit-address/:currency. */
+export interface DepositAddressInfo {
+  currency: string;
+  chain: string;
+  network: string;
+  address: string;
+  tokenContract: string;
+  decimals: number;
+  minAmount: number;
+  confirmations: number;
+  linkedWalletOnly: boolean;
+}
+
+/** [N473] a deposit claim: the on-chain hash, optionally the sending wallet. */
+export type DepositProof = string | { txHash: string; fromAddress?: string };
 
 // =============================================================================
 // ENROLLMENT TYPES (v3.0)
@@ -1650,41 +1711,143 @@ export class DeskillzBridge {
     }
   }
 
-  async deposit(currency: string, amount: number): Promise<TransactionResult> {
+  /**
+   * [N473] Claim a ledger deposit. The player sends the token on-chain from a
+   * linked wallet to getDepositAddress(currency).address; the claim carries
+   * that transaction hash and the backend verifies it on-chain (A2: the sender
+   * must be a wallet linked to the account; the real amount is what is
+   * credited). Without a hash there is nothing to claim and no request is
+   * made -- Add Funds lives on deskillz.games.
+   */
+  async deposit(currency: string, amount: number, proof?: DepositProof): Promise<TransactionResult> {
     if (this._isGuest || !this._isAuthenticated) {
       return { success: false, message: 'Wallet not available in guest mode.' };
     }
 
+    const txHash = (typeof proof === 'string' ? proof : proof?.txHash ?? '').trim();
+    if (!txHash) {
+      return {
+        success: false,
+        message: 'Add funds on deskillz.games (Wallet > Add Funds), then claim the transaction hash here.',
+      };
+    }
+
     try {
-      this.log('Depositing:', amount, currency);
-      const result = await this.http.post<TransactionResult>('/api/v1/wallet/deposit', { currency, amount });
-      if (result.success) {
-        const updated = await this.getWalletBalance();
-        this.emit('walletUpdated', updated);
-      }
-      return result;
+      const target = await this.getDepositAddress(currency);
+      if (!target) return { success: false, message: `Deposits are not available for ${currency}.` };
+      const fromAddress =
+        (typeof proof === 'object' ? proof.fromAddress?.trim() : '') || this.currentUser?.walletAddress || '';
+      this.log('Claiming deposit:', amount, currency, txHash);
+      const tx = await this.http.post<{ id?: string; status?: string; txHash?: string }>(
+        '/api/v1/wallet/deposit',
+        { txHash, amount, currency, fromAddress, toAddress: target.address, chain: target.chain },
+      );
+      this.getWalletBalance().then((u) => this.emit('walletUpdated', u)).catch(() => {});
+      return {
+        success: true,
+        txHash: tx?.txHash ?? txHash,
+        transactionId: tx?.id,
+        status: tx?.status,
+        message: 'Deposit claimed. It is credited after the network confirmations.',
+      };
     } catch (err) {
       this.log('Deposit error:', err);
-      return { success: false, message: 'Deposit failed. Please try again.' };
+      return { success: false, message: err instanceof Error ? err.message : 'Deposit failed. Please try again.' };
     }
   }
 
-  async withdraw(currency: string, amount: number, address?: string): Promise<TransactionResult> {
+  /** [N473] GET /api/v1/wallet/deposit-address/:currency -- where a ledger deposit is sent. */
+  async getDepositAddress(currency: string): Promise<DepositAddressInfo | null> {
+    if (this._isGuest || !this._isAuthenticated) return null;
+    try {
+      return await this.http.get<DepositAddressInfo>(
+        `/api/v1/wallet/deposit-address/${encodeURIComponent(currency)}`,
+      );
+    } catch (err) {
+      this.log('getDepositAddress error:', err);
+      return null;
+    }
+  }
+
+  /**
+   * [N397] GET /api/v1/wallet/withdraw/quote -- fee, net, minimum, destination
+   * and whether it would go out automatically. Throws the server message.
+   */
+  async quoteWithdrawal(currency: string, amount: number, walletId?: string): Promise<WithdrawQuote | null> {
+    if (this._isGuest || !this._isAuthenticated) return null;
+    return this.http.get<WithdrawQuote>('/api/v1/wallet/withdraw/quote', { currency, amount, walletId });
+  }
+
+  /**
+   * [N397] Design 6.1: POST /api/v1/wallet/withdraw { currency, amount, walletId }.
+   * Money only goes to a wallet linked to the account (default: the primary
+   * one on the currency's chain), never to a typed address. The third
+   * argument may be a linked walletId, or the address the player expects: if
+   * that is not the quoted destination the request is refused here, before
+   * anything is held. Every withdrawal is quoted first.
+   */
+  async withdraw(currency: string, amount: number, walletIdOrAddress?: string): Promise<TransactionResult> {
     if (this._isGuest || !this._isAuthenticated) {
       return { success: false, message: 'Wallet not available in guest mode.' };
     }
 
+    const pick = (walletIdOrAddress ?? '').trim();
+    const walletId = WALLET_ID_RE.test(pick) ? pick : undefined;
+
     try {
-      this.log('Withdrawing:', amount, currency);
-      const result = await this.http.post<TransactionResult>('/api/v1/wallet/withdraw', { currency, amount, address });
-      if (result.success) {
-        const updated = await this.getWalletBalance();
-        this.emit('walletUpdated', updated);
+      const quote = await this.quoteWithdrawal(currency, amount, walletId);
+      if (!quote) return { success: false, message: 'Could not quote this withdrawal. Please try again.' };
+      if (!quote.enabled) return { success: false, message: 'Withdrawals are not open yet.' };
+      const dest = quote.destination;
+      if (!dest) return { success: false, message: `Link a wallet for ${currency} on deskillz.games first.` };
+      if (pick && !walletId && !sameAddress(pick, dest.address)) {
+        return {
+          success: false,
+          message: `Withdrawals go to your linked wallet ${dest.address}. Link ${pick} on deskillz.games to use it.`,
+        };
       }
-      return result;
+      if (amount < quote.minimum) {
+        return { success: false, message: `The minimum withdrawal is ${quote.minimum} ${currency}.` };
+      }
+      if (!quote.sufficient) {
+        return { success: false, message: `Not enough ${currency}: ${quote.available} available.` };
+      }
+
+      this.log('Withdrawing:', amount, currency, 'to', dest.address);
+      const tx = await this.http.post<{ id?: string; status?: string; txHash?: string }>(
+        '/api/v1/wallet/withdraw',
+        { currency, amount, walletId: dest.walletId },
+      );
+      this.getWalletBalance().then((u) => this.emit('walletUpdated', u)).catch(() => {});
+      return {
+        success: true,
+        txHash: tx?.txHash,
+        transactionId: tx?.id,
+        status: tx?.status,
+        message: quote.autoApprove
+          ? `Withdrawal requested: ${quote.net} ${currency} to ${dest.address}.`
+          : `Withdrawal requested. It waits for a review (${quote.holdReason ?? 'manual check'}).`,
+      };
     } catch (err) {
       this.log('Withdraw error:', err);
-      return { success: false, message: 'Withdrawal failed. Please try again.' };
+      return { success: false, message: err instanceof Error ? err.message : 'Withdrawal failed. Please try again.' };
+    }
+  }
+
+  /** [N397] POST /api/v1/wallet/withdrawals/:id/cancel -- only while it is PENDING. */
+  async cancelWithdrawal(transactionId: string): Promise<TransactionResult> {
+    if (this._isGuest || !this._isAuthenticated) {
+      return { success: false, message: 'Wallet not available in guest mode.' };
+    }
+    try {
+      const tx = await this.http.post<{ id?: string; status?: string }>(
+        `/api/v1/wallet/withdrawals/${encodeURIComponent(transactionId)}/cancel`,
+      );
+      this.getWalletBalance().then((u) => this.emit('walletUpdated', u)).catch(() => {});
+      return { success: true, transactionId: tx?.id ?? transactionId, status: tx?.status, message: 'Withdrawal cancelled.' };
+    } catch (err) {
+      this.log('Cancel withdrawal error:', err);
+      return { success: false, message: err instanceof Error ? err.message : 'Could not cancel the withdrawal.' };
     }
   }
 
@@ -1771,7 +1934,20 @@ export class DeskillzBridge {
     try {
       const userId = this.currentUser?.id;
       if (!userId) return empty;
-      return await this.http.get<PlayerStats>(`/api/v1/users/${userId}/stats`);
+      // [N397] GET users/:id/stats returns UserStatsDto (totalMatches,
+      // totalWins, winRate in %, totalEarnings as a decimal string).
+      const raw = await this.http.get<Record<string, unknown> | null>(`/api/v1/users/${userId}/stats`);
+      const s = raw ?? {};
+      return {
+        ...empty,
+        gamesPlayed: toAmount(s.totalMatches ?? s.gamesPlayed),
+        gamesWon: toAmount(s.totalWins ?? s.gamesWon),
+        winRate: toAmount(s.winRate),
+        totalEarnings: toAmount(s.totalEarnings),
+        tournamentWins: toAmount(s.tournamentWins),
+        skillRating: toAmount(s.skillRating),
+        tournamentsPlayed: toAmount(s.tournamentsPlayed),
+      };
     } catch (err) {
       this.log('Get stats error:', err);
       return empty;
@@ -1786,11 +1962,24 @@ export class DeskillzBridge {
     if (this._isGuest || !this._isAuthenticated) return [];
 
     try {
-      const result = await this.http.get<{
-        matches: MatchRecord[];
-        pagination: { page: number; limit: number; total: number };
-      }>('/api/v1/matches/history/me', { page, limit });
-      return result.matches;
+      // [N397 / N388] GET matches/history/me returns a plain array: the last 50
+      // matches across every game, no paging, no currency. Keep this game's
+      // rows, page them here and map them onto MatchRecord.
+      const rows = await this.http.get<unknown>('/api/v1/matches/history/me');
+      const list: any[] = Array.isArray(rows) ? rows : [];
+      const mine = list.filter((r: any) => !r?.game?.id || r.game.id === this.config.gameId);
+      const size = Math.max(1, Math.floor(limit) || 20);
+      const start = Math.max(0, (Math.floor(page) || 1) - 1) * size;
+      return mine.slice(start, start + size).map((r: any): MatchRecord => ({
+        id: String(r?.matchId ?? r?.id ?? ''),
+        date: String(r?.playedAt ?? r?.date ?? ''),
+        opponent: String(r?.opponent?.username ?? (typeof r?.opponent === 'string' ? r.opponent : '')),
+        result: r?.isWinner ? 'win' : 'loss',
+        score: toAmount(r?.myScore ?? r?.score),
+        earnings: toAmount(r?.prizeWon ?? r?.earnings),
+        currency: String(r?.prizeCurrency ?? r?.currency ?? ''),
+        gameMode: String(r?.mode ?? r?.matchType ?? r?.gameMode ?? ''),
+      }));
     } catch (err) {
       this.log('Get match history error:', err);
       return [];
@@ -1941,19 +2130,32 @@ export class DeskillzBridge {
     }
   }
 
-  /** GET /api/v1/wallet/transactions */
+  /**
+   * GET /api/v1/wallet/transactions -> the rows. [N397] The API pages with
+   * page / limit (an offset was a 400) and answers { transactions, pagination };
+   * offset is still accepted here and turned into a page.
+   */
   async getTransactions(filters?: {
     limit?: number;
     offset?: number;
+    page?: number;
     type?: string;
+    currency?: string;
+    status?: string;
   }): Promise<any[]> {
     if (this._isGuest || !this._isAuthenticated) return [];
     try {
+      const limit = filters?.limit && filters.limit > 0 ? Math.min(100, Math.floor(filters.limit)) : undefined;
+      const page = filters?.page ?? (filters?.offset && limit ? Math.floor(filters.offset / limit) + 1 : undefined);
       const params: Record<string, string> = {};
-      if (filters?.limit) params.limit = String(filters.limit);
-      if (filters?.offset) params.offset = String(filters.offset);
-      if (filters?.type) params.type = filters.type;
-      return await this.http.get<any[]>('/api/v1/wallet/transactions', params);
+      if (limit) params.limit = String(limit);
+      if (page && page > 1) params.page = String(Math.floor(page));
+      if (filters?.type) params.type = filters.type.toUpperCase();
+      if (filters?.currency) params.currency = filters.currency;
+      if (filters?.status) params.status = filters.status.toUpperCase();
+      const res = await this.http.get<{ transactions?: any[] } | any[]>('/api/v1/wallet/transactions', params);
+      if (Array.isArray(res)) return res;
+      return Array.isArray(res?.transactions) ? res.transactions : [];
     } catch (err) {
       this.log('getTransactions error:', err);
       return [];
@@ -2372,6 +2574,8 @@ export class DeskillzBridge {
       esportsEarnings: number;
       socialEarnings: number;
       bonusEarnings: number;
+      /** [N420-P6] per-currency ledger totals */
+      byCurrency: Record<string, number>;
     };
     activeRooms: Array<{
       id: string; roomCode: string; name: string; gameName: string; currentPlayers: number;
@@ -2403,6 +2607,7 @@ export class DeskillzBridge {
         totalAllTime: 0, totalThisMonth: 0, totalThisWeek: 0,
         pendingSettlement: 0, availableWithdrawal: 0,
         esportsEarnings: 0, socialEarnings: 0, bonusEarnings: 0,
+        byCurrency: {} as Record<string, number>,
       },
       activeRooms: [] as Array<any>,
       recentSettlements: [] as Array<any>,
@@ -2464,6 +2669,7 @@ export class DeskillzBridge {
           esportsEarnings:     Number(e.esportsEarnings  ?? 0),
           socialEarnings:      Number(e.socialEarnings   ?? 0),
           bonusEarnings:       Number(e.bonusEarnings    ?? 0),
+          byCurrency:          hostByCurrency(e.byCurrency),
         },
         activeRooms: Array.isArray(d.activeRooms) ? d.activeRooms : [],
         recentSettlements: Array.isArray(d.recentSettlements) ? d.recentSettlements : [],
@@ -2475,19 +2681,8 @@ export class DeskillzBridge {
     }
   }
 
-  async withdrawHostEarnings(): Promise<boolean> {
-    if (this._isGuest || !this._isAuthenticated) return false;
-
-    try {
-      await this.http.post('/api/v1/host/earnings/withdraw');
-      const updated = await this.getWalletBalance();
-      this.emit('walletUpdated', updated);
-      return true;
-    } catch (err) {
-      this.log('Withdraw host earnings error:', err);
-      return false;
-    }
-  }
+  // [N420-P6] withdrawHostEarnings / requestHostWithdrawal removed: host
+  // earnings are ordinary wallet balance, withdrawn with withdraw() (N396 7).
 
   // ---------------------------------------------------------------------------
   // HOST — INDIVIDUAL ENDPOINTS (v3.2)
@@ -2574,7 +2769,8 @@ export class DeskillzBridge {
   /** POST /api/v1/host/verify-age */
   async verifyAge(): Promise<any> {
     this.ensureAuthenticated();
-    return await this.http.post<any>('/api/v1/host/verify-age');
+    // [N534] VerifyAgeDto requires { confirmed: boolean }; an empty body was a 400.
+    return await this.http.post<any>('/api/v1/host/verify-age', { confirmed: true });
   }
 
   /** GET /api/v1/host/age-verified */
@@ -2592,21 +2788,6 @@ export class DeskillzBridge {
     }
   }
 
-  /** POST /api/v1/host/withdraw — withdraw host earnings to wallet */
-  async requestHostWithdrawal(params: {
-    amount: number;
-    currency: string;
-    walletAddress: string;
-  }): Promise<{ transactionId: string; estimatedArrival: string }> {
-    this.ensureAuthenticated();
-    const result = await this.http.post<{ transactionId: string; estimatedArrival: string }>(
-      '/api/v1/host/withdraw',
-      params,
-    );
-    // Refresh wallet after withdrawal
-    this.getWalletBalance().then((updated) => this.emit('walletUpdated', updated)).catch(() => {});
-    return result;
-  }
   /** GET /api/v1/tournaments/:tournamentId/my-seat
    * Returns the player's current cash game table assignment, or null if not yet seated.
    */
@@ -2643,13 +2824,14 @@ export class DeskillzBridge {
     if (this._isGuest) return this.createMockRoom({ ...opts, isSocialGame: false });
 
     this.log('Creating esport room:', opts);
+    const entryCurrency = this.requireRoomCurrency(opts.currency);
     const res = await this.http.post<any>('/api/v1/private-rooms', {
       gameId: this.config.gameId,
       name: opts.name || `${this.currentUser?.username}'s Room`,
       maxPlayers: opts.maxPlayers || 4,
       minPlayers: opts.minPlayers || 2,
       entryFee: opts.entryFee || 0,
-      entryCurrency: opts.currency || 'USDT',
+      entryCurrency,
       visibility: opts.visibility || 'PUBLIC_LISTED',
       gameCategory: 'ESPORTS',
       ...(opts.hostRole && { hostRole: opts.hostRole }),
@@ -2673,12 +2855,13 @@ export class DeskillzBridge {
     if (this._isGuest) return this.createMockRoom({ ...opts, isSocialGame: true });
 
     this.log('Creating social room:', opts);
+    const entryCurrency = this.requireRoomCurrency(opts.currency);
     const res = await this.http.post<any>('/api/v1/private-rooms/social', {
       gameId: this.config.gameId,
       name: opts.name || `${this.currentUser?.username}'s Social Room`,
       maxPlayers: opts.maxPlayers || 4,
       minPlayers: opts.minPlayers || 2,
-      entryCurrency: opts.currency || 'USDT',
+      entryCurrency,
       visibility: opts.visibility || 'PUBLIC_LISTED',
       gameType: opts.gameType || 'MAHJONG',
       pointValueUsd: opts.pointValue,
@@ -2695,6 +2878,16 @@ export class DeskillzBridge {
     if (this.realtime.isConnected) this.realtime.subscribeRoom(room.id);
     this.emit('roomJoined', { room });
     return room;
+  }
+
+  /**
+   * [N432] A room is created in the currency the host picked. There is no
+   * default: the old bare 'USDT' is not a currency and was always a 400.
+   */
+  private requireRoomCurrency(currency: string | undefined): string {
+    const c = (currency ?? '').trim();
+    if (!c || c === 'USDT') throw new Error('Pick the room currency (USDT_BSC, USDC_BSC or USDT_TRON).');
+    return c;
   }
 
   /**
@@ -2757,10 +2950,17 @@ export class DeskillzBridge {
     this.currentRoom = null;
   }
 
-  async roomBuyIn(amount: number, currency: string = 'USDT'): Promise<{ success: boolean; pointBalance: number }> {
+  /**
+   * [N432] The room decides the currency: pass one only to state it
+   * explicitly (a bare 'USDT' is dropped, the server treats it as unset).
+   */
+  async roomBuyIn(amount: number, currency?: string): Promise<{ success: boolean; pointBalance: number }> {
     if (this._isGuest || !this.currentRoom) return { success: true, pointBalance: amount };
 
-    return this.http.post(`/api/v1/private-rooms/${this.currentRoom.id}/buy-in`, { amount, currency });
+    return this.http.post(`/api/v1/private-rooms/${this.currentRoom.id}/buy-in`, {
+      amount,
+      ...(currency && currency !== 'USDT' ? { currency } : {}),
+    });
   }
 
   async roomCashOut(): Promise<{ success: boolean; amount: number }> {
@@ -2770,21 +2970,32 @@ export class DeskillzBridge {
   }
 
   /** POST /api/v1/private-rooms/:roomId/rebuy -- rebuy chips when balance is 0 */
-  async roomRebuy(amount: number, currency: string = 'USDT'): Promise<{ success: boolean; pointBalance: number }> {
+  async roomRebuy(amount: number, currency?: string): Promise<{ success: boolean; pointBalance: number }> {
     if (this._isGuest || !this.currentRoom) return { success: true, pointBalance: amount };
 
-    return this.http.post(`/api/v1/private-rooms/${this.currentRoom.id}/rebuy`, { amount, currency });
+    // [N432] as roomBuyIn: the room's currency unless one is stated.
+    return this.http.post(`/api/v1/private-rooms/${this.currentRoom.id}/rebuy`, {
+      amount,
+      ...(currency && currency !== 'USDT' ? { currency } : {}),
+    });
   }
 
   // ---------------------------------------------------------------------------
   // ROUND & SETTLEMENT (Social Games)
   // ---------------------------------------------------------------------------
 
-  /** POST /api/v1/private-rooms/rounds/submit -- submit round results from game */
+  /**
+   * POST /api/v1/private-rooms/rounds/submit -- submit round results from game.
+   * [N393] The body is SubmitRoundDto: potSize and results[{ odid, pointsDelta,
+   * isWinner }] (at least two). The old playerResults shape was always a 400.
+   */
   async submitRound(payload: {
     roomId: string;
     roundNumber: number;
-    playerResults: Array<{ playerId: string; score: number; pointsWon: number }>;
+    potSize: number;
+    results: Array<{ odid: string; pointsDelta: number; isWinner?: boolean }>;
+    winnerId?: string;
+    gameData?: Record<string, unknown>;
   }): Promise<{ success: boolean; roundId: string }> {
     if (this._isGuest) {
       this.log('Round submitted (local only):', payload);
@@ -3235,9 +3446,12 @@ export class DeskillzBridge {
   }
 
   /** POST /api/v1/lobby/quick-play/social/:roomId/round -- submit social QP round */
+  // [N393] body is SubmitSocialRoundDto: winnerId, potAmount and
+  // playerResults[{ playerId, pointChange }].
   async submitSocialQuickPlayRound(roomId: string, payload: {
-    roundNumber: number;
-    playerResults: Array<{ playerId: string; score: number; pointsWon: number }>;
+    winnerId: string;
+    potAmount: number;
+    playerResults: Array<{ playerId: string; pointChange: number }>;
   }): Promise<{ success: boolean }> {
     if (this._isGuest) return { success: true };
 

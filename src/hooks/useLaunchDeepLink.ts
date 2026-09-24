@@ -45,6 +45,11 @@ export const LAUNCH_SS_ROOM_CODE     = 'deskillz_pending_roomCode'
 // never written any more (the launch token stays in the URL for the bridge).
 export const LAUNCH_SS_MATCH_TOKEN   = 'deskillz_pending_matchToken'
 
+// N510-RETURN: where the site launched this tab from. Written by
+// captureLaunchParams, never removed by clearLaunchParams, read by
+// deskillzReturn.ts for the result screen's single exit.
+export const LAUNCH_SS_ORIGIN        = 'deskillz_launch_origin'
+
 export interface LaunchParams {
   matchId: string | null
   tournamentId: string | null
@@ -94,6 +99,8 @@ export function captureLaunchParams(): LaunchParams {
     if (matchId)      sessionStorage.setItem(LAUNCH_SS_MATCH_ID, matchId)
     if (tournamentId) sessionStorage.setItem(LAUNCH_SS_TOURNAMENT_ID, tournamentId)
     if (roomCode)     sessionStorage.setItem(LAUNCH_SS_ROOM_CODE, roomCode)
+    // N510-RETURN: remember the launch origin for backToDeskillz()
+    sessionStorage.setItem(LAUNCH_SS_ORIGIN, JSON.stringify({ matchId, tournamentId, roomCode }))
 
     // Scrub what we consumed. round / table / gameplayMode / gameRuleVariant
     // and token are left for the bridge / game to read.

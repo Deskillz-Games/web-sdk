@@ -17,7 +17,10 @@
 //   bridge.getLevelInfo()       -> GET /api/v1/host/level
 //   bridge.verifyAge()         -> POST /api/v1/host/verify-age
 //   bridge.checkAgeVerified()  -> GET /api/v1/host/age-verified
-//   bridge.requestHostWithdrawal() -> POST /api/v1/host/withdraw
+//
+// [N420-P6] requestWithdrawal removed: host earnings are ordinary wallet
+// balance and are withdrawn from the wallet screen (N396 design 7).
+// earnings.byCurrency carries the per-currency ledger totals.
 // =============================================================================
 
 import { useState, useEffect, useCallback, useRef } from 'react'
@@ -94,6 +97,7 @@ export interface EarningsSummary {
   esportsEarnings: number
   socialEarnings: number
   bonusEarnings: number
+  byCurrency: Record<string, number>
 }
 
 export interface HostBadge {
@@ -301,7 +305,6 @@ export interface HostDashboardState {
 export interface UseHostDashboardResult extends HostDashboardState {
   refresh: () => Promise<void>
   verifyAge: () => Promise<boolean>
-  requestWithdrawal: (amount: number, currency: string, walletAddress: string) => Promise<boolean>
   activeTier: TierInfo | null
   activeTierDisplay: TierDisplayInfo
   totalEarnings: number
@@ -386,7 +389,18 @@ function safeEarnings(raw: any): EarningsSummary | null {
     esportsEarnings:     toNum(raw.esportsEarnings),
     socialEarnings:      toNum(raw.socialEarnings),
     bonusEarnings:       toNum(raw.bonusEarnings),
+    byCurrency:          safeByCurrency(raw.byCurrency),
   }
+}
+
+function safeByCurrency(raw: any): Record<string, number> {
+  const out: Record<string, number> = {}
+  if (!raw || typeof raw !== 'object' || Array.isArray(raw)) return out
+  for (const [k, v] of Object.entries(raw)) {
+    const n = Number(v)
+    if (/^[A-Z0-9_]{2,16}$/.test(k) && Number.isFinite(n)) out[k] = n
+  }
+  return out
 }
 
 // =============================================================================
@@ -514,24 +528,6 @@ export function useHostDashboard(
     }
   }, [])
 
-  const requestWithdrawal = useCallback(async (
-    amount: number,
-    currency: string,
-    walletAddress: string,
-  ): Promise<boolean> => {
-    const bridge = getBridge()
-    if (!bridge) { toast.error('Bridge not initialized'); return false }
-    try {
-      await bridge.requestHostWithdrawal({ amount, currency, walletAddress })
-      toast.success(`Withdrawal of $${amount.toFixed(2)} requested.`)
-      fetchDashboard()
-      return true
-    } catch (err: any) {
-      toast.error(err?.message ?? 'Withdrawal failed')
-      return false
-    }
-  }, [fetchDashboard])
-
   const { profile, esportsTier, socialTier, earnings } = state
 
   const activeTier = socialTier ?? esportsTier ?? null
@@ -549,7 +545,6 @@ export function useHostDashboard(
     ...state,
     refresh: fetchDashboard,
     verifyAge,
-    requestWithdrawal,
     activeTier,
     activeTierDisplay,
     totalEarnings,

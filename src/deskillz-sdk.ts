@@ -334,7 +334,7 @@ export class DeskillzSDK {
    * const profile = await sdk.host.getProfile();
    * const earnings = await sdk.host.getEarnings();
    * const badges = await sdk.host.getBadges();
-   * await sdk.host.requestWithdrawal({ amount: 50, currency: 'USDT_BSC' });
+   * // host earnings are wallet balance: withdraw them through the wallet (N420-P6)
    * ```
    */
   get host(): HostService {

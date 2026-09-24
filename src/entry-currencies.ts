@@ -14,11 +14,13 @@
 // against the same list the platform enforces.
 // =============================================================================
 
+// [N535] N488 (D-W11): Circle ended USDC on Tron -- Tron is USDT only, as in
+// the backend and the site. USDC_TRON keeps its label below so a legacy row
+// still displays (currencyOptionsWithLegacy shows it disabled).
 export const ENTRY_CURRENCIES = [
   'USDT_BSC',
   'USDC_BSC',
   'USDT_TRON',
-  'USDC_TRON',
 ] as const
 
 export type EntryCurrency = (typeof ENTRY_CURRENCIES)[number]

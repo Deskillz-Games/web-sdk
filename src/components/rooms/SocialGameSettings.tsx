@@ -192,7 +192,12 @@ const POINT_TARGET_OPTIONS: Record<SocialGameType, { value: number; label: strin
   ],
 }
 
-const RAKE_PERCENT_PRESETS = [3, 5, 7, 10, 15, 20]
+// [N431] Host room rake is 3-15 % (CreateSocialRoomDto, N429-B): no 20 % chip,
+// the free input is bounded, and a room default seeded from the quick-play
+// config (system tables allow 1-10 %) is clamped into the host range.
+const HOST_RAKE_MIN = 3
+const HOST_RAKE_MAX = 15
+const RAKE_PERCENT_PRESETS = [3, 5, 7, 10, 15]
 const RAKE_CAP_PRESETS     = [1, 2, 5, 10, 25, 50]
 const POINT_VALUE_PRESETS  = [0.01, 0.05, 0.10, 0.25, 0.50, 1.00]
 const ENTRY_FEE_PRESETS    = [0, 1, 5, 10, 25, 50, 100]
@@ -208,27 +213,47 @@ const TABLE_BREAK_RULES: { value: TableBreakRule; label: string; description: st
   { value: 'CLOSE',     label: 'Close Table',  description: 'Cash out all players at the under-minimum table and close it.' },
 ]
 
-const MIN_SE_SIZE = 8
+// [N458] Largest total the social room API accepts (CreateSocialRoomDto).
+const SOCIAL_ROOM_MAX_PLAYERS = 64
 
 // =============================================================================
-// POWER-OF-2 HELPERS
+// BRACKET SIZE HELPERS
 // =============================================================================
 
-function isPowerOf2(n: number): boolean { return n > 0 && (n & (n - 1)) === 0 }
-function nextPowerOf2(n: number): number {
-  if (n <= MIN_SE_SIZE) return MIN_SE_SIZE
-  let p = MIN_SE_SIZE; while (p < n) p *= 2; return p
+// [N458] A size is valid when every round fills whole tables and the last round
+// is exactly one table. 4 seats: 1 advances -> 4, 16, 64; 2 advance -> 4, 8, 16,
+// 32, 64. 3 seats: 1 advances -> 3, 9, 27. capMax 0 = no game limit.
+function bracketSizes(seatsPerTable: number, advance: number, capMax: number): number[] {
+  const seats = Math.max(2, Math.floor(seatsPerTable))
+  const adv   = Math.min(Math.max(1, Math.floor(advance)), seats - 1)
+  const limit = Math.min(capMax > 0 ? capMax : SOCIAL_ROOM_MAX_PLAYERS, SOCIAL_ROOM_MAX_PLAYERS)
+  const sizes = [seats]
+  for (;;) {
+    const prev = (sizes[sizes.length - 1] * seats) / adv
+    if (!Number.isInteger(prev) || prev % seats !== 0 || prev > limit) break
+    sizes.push(prev)
+  }
+  return sizes
 }
-function prevPowerOf2(n: number): number {
-  if (n <= MIN_SE_SIZE) return MIN_SE_SIZE
-  const safe = isPowerOf2(n) ? n : nextPowerOf2(n)
-  return Math.max(MIN_SE_SIZE, safe / 2)
+// [N463] The size drives the rule. The stepper offers every size some advance
+// rule can run; the advance choices are the rules that can run that size. One
+// table has no next round, so nobody advances.
+function advanceOptions(size: number, seatsPerTable: number, capMax: number): Array<1 | 2> {
+  const seats = Math.max(2, Math.floor(seatsPerTable))
+  if (size <= seats) return []
+  return ([1, 2] as const).filter((adv) => adv < seats && bracketSizes(seats, adv, capMax).includes(size))
 }
-function deriveTournamentMeta(players: number, seatsPerTable: number) {
-  const safeP  = isPowerOf2(players) ? players : nextPowerOf2(players)
-  const rounds = Math.log2(safeP)
-  const tables = Math.ceil(safeP / Math.max(1, seatsPerTable))
-  return { players: safeP, rounds, tables }
+function deriveTournamentMeta(players: number, seatsPerTable: number, advance: 1 | 2, capMax: number) {
+  const seats = Math.max(2, Math.floor(seatsPerTable))
+  const sizes = Array.from(new Set([...bracketSizes(seats, 1, capMax), ...(seats > 2 ? bracketSizes(seats, 2, capMax) : [])]))
+    .sort((a, b) => a - b)
+  const found   = sizes.findIndex((s) => s >= players)
+  const index   = found === -1 ? sizes.length - 1 : found
+  const size    = sizes[index]
+  const options = advanceOptions(size, seats, capMax)
+  const adv: 1 | 2 = options.length === 0 ? 1 : options.includes(advance) ? advance : options[0]
+  const rounds  = options.length === 0 ? 1 : bracketSizes(seats, adv, capMax).indexOf(size) + 1
+  return { players: size, rounds, tables: Math.ceil(size / seats), sizes, index, advanceOptions: options, advance: adv }
 }
 
 // =============================================================================
@@ -311,13 +336,22 @@ function Chip({ selected, disabled, onClick, children, className }: {
   )
 }
 
-function ChipPlusFreeInput({ presets, value, disabled, onSelect, inputMin, inputStep,
-  inputPrefix, inputSuffix, placeholder, formatPreset }: {
+function ChipPlusFreeInput({ presets, value, disabled, onSelect, inputMin, inputMax, inputStep,
+  inputPrefix, inputSuffix, placeholder, formatPreset, customStart }: {
   presets: number[]; value: number; disabled?: boolean; onSelect: (v: number) => void
-  inputMin?: number; inputStep?: number; inputPrefix?: string
+  inputMin?: number; inputMax?: number; inputStep?: number; inputPrefix?: string
   inputSuffix?: string; placeholder?: string; formatPreset?: (v: number) => string
+  customStart?: number
 }) {
   const isCustom = !presets.includes(value)
+  // [N431] a value is accepted only inside [inputMin, inputMax]; Custom starts
+  // at customStart (else last preset x 1.5) clamped into that range.
+  const lo = inputMin ?? 0
+  const inRange = (v: number) => v >= lo && (inputMax === undefined || v <= inputMax)
+  const startCustom = () => {
+    const s = customStart ?? presets[presets.length - 1] * 1.5
+    onSelect(Math.min(inputMax ?? s, Math.max(lo, s)))
+  }
   return (
     <div className="space-y-2">
       <div className={S.chipGrid}>
@@ -326,13 +360,13 @@ function ChipPlusFreeInput({ presets, value, disabled, onSelect, inputMin, input
             {formatPreset ? formatPreset(p) : String(p)}
           </Chip>
         ))}
-        <Chip selected={isCustom} disabled={disabled} onClick={() => { if (!isCustom) onSelect(presets[presets.length - 1] * 1.5) }}>Custom</Chip>
+        <Chip selected={isCustom} disabled={disabled} onClick={() => { if (!isCustom) startCustom() }}>Custom</Chip>
       </div>
       {isCustom && (
         <div className="flex items-center gap-2">
           {inputPrefix && <span className="text-gray-500 text-sm">{inputPrefix}</span>}
-          <input type="number" min={inputMin ?? 0} step={inputStep ?? 1} value={value}
-            onChange={(e) => { const v = parseFloat(e.target.value); if (!isNaN(v) && v >= (inputMin ?? 0)) onSelect(v) }}
+          <input type="number" min={lo} max={inputMax} step={inputStep ?? 1} value={value}
+            onChange={(e) => { const v = parseFloat(e.target.value); if (!isNaN(v) && inRange(v)) onSelect(v) }}
             disabled={disabled} placeholder={placeholder}
             className={cn(S.freeInput, 'w-32')} />
           {inputSuffix && <span className="text-gray-500 text-sm">{inputSuffix}</span>}
@@ -343,37 +377,39 @@ function ChipPlusFreeInput({ presets, value, disabled, onSelect, inputMin, input
 }
 
 // =============================================================================
-// POWER-OF-2 STEPPER (Tournament Size)
+// BRACKET SIZE STEPPER (Tournament Size)
 // =============================================================================
 
-function PowerOf2Stepper({ value, seatsPerTable, disabled, capMax, onChange }: {
-  value: number; seatsPerTable: number; disabled?: boolean
-  capMax: number; onChange: (players: number, rounds: number, tables: number) => void
+function BracketSizeStepper({ value, seatsPerTable, advance, disabled, capMax, onChange }: {
+  value: number; seatsPerTable: number; advance: 1 | 2; disabled?: boolean
+  capMax: number; onChange: (players: number, rounds: number, tables: number, advance: 1 | 2) => void
 }) {
-  const meta   = deriveTournamentMeta(value, seatsPerTable)
-  const canDec = meta.players > MIN_SE_SIZE
-  const canInc = capMax === 0 || meta.players * 2 <= capMax
+  const meta   = deriveTournamentMeta(value, seatsPerTable, advance, capMax)
+  const canDec = meta.index > 0
+  const canInc = meta.index < meta.sizes.length - 1
+  const go = (index: number) => {
+    const m = deriveTournamentMeta(meta.sizes[index], seatsPerTable, advance, capMax)
+    onChange(m.players, m.rounds, m.tables, m.advance)
+  }
 
   return (
     <div className="space-y-3">
       <div className="flex items-center gap-3">
-        <button type="button" disabled={disabled || !canDec}
-          onClick={() => { const n = prevPowerOf2(meta.players); const m = deriveTournamentMeta(n, seatsPerTable); onChange(m.players, m.rounds, m.tables) }}
-          className={S.stepBtn}>−</button>
+        <button type="button" disabled={disabled || !canDec} aria-label="Smaller tournament"
+          onClick={() => go(meta.index - 1)} className={S.stepBtn}>&minus;</button>
         <div className="flex-1 text-center py-2 bg-[#1a1a2e] border border-gray-700 rounded-lg">
           <span className="text-white text-xl font-bold">{meta.players}</span>
           <span className="text-gray-500 text-sm ml-2">players</span>
         </div>
-        <button type="button" disabled={disabled || !canInc}
-          onClick={() => { const n = meta.players * 2; const m = deriveTournamentMeta(n, seatsPerTable); onChange(m.players, m.rounds, m.tables) }}
-          className={S.stepBtn}>+</button>
+        <button type="button" disabled={disabled || !canInc} aria-label="Larger tournament"
+          onClick={() => go(meta.index + 1)} className={S.stepBtn}>+</button>
       </div>
       <div className="grid grid-cols-2 gap-2">
-        <div className={S.readOnly}><Lock className="w-3 h-3 flex-shrink-0" /><span className="text-xs">{meta.rounds} bracket rounds (auto)</span></div>
-        <div className={S.readOnly}><Lock className="w-3 h-3 flex-shrink-0" /><span className="text-xs">{meta.tables} tables (auto)</span></div>
+        <div className={S.readOnly}><Lock className="w-3 h-3 flex-shrink-0" /><span className="text-xs">{meta.rounds} bracket round{meta.rounds === 1 ? '' : 's'} (auto)</span></div>
+        <div className={S.readOnly}><Lock className="w-3 h-3 flex-shrink-0" /><span className="text-xs">{meta.tables} table{meta.tables === 1 ? '' : 's'} (auto)</span></div>
       </div>
       <p className="text-xs text-gray-500">
-        Single elimination. Must be power of 2. Steps: {meta.players} → {canInc ? meta.players * 2 : '—'}
+        Single elimination. Every round fills whole tables. Sizes: {meta.sizes.join(', ')}
       </p>
     </div>
   )
@@ -415,15 +451,6 @@ export default function SocialGameSettings({
     }
   }, [supportsSuddenDeath, config.tiebreakRule])
 
-  // Ensure tournament size is always valid power of 2
-  useEffect(() => {
-    if (isTournament && !isPowerOf2(config.maxPlayers)) {
-      const safe = nextPowerOf2(config.maxPlayers)
-      const m = deriveTournamentMeta(safe, seatsPerTable)
-      update({ maxPlayers: m.players, minPlayers: m.players, numberOfTables: m.tables })
-    }
-  }, [isTournament])
-
   const update = useCallback(
     (partial: Partial<SocialGameConfig>) => onChange({ ...config, ...partial }),
     [config, onChange],
@@ -442,6 +469,18 @@ export default function SocialGameSettings({
   const totalCashGamePlayers = isCashGame ? config.numberOfTables * seatsPerTable : config.maxPlayers
   const pointTargetOptions   = POINT_TARGET_OPTIONS[config.gameType] || POINT_TARGET_OPTIONS.BIG_TWO
   const minBuyIn             = config.pointValueUsd * 50
+  const tournamentCap        = cap.maxTournamentSize || 0
+
+  // [N458] keep the tournament on a valid bracket size when the mode, the
+  // advance rule or the table size changes (skipped while a game lock is landing)
+  useEffect(() => {
+    if (!isTournament || (isLocked && config.gameType !== lockedGameType)) return
+    const m = deriveTournamentMeta(config.maxPlayers, seatsPerTable, config.playersAdvancePerTable, tournamentCap)
+    if (m.players !== config.maxPlayers || m.tables !== config.numberOfTables || m.advance !== config.playersAdvancePerTable) {
+      update({ maxPlayers: m.players, minPlayers: m.players, numberOfTables: m.tables, playersAdvancePerTable: m.advance })
+    }
+  }, [isTournament, isLocked, lockedGameType, config.gameType, config.maxPlayers, config.numberOfTables,
+      config.playersAdvancePerTable, seatsPerTable, tournamentCap])
 
   return (
     <div className={cn('space-y-6', className)}>
@@ -562,7 +601,8 @@ export default function SocialGameSettings({
           <div className={S.section}>
             <label className={S.label}><Percent className="w-4 h-4 text-pink-400" />Rake Percentage</label>
             <ChipPlusFreeInput presets={RAKE_PERCENT_PRESETS} value={config.rakePercentage} disabled={disabled}
-              onSelect={(v) => update({ rakePercentage: v })} inputMin={0} inputStep={0.5}
+              onSelect={(v) => update({ rakePercentage: v })} inputMin={HOST_RAKE_MIN} inputMax={HOST_RAKE_MAX}
+              customStart={12.5} inputStep={0.5}
               inputSuffix="%" placeholder="5" formatPreset={(v) => `${v}%`} />
           </div>
 
@@ -613,11 +653,11 @@ export default function SocialGameSettings({
           {/* Tournament Size */}
           <div className={S.section}>
             <LabelWithTooltip icon={Layers} iconClass="text-purple-400" label="Tournament Size (Single Elimination)"
-              tooltip="Must be a power of 2 for a balanced bracket. Bracket rounds and tables are auto-calculated. Each table plays until one winner advances." />
-            <PowerOf2Stepper
+              tooltip="Every round must fill whole tables. Pick the size first: it decides which advance rules are possible. Bracket rounds and tables are auto-calculated." />
+            <BracketSizeStepper
               value={config.maxPlayers} seatsPerTable={seatsPerTable} disabled={disabled}
-              capMax={cap.maxPlayers || 0}
-              onChange={(players, rounds, tables) => update({ maxPlayers: players, minPlayers: players, numberOfTables: tables })}
+              advance={config.playersAdvancePerTable} capMax={tournamentCap}
+              onChange={(players, _rounds, tables, advance) => update({ maxPlayers: players, minPlayers: players, numberOfTables: tables, playersAdvancePerTable: advance })}
             />
           </div>
 
@@ -625,21 +665,44 @@ export default function SocialGameSettings({
           <div className={S.section}>
             <LabelWithTooltip icon={Users} iconClass="text-cyan-400" label="Players Advance Per Table"
               tooltip="How many players from each table move on to the next round. 1 = only the table winner advances (strictest). 2 = top 2 advance (more forgiving, fills next round faster)." />
-            <div className="grid grid-cols-2 gap-2">
-              {([
-                { value: 1 as const, label: '1 Advances', sub: 'Table winner only. Strictest format.' },
-                { value: 2 as const, label: '2 Advance',  sub: 'Top 2 from each table move on.' },
-              ]).map(({ value, label, sub }) => (
-                <button key={value} type="button" disabled={disabled}
-                  onClick={() => update({ playersAdvancePerTable: value })}
-                  className={cn('p-3 rounded-lg border-2 transition-all text-left',
-                    config.playersAdvancePerTable === value ? 'border-yellow-500 bg-yellow-500/10' : 'border-gray-700 bg-[#1a1a2e] hover:border-gray-600',
-                    disabled && S.chipDisabled)}>
-                  <p className={cn('font-bold text-sm', config.playersAdvancePerTable === value ? 'text-white' : 'text-gray-300')}>{label}</p>
-                  <p className="text-xs text-gray-500 mt-0.5">{sub}</p>
-                </button>
-              ))}
-            </div>
+            {(() => {
+              // [N463] only the rules that can run this size are selectable
+              const options = deriveTournamentMeta(config.maxPlayers, seatsPerTable, config.playersAdvancePerTable, tournamentCap).advanceOptions
+              if (options.length === 0) {
+                return (
+                  <p className="p-3 rounded-lg border border-gray-700 bg-[#1a1a2e] text-xs text-gray-400">
+                    Single table. The table winner takes the tournament, so nobody advances.
+                  </p>
+                )
+              }
+              return (
+                <div className="grid grid-cols-2 gap-2">
+                  {([
+                    { value: 1 as const, label: '1 Advances', sub: 'Table winner only. Strictest format.' },
+                    { value: 2 as const, label: '2 Advance',  sub: 'Top 2 from each table move on.' },
+                  ]).map(({ value, label, sub }) => {
+                    const available = options.includes(value)
+                    const selected  = available && config.playersAdvancePerTable === value
+                    return (
+                      <button key={value} type="button" disabled={disabled || !available}
+                        onClick={() => available && update({ playersAdvancePerTable: value })}
+                        className={cn('p-3 rounded-lg border-2 transition-all text-left',
+                          selected ? 'border-yellow-500 bg-yellow-500/10' : 'border-gray-700 bg-[#1a1a2e]',
+                          available && !disabled && !selected && 'hover:border-gray-600',
+                          (!available || disabled) && 'opacity-40 cursor-not-allowed')}>
+                        <div className="flex items-center justify-between gap-2">
+                          <p className={cn('font-bold text-sm', selected ? 'text-white' : 'text-gray-300')}>{label}</p>
+                          {!available && <span className="text-xs text-red-400 px-2 py-0.5 rounded-full border border-red-500/30 bg-red-500/10">Not Available</span>}
+                        </div>
+                        <p className="text-xs text-gray-500 mt-0.5">
+                          {available ? sub : `${config.maxPlayers} players cannot fill whole tables every round with this rule.`}
+                        </p>
+                      </button>
+                    )
+                  })}
+                </div>
+              )
+            })()}
           </div>
 
           {/* Tiebreak Rule */}
@@ -857,7 +920,7 @@ export default function SocialGameSettings({
       )}
 
       {isTournament && (() => {
-        const meta = deriveTournamentMeta(config.maxPlayers, seatsPerTable)
+        const meta = deriveTournamentMeta(config.maxPlayers, seatsPerTable, config.playersAdvancePerTable, tournamentCap)
         return (
           <div className="p-4 bg-gradient-to-r from-purple-500/10 to-yellow-500/10 rounded-lg border border-purple-500/20">
             <div className="flex items-center gap-2 mb-3">
@@ -871,7 +934,7 @@ export default function SocialGameSettings({
               <div><p className="text-xs text-gray-500">Prize Pool</p><p className="text-lg font-bold text-green-400">{config.entryFee === 0 ? 'For fun' : `$${(config.entryFee * meta.players * 0.9).toFixed(2)}`}</p></div>
             </div>
             <div className="mt-3 pt-3 border-t border-gray-700/50 grid grid-cols-2 gap-2 text-xs text-gray-500">
-              <span>Advance per table: <span className="text-white font-medium">{config.playersAdvancePerTable}</span></span>
+              <span>Advance per table: <span className="text-white font-medium">{meta.advanceOptions.length === 0 ? 'single table' : config.playersAdvancePerTable}</span></span>
               <span>Tiebreak: <span className="text-white font-medium">{config.tiebreakRule.replace(/_/g, ' ').toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase())}</span></span>
             </div>
           </div>
@@ -908,7 +971,7 @@ export function createDefaultSocialGameConfig(
       ? qpConfig.socialPointValueTiers[0]
       : undefined
   const pointValueUsd    = firstPointValueTier ?? 0.25
-  const rakePercentage   = qpConfig?.socialRakePercent ?? 5
+  const rakePercentage   = Math.min(HOST_RAKE_MAX, Math.max(HOST_RAKE_MIN, qpConfig?.socialRakePercent ?? 5))
   const rakeCapPerRound  = qpConfig?.socialRakeCapUsd ?? 5
   const turnTimerSeconds = qpConfig?.socialTurnTimerSeconds ?? d.turnTimer
   const minPlayers       = qpConfig?.socialMinPlayers ?? d.minPlayers

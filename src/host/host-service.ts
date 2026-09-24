@@ -311,22 +311,8 @@ export class HostService {
     return res.data;
   }
 
-  // ===========================================================================
-  // WITHDRAWAL (1 endpoint)
-  // Replicates: host.ts lines 428-441
-  // ===========================================================================
-
-  /**
-   * Request earnings withdrawal to an external wallet.
-   * POST /api/v1/host/withdraw
-   *
-   * @param payload - Amount, currency, and destination wallet address.
-   */
-  async requestWithdrawal(payload: WithdrawRequest): Promise<WithdrawResponse> {
-    this.log('requestWithdrawal', { amount: payload.amount, currency: payload.currency });
-    const res = await this.http.post<WithdrawResponse>('/api/v1/host/withdraw', payload);
-    return res.data;
-  }
+  // [N420-P6] requestWithdrawal (POST /host/withdraw, a 501) removed: host
+  // earnings are ordinary wallet balance, withdrawn through the wallet.
 
   // ===========================================================================
   // AGE VERIFICATION (2 endpoints)
