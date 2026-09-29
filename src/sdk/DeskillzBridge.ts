@@ -227,6 +227,8 @@ export interface GameScorePayload {
   matchId?: string;
   tournamentId?: string;
   roomId?: string;
+  /** [Q-W 3.7.5b] N611: QUICK_PLAY scores through lobby/quick-play/match/:matchId/score */
+  matchType?: 'TOURNAMENT' | 'PRIVATE_ROOM' | 'QUICK_PLAY';
   score: number;
   metadata?: Record<string, unknown>;
 }
@@ -3302,6 +3304,18 @@ export class DeskillzBridge {
       );
       this.log('Room score submitted:', result?.status, 'pending:', result?.pendingPlayers);
       return { success: true };
+    }
+
+    // [Q-W 3.7.5b] N611: a Quick Play match scores through its own route. Before
+    // this, a QUICK_PLAY score was logged as recorded and never left the client,
+    // so the server settled at the clock + grace with the human ranked last.
+    // The match is the one in the payload, or the one quick-play:found handed
+    // this bridge (a payload without matchType is trusted only for that one).
+    const qpMatchId = payload.matchId ?? this._currentQuickPlayMatch?.matchId ?? null;
+    if (qpMatchId && (payload.matchType === 'QUICK_PLAY' ||
+        (payload.matchType === undefined && this._currentQuickPlayMatch?.matchId === qpMatchId))) {
+      const qp = await this.submitQuickPlayScore(qpMatchId, payload.score);
+      return { success: qp.success !== false };
     }
 
     // Non-tournament scoring handled server-side via socket events
