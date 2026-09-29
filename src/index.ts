@@ -34,6 +34,18 @@ export type {
   MyLaunchLobby,
   MyLaunchSeat,
   GameLeaderboardEntry,
+  // [Q-W 3.7.5] N540 tickets + the relayed quick-play:* payloads
+  QpEsportRules,
+  QpSocialRules,
+  QuickPlayConfig,
+  QuickPlayLaunchData,
+  QuickPlayScoreResult,
+  QuickPlayMatchResult,
+  QuickPlayMatchFailedData,
+  QuickPlayQueueRosterData,
+  QuickPlayMatchEndingData,
+  QuickPlaySocialRoomData,
+  QuickPlaySocialSeatOutData,
 } from './DeskillzBridge';
 // =============================================================================
 // CORE

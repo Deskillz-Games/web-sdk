@@ -104,6 +104,15 @@ Guide section 18 has the full checklist.
 
 ## Upgrading
 
+**3.7.4 -> 3.7.5 (Q-W):** replace the bridge (both copies), `hooks/useQuickPlayQueue.ts`
+and `components/rooms/SocialGameSettings.tsx`. Host-room frames now arrive on a
+second socket to `<VITE_SOCKET_URL>/lobby` (opened by the bridge, nothing to
+configure); `quickPlayFound` / `quickPlayStarting` carry `matchId`, `token`,
+`deepLink`, `endsAt` and the ticket `rules`; `launchQuickPlayMatch(matchId)`
+only re-issues your own token; `submitSocialQuickPlayRound` needs `roundNumber`;
+`createSocialQuickPlay`, `socialQuickPlayRebuy` and `forceCompleteQuickPlayMatch`
+are gone (the server creates the table, settles the match and has no rebuys).
+
 **3.7.0 -> 3.7.1:** documentation only. No code change.
 
 **3.6.x -> 3.7.x:**

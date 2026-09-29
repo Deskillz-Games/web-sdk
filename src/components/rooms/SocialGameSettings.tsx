@@ -87,6 +87,10 @@ export interface SocialGameConfig {
   winCondition: SocialWinCondition
   winConditionTarget?: number
   allowFreePlay: boolean
+  // [N564] rebuys are the host's choice at creation (off by default, N569)
+  allowRebuy: boolean
+  /** Rebuys per player while allowed; 0 = no cap */
+  maxRebuys: number
 }
 
 export interface SocialGameSettingsProps {
@@ -873,6 +877,34 @@ export default function SocialGameSettings({
         </div>
       )}
 
+      {/* [N564] Rebuys: the host decides at creation; off by default (N569). A player at 0 with no rebuy right leaves the table. */}
+      {isCashGame && (
+        <div className={S.section}>
+          <label className={S.label}><Coins className="w-4 h-4 text-cyan-400" />Rebuys</label>
+          <div className="flex gap-2">
+            <button type="button" disabled={disabled} onClick={() => update({ allowRebuy: false, maxRebuys: 0 })}
+              className={cn(S.toggleBtn, !config.allowRebuy ? S.toggleActive : S.toggleInact, disabled && S.chipDisabled)}>
+              No rebuys
+            </button>
+            <button type="button" disabled={disabled} onClick={() => update({ allowRebuy: true })}
+              className={cn(S.toggleBtn, config.allowRebuy ? S.toggleActive : S.toggleInact, disabled && S.chipDisabled)}>
+              Allow rebuys
+            </button>
+          </div>
+          {config.allowRebuy ? (
+            <div className="flex items-center gap-2">
+              <span className="text-xs text-gray-500">Max rebuys per player</span>
+              <input type="number" min={0} max={100} step={1} disabled={disabled} value={config.maxRebuys}
+                onChange={(e) => update({ maxRebuys: Math.min(100, Math.max(0, parseInt(e.target.value, 10) || 0)) })}
+                className="w-20 px-2 py-1 bg-[#1a1a2e] border border-gray-700 rounded text-sm text-white text-center focus:border-yellow-500 focus:outline-none" />
+              <span className="text-xs text-gray-500">0 = no cap</span>
+            </div>
+          ) : (
+            <p className="text-xs text-gray-500">A player whose chips reach 0 leaves the table.</p>
+          )}
+        </div>
+      )}
+
       {/* Visibility */}
       <div className={S.section}>
         <label className={S.label}>Visibility</label>
@@ -914,6 +946,7 @@ export default function SocialGameSettings({
             {config.numberOfTables > 1 ? `${config.numberOfTables} tables × ${seatsPerTable} seats = ${totalCashGamePlayers} players max. ` : ''}
             {config.rakePercentage}% rake per round (cap: ${typeof config.rakeCapPerRound === 'number' ? config.rakeCapPerRound.toFixed(2) : config.rakeCapPerRound}).
             {config.pointTarget > 0 ? ` Game ends at ${config.pointTarget} points.` : ' Game runs until all players cash out.'}
+            {config.allowRebuy ? ` Rebuys allowed${config.maxRebuys > 0 ? ` (max ${config.maxRebuys} per player)` : ''}.` : ' No rebuys: a player at 0 chips leaves the table.'}
             {showMultiTable ? ` When a table drops below ${config.minPlayersPerTable} players, ${config.tableBreakRule === 'REBALANCE' ? 'players are moved to other tables' : 'the table closes and players are cashed out'}.` : ''}
           </p>
         </div>
@@ -1015,5 +1048,7 @@ export function createDefaultSocialGameConfig(
     winCondition,
     winConditionTarget,
     allowFreePlay,
+    allowRebuy:             false,
+    maxRebuys:              0,
   }
 }

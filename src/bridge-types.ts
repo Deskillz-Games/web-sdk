@@ -40,6 +40,35 @@ export interface TournamentRegistration {
   tableId?: string
 }
 
+// [Q-W 3.7.5] N540 Q-B2: the server-built tickets (lines = ASCII text to show as-is)
+export interface QpEsportRules {
+  version: 1
+  kind: 'ESPORT'
+  playerCount: number
+  feePercent: number
+  durationSecs: number
+  graceSecs: number
+  targetScore: number | null
+  targetGraceSecs: number
+  split: number[]
+  tieBreak: 'EARLIER_SUBMISSION'
+  lines: string[]
+}
+
+export interface QpSocialRules {
+  version: 1
+  kind: 'SOCIAL'
+  winCondition: string
+  target: number | null
+  sessionMins: number | null
+  pointValueUsd: number
+  buyIn: number
+  rakePercent: number
+  rakeCapUsd: number
+  idleMins: number
+  lines: string[]
+}
+
 export interface QuickPlayConfig {
   gameId: string
   enabled: boolean
@@ -51,6 +80,8 @@ export interface QuickPlayConfig {
   esportCurrencies: string[]
   esportPrizeType: 'WINNER_TAKES_ALL' | 'TOP_HEAVY' | 'EVEN_SPLIT'
   esportPlatformFee: number
+  esportTargetScore: number | null // [Q-W 3.7.5] null = highest score at the clock
+  esportRules: QpEsportRules[]     // [Q-W 3.7.5] one ticket per player mode
   socialMinPlayers: number
   socialMaxPlayers: number
   socialPointValueTiers: number[]
@@ -61,6 +92,7 @@ export interface QuickPlayConfig {
   socialRakePercent: number
   socialRakeCapUsd: number
   socialAutoCashout: boolean
+  socialRules: QpSocialRules[]     // [Q-W 3.7.5] one ticket per point value tier
   socialWinCondition: SocialWinCondition
   socialPointTargets: number[]
   socialRoundTargets: number[]
@@ -80,8 +112,12 @@ export interface QuickPlayLaunchData {
   entryFee: number
   currency: string
   prizePool: number
-  players: Array<{ id: string; username: string }>
+  players: Array<{ id: string; username: string; avatarUrl?: string | null }>
   matchDurationSecs: number | null
+  // [Q-W 3.7.5] N540: quick-play:found / starting carry this whole shape (own token + deepLink)
+  targetScore: number | null
+  endsAt: string | null
+  rules: QpEsportRules | null
 }
 
 export interface Tournament {

@@ -2019,13 +2019,25 @@ events are delivered only to the player they concern.
 |-------|--------------|---------|
 | `quick-play:searching` | `quickPlaySearching` | `{ queueKey, gameId, entryFee, playerCount, currency, position, playersInQueue }` |
 | `quick-play:filling` | `quickPlayFilling` | `{ queueKey, gameId, totalPlayers, requiredPlayers, phase }` |
-| `quick-play:found` | `quickPlayFound` | `{ matchId, gameId, entryFee, currency, players }` |
-| `quick-play:starting` | `quickPlayStarting` | `{ matchId, gameId, entryFee, currency, players }` |
-| `quick-play:match-launched` | `quickPlayMatchLaunched` | `{ matchId, matchSessionId, gameId, deepLink, token, entryFee, currency, prizePool, players }` |
+| `quick-play:npc-filling` | `quickPlayNpcFilling` | `{ queueKey, gameId, npcsAdding, totalPlayers, requiredPlayers, phase }` |
+| `quick-play:found` | `quickPlayFound` | `QuickPlayLaunchData`: `{ matchId, gameId, entryFee, currency, prizePool, players, token, deepLink, matchDurationSecs, targetScore, endsAt, rules }` (3.7.5: your own launch token is in here; launch from it) |
+| `quick-play:starting` | `quickPlayStarting` | same shape as found |
+| `quick-play:match-ending` | `quickPlayMatchEnding` | `{ matchId, reason: 'target', targetScore, deadline }` -- send your score before `deadline` |
+| `quick-play:match-failed` | `quickPlayMatchFailed` | `{ queueKey, gameId, reason }` -- entry already refunded |
 | `quick-play:score-submitted` | `quickPlayScoreSubmitted` | `{ matchId, playerId, scoresIn, totalPlayers }` |
 | `quick-play:match-completed` | `quickPlayMatchCompleted` | Final results |
 | `quick-play:lobby-update` | `quickPlayLobbyUpdate` | Social open games board |
-| `quick-play:queue-roster` | (raw event, 12.3) | `{ queueKey, requiredPlayers, startsAt, meId, roster }` |
+| `quick-play:queue-roster` | `quickPlayQueueRoster` | `{ queueKey, requiredPlayers, startsAt, meId, roster }` |
+| `quick-play:social-room-created` | `quickPlaySocialRoomCreated` | `QuickPlaySocialRoomData`: `{ roomId, roomCode, gameId, socialGameType, pointValueUsd, currency, rakePercent, rakeCapPerRound, minBuyIn, defaultBuyIn, players, token, deepLink, rules }` |
+| `quick-play:social-round-complete` | `quickPlaySocialRoundComplete` | the round result (winner, pot, rake, balances) |
+| `quick-play:social-session-ended` | `quickPlaySocialSessionEnded` | the table results (per seat: totalBuyIn, netProfitLoss, roundsPlayed) |
+| `quick-play:social-seat-out` | `quickPlaySocialSeatOut` | `{ roomId, playerId, reason }` -- a seat at 0 chips left the table |
+
+3.7.5: `quick-play:match-launched` is not sent by the server; `quickPlayMatchLaunched`
+fires from `launchQuickPlayMatch(matchId)` (own-token re-issue). Host-room frames
+(`private-room:*`, `player:seat-out`, `player:bought_in`, `rake:settled`,
+`round:completed`, `low:balance:warning`) arrive on the bridge's /lobby socket:
+`bridge.onRoomEvent(name, handler)` (or `onRealtimeEvent`, which routes them).
 
 ### 22.4 Cash tables and account (server to client)
 

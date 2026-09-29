@@ -11,6 +11,11 @@
 // N397 withdraw per design 6.1 + quote / cancel, transactions / stats /
 // history mapped to the real responses, N473 deposit claim + deposit
 // address, N420-P6 host-withdraw methods removed, N534 verifyAge body.
+// 3.7.5 (Q-W): N584 second socket to <socketUrl>/lobby for host rooms,
+// N604 every quick-play:* frame relayed to its bridge event for the whole
+// realtime session, N605 tournament:* relayed, N540 Quick Play routes
+// (launch = own-token re-issue, roundNumber on social rounds, removed
+// routes dropped), allowRebuy / maxRebuys on social rooms.
 //
 // USAGE:
 //   import { DeskillzBridge } from './sdk/DeskillzBridge';
@@ -177,6 +182,10 @@ export interface PrivateRoom {
   roomCode?: string;
   name?: string;
   description?: string;
+  // [Q-W 3.7.5] N569: rebuys are the host's choice at creation (off by default)
+  allowRebuy?: boolean;
+  /** Rebuys per player while allowed; 0 = no cap */
+  maxRebuys?: number;
 }
 
 /** Options for creating an esports private room */
@@ -207,6 +216,10 @@ export interface CreateSocialRoomOpts {
   gameType?: 'MAHJONG' | 'BIG_TWO' | 'CHINESE_POKER_13';
   visibility?: 'PUBLIC_LISTED' | 'PRIVATE_CODE' | 'UNLISTED';
   hostRole?: 'PLAYER' | 'SPECTATOR';
+  /** [Q-W 3.7.5] N569: off unless the host switches rebuys on */
+  allowRebuy?: boolean;
+  /** Rebuys per player while allowed; 0 = no cap (sent only with allowRebuy) */
+  maxRebuys?: number;
 }
 
 export interface GameScorePayload {
@@ -384,6 +397,36 @@ export interface TournamentListing {
   scheduledEnd?: string;
 }
 
+// [Q-W 3.7.5] N540 Q-B2: the server-built tickets. `lines` is the ASCII text
+// a game shows as-is; the other fields are the numbers it was built from.
+export interface QpEsportRules {
+  version: 1;
+  kind: 'ESPORT';
+  playerCount: number;
+  feePercent: number;
+  durationSecs: number;
+  graceSecs: number;
+  targetScore: number | null;
+  targetGraceSecs: number;
+  split: number[];
+  tieBreak: 'EARLIER_SUBMISSION';
+  lines: string[];
+}
+
+export interface QpSocialRules {
+  version: 1;
+  kind: 'SOCIAL';
+  winCondition: string;
+  target: number | null;
+  sessionMins: number | null;
+  pointValueUsd: number;
+  buyIn: number;
+  rakePercent: number;
+  rakeCapUsd: number;
+  idleMins: number;
+  lines: string[];
+}
+
 // QuickPlay configuration returned by GET /api/v1/quick-play/games/:gameId
 export interface QuickPlayConfig {
   gameId: string;
@@ -397,6 +440,10 @@ export interface QuickPlayConfig {
   esportCurrencies: string[];
   esportPrizeType: 'WINNER_TAKES_ALL' | 'TOP_HEAVY' | 'EVEN_SPLIT';
   esportPlatformFee: number;
+  /** [Q-W 3.7.5] null = highest score wins at the clock */
+  esportTargetScore: number | null;
+  /** [Q-W 3.7.5] one ticket per player mode */
+  esportRules: QpEsportRules[];
   // Social
   socialMinPlayers: number;
   socialMaxPlayers: number;
@@ -408,6 +455,8 @@ export interface QuickPlayConfig {
   socialRakePercent: number;
   socialRakeCapUsd: number;
   socialAutoCashout: boolean;
+  /** [Q-W 3.7.5] one ticket per point value tier */
+  socialRules: QpSocialRules[];
   // Matchmaking
   matchmakingTimeoutSecs: number;
   matchDurationSecs: number | null;
@@ -462,8 +511,13 @@ export interface QuickPlayLaunchData {
   entryFee: number;
   currency: string;
   prizePool: number;
-  players: Array<{ id: string; username: string }>;
+  players: Array<{ id: string; username: string; avatarUrl?: string | null }>;
   matchDurationSecs: number | null;
+  // [Q-W 3.7.5] N540: quick-play:found / starting carry this whole shape
+  targetScore: number | null;
+  /** ISO time the server settles the match (duration + grace) */
+  endsAt: string | null;
+  rules: QpEsportRules | null;
 }
 
 export interface QuickPlayScoreResult {
@@ -471,7 +525,10 @@ export interface QuickPlayScoreResult {
   matchId: string;
   playerId: string;
   score: number;
+  rank?: number;
   allScoresSubmitted: boolean;
+  /** [Q-W 3.7.5] this score reached the target: the match is ending */
+  targetReached: boolean;
 }
 
 export interface QuickPlayMatchResult {
@@ -491,6 +548,61 @@ export interface QuickPlayMatchResult {
   }>;
   winnerId: string | null;
   completedAt: string | null;
+  /** [Q-W 3.7.5] true = every entry refunded, no prize */
+  voided: boolean;
+  rules: QpEsportRules | null;
+}
+
+// [Q-W 3.7.5] N604: payloads of the relayed quick-play:* events
+export interface QuickPlayMatchFailedData {
+  queueKey: string;
+  gameId: string;
+  /** Server text, already refunded */
+  reason: string;
+}
+
+export interface QuickPlayQueueRosterData {
+  queueKey: string;
+  requiredPlayers: number;
+  /** ISO time the NPC fill starts, null while the queue is not filling */
+  startsAt: string | null;
+  /** The caller's own hashed id inside roster */
+  meId: string;
+  roster: Array<{ id: string; username: string; avatarUrl: string | null; joinedAt: string | number }>;
+}
+
+export interface QuickPlayMatchEndingData {
+  matchId: string;
+  reason: 'target';
+  targetScore: number | null;
+  /** ISO time every score must be in */
+  deadline: string;
+}
+
+export interface QuickPlaySocialRoomData {
+  roomId: string;
+  matchId: string;
+  kind: 'social';
+  roomCode: string;
+  gameId: string;
+  socialGameType: string;
+  pointValueUsd: number;
+  currency: string;
+  rakePercent: number;
+  rakeCapPerRound: number;
+  minBuyIn: number;
+  defaultBuyIn: number;
+  players: Array<{ id: string; username: string; avatarUrl: string | null; buyInAmount: number; pointBalance: number }>;
+  /** The caller's own launch token */
+  token: string;
+  deepLink: string;
+  rules: QpSocialRules | null;
+}
+
+export interface QuickPlaySocialSeatOutData {
+  roomId: string;
+  playerId: string;
+  reason: string;
 }
 
 export interface QuickPlayMatchData {
@@ -730,6 +842,15 @@ export type BridgeEventType =
   | 'quickPlayScoreSubmitted'
   | 'quickPlayMatchCompleted'
   | 'quickPlayLobbyUpdate'
+  // [Q-W 3.7.5] N604: the rest of the quick-play:* frames (root socket)
+  | 'quickPlayNpcFilling'
+  | 'quickPlayMatchEnding'
+  | 'quickPlayMatchFailed'
+  | 'quickPlayQueueRoster'
+  | 'quickPlaySocialRoomCreated'
+  | 'quickPlaySocialRoundComplete'
+  | 'quickPlaySocialSessionEnded'
+  | 'quickPlaySocialSeatOut'
   // Enrollment events (v3.0)
   | 'tournamentRegistered'    // Successfully registered for a tournament
   | 'tournamentCheckedIn'     // Successfully checked in
@@ -977,9 +1098,27 @@ class HttpClient {
 class RealtimeService {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private socket: any = null;
+  // [Q-W 3.7.5] N584 (D-Q1 / D-Q2, rule 68): host rooms live on the /lobby
+  // namespace only. The root socket keeps the user events (quick-play:*,
+  // tournament:*, match:*, notification); this one carries room:subscribe /
+  // room:chat / room:ready and every private-room:* / player:* / rake:* /
+  // round:* / low:* frame the room relay sends.
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  private lobbySocket: any = null;
   private _isConnected = false;
   // N250: handlers registered before the socket exists, attached in connect()
   private preSocketHandlers: Array<{ event: string; handler: (...args: unknown[]) => void }> = [];
+  private preLobbyHandlers: Array<{ event: string; handler: (...args: unknown[]) => void }> = [];
+
+  /** [Q-W 3.7.5] N584: a server->client name the /lobby room relay sends */
+  static isRoomEvent(event: string): boolean {
+    return /^(private-room|player|rake|round|low):/.test(event);
+  }
+
+  /** [Q-W 3.7.5] N584: <socketUrl>/lobby; a socketUrl already ending in /lobby is accepted */
+  private lobbyUrl(): string {
+    return this.config.socketUrl.replace(/\/+$/, '').replace(/\/lobby$/, '') + '/lobby';
+  }
   private config: ResolvedConfig;
   private tokens: TokenManager;
 
@@ -994,6 +1133,7 @@ class RealtimeService {
     // user). Reuse the one instance; socket.io reconnection manages it.
     if (this.socket) {
       if (!this.socket.connected) this.socket.connect();
+      if (this.lobbySocket && !this.lobbySocket.connected) this.lobbySocket.connect(); // [Q-W 3.7.5] N584
       return;
     }
     try {
@@ -1024,71 +1164,51 @@ class RealtimeService {
         this._isConnected = false;
         if (this.config.debug) console.log('[DeskillzBridge] Socket disconnected');
       });
-      // --- Quick Play socket event listeners ---
 
-  this.socket.on('quick-play:searching', (data: unknown) => {
-    if (this.config.debug) console.log('[DeskillzBridge] QP: Searching', data);
-  });
-
-  this.socket.on('quick-play:found', (data: unknown) => {
-    if (this.config.debug) console.log('[DeskillzBridge] QP: Match Found', data);
-  });
-
-  this.socket.on('quick-play:filling', (data: unknown) => {
-    if (this.config.debug) console.log('[DeskillzBridge] QP: Filling', data);
-  });
-
-  this.socket.on('quick-play:starting', (data: unknown) => {
-    if (this.config.debug) console.log('[DeskillzBridge] QP: Match Starting', data);
-  });
-   // --- Quick Play Match socket event listeners (Phase 4) ---
-
-      this.socket.on('quick-play:match-launched', (data: unknown) => {
-        if (this.config.debug) console.log('[DeskillzBridge] QP Match: Launched', data);
+      // [Q-W 3.7.5] N584: the /lobby socket (host rooms). Same callback auth,
+      // same reconnection; socket.io multiplexes both over one transport.
+      this.lobbySocket = io(this.lobbyUrl(), {
+        auth: (cb: (data: object) => void) => cb({ token: this.tokens.getAccessToken() }),
+        transports: ['websocket', 'polling'],
+        reconnection: true,
+        reconnectionAttempts: 10,
+        reconnectionDelay: 1000,
       });
-
-      this.socket.on('quick-play:score-submitted', (data: unknown) => {
-        if (this.config.debug) console.log('[DeskillzBridge] QP Match: Score Submitted', data);
+      for (const h of this.preLobbyHandlers) this.lobbySocket.on(h.event, h.handler);
+      this.preLobbyHandlers = [];
+      this.lobbySocket.on('connect', () => {
+        if (this.config.debug) console.log('[DeskillzBridge] Lobby socket connected');
       });
-
-     this.socket.on('quick-play:match-completed', (data: unknown) => {
-        if (this.config.debug) console.log('[DeskillzBridge] QP Match: Completed', data);
+      this.lobbySocket.on('disconnect', () => {
+        if (this.config.debug) console.log('[DeskillzBridge] Lobby socket disconnected');
       });
-
-      this.socket.on('quick-play:lobby-update', (data: unknown) => {
-        if (this.config.debug) console.log('[DeskillzBridge] QP: Lobby Update', data);
-      });
+      // [Q-W 3.7.5] N604: quick-play:* and tournament:* frames are relayed to
+      // the bridge events by DeskillzBridge.wireSocketRelays() (root socket).
 
       // --- Enrollment socket event listeners (v3.0) ---
 
       this.socket.on('tournament:registered', (data: unknown) => {
         if (this.config.debug) console.log('[DeskillzBridge] Tournament: Registered', data);
-        this.emit('tournamentRegistered', data);
       });
 
       this.socket.on('tournament:checked-in', (data: unknown) => {
         if (this.config.debug) console.log('[DeskillzBridge] Tournament: Checked In', data);
-        this.emit('tournamentCheckedIn', data);
       });
 
       this.socket.on('tournament:checkin-open', (data: unknown) => {
         if (this.config.debug) console.log('[DeskillzBridge] Tournament: Check-in Open', data);
-        this.emit('tournamentCheckinOpen', data);
       });
 
       this.socket.on('tournament:dq-noshow', (data: unknown) => {
         if (this.config.debug) console.log('[DeskillzBridge] Tournament: DQ No-Show', data);
-        this.emit('tournamentDQNoShow', data);
       });
 
       this.socket.on('tournament:starting', (data: unknown) => {
         if (this.config.debug) console.log('[DeskillzBridge] Tournament: Starting', data);
-        this.emit('tournamentStarting', data);
       });
 
       this.socket.on('tournament:left', (data: unknown) => {
         if (this.config.debug) console.log('[DeskillzBridge] Tournament: Left', data);
-        this.emit('tournamentLeft', data);
       });
 
       // --- Cash game table assignment events (v3.3) ---
@@ -1118,20 +1238,25 @@ class RealtimeService {
 
   disconnect(): void {
     this.socket?.disconnect();
+    this.lobbySocket?.disconnect(); // [Q-W 3.7.5] N584
     this._isConnected = false;
   }
 
+  // [Q-W 3.7.5] N584: rooms are joined on /lobby with the gateway's own names
+  // (room:subscribe / room:unsubscribe). The old root emits had no handler.
   subscribeRoom(roomId: string): void {
-    this.socket?.emit('room:join', { roomId });
+    this.lobbySocket?.emit('room:subscribe', { roomId });
   }
 
   unsubscribeRoom(roomId: string): void {
-    this.socket?.emit('room:leave', { roomId });
+    this.lobbySocket?.emit('room:unsubscribe', { roomId });
   }
 
   on(event: string, handler: (...args: unknown[]) => void): () => void {
     // N250: pre-socket registrations were silently lost (socket?.on on
     // null). Buffer them; connect() attaches at socket creation.
+    // [Q-W 3.7.5] N584: a room name is heard on the /lobby socket.
+    if (RealtimeService.isRoomEvent(event)) return this.onRoom(event, handler);
     if (this.socket) {
       this.socket.on(event, handler);
     } else {
@@ -1143,17 +1268,39 @@ class RealtimeService {
     };
   }
 
+  /** [Q-W 3.7.5] N584: listen on the /lobby socket (host-room frames) */
+  onRoom(event: string, handler: (...args: unknown[]) => void): () => void {
+    if (this.lobbySocket) {
+      this.lobbySocket.on(event, handler);
+    } else {
+      this.preLobbyHandlers.push({ event, handler });
+    }
+    return () => {
+      this.lobbySocket?.off(event, handler);
+      this.preLobbyHandlers = this.preLobbyHandlers.filter((h) => h.handler !== handler);
+    };
+  }
+
   sendChat(roomId: string, message: string): void {
-    this.socket?.emit('room:chat', { roomId, message });
+    this.lobbySocket?.emit('room:chat', { roomId, message });
   }
 
- setReady(roomId: string, isReady: boolean): void {
-    this.socket?.emit('room:ready', { roomId, isReady });
+  setReady(roomId: string, isReady: boolean): void {
+    this.lobbySocket?.emit('room:ready', { roomId, isReady });
   }
 
-  /** Generic emit for any event */
+  /** Generic emit for any event (root namespace: match:*, matchmaking:*, game:*) */
   emit(event: string, data: unknown): void {
     this.socket?.emit(event, data);
+  }
+
+  /** [Q-W 3.7.5] N584: a room:* client message for the /lobby gateway (room:submit_round, room:buy_in ...) */
+  emitRoom(event: string, data: unknown): void {
+    this.lobbySocket?.emit(event, data);
+  }
+
+  get isLobbyConnected(): boolean {
+    return this.lobbySocket?.connected === true;
   }
 
   get isConnected(): boolean {
@@ -2871,6 +3018,10 @@ export class DeskillzBridge {
       maxBuyIn: opts.maxBuyIn,
       turnTimerSeconds: opts.turnTimerSeconds ?? 60,
       ...(opts.hostRole && { hostRole: opts.hostRole }),
+      // [Q-W 3.7.5] N569: explicit, off unless the host switched rebuys on; the
+      // cap travels only while on (CreateSocialRoomDto).
+      allowRebuy: opts.allowRebuy === true,
+      ...(opts.allowRebuy === true && { maxRebuys: Math.max(0, Math.trunc(opts.maxRebuys ?? 0)) }),
     });
 
     const room = this.normalizeRoom(res, true);
@@ -2918,6 +3069,8 @@ export class DeskillzBridge {
       roomCode: raw.roomCode,
       name: raw.name,
       description: raw.description,
+      allowRebuy: raw.allowRebuy === true, // [Q-W 3.7.5] N569
+      maxRebuys: raw.maxRebuys != null ? Number(raw.maxRebuys) : 0,
     };
   }
 
@@ -3170,7 +3323,8 @@ export class DeskillzBridge {
   // QUICK PLAY (Phase 3 - Instant Matchmaking)
   // ---------------------------------------------------------------------------
 
-  private _quickPlayCleanups: Array<() => void> = [];
+  /** [Q-W 3.7.5] N604: socket -> bridge relays are wired once per realtime session */
+  private socketRelaysWired = false;
 
   async joinQuickPlay(params: QuickPlayJoinParams): Promise<QuickPlayJoinResult> {
     this.ensureAuthenticated();
@@ -3206,10 +3360,6 @@ export class DeskillzBridge {
 
     this.log('Quick Play: joining queue', params);
 
-    // Set up socket listeners for this session
-    this.cleanupQuickPlayListeners();
-    this.setupQuickPlayListeners();
-
     const result = await this.http.post<QuickPlayJoinResult>(
       '/api/v1/lobby/quick-play/join',
       {
@@ -3241,7 +3391,6 @@ export class DeskillzBridge {
 
     if (this._isGuest) {
       this.log('Quick Play: leaving queue (guest mode)');
-      this.cleanupQuickPlayListeners();
       this.emit('quickPlayLeft', {});
       return { success: true };
     }
@@ -3252,12 +3401,10 @@ export class DeskillzBridge {
       const result = await this.http.post<{ success: boolean }>(
         '/api/v1/lobby/quick-play/leave',
       );
-      this.cleanupQuickPlayListeners();
       this.emit('quickPlayLeft', {});
       return result;
     } catch (err) {
       this.log('Quick Play leave error:', err);
-      this.cleanupQuickPlayListeners();
       return { success: false };
     }
   }
@@ -3299,14 +3446,20 @@ export class DeskillzBridge {
 
   private _currentQuickPlayMatch: QuickPlayLaunchData | null = null;
 
-  async launchQuickPlayMatch(matchSessionId: string): Promise<QuickPlayLaunchData> {
+  /**
+   * [Q-W 3.7.5] N540 Q-B2: the match, its pool and every player's launch token
+   * are created server-side at match time and arrive in quick-play:found /
+   * starting (quickPlayFound / quickPlayStarting). This route only re-issues
+   * the caller's own token for a match it is in (a reconnect).
+   */
+  async launchQuickPlayMatch(matchId: string): Promise<QuickPlayLaunchData> {
     this.ensureAuthenticated();
 
     if (this._isGuest) {
       this.log('Quick Play Match: simulating launch (guest mode)');
       const mock: QuickPlayLaunchData = {
-        matchId: `mock_match_${Date.now()}`,
-        matchSessionId,
+        matchId,
+        matchSessionId: matchId,
         gameId: this.config.gameId,
         deepLink: `deskillz://quick-play?matchId=mock&token=mock`,
         token: 'mock-token',
@@ -3318,17 +3471,20 @@ export class DeskillzBridge {
           { id: 'guest-opponent', username: 'Opponent' },
         ],
         matchDurationSecs: 120,
+        targetScore: null,
+        endsAt: null,
+        rules: null,
       };
       this._currentQuickPlayMatch = mock;
       this.emit('quickPlayMatchLaunched', mock);
       return mock;
     }
 
-    this.log('Quick Play Match: launching', matchSessionId);
+    this.log('Quick Play Match: re-issuing launch token', matchId);
 
     const result = await this.http.post<QuickPlayLaunchData>(
       '/api/v1/lobby/quick-play/match/launch',
-      { matchSessionId },
+      { matchId },
     );
 
     this._currentQuickPlayMatch = result;
@@ -3347,6 +3503,7 @@ export class DeskillzBridge {
         playerId: this.currentUser?.id || 'guest',
         score,
         allScoresSubmitted: true,
+        targetReached: false,
       };
       this.emit('quickPlayScoreSubmitted', mock);
 
@@ -3366,6 +3523,8 @@ export class DeskillzBridge {
           ],
           winnerId: 'guest',
           completedAt: new Date().toISOString(),
+          voided: false,
+          rules: null,
         });
       }, 1000);
 
@@ -3398,6 +3557,8 @@ export class DeskillzBridge {
         players: [],
         winnerId: null,
         completedAt: null,
+        voided: false,
+        rules: null,
       };
     }
 
@@ -3406,64 +3567,35 @@ export class DeskillzBridge {
     );
   }
 
-  async forceCompleteQuickPlayMatch(matchId: string): Promise<QuickPlayMatchResult> {
-    this.ensureAuthenticated();
-
-    if (this._isGuest) return this.getQuickPlayMatchResults(matchId);
-
-    this.log('Quick Play Match: force completing', matchId);
-
-    const result = await this.http.post<QuickPlayMatchResult>(
-      `/api/v1/lobby/quick-play/match/${matchId}/complete`,
-    );
-
-    this._currentQuickPlayMatch = null;
-    this.emit('quickPlayMatchCompleted', result);
-    return result;
-  }
+  // [Q-W 3.7.5] forceCompleteQuickPlayMatch removed: the server settles every
+  // match itself (last score, target or clock + grace); the route is gone (P7c B4).
 
   // ---------------------------------------------------------------------------
   // QUICK PLAY SOCIAL (Cash game rooms via QuickPlay)
   // ---------------------------------------------------------------------------
 
-  /** POST /api/v1/lobby/quick-play/social/create -- create a social quick-play room */
-  async createSocialQuickPlay(params: {
-    gameId?: string;
-    pointValueUsd: number;
-    currency: string;
-    seatsPerTable?: number;
-  }): Promise<{ success: boolean; roomId: string; roomCode: string }> {
-    this.ensureAuthenticated();
-
-    if (this._isGuest) {
-      return { success: true, roomId: `mock_room_${Date.now()}`, roomCode: 'MOCK-0000' };
-    }
-
-    return this.http.post('/api/v1/lobby/quick-play/social/create', {
-      gameId: params.gameId || this.config.gameId,
-      ...params,
-    });
-  }
+  // [Q-W 3.7.5] createSocialQuickPlay removed: a Quick Play table is created by
+  // the server when the queue fills (N540 Q-B2b); it arrives as
+  // quickPlaySocialRoomCreated with the caller's own token + deepLink.
 
   /** POST /api/v1/lobby/quick-play/social/:roomId/round -- submit social QP round */
-  // [N393] body is SubmitSocialRoundDto: winnerId, potAmount and
-  // playerResults[{ playerId, pointChange }].
+  // [N393] body is SubmitSocialRoundDto: winnerId, potAmount,
+  // playerResults[{ playerId, pointChange }] and, since N574, the roundNumber
+  // (the next round only; a repeat or a skip is refused, so every hand is
+  // applied once). Points net to zero across playerResults.
   async submitSocialQuickPlayRound(roomId: string, payload: {
     winnerId: string;
     potAmount: number;
     playerResults: Array<{ playerId: string; pointChange: number }>;
+    roundNumber: number; // [Q-W 3.7.5] N574
   }): Promise<{ success: boolean }> {
     if (this._isGuest) return { success: true };
 
     return this.http.post(`/api/v1/lobby/quick-play/social/${roomId}/round`, payload);
   }
 
-  /** POST /api/v1/lobby/quick-play/social/:roomId/rebuy -- rebuy in social QP */
-  async socialQuickPlayRebuy(roomId: string, amount: number): Promise<{ success: boolean; pointBalance: number }> {
-    if (this._isGuest) return { success: true, pointBalance: amount };
-
-    return this.http.post(`/api/v1/lobby/quick-play/social/${roomId}/rebuy`, { amount });
-  }
+  // [Q-W 3.7.5] socialQuickPlayRebuy removed: Quick Play tables have no rebuys
+  // (N569); a seat at 0 is cashed out at 0 and leaves (quickPlaySocialSeatOut).
 
   /** POST /api/v1/lobby/quick-play/social/:roomId/cashout -- cash out of social QP */
   async socialQuickPlayCashout(roomId: string): Promise<{ success: boolean; amount: number }> {
@@ -3483,54 +3615,48 @@ export class DeskillzBridge {
     return this._currentQuickPlayMatch;
   }
 
-  private setupQuickPlayListeners(): void {
-    const onSearching = this.onRealtimeEvent('quick-play:searching', (data) => {
-      this.emit('quickPlaySearching', data);
-    });
-
-    const onFound = this.onRealtimeEvent('quick-play:found', (data) => {
+  // [Q-W 3.7.5] N604 / N605: every server frame the games act on is relayed
+  // to its bridge event for the whole realtime session. The 3.7.4 listeners
+  // were installed by joinQuickPlay and torn down on the first found, so
+  // starting, match-failed, queue-roster, match-ending and the social-*
+  // frames never reached a game; the tournament:* relays emitted to the
+  // server. disconnectRealtime() drops them with the other realtime cleanups.
+  private wireSocketRelays(): void {
+    if (this.socketRelaysWired) return;
+    this.socketRelaysWired = true;
+    const relay = (wire: string, type: BridgeEventType): void => {
+      this.onRealtimeEvent(wire, (data) => this.emit(type, data));
+    };
+    relay('quick-play:searching', 'quickPlaySearching');
+    relay('quick-play:npc-filling', 'quickPlayNpcFilling');
+    relay('quick-play:filling', 'quickPlayFilling');
+    this.onRealtimeEvent('quick-play:found', (data) => {
+      this._currentQuickPlayMatch = data as QuickPlayLaunchData; // carries the own token + deepLink
       this.emit('quickPlayFound', data);
-      // Auto-cleanup after match found
-      this.cleanupQuickPlayListeners();
     });
-
-    const onFilling = this.onRealtimeEvent('quick-play:filling', (data) => {
-      this.emit('quickPlayFilling', data);
-    });
-
-    const onStarting = this.onRealtimeEvent('quick-play:starting', (data) => {
-      this.emit('quickPlayStarting', data);
-      // Auto-cleanup after match starts
-      this.cleanupQuickPlayListeners();
-    });
-   
-    const onMatchLaunched = this.onRealtimeEvent('quick-play:match-launched', (data) => {
+    this.onRealtimeEvent('quick-play:starting', (data) => {
       this._currentQuickPlayMatch = data as QuickPlayLaunchData;
-      this.emit('quickPlayMatchLaunched', data);
+      this.emit('quickPlayStarting', data);
     });
-
-    const onScoreSubmitted = this.onRealtimeEvent('quick-play:score-submitted', (data) => {
-      this.emit('quickPlayScoreSubmitted', data);
-    });
-
-    const onMatchCompleted = this.onRealtimeEvent('quick-play:match-completed', (data) => {
+    relay('quick-play:match-ending', 'quickPlayMatchEnding');
+    relay('quick-play:match-failed', 'quickPlayMatchFailed');
+    relay('quick-play:queue-roster', 'quickPlayQueueRoster');
+    relay('quick-play:score-submitted', 'quickPlayScoreSubmitted');
+    this.onRealtimeEvent('quick-play:match-completed', (data) => {
       this._currentQuickPlayMatch = null;
       this.emit('quickPlayMatchCompleted', data);
     });
-    
-   const onLobbyUpdate = this.onRealtimeEvent('quick-play:lobby-update', (data) => {
-      this.emit('quickPlayLobbyUpdate', data);
-    });
-
-    this._quickPlayCleanups = [
-      onSearching, onFound, onFilling, onStarting,
-      onMatchLaunched, onScoreSubmitted, onMatchCompleted, onLobbyUpdate,
-    ];
-  }
-
-  private cleanupQuickPlayListeners(): void {
-    this._quickPlayCleanups.forEach((cleanup) => cleanup());
-    this._quickPlayCleanups = [];
+    relay('quick-play:lobby-update', 'quickPlayLobbyUpdate');
+    relay('quick-play:social-room-created', 'quickPlaySocialRoomCreated');
+    relay('quick-play:social-round-complete', 'quickPlaySocialRoundComplete');
+    relay('quick-play:social-session-ended', 'quickPlaySocialSessionEnded');
+    relay('quick-play:social-seat-out', 'quickPlaySocialSeatOut');
+    relay('tournament:registered', 'tournamentRegistered');
+    relay('tournament:checked-in', 'tournamentCheckedIn');
+    relay('tournament:checkin-open', 'tournamentCheckinOpen');
+    relay('tournament:dq-noshow', 'tournamentDQNoShow');
+    relay('tournament:starting', 'tournamentStarting');
+    relay('tournament:left', 'tournamentLeft');
   }
   // ---------------------------------------------------------------------------
   // REALTIME / SOCKET
@@ -3546,6 +3672,7 @@ export class DeskillzBridge {
     this.realtime.connect().catch((err: unknown) => {
       this.log('Realtime connect error:', err);
     });
+    this.wireSocketRelays(); // [Q-W 3.7.5] N604
     // Wire table assignment events to instance callbacks
     this.onRealtimeEvent('room:table-assigned', (data: any) => {
       this.currentTableAssignment = data;
@@ -3564,6 +3691,7 @@ export class DeskillzBridge {
   disconnectRealtime(): void {
     this.realtimeCleanups.forEach((cleanup) => cleanup());
     this.realtimeCleanups = [];
+    this.socketRelaysWired = false; // [Q-W 3.7.5] wired again by the next connectRealtime()
     this.realtime.disconnect();
     this.log('Realtime disconnected');
   }
@@ -3572,6 +3700,24 @@ export class DeskillzBridge {
     const cleanup = this.realtime.on(event, handler);
     this.realtimeCleanups.push(cleanup);
     return cleanup;
+  }
+
+  /**
+   * [Q-W 3.7.5] N584: a host-room frame (private-room:*, player:seat-out,
+   * player:bought_in, rake:settled, round:completed, low:balance:warning ...)
+   * arrives on the /lobby socket once the bridge has joined the room
+   * (createRoom / joinRoom subscribe it). onRealtimeEvent routes these names
+   * here as well; this is the explicit door.
+   */
+  onRoomEvent(event: string, handler: (...args: unknown[]) => void): () => void {
+    const cleanup = this.realtime.onRoom(event, handler);
+    this.realtimeCleanups.push(cleanup);
+    return cleanup;
+  }
+
+  /** [Q-W 3.7.5] N584: send a room:* client message to the /lobby gateway */
+  sendRoomMessage(event: string, data: unknown): void {
+    this.realtime.emitRoom(event, data);
   }
 
   // N243: pending-send queue -- see sendRealtimeMessage.
@@ -3816,7 +3962,6 @@ export class DeskillzBridge {
   }
 
   protected cleanup(): void {
-    this.cleanupQuickPlayListeners();
     this.disconnectRealtime();
     this.listeners = [];
     this._eventHandlers.clear();
