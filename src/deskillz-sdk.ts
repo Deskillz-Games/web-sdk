@@ -34,8 +34,9 @@ import { ScoreSigner } from './security/score-signer';
 // SDK VERSION
 // =============================================================================
 
-/** Semantic version of the Deskillz Web SDK. */
-export const SDK_VERSION = '1.1.0';
+/** Semantic version of the Deskillz Web SDK. Keep equal to package.json
+ *  "version" (N175: the package version is the stamp). */
+export const SDK_VERSION = '3.7.5';
 
 // =============================================================================
 // MAIN SDK CLASS
