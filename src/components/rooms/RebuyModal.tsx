@@ -36,6 +36,8 @@ export interface RebuyConfig {
   maxBuyIn: number | null   // null = unlimited
   entryCurrency: string
   currentRebuyCount: number
+  /** [P7d-2] N603: the room's cap (allowRebuy / maxRebuys, N569); 0 = no cap */
+  maxRebuys?: number
 }
 
 export interface RebuyModalProps {
@@ -46,6 +48,7 @@ export interface RebuyModalProps {
   config: RebuyConfig
   roomName: string
   walletBalance?: number
+  /** @deprecated [P7d-2] N603: amounts show config.entryCurrency; kept so old callers compile */
   currencySymbol?: string
 }
 
@@ -67,8 +70,14 @@ export default function RebuyModal({
   config,
   roomName,
   walletBalance = 0,
-  currencySymbol = '$',
 }: RebuyModalProps) {
+  // [P7d-2] N603: every amount is stated in the room's currency (was a bare '$'
+  // whatever the room paid in); quick options above maxBuyIn are dropped.
+  const cur = config.entryCurrency
+  const fmt = (n: number) => `${n.toFixed(2)} ${cur}`
+  const quickMultipliers = QUICK_REBUY_MULTIPLIERS.filter(
+    (m, i) => i === 0 || config.maxBuyIn == null || config.pointValueUsd * m <= config.maxBuyIn,
+  )
   const [rebuyAmount, setRebuyAmount] = useState<number>(config.defaultBuyIn)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -108,7 +117,7 @@ export default function RebuyModal({
 
   const handleRebuy = useCallback(async () => {
     if (!isValidAmount) {
-      setError(`Amount must be at least $${config.minBuyIn.toFixed(2)}`)
+      setError(`Amount must be at least ${fmt(config.minBuyIn)}`)
       return
     }
     if (!hasSufficientBalance) {
@@ -189,7 +198,7 @@ export default function RebuyModal({
               <div className="p-4 bg-[#1a1a2e] rounded-xl border border-gray-800 text-center">
                 <p className="text-xs text-gray-500 mb-1">Rebuys This Session</p>
                 <p className="text-2xl font-bold text-white">{config.currentRebuyCount}</p>
-                <p className="text-xs text-gray-500">unlimited</p>
+                <p className="text-xs text-gray-500">{config.maxRebuys && config.maxRebuys > 0 ? `of ${config.maxRebuys}` : 'no cap'}</p>
               </div>
             </div>
 
@@ -200,7 +209,7 @@ export default function RebuyModal({
                 Quick Rebuy
               </label>
               <div className="grid grid-cols-4 gap-2">
-                {QUICK_REBUY_MULTIPLIERS.map((multiplier) => {
+                {quickMultipliers.map((multiplier) => {
                   const amount = config.pointValueUsd * multiplier
                   const isSelected = rebuyAmount === amount
                   return (
@@ -218,7 +227,7 @@ export default function RebuyModal({
                       )}
                     >
                       <p className="text-lg font-bold text-white">{multiplier}</p>
-                      <p className="text-xs text-gray-400">${amount.toFixed(2)}</p>
+                      <p className="text-xs text-gray-400">{fmt(amount)}</p>
                     </button>
                   )
                 })}
@@ -264,7 +273,7 @@ export default function RebuyModal({
                 </button>
               </div>
               <p className="mt-2 text-xs text-gray-500 text-center">
-                Min: ${config.minBuyIn.toFixed(2)} ({Math.round(config.minBuyIn / config.pointValueUsd)} points)
+                Min: {fmt(config.minBuyIn)} ({Math.round(config.minBuyIn / config.pointValueUsd)} points)
               </p>
             </div>
 
@@ -291,7 +300,7 @@ export default function RebuyModal({
                   hasSufficientBalance ? 'text-green-400' : 'text-red-400',
                 )}
               >
-                {currencySymbol}{walletBalance.toFixed(2)}
+                {fmt(walletBalance)}
               </span>
             </div>
 
@@ -302,7 +311,7 @@ export default function RebuyModal({
                 <div>
                   <p className="text-sm font-medium text-amber-300">Insufficient Funds</p>
                   <p className="text-xs text-amber-400/80 mt-1">
-                    You need ${rebuyAmount.toFixed(2)} but only have {currencySymbol}{walletBalance.toFixed(2)}.
+                    You need {fmt(rebuyAmount)} but only have {fmt(walletBalance)}.
                     Deposit more funds or leave the room.
                   </p>
                 </div>
@@ -345,16 +354,12 @@ export default function RebuyModal({
                 ) : (
                   <span className="flex items-center justify-center gap-2">
                     <RefreshCw className="w-4 h-4" />
-                    Rebuy ${rebuyAmount.toFixed(2)}
+                    Rebuy {fmt(rebuyAmount)}
                   </span>
                 )}
               </button>
             </div>
 
-            {/* Timer Warning */}
-            <p className="text-xs text-center text-gray-500">
-              You have 60 seconds to rebuy before being automatically removed from the room.
-            </p>
           </div>
         </motion.div>
       </div>
@@ -371,6 +376,7 @@ export function createRebuyConfig(
   entryCurrency: string,
   currentRebuyCount: number,
   maxBuyIn?: number | null,
+  maxRebuys?: number, // [P7d-2] N603
 ): RebuyConfig {
   return {
     pointValueUsd,
@@ -379,5 +385,6 @@ export function createRebuyConfig(
     maxBuyIn: maxBuyIn ?? null,
     entryCurrency,
     currentRebuyCount,
+    maxRebuys: maxRebuys ?? 0,
   }
 }

@@ -8,6 +8,9 @@
 //   <pwaUrl>?matchId=<MatchSession.id>&token=<single-use launch token>
 //            &tournamentId=<id>&round=<n>&table=<n>
 // or, for private rooms, <pwaUrl>?roomCode=<code>&token=...
+// or, for a Quick Play TABLE opened from a deep link (APK / app), the server's
+// social-room link shape <pwaUrl>?roomId=<table>&token=...&type=quick_play_social
+// -- the table id is the match id (N540 5.3), so it is stashed as matchId [N621].
 //
 // Contract:
 //   1. captureLaunchParams() runs at MODULE LOAD of the game's App.tsx (before
@@ -91,22 +94,31 @@ export function captureLaunchParams(): LaunchParams {
   if (typeof window === 'undefined' || !window.location) return empty
   try {
     const params = new URLSearchParams(window.location.search)
-    const matchId      = params.get('matchId')
+    // [N621] a Quick Play TABLE deep link names the table as roomId + type
+    const linkType     = params.get('type')
+    const tableId      = linkType === 'quick_play_social' ? params.get('roomId') : null
+    const matchId      = params.get('matchId') ?? tableId
     const tournamentId = params.get('tournamentId')
     const roomCode     = params.get('roomCode')
+    const gameId       = params.get('gameId')
     if (!matchId && !tournamentId && !roomCode) return peekLaunchParams()
 
     if (matchId)      sessionStorage.setItem(LAUNCH_SS_MATCH_ID, matchId)
     if (tournamentId) sessionStorage.setItem(LAUNCH_SS_TOURNAMENT_ID, tournamentId)
     if (roomCode)     sessionStorage.setItem(LAUNCH_SS_ROOM_CODE, roomCode)
     // N510-RETURN: remember the launch origin for backToDeskillz()
-    sessionStorage.setItem(LAUNCH_SS_ORIGIN, JSON.stringify({ matchId, tournamentId, roomCode }))
+    // [N621] + the game id when the link names it (the return target)
+    sessionStorage.setItem(LAUNCH_SS_ORIGIN, JSON.stringify({ matchId, tournamentId, roomCode, gameId }))
 
     // Scrub what we consumed. round / table / gameplayMode / gameRuleVariant
     // and token are left for the bridge / game to read.
     params.delete('matchId')
     params.delete('tournamentId')
     params.delete('roomCode')
+    if (tableId) {
+      params.delete('roomId')
+      params.delete('type')
+    }
     const cleaned =
       window.location.pathname +
       (params.toString() ? `?${params.toString()}` : '') +

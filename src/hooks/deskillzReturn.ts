@@ -18,7 +18,8 @@
 //     the site opened it with window.open, the Deskillz tab is still behind
 //     it. If the browser keeps it open (installed PWA, app webview, typed URL)
 //     go to the launching page on the site instead: /tournaments/<id> for a
-//     tournament, /lobby for a room or lobby match.
+//     tournament, /lobby for a room, and [N621] /games/<gameId> for a Quick
+//     Play match or table (the game's own page launched it).
 //
 // Practice / AI modes are not real matches and keep their own buttons.
 // Vendored byte-identical into every game at src/hooks/deskillzReturn.ts,
@@ -36,6 +37,8 @@ export interface LaunchOrigin {
   matchId: string | null
   tournamentId: string | null
   roomCode: string | null
+  /** [N621] the game the link named, when it did (the return target). */
+  gameId?: string | null
 }
 
 const str = (v: unknown): string | null => (typeof v === 'string' && v ? v : null)
@@ -50,6 +53,7 @@ export function getLaunchOrigin(): LaunchOrigin | null {
       matchId: str(o.matchId),
       tournamentId: str(o.tournamentId),
       roomCode: str(o.roomCode),
+      gameId: str(o.gameId),
     }
     return origin.matchId || origin.tournamentId || origin.roomCode ? origin : null
   } catch {
@@ -61,11 +65,26 @@ export function isDeskillzLaunched(): boolean {
   return getLaunchOrigin() !== null
 }
 
+/** [N621] The game this tab runs: the bridge's own config, else the launch link. */
+function currentGameId(origin: LaunchOrigin): string | null {
+  try {
+    const id = (window as any).DeskillzBridge?.getInstance?.()?.getConfig?.()?.gameId
+    if (typeof id === 'string' && id) return id
+  } catch {
+    // no bridge on this page -- fall through to the link's own game id
+  }
+  return origin.gameId ?? null
+}
+
 /** The site page a launch origin returns to. */
 export function deskillzReturnUrl(origin: LaunchOrigin): string {
-  return origin.tournamentId
-    ? `${DESKILLZ_SITE_URL}/tournaments/${encodeURIComponent(origin.tournamentId)}`
-    : `${DESKILLZ_SITE_URL}/lobby`
+  if (origin.tournamentId) {
+    return `${DESKILLZ_SITE_URL}/tournaments/${encodeURIComponent(origin.tournamentId)}`
+  }
+  if (origin.roomCode) return `${DESKILLZ_SITE_URL}/lobby`
+  // [N621] a Quick Play match or table: back to the game's own page
+  const gameId = currentGameId(origin)
+  return gameId ? `${DESKILLZ_SITE_URL}/games/${encodeURIComponent(gameId)}` : `${DESKILLZ_SITE_URL}/games`
 }
 
 /**
