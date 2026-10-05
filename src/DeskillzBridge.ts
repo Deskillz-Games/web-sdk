@@ -1314,6 +1314,20 @@ class RealtimeService {
 // MAIN BRIDGE CLASS
 // =============================================================================
 
+/** [N653] what socialQuickPlayCashout resolves to: the server's SocialCashOutResult
+ *  plus `amount` (= cashOutAmount) and `success`. */
+export interface SocialQuickPlayCashoutResult {
+  success: boolean;
+  amount: number;
+  roomId?: string;
+  playerId?: string;
+  cashOutAmount?: number;
+  currency?: string;
+  totalBuyIn?: number;
+  netProfitLoss?: number;
+  roundsPlayed?: number;
+}
+
 export class DeskillzBridge {
   private static instance: DeskillzBridge | null = null;
 
@@ -3611,11 +3625,16 @@ export class DeskillzBridge {
   // [Q-W 3.7.5] socialQuickPlayRebuy removed: Quick Play tables have no rebuys
   // (N569); a seat at 0 is cashed out at 0 and leaves (quickPlaySocialSeatOut).
 
-  /** POST /api/v1/lobby/quick-play/social/:roomId/cashout -- cash out of social QP */
-  async socialQuickPlayCashout(roomId: string): Promise<{ success: boolean; amount: number }> {
+  /** POST /api/v1/lobby/quick-play/social/:roomId/cashout -- cash out of social QP.
+   *  [N653] socialQuickPlayCashout: the server body (SocialCashOutResult) is
+   *  returned whole with `amount` = its cashOutAmount, so a game toasts the
+   *  ledger's number and never a local chip count (N647). */
+  async socialQuickPlayCashout(roomId: string): Promise<SocialQuickPlayCashoutResult> {
     if (this._isGuest) return { success: true, amount: 0 };
 
-    return this.http.post(`/api/v1/lobby/quick-play/social/${roomId}/cashout`);
+    const body = await this.http.post<Record<string, unknown> | null>(`/api/v1/lobby/quick-play/social/${roomId}/cashout`);
+    const amount = Number(body?.cashOutAmount ?? body?.amount ?? 0);
+    return { success: true, ...(body && typeof body === 'object' ? body : {}), amount } as SocialQuickPlayCashoutResult;
   }
 
   /** POST /api/v1/lobby/quick-play/social/:roomId/end -- end social QP game */

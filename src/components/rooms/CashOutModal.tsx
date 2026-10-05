@@ -12,7 +12,7 @@
 // up from the main-app copy for improved TypeScript safety.
 // =============================================================================
 
-import { useState, useCallback, useMemo } from 'react'
+import { useState, useCallback, useMemo, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   X,
@@ -49,6 +49,9 @@ export interface CashOutModalProps {
   stats: CashOutStats
   roomName: string
   isRoundInProgress?: boolean
+  /** [N653] leaveAfterHand: a hand is live -- confirm arms "leave after this hand"
+   *  (D-Q5) instead of being blocked by isRoundInProgress. */
+  leaveAfterHand?: boolean
   entryCurrency: string
 }
 
@@ -63,10 +66,19 @@ export default function CashOutModal({
   stats,
   roomName,
   isRoundInProgress = false,
+  leaveAfterHand = false,
   entryCurrency,
 }: CashOutModalProps) {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [error, setError] = useState<string | null>(null)
+
+  // [N653] a closed modal forgets its last submit (it stays mounted hidden)
+  useEffect(() => {
+    if (!isOpen) {
+      setIsSubmitting(false)
+      setError(null)
+    }
+  }, [isOpen])
 
   const cashOutValueUsd = useMemo(() => {
     return stats.currentBalance * stats.pointValueUsd
@@ -82,7 +94,7 @@ export default function CashOutModal({
   }, [stats.roundsPlayed, stats.roundsWon])
 
   const handleConfirm = useCallback(async () => {
-    if (isRoundInProgress) {
+    if (isRoundInProgress && !leaveAfterHand) {
       setError('Please wait for the current round to finish before leaving.')
       return
     }
@@ -95,7 +107,7 @@ export default function CashOutModal({
       setError(error.response?.data?.message || error.message || 'Cash out failed. Please try again.')
       setIsSubmitting(false)
     }
-  }, [isRoundInProgress, onConfirm])
+  }, [isRoundInProgress, leaveAfterHand, onConfirm])
 
   const handleClose = useCallback(() => {
     if (!isSubmitting) {
@@ -276,6 +288,14 @@ export default function CashOutModal({
               </div>
             )}
 
+            {/* [N653] D-Q5: a live hand is finished first, then the seat leaves */}
+            {leaveAfterHand && (
+              <div className="flex items-center gap-2 p-3 bg-amber-500/10 border border-amber-500/30 rounded-lg">
+                <AlertTriangle className="w-4 h-4 text-amber-400 flex-shrink-0" />
+                <p className="text-sm text-amber-300">A hand is in play. You will cash out as soon as it is scored.</p>
+              </div>
+            )}
+
             {/* Actions */}
             <div className="flex gap-3">
               <button
@@ -287,7 +307,7 @@ export default function CashOutModal({
               </button>
               <button
                 onClick={handleConfirm}
-                disabled={isSubmitting || isRoundInProgress}
+                disabled={isSubmitting || (isRoundInProgress && !leaveAfterHand)}
                 className={cn(
                   'flex-1 py-3 rounded-xl font-bold text-white transition-all disabled:opacity-50',
                   'bg-gradient-to-r from-cyan-600 to-blue-500 hover:from-cyan-700 hover:to-blue-600',
@@ -301,7 +321,7 @@ export default function CashOutModal({
                 ) : (
                   <span className="flex items-center justify-center gap-2">
                     <LogOut className="w-4 h-4" />
-                    Cash Out ${cashOutValueUsd.toFixed(2)}
+                    {leaveAfterHand ? 'Leave after this hand' : `Cash Out $${cashOutValueUsd.toFixed(2)}`}
                   </span>
                 )}
               </button>
