@@ -159,6 +159,7 @@ export function showCashOutNotice(
     alignItems: 'center',
     justifyContent: 'center',
     gap: '10px 14px',
+    width: 'max-content',  // [N659b] left 50% caps shrink-to-fit at half the screen
     maxWidth: 'calc(100vw - 24px)',
     boxSizing: 'border-box',
     padding: '10px 14px',
