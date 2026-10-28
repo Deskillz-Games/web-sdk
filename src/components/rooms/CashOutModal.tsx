@@ -52,6 +52,9 @@ export interface CashOutModalProps {
   /** [N653] leaveAfterHand: a hand is live -- confirm arms "leave after this hand"
    *  (D-Q5) instead of being blocked by isRoundInProgress. */
   leaveAfterHand?: boolean
+  /** [N654] a Quick Play table: footer + stay button use table wording
+   *  (a host room keeps its own copy). [N659-SHARED] */
+  quickPlay?: boolean
   entryCurrency: string
 }
 
@@ -67,6 +70,7 @@ export default function CashOutModal({
   roomName,
   isRoundInProgress = false,
   leaveAfterHand = false,
+  quickPlay = false,
   entryCurrency,
 }: CashOutModalProps) {
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -134,6 +138,7 @@ export default function CashOutModal({
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 20 }}
           className="relative w-full max-w-md bg-[#12121a] border border-gray-700 rounded-2xl shadow-2xl overflow-hidden"
+          style={{ maxHeight: '100%', overflowY: 'auto' }} /* [N659] scrolls on a phone */
         >
           {/* Header */}
           <div className="flex items-center justify-between p-6 border-b border-gray-800">
@@ -274,10 +279,18 @@ export default function CashOutModal({
             {/* Confirmation Note */}
             <div className="flex items-start gap-3 p-3 bg-[#1a1a2e] rounded-lg">
               <CheckCircle2 className="w-4 h-4 text-green-400 flex-shrink-0 mt-0.5" />
-              <p className="text-xs text-gray-400">
-                Your balance will be credited to your wallet immediately upon confirmation.
-                You can rejoin the room later if there are open slots.
-              </p>
+              {/* [N654] Quick Play wording; a host room keeps its own */}
+              {quickPlay ? (
+                <p className="text-xs text-gray-400">
+                  Your chips are paid to your Deskillz wallet at the table amount.
+                  You can start a new Quick Play any time.
+                </p>
+              ) : (
+                <p className="text-xs text-gray-400">
+                  Your balance will be credited to your wallet immediately upon confirmation.
+                  You can rejoin the room later if there are open slots.
+                </p>
+              )}
             </div>
 
             {/* Error Message */}
@@ -303,7 +316,7 @@ export default function CashOutModal({
                 disabled={isSubmitting}
                 className="flex-1 py-3 text-gray-400 hover:bg-gray-800 rounded-xl transition-colors disabled:opacity-50"
               >
-                Stay in Room
+                {quickPlay ? 'Stay at Table' : 'Stay in Room'}
               </button>
               <button
                 onClick={handleConfirm}

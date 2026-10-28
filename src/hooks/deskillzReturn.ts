@@ -12,14 +12,21 @@
 //     endSession and only dropped the socket.
 //   - Match started from the game's own Quick Play / Rooms screen: no launch
 //     origin -> that is all; the player is in the game's lobby (Liam, Sep 23).
-//   - Tab launched by the site (captureLaunchParams saw ?matchId=,
+//   - Page launched by the site (captureLaunchParams saw ?matchId=,
 //     ?tournamentId= or ?roomCode= and recorded the launch origin): after
-//     RETURN_DELAY_MS (so the leave request is on the wire) close this tab --
-//     the site opened it with window.open, the Deskillz tab is still behind
-//     it. If the browser keeps it open (installed PWA, app webview, typed URL)
-//     go to the launching page on the site instead: /tournaments/<id> for a
+//     RETURN_DELAY_MS (so the leave request is on the wire) this page is
+//     replaced by the launching page on the site: /tournaments/<id> for a
 //     tournament, /lobby for a room, and [N621] /games/<gameId> for a Quick
 //     Play match or table (the game's own page launched it).
+//     [N655] D-F3 one tab for the whole journey: the site opens the game in
+//     the same tab, so the way back is a navigation and the tab is never
+//     closed. replace(), not assign(): browser Back on the site never
+//     reopens a finished table. The launch origin is forgotten first.
+//   - [N658] D-Q7 showCashOutNotice: after an armed cash-out the hand result
+//     stays on screen with a bar 'You cashed out X' + Back to Deskillz that
+//     counts down (15 s) and then leaves. [N653-a] setLeavingBadge: a lasting
+//     cue while a Cash Out waits for the hand. Both are plain DOM with inline
+//     styles so every game can use them (DDZ has no React).
 //
 // Practice / AI modes are not real matches and keep their own buttons.
 // Vendored byte-identical into every game at src/hooks/deskillzReturn.ts,
@@ -32,6 +39,8 @@ export const DESKILLZ_SITE_URL = 'https://deskillz.games'
 export const BACK_TO_DESKILLZ_LABEL = 'Back to Deskillz'
 /** N527: time for the game's leave request to leave the tab before it closes. */
 export const RETURN_DELAY_MS = 500
+/** [N658] D-Q7: seconds the cash-out notice waits before it returns by itself. */
+export const CASH_OUT_RETURN_SECONDS = 15
 
 export interface LaunchOrigin {
   matchId: string | null
@@ -100,12 +109,143 @@ export function backToDeskillz(fallback?: () => void): void {
   }
   if (!origin) return
   const url = deskillzReturnUrl(origin)
+  // [N655] D-F3: same tab -- replace this page with the launching page
   setTimeout(() => {
-    try { window.close() } catch { /* not script-closable */ }
-    setTimeout(() => {
-      try {
-        if (!window.closed) window.location.assign(url)
-      } catch { /* navigation refused -- nothing else to do */ }
-    }, 300)
+    try { sessionStorage.removeItem(LAUNCH_SS_ORIGIN) } catch { /* storage blocked */ }
+    try {
+      window.location.replace(url)
+    } catch { /* navigation refused -- nothing else to do */ }
   }, RETURN_DELAY_MS)
+}
+
+// =============================================================================
+// [N658] D-Q7 cash-out notice + [N653-a] armed badge (plain DOM, inline styles)
+// =============================================================================
+
+const NOTICE_ID = 'dskz-cashout-notice'
+const BADGE_ID = 'dskz-leaving-badge'
+const OVERLAY_Z = '2147483000'
+
+function hasDom(): boolean {
+  return typeof document !== 'undefined' && !!document.body
+}
+
+/**
+ * [N658] D-Q7: after an armed cash-out the game keeps its hand result on
+ * screen and calls this. A bar at the bottom shows `message` (e.g. 'You
+ * cashed out 1.1472 USDT (Tron)') and 'Back to Deskillz (n)'; the button, or
+ * the countdown reaching 0, runs onBack once (the game passes its leave via
+ * backToDeskillz). Returns a dispose that removes the bar without onBack.
+ */
+export function showCashOutNotice(
+  message: string,
+  onBack: () => void,
+  seconds: number = CASH_OUT_RETURN_SECONDS,
+): () => void {
+  if (!hasDom()) return () => {}
+  document.getElementById(NOTICE_ID)?.remove()
+
+  const bar = document.createElement('div')
+  bar.id = NOTICE_ID
+  bar.setAttribute('role', 'status')
+  Object.assign(bar.style, {
+    position: 'fixed',
+    left: '50%',
+    bottom: 'max(12px, env(safe-area-inset-bottom))',
+    transform: 'translateX(-50%)',
+    zIndex: OVERLAY_Z,
+    display: 'flex',
+    flexWrap: 'wrap',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: '10px 14px',
+    maxWidth: 'calc(100vw - 24px)',
+    boxSizing: 'border-box',
+    padding: '10px 14px',
+    borderRadius: '14px',
+    border: '1px solid rgba(34, 211, 238, 0.55)',
+    background: 'rgba(10, 12, 22, 0.94)',
+    boxShadow: '0 8px 28px rgba(0, 0, 0, 0.55)',
+    color: '#ffffff',
+    fontFamily: 'system-ui, -apple-system, Segoe UI, Roboto, sans-serif',
+  } as Partial<CSSStyleDeclaration>)
+
+  const text = document.createElement('span')
+  text.textContent = message
+  Object.assign(text.style, { fontSize: '15px', fontWeight: '700', lineHeight: '1.3', textAlign: 'center' })
+
+  const btn = document.createElement('button')
+  btn.type = 'button'
+  Object.assign(btn.style, {
+    border: '0',
+    borderRadius: '10px',
+    padding: '8px 14px',
+    fontSize: '14px',
+    fontWeight: '700',
+    color: '#ffffff',
+    background: 'linear-gradient(90deg, #0891b2, #3b82f6)',
+    cursor: 'pointer',
+    whiteSpace: 'nowrap',
+  } as Partial<CSSStyleDeclaration>)
+
+  let left = Math.max(1, Math.floor(seconds))
+  const label = () => { btn.textContent = `${BACK_TO_DESKILLZ_LABEL} (${left})` }
+  label()
+
+  let done = false
+  let timer: ReturnType<typeof setInterval> | null = null
+  const dispose = () => {
+    done = true
+    if (timer !== null) { clearInterval(timer); timer = null }
+    bar.remove()
+  }
+  const fire = () => {
+    if (done) return
+    dispose()
+    try { onBack() } catch (err) { console.warn('[showCashOutNotice] back handler failed:', err) }
+  }
+  btn.addEventListener('click', fire)
+  timer = setInterval(() => {
+    left -= 1
+    if (left <= 0) fire()
+    else label()
+  }, 1000)
+
+  bar.appendChild(text)
+  bar.appendChild(btn)
+  document.body.appendChild(bar)
+  return dispose
+}
+
+/**
+ * [N653-a] A lasting 'Leaving after this hand' pill while a Cash Out waits
+ * for the live hand (D-Q5). on = show (idempotent), off = remove. It never
+ * takes a click (pointer-events none).
+ */
+export function setLeavingBadge(on: boolean, placement: 'top' | 'bottom' = 'top'): void {
+  if (!hasDom()) return
+  const existing = document.getElementById(BADGE_ID)
+  if (!on) { existing?.remove(); return }
+  const pill = existing ?? document.createElement('div')
+  pill.id = BADGE_ID
+  pill.textContent = 'Leaving after this hand'
+  Object.assign(pill.style, {
+    position: 'fixed',
+    left: '50%',
+    top: placement === 'top' ? 'max(6px, env(safe-area-inset-top))' : 'auto',
+    bottom: placement === 'bottom' ? 'max(6px, env(safe-area-inset-bottom))' : 'auto',
+    transform: 'translateX(-50%)',
+    zIndex: OVERLAY_Z,
+    pointerEvents: 'none',
+    padding: '3px 12px',
+    borderRadius: '999px',
+    border: '1px solid rgba(245, 158, 11, 0.65)',
+    background: 'rgba(30, 20, 4, 0.88)',
+    color: '#fcd34d',
+    fontSize: '12px',
+    fontWeight: '600',
+    whiteSpace: 'nowrap',
+    fontFamily: 'system-ui, -apple-system, Segoe UI, Roboto, sans-serif',
+  } as Partial<CSSStyleDeclaration>)
+  if (!existing) document.body.appendChild(pill)
 }
