@@ -62,6 +62,16 @@ export interface CashOutModalProps {
 // COMPONENT
 // =============================================================================
 
+// [N687] what was taken off this seat's balance (USD), shown as a deduction;
+// a fee under one cent keeps four decimals so it never reads as nothing.
+function feeText(v: number): string {
+  const n = Math.max(0, Number(v) || 0)
+  if (n === 0) return '$0.00'
+  let s = n.toFixed(2)
+  if (s === '0.00') s = n.toFixed(4)
+  return '-$' + s
+}
+
 export default function CashOutModal({
   isOpen,
   onClose,
@@ -233,8 +243,9 @@ export default function CashOutModal({
                   <p className="text-lg font-bold text-white">${stats.totalBuyIn.toFixed(2)}</p>
                 </div>
                 <div className="p-3 bg-[#1a1a2e] rounded-lg border border-gray-800">
-                  <p className="text-xs text-gray-500">Rake Paid</p>
-                  <p className="text-lg font-bold text-amber-400">${stats.rakePaid.toFixed(2)}</p>
+                  {/* [N687] the seat's own share of the rake (server); Quick Play calls it a service fee */}
+                  <p className="text-xs text-gray-500">{quickPlay ? 'Service Fee' : 'Rake'}</p>
+                  <p className="text-lg font-bold text-amber-400">{feeText(stats.rakePaid)}</p>
                 </div>
                 <div className="p-3 bg-[#1a1a2e] rounded-lg border border-gray-800">
                   <p className="text-xs text-gray-500">Rounds Played</p>
