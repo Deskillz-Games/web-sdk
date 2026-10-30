@@ -69,6 +69,32 @@ export interface QpSocialRules {
   lines: string[]
 }
 
+// [N694] a winner takes pot table: its ticket and its money (server built)
+export interface QpPotRules {
+  version: 1
+  kind: 'SOCIAL_POT'
+  winCondition: string
+  target: number | null
+  sessionMins: number | null
+  entryFee: number
+  seats: number
+  pot: number
+  feePercent: number
+  netPot: number
+  prizeDistribution: Record<string, number>
+  idleMins: number
+  lines: string[]
+}
+
+export interface QuickPlayPotMode {
+  entryFee: number
+  pot: number
+  feePercent: number
+  prizeDistribution: Record<string, number>
+  netPot: number
+  goal: { winCondition: string; target: number | null; sessionMins: number | null }
+}
+
 export interface QuickPlayConfig {
   gameId: string
   enabled: boolean
@@ -93,6 +119,13 @@ export interface QuickPlayConfig {
   socialRakeCapUsd: number
   socialAutoCashout: boolean
   socialRules: QpSocialRules[]     // [Q-W 3.7.5] one ticket per point value tier
+  // [N694] winner takes pot tables (absent on an older server = off)
+  socialPotEnabled?: boolean
+  socialPotEntryFees?: number[]
+  socialPotFeePercent?: number
+  socialPotPrizeDistribution?: Record<string, number>
+  socialPotWinCondition?: SocialWinCondition
+  socialPotTarget?: number
   socialWinCondition: SocialWinCondition
   socialPointTargets: number[]
   socialRoundTargets: number[]
@@ -118,6 +151,8 @@ export interface QuickPlayLaunchData {
   targetScore: number | null
   endsAt: string | null
   rules: QpEsportRules | null
+  /** [N694] a winner takes pot table (null / absent = not one) */
+  potMode?: QuickPlayPotMode | null
 }
 
 export interface Tournament {

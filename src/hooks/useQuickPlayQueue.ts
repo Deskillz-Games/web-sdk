@@ -41,7 +41,7 @@
 
 import { useState, useEffect, useCallback, useRef } from 'react'
 import toast from 'react-hot-toast'
-import type { QuickPlayConfig, QuickPlayLaunchData } from '../bridge-types'
+import type { QuickPlayConfig, QuickPlayLaunchData, QuickPlayPotMode } from '../bridge-types'
 
 // =============================================================================
 // TYPES
@@ -92,6 +92,8 @@ export interface QuickPlaySocialRoom {
   token: string
   deepLink: string
   rules: unknown
+  /** [N694] a winner takes pot table (null / absent = a cash table) */
+  potMode?: QuickPlayPotMode | null
 }
 
 export interface QuickPlayQueueState {
@@ -104,12 +106,14 @@ export interface QuickPlayQueueState {
   selectedMode: number       // Esport: player count (2 = 1v1, 4 = FFA-4)
   selectedCurrency: string   // e.g. 'USDT_BSC'
   selectedTarget: number     // Social: win condition target (point/round count)
+  selectedPot: boolean       // [N694] Social: a winner takes pot table (selectedFee = its entry fee)
 
   // Setters called by dropdowns/chips in the UI
   setSelectedFee: (fee: number) => void
   setSelectedMode: (mode: number) => void
   setSelectedCurrency: (currency: string) => void
   setSelectedTarget: (target: number) => void
+  setSelectedPot: (pot: boolean) => void // [N694] also resets selectedFee to the first tier of that table type
 
   // State machine
   status: QuickPlayStatus
@@ -158,14 +162,39 @@ function getBridge(): any {
 /**
  * [Q-W 3.7.5] A queue key is qp:<gameId>:<entryFee>:<playerCount>:<currency>
  * (quick-play-queue.service). The join route takes those four fields, not the key.
+ * [N694] A winner takes pot queue adds ':pot'; the join then sends pot: true.
  */
-export function parseQueueKey(queueKey: string): { gameId: string; entryFee: number; playerCount: number; currency: string } | null {
+export function parseQueueKey(queueKey: string): { gameId: string; entryFee: number; playerCount: number; currency: string; pot?: true } | null {
   const parts = String(queueKey ?? '').split(':')
-  if (parts.length !== 5 || parts[0] !== 'qp') return null
+  const pot = parts.length === 6 && parts[5] === 'pot'
+  if ((parts.length !== 5 && !pot) || parts[0] !== 'qp') return null
   const entryFee = Number(parts[2])
   const playerCount = Number(parts[3])
   if (!parts[1] || !parts[4] || !Number.isFinite(entryFee) || !Number.isInteger(playerCount)) return null
-  return { gameId: parts[1], entryFee, playerCount, currency: parts[4] }
+  return { gameId: parts[1], entryFee, playerCount, currency: parts[4], ...(pot ? { pot: true as const } : {}) }
+}
+
+/** [N694] 8 dp, rounded down (the server's floor8) */
+const potFloor8 = (n: number): number => Math.floor(n * 1e8 + 1e-6) / 1e8
+
+/**
+ * [N694] What 1st is paid at a full pot table: entry x seats, less the service
+ * fee, times 1st's share (a place with nobody to take it goes to 1st), as the
+ * server pays it (pot-rules potNetFor / planPotSettlement). 0 = no pot mode.
+ */
+export function potFirstPrize(config: QuickPlayConfig | null | undefined, entryFee: number, seats: number): number {
+  if (!config || config.socialPotEnabled !== true || !(entryFee > 0) || !(seats > 0)) return 0
+  const rawFee = Number(config.socialPotFeePercent ?? 10)
+  const fee = Number.isFinite(rawFee) ? Math.min(Math.max(rawFee, 0), 100) : 10
+  const netPot = potFloor8((entryFee * seats * (100 - fee)) / 100)
+  const dist = config.socialPotPrizeDistribution && typeof config.socialPotPrizeDistribution === 'object' ? config.socialPotPrizeDistribution : { '1': 100 }
+  let share = 0
+  for (const [place, pct] of Object.entries(dist)) {
+    const p = Number(place)
+    const v = Number(pct)
+    if (Number.isFinite(v) && (p === 1 || p > seats)) share += v
+  }
+  return potFloor8((netPot * share) / 100)
 }
 
 /** [Q-W 3.7.5] matchData for a social table: the same launch shape the games already read */
@@ -176,14 +205,15 @@ function socialRoomToLaunchData(room: QuickPlaySocialRoom): QuickPlayLaunchData 
     gameId: room.gameId,
     deepLink: room.deepLink,
     token: room.token,
-    entryFee: room.defaultBuyIn,
+    entryFee: room.potMode ? room.potMode.entryFee : room.defaultBuyIn, // [N694] a pot table: its entry fee
     currency: room.currency,
-    prizePool: 0,
+    prizePool: room.potMode ? room.potMode.netPot : 0, // [N694] a pot table: the pot after the service fee
     players: (room.players ?? []).map((p) => ({ id: p.id, username: p.username })),
     matchDurationSecs: null,
     targetScore: null,
     endsAt: null,
     rules: null,
+    potMode: room.potMode ?? null, // [N694]
   }
 }
 
@@ -198,6 +228,7 @@ export function useQuickPlayQueue(gameId: string): QuickPlayQueueState {
   const [selectedMode, setSelectedMode]         = useState(2)
   const [selectedCurrency, setSelectedCurrency] = useState('USDT_BSC')
   const [selectedTarget, setSelectedTarget]     = useState(0)
+  const [selectedPot, setSelectedPotState]      = useState(false) // [N694]
   const [status, setStatus]                     = useState<QuickPlayStatus>('idle')
   const [searchTimer, setSearchTimer]           = useState(0)
   const [playersInQueue, setPlayersInQueue]     = useState(0)
@@ -225,6 +256,7 @@ export function useQuickPlayQueue(gameId: string): QuickPlayQueueState {
       .then((cfg: QuickPlayConfig | null) => {
         if (!cfg) { setConfigLoading(false); return }
         setConfig(cfg)
+        setSelectedPotState(false) // [N694] a new game starts on its cash table
 
         const isEsport = cfg.gameCategory === 'ESPORTS'
         const fees  = safeArray<number>(isEsport ? cfg.esportEntryFeeTiers : cfg.socialPointValueTiers, [1])
@@ -249,6 +281,18 @@ export function useQuickPlayQueue(gameId: string): QuickPlayQueueState {
       })
       .catch(() => setConfigLoading(false))
   }, [gameId])
+
+  // ---------------------------------------------------------------------------
+  // [N694] Cash table or winner takes pot. Switching resets the tier: a pot
+  // table's tiers are entry fees (socialPotEntryFees), a cash table's are point
+  // values. Pot is only chosen when the game has pot mode on.
+  // ---------------------------------------------------------------------------
+  const setSelectedPot = useCallback((pot: boolean) => {
+    const on = pot === true && config?.socialPotEnabled === true
+    setSelectedPotState(on)
+    const tiers = safeArray<number>((on ? config?.socialPotEntryFees : config?.socialPointValueTiers) as any, [])
+    if (tiers.length > 0) setSelectedFee(tiers[0])
+  }, [config])
 
   // ---------------------------------------------------------------------------
   // Elapsed timer -- runs during searching / waiting / filling
@@ -416,6 +460,7 @@ export function useQuickPlayQueue(gameId: string): QuickPlayQueueState {
         entryFee:    selectedFee,
         playerCount,
         currency:    selectedCurrency,
+        ...(selectedPot ? { pot: true } : {}), // [N694] a winner takes pot table
       })
       if (result.success) {
         setStatus('waiting')
@@ -428,7 +473,7 @@ export function useQuickPlayQueue(gameId: string): QuickPlayQueueState {
       const msg = err?.message || 'Failed to create game'
       setError(msg); setStatus('error'); toast.error(msg)
     }
-  }, [config, gameId, selectedFee, selectedCurrency])
+  }, [config, gameId, selectedFee, selectedCurrency, selectedPot])
 
   // ---------------------------------------------------------------------------
   // SOCIAL: join an existing open game from the live board
@@ -480,8 +525,8 @@ export function useQuickPlayQueue(gameId: string): QuickPlayQueueState {
 
   return {
     config, configLoading,
-    selectedFee, selectedMode, selectedCurrency, selectedTarget,
-    setSelectedFee, setSelectedMode, setSelectedCurrency, setSelectedTarget,
+    selectedFee, selectedMode, selectedCurrency, selectedTarget, selectedPot,
+    setSelectedFee, setSelectedMode, setSelectedCurrency, setSelectedTarget, setSelectedPot,
     status, searchTimer, playersInQueue, totalRequired, matchData, error,
     availableGames,
     roster, startsAt, socialRoom,

@@ -37,6 +37,8 @@ export type {
   // [Q-W 3.7.5] N540 tickets + the relayed quick-play:* payloads
   QpEsportRules,
   QpSocialRules,
+  QpPotRules, // [N694]
+  QuickPlayPotMode, // [N694]
   QuickPlayConfig,
   QuickPlayLaunchData,
   QuickPlayScoreResult,

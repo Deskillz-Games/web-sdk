@@ -22,6 +22,8 @@ export interface QuickPlayJoinParams {
   playerCount: number;
   /** Payment currency (e.g., 'BNB', 'USDT_BSC', 'USDC_TRON') */
   currency: string;
+  /** [N694] true = a winner takes pot table (entryFee is its entry fee) */
+  pot?: boolean;
 }
 
 /**

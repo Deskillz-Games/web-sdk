@@ -429,6 +429,32 @@ export interface QpSocialRules {
   lines: string[];
 }
 
+// [N694] a winner takes pot table: its ticket and its money (server built)
+export interface QpPotRules {
+  version: 1;
+  kind: 'SOCIAL_POT';
+  winCondition: string;
+  target: number | null;
+  sessionMins: number | null;
+  entryFee: number;
+  seats: number;
+  pot: number;
+  feePercent: number;
+  netPot: number;
+  prizeDistribution: Record<string, number>;
+  idleMins: number;
+  lines: string[];
+}
+
+export interface QuickPlayPotMode {
+  entryFee: number;
+  pot: number;
+  feePercent: number;
+  prizeDistribution: Record<string, number>;
+  netPot: number;
+  goal: { winCondition: string; target: number | null; sessionMins: number | null };
+}
+
 // QuickPlay configuration returned by GET /api/v1/quick-play/games/:gameId
 export interface QuickPlayConfig {
   gameId: string;
@@ -459,6 +485,13 @@ export interface QuickPlayConfig {
   socialAutoCashout: boolean;
   /** [Q-W 3.7.5] one ticket per point value tier */
   socialRules: QpSocialRules[];
+  // [N694] winner takes pot tables (absent on an older server = off)
+  socialPotEnabled?: boolean;
+  socialPotEntryFees?: number[];
+  socialPotFeePercent?: number;
+  socialPotPrizeDistribution?: Record<string, number>;
+  socialPotWinCondition?: string;
+  socialPotTarget?: number;
   // Matchmaking
   matchmakingTimeoutSecs: number;
   matchDurationSecs: number | null;
@@ -474,6 +507,8 @@ export interface QuickPlayJoinParams {
   playerCount: number;
   /** Payment currency (e.g., 'BNB', 'USDT_BSC', 'USDC_TRON') */
   currency: string;
+  /** [N694] true = a winner takes pot table (entryFee is its entry fee) */
+  pot?: boolean;
 }
 
 export interface QuickPlayJoinResult {
@@ -520,6 +555,8 @@ export interface QuickPlayLaunchData {
   /** ISO time the server settles the match (duration + grace) */
   endsAt: string | null;
   rules: QpEsportRules | null;
+  /** [N694] a winner takes pot table (null / absent = not one) */
+  potMode?: QuickPlayPotMode | null;
 }
 
 export interface QuickPlayScoreResult {
@@ -598,7 +635,9 @@ export interface QuickPlaySocialRoomData {
   /** The caller's own launch token */
   token: string;
   deepLink: string;
-  rules: QpSocialRules | null;
+  rules: QpSocialRules | QpPotRules | null;
+  /** [N694] a winner takes pot table (null / absent = a cash table) */
+  potMode?: QuickPlayPotMode | null;
 }
 
 export interface QuickPlaySocialSeatOutData {
@@ -3361,7 +3400,7 @@ export class DeskillzBridge {
       this.log('Quick Play: simulating join (guest mode)');
       const mockResult: QuickPlayJoinResult = {
         success: true,
-        queueKey: `qp:mock:${params.entryFee}:${params.playerCount}`,
+        queueKey: `qp:mock:${params.entryFee}:${params.playerCount}${params.pot === true ? ':pot' : ''}`, // [N694]
         gameId: params.gameId || this.config.gameId,
         entryFee: params.entryFee,
         playerCount: params.playerCount,
@@ -3395,6 +3434,7 @@ export class DeskillzBridge {
         entryFee: params.entryFee,
         playerCount: params.playerCount,
         currency: params.currency,
+        ...(params.pot === true ? { pot: true } : {}), // [N694] a winner takes pot table; absent = a cash table
       },
     );
 
