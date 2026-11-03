@@ -272,6 +272,11 @@ export interface ClientToServerEvents {
   // Pre-Match Room
   'match:join_room': (data: { matchId: string }) => void;
   'match:leave_room': (data: { matchId: string }) => void;
+  // N136 shared-table relay: the server stamps senderUserId on every payload
+  // and takes the host's events (state, hand, round end, game end) only from
+  // the table host [N722]; relay_to reaches ONE seated player [N721]
+  'match:relay': (data: { matchId: string; event: string; payload: unknown }) => void;
+  'match:relay_to': (data: { matchId: string; toUserId: string; event: string; payload: unknown }) => void;
   'match:ready': (data: { matchId: string }) => void;
   'match:leave': (data: { matchId: string }) => void;
 

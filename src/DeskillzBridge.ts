@@ -1059,7 +1059,7 @@ class HttpClient {
     }
 
     if (this.config.debug) {
-      console.log(`[DeskillzBridge] ${method} ${url}`, body ?? '');
+      console.log(`[DeskillzBridge] ${method} ${url}`); // [N734] a request body (a password, a token) is never logged
     }
 
     try {
@@ -1494,14 +1494,16 @@ export class DeskillzBridge {
   // ---------------------------------------------------------------------------
 
   /**
-   * Reads a JWT from the URL query string (?token=...) that was placed there
-   * by the main Deskillz app when launching this game, saves it into the
-   * TokenManager, and scrubs the token from the visible URL.
+   * Reads the single-use launch token from the URL query string (?token=...)
+   * placed there by the main Deskillz app when launching this game, exchanges
+   * it for a game-scoped access token, and scrubs it from the visible URL.
+   * [N732] A full JWT in the URL is never accepted (session fixation): it is
+   * only scrubbed, and the existing session is kept.
    *
    * Flow:
-   *   Main app -> navigates to gameUrl?matchId=X&token=JWT
-   *   Bridge.initialize() -> consumeSSOToken() saves JWT to localStorage
-   *   restoreSession() -> uses stored JWT to call GET /api/v1/users/me
+   *   Main app -> POST /api/v1/auth/launch/issue -> gameUrl?matchId=X&token=<uuid>
+   *   Bridge.initialize() -> consumeSSOToken() -> POST /api/v1/auth/launch/exchange
+   *   restoreSession() -> uses the game access token to call GET /api/v1/users/me
    *   URL is rewritten to strip 'token' so it doesn't leak via history/screenshot
    *
    * Safe no-op if:
@@ -1519,11 +1521,12 @@ export class DeskillzBridge {
       if (!ssoToken) return;
 
       if (ssoToken.split('.').length === 3) {
-        // Legacy path: a full JWT was placed in the URL by the main app.
-        // We intentionally do not set a refresh token here; the main app
-        // retains it and the Bridge uses /api/v1/auth/refresh if needed.
-        this.tokens.setTokens(ssoToken);
-        this.log('SSO token (JWT) consumed from URL');
+        // [N732] a full JWT in the URL is never accepted: a link carrying
+        // someone else's sign-in would put this player in that account
+        // (session fixation). The site launches with a single-use launch
+        // token (POST /api/v1/auth/launch/issue); a JWT is only scrubbed
+        // from the URL below and the existing session is kept.
+        this.log('A sign-in token in the URL was ignored (launch tokens only)');
       } else {
         // Launch-token path (v3.5.x): the URL carries a single-use uuid
         // bound to (player, match). Exchange it for a short-lived, game-scoped
