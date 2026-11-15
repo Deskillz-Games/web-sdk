@@ -25,7 +25,7 @@ export type {
   PlayerStats,
   MatchRecord,
   UpdateProfilePayload,
-  TransactionResult,
+  DepositAddressInfo,
   // GAP 9 (v3.4.12): session resume payload for 'roomReconnect' event
   ActiveSessionPayload,
   // SDK 3.7.0 P3: getMyLaunch() and getLeaderboard() result types
@@ -129,7 +129,6 @@ export type {
   AuthResult,
   EmailRegisterPayload,
   EmailLoginPayload,
-  ChangePasswordPayload,
   ResetPasswordPayload,
   SocialAuthPayload,
   NonceResponse,
@@ -179,9 +178,9 @@ export type {
   Transaction,
   TransactionMetadata,
   TransactionFilters,
-  DepositRequest,
   DepositAddress,
-  WithdrawRequest,
+  DepositChain,
+  DepositToken,
 } from './wallet/wallet-types';
 
 // =============================================================================

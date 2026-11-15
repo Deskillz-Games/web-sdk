@@ -14,14 +14,13 @@ import type {
   CryptoRate,
   Transaction,
   TransactionFilters,
-  DepositRequest,
   DepositAddress,
-  WithdrawRequest,
+  DepositChain,
 } from './wallet-types';
 
 /**
  * Wallet service for managing cryptocurrency balances, transactions,
- * deposits, and withdrawals.
+ * and the deposit address (add funds and withdrawals are on deskillz.games).
  *
  * All balance and transaction data is server-managed (custodial).
  * On-chain operations (deposit confirmations, withdrawals) go through
@@ -165,68 +164,28 @@ export class WalletService {
   }
 
   // ---------------------------------------------------------------------------
-  // Deposits (auth required)
-  // Replicates: wallet.ts walletApi.getDepositAddress (lines 124-129)
-  // and walletApi.confirmDeposit (lines 132-135)
+  // Deposit address (auth required) -- [N791] one address per player per chain
   // ---------------------------------------------------------------------------
 
   /**
-   * Get the deposit address for a specific currency.
-   * Returns the address to send cryptocurrency to, along with network and QR code.
+   * The player's OWN deposit address on BNB Smart Chain ('bsc') or Tron
+   * ('tron'). Any wallet or exchange may send a listed token there; it is
+   * credited automatically after the confirmations.
    *
-   * Endpoint: GET /api/v1/wallet/deposit-address/:currency
-   * Replicates: wallet.ts walletApi.getDepositAddress (lines 124-129)
+   * Endpoint: GET /api/v1/wallet/deposit-address/:chain
    *
-   * @param currency - Currency symbol (e.g., 'BNB', 'USDT').
+   * [N815] 3.7.7: confirmDeposit (POST /wallet/deposit, removed in N791) and
+   * requestWithdraw are gone. Players add funds and withdraw on deskillz.games
+   * (https://deskillz.games/add-funds, https://deskillz.games/transactions).
    */
-  async getDepositAddress(currency: string): Promise<DepositAddress> {
-    this.log('Getting deposit address for:', currency);
+  async getDepositAddress(chain: DepositChain): Promise<DepositAddress> {
+    if (chain !== 'bsc' && chain !== 'tron') {
+      throw new Error('getDepositAddress takes bsc or tron.');
+    }
+    this.log('Getting deposit address on:', chain);
 
     const response = await this.http.get<DepositAddress>(
-      `/api/v1/wallet/deposit-address/${encodeURIComponent(currency)}`
-    );
-    return response.data;
-  }
-
-  /**
-   * Confirm a deposit by submitting the on-chain transaction hash.
-   * The backend verifies the transaction and credits the user's balance.
-   *
-   * Endpoint: POST /api/v1/wallet/deposit
-   * Replicates: wallet.ts walletApi.confirmDeposit (lines 132-135)
-   *
-   * @param data - Currency, amount, and transaction hash.
-   */
-  async confirmDeposit(data: DepositRequest): Promise<Transaction> {
-    this.log('Confirming deposit:', data.currency, data.amount);
-
-    const response = await this.http.post<Transaction>(
-      '/api/v1/wallet/deposit',
-      data
-    );
-    return response.data;
-  }
-
-  // ---------------------------------------------------------------------------
-  // Withdrawals (auth required)
-  // Replicates: wallet.ts walletApi.requestWithdraw (lines 138-141)
-  // ---------------------------------------------------------------------------
-
-  /**
-   * Request a cryptocurrency withdrawal.
-   * The backend processes the on-chain transfer to the specified address.
-   *
-   * Endpoint: POST /api/v1/wallet/withdraw
-   * Replicates: wallet.ts walletApi.requestWithdraw (lines 138-141)
-   *
-   * @param data - Currency, amount, and destination wallet address.
-   */
-  async requestWithdraw(data: WithdrawRequest): Promise<Transaction> {
-    this.log('Requesting withdrawal:', data.currency, data.amount, 'to', data.toAddress);
-
-    const response = await this.http.post<Transaction>(
-      '/api/v1/wallet/withdraw',
-      data
+      `/api/v1/wallet/deposit-address/${chain}`
     );
     return response.data;
   }

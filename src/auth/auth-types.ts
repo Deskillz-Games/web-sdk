@@ -93,14 +93,6 @@ export interface EmailLoginPayload {
 }
 
 /**
- * Password change payload (authenticated).
- */
-export interface ChangePasswordPayload {
-  currentPassword: string;
-  newPassword: string;
-}
-
-/**
  * Password reset payload (via email link token).
  * Replicates: auth.ts ResetPasswordRequest (lines 79-82)
  */

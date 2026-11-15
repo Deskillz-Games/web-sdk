@@ -19,7 +19,6 @@ import type {
   EmailRegisterPayload,
   EmailLoginPayload,
   SocialAuthPayload,
-  ChangePasswordPayload,
   ResetPasswordPayload,
   AuthState,
 } from './auth-types';
@@ -224,21 +223,6 @@ export class AuthService {
 
     const response = await this.http.post<{ success: boolean }>(
       '/api/v1/auth/reset-password',
-      payload
-    );
-    return response.data;
-  }
-
-  /**
-   * Change password for the currently authenticated user.
-   *
-   * @param payload - Current password and new password.
-   */
-  async changePassword(payload: ChangePasswordPayload): Promise<{ success: boolean }> {
-    this.log('Changing password');
-
-    const response = await this.http.post<{ success: boolean }>(
-      '/api/v1/auth/change-password',
       payload
     );
     return response.data;

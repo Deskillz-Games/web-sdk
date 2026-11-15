@@ -23,7 +23,6 @@ export type {
   AuthResult,
   EmailRegisterPayload,
   EmailLoginPayload,
-  ChangePasswordPayload,
   ResetPasswordPayload,
   SocialAuthPayload,
   NonceResponse,

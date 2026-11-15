@@ -9,7 +9,7 @@ Windows app.
 
 - API: `https://api.deskillz.games` (REST under `/api/v1`, Socket.IO on the same host)
 - Distribution: **GitHub Releases** of this repository. The SDK is not published to npm.
-- Full documentation: `DESKILLZ_WEB_GAME_DEVELOPER_GUIDE_v6_0.md` (in the release zip)
+- Full documentation: `DESKILLZ_WEB_GAME_DEVELOPER_GUIDE_v6_2.md` (in the release zip)
 - Developer Portal (Game ID, API key, uploads): https://deskillz.games/developer
 
 ## Install
@@ -82,27 +82,47 @@ replaces them. Do not use React `StrictMode`.
 | Tournaments | `getTournaments`, `useEnrollmentStatus` + `TournamentCard`, `getTournamentSchedule` |
 | Quick play | `useQuickPlayQueue` + `QuickPlayCard` |
 | Private rooms | `createRoom`, `createSocialRoom`, `joinRoom`, `startRoom`, `roomBuyIn(amount, currency)`, `roomCashOut`, `leaveRoom`, `invitePlayer`, `getMyInvites`, `respondToInvite` |
-| Wallet and ranks | `getWalletBalance`, `getBalanceForCurrency`, `getLeaderboard(limit, period)`, `getMyGameRank`, `getProfile`, `updateProfile` |
+| Wallet and ranks | `getWalletBalance`, `getBalanceForCurrency`, `getDepositAddress('bsc' or 'tron')`, `getLeaderboard(limit, period)`, `getMyGameRank`, `getProfile`, `updateProfile` |
 | Disputes | `DisputeModal`, `fileDispute`, `getMyDisputes` |
 | Game settings | `getGameCapabilities`, `getQuickPlayConfig` |
 | Updates | `useAutoUpdater` |
 
-Currencies are chain-qualified: `BNB`, `USDT_BSC`, `USDT_TRON`, `USDC_BSC`,
-`USDC_TRON`. The guide's API reference (section 21) lists every endpoint.
+Currencies are chain-qualified: `USDT_BSC`, `USDC_BSC` and `USDT_TRON` (`BNB`
+appears only on older rows). The guide's API reference (section 21) lists every
+endpoint.
+
+Money in and out happens on deskillz.games, never in a game: send players to
+`https://deskillz.games/add-funds` to add funds and to
+`https://deskillz.games/transactions` to withdraw (same tab). A game sign-in is
+refused on the withdraw routes. `getDepositAddress` only shows the player's own
+address on a chain.
 
 ## Build and publish
 
 1. Bump `version` in `package.json` (it must match the version you enter in the portal).
 2. `npm run build` and note the printed service-worker build stamp.
 3. Load-test your engine chunk with Node, then check `npm run preview`.
-4. Zip the **contents** of `dist/` with `tar` (never `Compress-Archive`):
-   `cd dist`, then `tar -a -c -f ..\your-game-1.2.0.zip *`.
+4. Zip the **contents** of `dist/` (guide 18.1):
+   `Compress-Archive -Path .\dist\* -DestinationPath .\your-game-1.2.0.zip -Force`.
 5. Developer Portal -> Game Builds: upload, All Platforms, start.
 6. After SUCCESS, open the hosted PWA and confirm the new cache stamp.
 
 Guide section 18 has the full checklist.
 
 ## Upgrading
+
+**3.7.5 -> 3.7.7:** replace the bridge (both copies) and the files in the
+release zip. 3.7.6: a full JWT in the game URL is scrubbed and ignored (launch
+tokens only), request bodies are never logged, socket types gain `match:relay`
+and `match:relay_to`. 3.7.7: `deposit()`, `withdraw()`, `quoteWithdrawal()` and
+`cancelWithdrawal()` are gone (add funds and withdraw on deskillz.games);
+`getDepositAddress(chain)` takes `'bsc'` or `'tron'` and returns the player's own
+address with the tokens credited there; the modular services lose the calls
+the server no longer has (`changePassword`, `rateGame`, room `sendChat` (use the
+socket), `requestToJoin`, pause / resume, `getRoundHistory`, `getSessionStats`,
+wallet `confirmDeposit` and `requestWithdraw`); `QuickPlayCard` gains the
+Winner takes pot text. If your game called any of these, remove the call and
+link to deskillz.games instead.
 
 **3.7.4 -> 3.7.5 (Q-W):** replace the bridge (both copies), `hooks/useQuickPlayQueue.ts`
 and `components/rooms/SocialGameSettings.tsx`. Host-room frames now arrive on a
@@ -123,7 +143,7 @@ are gone (the server creates the table, settles the match and has no rebuys).
    `VITE_SOCKET_URL=wss://api.deskillz.games` (no path).
 3. Shared tables: take the host seat from `hostUserId` (`getMyLaunch` or `match:launch`).
 4. Quick play filling event is `quickPlayFilling`; dispute reason `OPPONENT_ISSUE`.
-5. Bump, build, load test, zip with `tar`, upload, confirm the cache stamp.
+5. Bump, build, load test, zip with `Compress-Archive`, upload, confirm the cache stamp.
 
 `CHANGELOG.md` in the release zip lists the changes in each version.
 

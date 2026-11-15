@@ -142,42 +142,32 @@ export interface TransactionFilters {
 }
 
 // -----------------------------------------------------------------------------
-// Deposit Types
-// Replicates: wallet.ts DepositRequest (lines 61-65), DepositAddress (lines 73-78)
+// Deposit address -- [N791] GET /api/v1/wallet/deposit-address/:chain
+// [N815] 3.7.7: DepositRequest and WithdrawRequest removed (no hash deposit
+// route since N791; players withdraw on deskillz.games, N723).
 // -----------------------------------------------------------------------------
 
-/**
- * Deposit confirmation payload.
- * Replicates: wallet.ts DepositRequest (lines 61-65)
- */
-export interface DepositRequest {
+/** The two deposit chains. */
+export type DepositChain = 'bsc' | 'tron';
+
+/** One token credited at a deposit address. */
+export interface DepositToken {
   currency: string;
-  amount: number;
-  txHash: string;
+  tokenContract: string;
+  decimals: number;
 }
 
 /**
- * Deposit address for receiving cryptocurrency.
- * Replicates: wallet.ts DepositAddress (lines 73-78)
+ * The player's own deposit address on a chain. Any sender; every token in
+ * tokens is credited automatically after the confirmations.
  */
 export interface DepositAddress {
-  currency: string;
-  address: string;
+  chain: DepositChain;
   network: string;
-  qrCode?: string;
-}
-
-// -----------------------------------------------------------------------------
-// Withdrawal Types
-// Replicates: wallet.ts WithdrawRequest (lines 67-71)
-// -----------------------------------------------------------------------------
-
-/**
- * Withdrawal request payload.
- * Replicates: wallet.ts WithdrawRequest (lines 67-71)
- */
-export interface WithdrawRequest {
-  currency: string;
-  amount: number;
-  toAddress: string;
+  address: string;
+  tokens: DepositToken[];
+  minAmount: number;
+  confirmations: number;
+  linkedWalletOnly: boolean;
+  createdAt: string;
 }

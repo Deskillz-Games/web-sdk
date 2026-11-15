@@ -20,7 +20,7 @@ export interface QuickPlayJoinParams {
   entryFee: number;
   /** Number of players for the match (2 for 1v1, 3 for FFA-3, 4 for FFA-4 or social) */
   playerCount: number;
-  /** Payment currency (e.g., 'BNB', 'USDT_BSC', 'USDC_TRON') */
+  /** Payment currency (e.g., 'USDT_BSC', 'USDC_BSC', 'USDT_TRON') */
   currency: string;
   /** [N694] true = a winner takes pot table (entryFee is its entry fee) */
   pot?: boolean;

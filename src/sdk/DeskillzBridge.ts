@@ -8,9 +8,12 @@
 // No external npm dependencies (socket.io-client is optional).
 // All endpoints use /api/v1/ prefix.
 // 3.7.4 (P7c 1d): N432 room currency (no bare 'USDT'), N393 round payloads,
-// N397 withdraw per design 6.1 + quote / cancel, transactions / stats /
-// history mapped to the real responses, N473 deposit claim + deposit
-// address, N420-P6 host-withdraw methods removed, N534 verifyAge body.
+// N397 transactions / stats / history mapped to the real responses,
+// N420-P6 host-withdraw methods removed, N534 verifyAge body.
+// 3.7.7 (N815): deposit(), withdraw(), quoteWithdrawal() and
+// cancelWithdrawal() removed (players add funds and withdraw on
+// deskillz.games; a game sign-in is refused on the withdraw routes, N723,
+// and the hash deposit route is gone, N791); getDepositAddress takes a chain.
 // 3.7.5 (Q-W): N584 second socket to <socketUrl>/lobby for host rooms,
 // N604 every quick-play:* frame relayed to its bridge event for the whole
 // realtime session, N605 tournament:* relayed, N540 Quick Play routes
@@ -128,14 +131,6 @@ interface LeaderboardApiRow {
 function toAmount(value: unknown): number {
   const n = typeof value === 'number' ? value : Number(value);
   return Number.isFinite(n) ? n : 0;
-}
-
-/** [N397] a linked WalletAccount id (the withdraw walletId). */
-const WALLET_ID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
-
-/** [N397] EVM addresses compare case-insensitively; Tron base58 is case-sensitive (rule 38). */
-function sameAddress(a: string, b: string): boolean {
-  return /^0x/i.test(a) ? a.toLowerCase() === b.toLowerCase() : a === b;
 }
 
 /** [N420-P6] { currency: amount } from the host earnings block, numbers only. */
@@ -263,52 +258,31 @@ export interface UpdateProfilePayload {
   avatarUrl?: string;
 }
 
-export interface TransactionRequest {
+/** [N791] One token credited at a deposit address. */
+export interface DepositToken {
   currency: string;
-  amount: number;
-  address?: string;
-}
-
-export interface TransactionResult {
-  success: boolean;
-  txHash?: string;
-  message?: string;
-  /** [N397] the ledger transaction id (cancelWithdrawal takes it) */
-  transactionId?: string;
-  status?: string;
-}
-
-/** [N397] GET /api/v1/wallet/withdraw/quote (design 6.1). */
-export interface WithdrawQuote {
-  currency: string;
-  chain: string;
-  amount: number;
-  fee: number;
-  net: number;
-  minimum: number;
-  available: number;
-  sufficient: boolean;
-  autoApprove: boolean;
-  holdReason: string | null;
-  destination: { walletId: string; address: string } | null;
-  enabled: boolean;
-}
-
-/** [N473] GET /api/v1/wallet/deposit-address/:currency. */
-export interface DepositAddressInfo {
-  currency: string;
-  chain: string;
-  network: string;
-  address: string;
   tokenContract: string;
   decimals: number;
+}
+
+/**
+ * [N791] GET /api/v1/wallet/deposit-address/:chain (bsc | tron): the player's
+ * OWN deposit address on that chain. Any wallet or exchange may send to it;
+ * every token in tokens is credited automatically after the confirmations.
+ */
+export interface DepositAddressInfo {
+  chain: 'bsc' | 'tron';
+  network: string;
+  address: string;
+  tokens: DepositToken[];
   minAmount: number;
   confirmations: number;
   linkedWalletOnly: boolean;
+  createdAt: string;
 }
 
-/** [N473] a deposit claim: the on-chain hash, optionally the sending wallet. */
-export type DepositProof = string | { txHash: string; fromAddress?: string };
+/** [N791] The two deposit chains. */
+export type DepositChain = 'bsc' | 'tron';
 
 // =============================================================================
 // ENROLLMENT TYPES (v3.0)
@@ -505,7 +479,7 @@ export interface QuickPlayJoinParams {
   entryFee: number;
   /** Number of players (2 = 1v1, 3 = FFA-3, 4 = FFA-4 or social table) */
   playerCount: number;
-  /** Payment currency (e.g., 'BNB', 'USDT_BSC', 'USDC_TRON') */
+  /** Payment currency (e.g., 'USDT_BSC', 'USDC_BSC', 'USDT_TRON') */
   currency: string;
   /** [N694] true = a winner takes pot table (entryFee is its entry fee) */
   pot?: boolean;
@@ -870,8 +844,6 @@ export type BridgeEventType =
   | 'connectionChanged'
   | 'walletUpdated'
   | 'walletDisconnected'
-  | 'depositComplete'
-  | 'withdrawComplete'
   | 'playerJoined'
   | 'playerLeft'
   | 'quickPlaySearching'
@@ -1917,144 +1889,29 @@ export class DeskillzBridge {
   }
 
   /**
-   * [N473] Claim a ledger deposit. The player sends the token on-chain from a
-   * linked wallet to getDepositAddress(currency).address; the claim carries
-   * that transaction hash and the backend verifies it on-chain (A2: the sender
-   * must be a wallet linked to the account; the real amount is what is
-   * credited). Without a hash there is nothing to claim and no request is
-   * made -- Add Funds lives on deskillz.games.
+   * [N791] GET /api/v1/wallet/deposit-address/:chain -- the player's own
+   * deposit address on BNB Smart Chain ('bsc') or Tron ('tron'). Anything
+   * sent there in a listed token is credited automatically. Show it, or send
+   * the player to deskillz.games/add-funds; a game never claims a deposit.
    */
-  async deposit(currency: string, amount: number, proof?: DepositProof): Promise<TransactionResult> {
-    if (this._isGuest || !this._isAuthenticated) {
-      return { success: false, message: 'Wallet not available in guest mode.' };
-    }
-
-    const txHash = (typeof proof === 'string' ? proof : proof?.txHash ?? '').trim();
-    if (!txHash) {
-      return {
-        success: false,
-        message: 'Add funds on deskillz.games (Wallet > Add Funds), then claim the transaction hash here.',
-      };
-    }
-
-    try {
-      const target = await this.getDepositAddress(currency);
-      if (!target) return { success: false, message: `Deposits are not available for ${currency}.` };
-      const fromAddress =
-        (typeof proof === 'object' ? proof.fromAddress?.trim() : '') || this.currentUser?.walletAddress || '';
-      this.log('Claiming deposit:', amount, currency, txHash);
-      const tx = await this.http.post<{ id?: string; status?: string; txHash?: string }>(
-        '/api/v1/wallet/deposit',
-        { txHash, amount, currency, fromAddress, toAddress: target.address, chain: target.chain },
-      );
-      this.getWalletBalance().then((u) => this.emit('walletUpdated', u)).catch(() => {});
-      return {
-        success: true,
-        txHash: tx?.txHash ?? txHash,
-        transactionId: tx?.id,
-        status: tx?.status,
-        message: 'Deposit claimed. It is credited after the network confirmations.',
-      };
-    } catch (err) {
-      this.log('Deposit error:', err);
-      return { success: false, message: err instanceof Error ? err.message : 'Deposit failed. Please try again.' };
-    }
-  }
-
-  /** [N473] GET /api/v1/wallet/deposit-address/:currency -- where a ledger deposit is sent. */
-  async getDepositAddress(currency: string): Promise<DepositAddressInfo | null> {
+  async getDepositAddress(chain: DepositChain): Promise<DepositAddressInfo | null> {
     if (this._isGuest || !this._isAuthenticated) return null;
+    if (chain !== 'bsc' && chain !== 'tron') {
+      this.log('getDepositAddress: use bsc or tron, got', chain);
+      return null;
+    }
     try {
-      return await this.http.get<DepositAddressInfo>(
-        `/api/v1/wallet/deposit-address/${encodeURIComponent(currency)}`,
-      );
+      return await this.http.get<DepositAddressInfo>(`/api/v1/wallet/deposit-address/${chain}`);
     } catch (err) {
       this.log('getDepositAddress error:', err);
       return null;
     }
   }
 
-  /**
-   * [N397] GET /api/v1/wallet/withdraw/quote -- fee, net, minimum, destination
-   * and whether it would go out automatically. Throws the server message.
-   */
-  async quoteWithdrawal(currency: string, amount: number, walletId?: string): Promise<WithdrawQuote | null> {
-    if (this._isGuest || !this._isAuthenticated) return null;
-    return this.http.get<WithdrawQuote>('/api/v1/wallet/withdraw/quote', { currency, amount, walletId });
-  }
-
-  /**
-   * [N397] Design 6.1: POST /api/v1/wallet/withdraw { currency, amount, walletId }.
-   * Money only goes to a wallet linked to the account (default: the primary
-   * one on the currency's chain), never to a typed address. The third
-   * argument may be a linked walletId, or the address the player expects: if
-   * that is not the quoted destination the request is refused here, before
-   * anything is held. Every withdrawal is quoted first.
-   */
-  async withdraw(currency: string, amount: number, walletIdOrAddress?: string): Promise<TransactionResult> {
-    if (this._isGuest || !this._isAuthenticated) {
-      return { success: false, message: 'Wallet not available in guest mode.' };
-    }
-
-    const pick = (walletIdOrAddress ?? '').trim();
-    const walletId = WALLET_ID_RE.test(pick) ? pick : undefined;
-
-    try {
-      const quote = await this.quoteWithdrawal(currency, amount, walletId);
-      if (!quote) return { success: false, message: 'Could not quote this withdrawal. Please try again.' };
-      if (!quote.enabled) return { success: false, message: 'Withdrawals are not open yet.' };
-      const dest = quote.destination;
-      if (!dest) return { success: false, message: `Link a wallet for ${currency} on deskillz.games first.` };
-      if (pick && !walletId && !sameAddress(pick, dest.address)) {
-        return {
-          success: false,
-          message: `Withdrawals go to your linked wallet ${dest.address}. Link ${pick} on deskillz.games to use it.`,
-        };
-      }
-      if (amount < quote.minimum) {
-        return { success: false, message: `The minimum withdrawal is ${quote.minimum} ${currency}.` };
-      }
-      if (!quote.sufficient) {
-        return { success: false, message: `Not enough ${currency}: ${quote.available} available.` };
-      }
-
-      this.log('Withdrawing:', amount, currency, 'to', dest.address);
-      const tx = await this.http.post<{ id?: string; status?: string; txHash?: string }>(
-        '/api/v1/wallet/withdraw',
-        { currency, amount, walletId: dest.walletId },
-      );
-      this.getWalletBalance().then((u) => this.emit('walletUpdated', u)).catch(() => {});
-      return {
-        success: true,
-        txHash: tx?.txHash,
-        transactionId: tx?.id,
-        status: tx?.status,
-        message: quote.autoApprove
-          ? `Withdrawal requested: ${quote.net} ${currency} to ${dest.address}.`
-          : `Withdrawal requested. It waits for a review (${quote.holdReason ?? 'manual check'}).`,
-      };
-    } catch (err) {
-      this.log('Withdraw error:', err);
-      return { success: false, message: err instanceof Error ? err.message : 'Withdrawal failed. Please try again.' };
-    }
-  }
-
-  /** [N397] POST /api/v1/wallet/withdrawals/:id/cancel -- only while it is PENDING. */
-  async cancelWithdrawal(transactionId: string): Promise<TransactionResult> {
-    if (this._isGuest || !this._isAuthenticated) {
-      return { success: false, message: 'Wallet not available in guest mode.' };
-    }
-    try {
-      const tx = await this.http.post<{ id?: string; status?: string }>(
-        `/api/v1/wallet/withdrawals/${encodeURIComponent(transactionId)}/cancel`,
-      );
-      this.getWalletBalance().then((u) => this.emit('walletUpdated', u)).catch(() => {});
-      return { success: true, transactionId: tx?.id ?? transactionId, status: tx?.status, message: 'Withdrawal cancelled.' };
-    } catch (err) {
-      this.log('Cancel withdrawal error:', err);
-      return { success: false, message: err instanceof Error ? err.message : 'Could not cancel the withdrawal.' };
-    }
-  }
+  // [N815] Add funds and withdrawals happen on deskillz.games only:
+  //   https://deskillz.games/add-funds and https://deskillz.games/transactions
+  // (open them in the same tab). deposit(), withdraw(), quoteWithdrawal() and
+  // cancelWithdrawal() were removed in 3.7.7.
 
   async disconnectWallet(): Promise<void> {
     if (this._isGuest || !this._isAuthenticated) return;

@@ -223,21 +223,6 @@ export class GameService {
   // Authenticated Endpoints - Player Actions
   // ---------------------------------------------------------------------------
 
-  /**
-   * Rate a game.
-   *
-   * Endpoint: POST /api/v1/games/:id/rate
-   * Replicates: games.ts gamesApi.rateGame (lines 198-200)
-   *
-   * @param id - Game ID.
-   * @param rating - Rating value (e.g. 1-5).
-   */
-  async rateGame(id: string, rating: number): Promise<void> {
-    this.log('Rating game:', id, rating);
-
-    await this.http.post(`/api/v1/games/${encodeURIComponent(id)}/rate`, { rating });
-  }
-
   // ---------------------------------------------------------------------------
   // Developer Endpoints (Requires Auth)
   // Replicates: games.ts gamesApi (lines 202-243)

@@ -20,8 +20,6 @@ import {
   type BuyInRequest,
   type BuyInResponse,
   type CashOutResponse,
-  type SocialRoundResult,
-  type SessionStats,
   type SpectatorRoomState,
   type StatusInfo,
   type SocialGameTypeInfo,
@@ -451,22 +449,6 @@ export class PrivateRoomService {
   }
 
   /**
-   * Request to join a room.
-   *
-   * Endpoint: POST /api/v1/private-rooms/:roomId/request-join
-   * Replicates: private-rooms.ts privateRoomApi.requestToJoin (lines 747-752)
-   */
-  async requestToJoin(roomId: string, message?: string): Promise<RoomInvite> {
-    this.log('Requesting to join:', roomId);
-
-    const response = await this.http.post<RoomInvite>(
-      `/api/v1/private-rooms/${encodeURIComponent(roomId)}/request-join`,
-      { message }
-    );
-    return response.data;
-  }
-
-  /**
    * Get current user's pending invites.
    *
    * Endpoint: GET /api/v1/private-rooms/invites/my
@@ -522,21 +504,6 @@ export class PrivateRoomService {
       { accept }
     );
     return response.data;
-  }
-
-  /**
-   * Send a chat message in a room.
-   *
-   * Endpoint: POST /api/v1/private-rooms/:roomId/chat
-   * Replicates: private-rooms.ts privateRoomApi.sendChat (lines 794-796)
-   */
-  async sendChat(roomId: string, message: string): Promise<void> {
-    this.log('Sending chat:', roomId);
-
-    await this.http.post(
-      `/api/v1/private-rooms/${encodeURIComponent(roomId)}/chat`,
-      { message }
-    );
   }
 
   // ---------------------------------------------------------------------------
@@ -602,111 +569,6 @@ export class PrivateRoomService {
 
     const response = await this.http.post<CashOutResponse>(
       `/api/v1/private-rooms/${encodeURIComponent(roomId)}/cash-out`
-    );
-    return response.data;
-  }
-
-  /**
-   * Request a pause in a social game.
-   *
-   * Endpoint: POST /api/v1/private-rooms/:roomId/pause/request
-   * Replicates: private-rooms.ts privateRoomApi.requestPause (lines 843-849)
-   */
-  async requestPause(
-    roomId: string,
-    reason?: string
-  ): Promise<{ success: boolean; pauseId: string }> {
-    this.log('Requesting pause:', roomId);
-
-    const response = await this.http.post<{ success: boolean; pauseId: string }>(
-      `/api/v1/private-rooms/${encodeURIComponent(roomId)}/pause/request`,
-      { reason }
-    );
-    return response.data;
-  }
-
-  /**
-   * Vote on a pause request.
-   *
-   * Endpoint: POST /api/v1/private-rooms/:roomId/pause/vote
-   * Replicates: private-rooms.ts privateRoomApi.votePause (lines 854-860)
-   */
-  async votePause(
-    roomId: string,
-    approved: boolean
-  ): Promise<{ success: boolean; allApproved: boolean }> {
-    this.log('Voting on pause:', roomId, approved);
-
-    const response = await this.http.post<{
-      success: boolean;
-      allApproved: boolean;
-    }>(
-      `/api/v1/private-rooms/${encodeURIComponent(roomId)}/pause/vote`,
-      { approved }
-    );
-    return response.data;
-  }
-
-  /**
-   * Cancel a pause request (requester only).
-   *
-   * Endpoint: POST /api/v1/private-rooms/:roomId/pause/cancel
-   * Replicates: private-rooms.ts privateRoomApi.cancelPause (lines 865-868)
-   */
-  async cancelPause(roomId: string): Promise<{ success: boolean }> {
-    this.log('Cancelling pause:', roomId);
-
-    const response = await this.http.post<{ success: boolean }>(
-      `/api/v1/private-rooms/${encodeURIComponent(roomId)}/pause/cancel`
-    );
-    return response.data;
-  }
-
-  /**
-   * Resume from pause (host only, or automatic).
-   *
-   * Endpoint: POST /api/v1/private-rooms/:roomId/resume
-   * Replicates: private-rooms.ts privateRoomApi.resumeGame (lines 873-876)
-   */
-  async resumeGame(roomId: string): Promise<{ success: boolean }> {
-    this.log('Resuming game:', roomId);
-
-    const response = await this.http.post<{ success: boolean }>(
-      `/api/v1/private-rooms/${encodeURIComponent(roomId)}/resume`
-    );
-    return response.data;
-  }
-
-  /**
-   * Get round history for a social room.
-   *
-   * Endpoint: GET /api/v1/private-rooms/:roomId/rounds
-   * Replicates: private-rooms.ts privateRoomApi.getRoundHistory (lines 881-887)
-   */
-  async getRoundHistory(
-    roomId: string,
-    params?: { limit?: number; offset?: number }
-  ): Promise<SocialRoundResult[]> {
-    this.log('Getting round history:', roomId);
-
-    const response = await this.http.get<SocialRoundResult[]>(
-      `/api/v1/private-rooms/${encodeURIComponent(roomId)}/rounds`,
-      params as QueryParams
-    );
-    return response.data;
-  }
-
-  /**
-   * Get player session stats for a social room.
-   *
-   * Endpoint: GET /api/v1/private-rooms/:roomId/stats
-   * Replicates: private-rooms.ts privateRoomApi.getSessionStats (lines 892-895)
-   */
-  async getSessionStats(roomId: string): Promise<SessionStats> {
-    this.log('Getting session stats:', roomId);
-
-    const response = await this.http.get<SessionStats>(
-      `/api/v1/private-rooms/${encodeURIComponent(roomId)}/stats`
     );
     return response.data;
   }

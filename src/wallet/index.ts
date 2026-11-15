@@ -40,7 +40,7 @@ export type {
   Transaction,
   TransactionMetadata,
   TransactionFilters,
-  DepositRequest,
   DepositAddress,
-  WithdrawRequest,
+  DepositChain,
+  DepositToken,
 } from './wallet-types';
