@@ -57,6 +57,8 @@ import {
 import {
   QuickPlayQueueState,
   AvailableGame,
+  parseQueueKey,
+  potFirstPrize,
 } from '../../hooks/useQuickPlayQueue'
 
 // =============================================================================
@@ -88,6 +90,42 @@ function timerColor(secs: number): string {
   if (secs > 30) return 'text-green-400'
   if (secs > 15) return 'text-yellow-400'
   return 'text-red-400 animate-pulse'
+}
+
+// [N694] winner takes pot: money and goal text (ASCII, no dashes as punctuation)
+function usd(n: number): string {
+  const v = Math.max(0, Number(n) || 0)
+  return `$${v < 0.01 && v > 0 ? v.toFixed(4) : v.toFixed(2)}`
+}
+
+function placeName(i: number): string {
+  return i === 1 ? '1st' : i === 2 ? '2nd' : i === 3 ? '3rd' : `${i}th`
+}
+
+function potPlacesText(dist: Record<string, number> | undefined): string {
+  const rows = Object.entries(dist && typeof dist === 'object' ? dist : { '1': 100 })
+    .map(([p, pct]) => [Number(p), Number(pct)] as const)
+    .filter(([p, pct]) => Number.isInteger(p) && p >= 1 && Number.isFinite(pct) && pct > 0)
+    .sort((a, b) => a[0] - b[0])
+  if (rows.length === 0 || (rows.length === 1 && rows[0][0] === 1)) return 'Winner takes the pot'
+  return rows.map(([p, pct]) => `${placeName(p)} ${pct}%`).join(', ')
+}
+
+function potGoalText(config: QuickPlayConfig): string {
+  const kind = String(config.socialPotWinCondition ?? 'FIXED_ROUNDS')
+  const t = Number(config.socialPotTarget ?? 0)
+  if (kind === 'FIRST_TO_POINTS') return `First to ${t} points`
+  if (kind === 'TIMED_SESSION') return `${t} minutes`
+  if (kind === 'SINGLE_GAME') return 'One hand'
+  return `${t} hands`
+}
+
+function potTiers(config: QuickPlayConfig): number[] {
+  return safeArray<number>(config.socialPotEntryFees as any, []).filter((n) => Number(n) > 0)
+}
+
+function potOffered(config: QuickPlayConfig): boolean {
+  return config.socialPotEnabled === true && potTiers(config).length > 0
 }
 
 const PRIZE_TYPE_LABELS: Record<string, string> = {
@@ -220,11 +258,15 @@ function PointValueDropdown({
 // =============================================================================
 
 function AvailableGamesBoard({
-  games, onJoin,
+  games: allGames, onJoin, gameId,
 }: {
   games: AvailableGame[]
   onJoin: (queueKey: string) => void
+  gameId?: string
 }) {
+  // [N694] the board frame lists every game's open queues: keep this game's own
+  // (a JOIN of another game's queue seated the player in that game)
+  const games = allGames.filter((g) => !gameId || parseQueueKey(g.queueKey)?.gameId === gameId)
   return (
     <div className="space-y-2">
       <label className="block text-xs text-white/40 uppercase tracking-wider">
@@ -233,20 +275,26 @@ function AvailableGamesBoard({
 
       {games.length === 0 ? (
         <div className="text-center py-3 text-xs text-white/30 border border-white/5 rounded-lg">
-          No open games — create one below
+          No open games yet. Create one below.
         </div>
       ) : (
         games.map(game => {
           const fillPct = Math.min((game.currentPlayers / game.maxPlayers) * 100, 100)
+          const key = parseQueueKey(game.queueKey)
+          const isPot = Boolean(key?.pot) || game.mode === 'pot' // [N694]
+          const currency = key?.currency ?? game.currency
           return (
             <div
               key={game.queueKey}
               className="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-white/5 border border-white/10 hover:border-white/20 transition-colors"
             >
-              {/* Point value */}
+              {/* Point value, or a pot table's entry fee [N694] */}
               <div className="shrink-0 text-left">
                 <span className="text-sm font-bold text-white">${game.pointValue}</span>
-                <span className="text-xs text-white/40">/pt</span>
+                <span className="text-xs text-white/40">{isPot ? ' entry' : '/pt'}</span>
+                {isPot && (
+                  <span className="block text-[10px] font-bold uppercase tracking-wider text-yellow-300">Pot</span>
+                )}
               </div>
 
               {/* Fill bar + meta */}
@@ -267,12 +315,13 @@ function AvailableGamesBoard({
                     style={{ width: `${fillPct}%` }}
                   />
                 </div>
+                {/* Currency, from the queue key (the board frame carries none) [N694] */}
+                {currency && (
+                  <div className="text-xs text-white/30 mt-1" style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                    {CURRENCY_LABELS[currency] ?? currency}
+                  </div>
+                )}
               </div>
-
-              {/* Currency */}
-              <span className="text-xs text-white/30 shrink-0">
-                {CURRENCY_LABELS[game.currency] ?? game.currency}
-              </span>
 
               {/* Join */}
               <button
@@ -392,7 +441,133 @@ function EsportIdleState({ config, qp }: { config: QuickPlayConfig; qp: QuickPla
 // Dropdown for point value + currency + live games board + Create Game button
 // =============================================================================
 
+// [N694] Cash table or winner takes pot (only when the game has pot mode on)
+function TableTypeToggle({ qp }: { qp: QuickPlayQueueState }) {
+  const opts: Array<{ pot: boolean; title: string; sub: string }> = [
+    { pot: false, title: 'Cash table', sub: 'Chips, leave after any hand' },
+    { pot: true, title: 'Winner takes pot', sub: 'Set entry, play to the end' },
+  ]
+  return (
+    <div className="grid grid-cols-2 gap-2" role="radiogroup" aria-label="Table type">
+      {opts.map((o) => {
+        const on = qp.selectedPot === o.pot
+        return (
+          <button
+            key={o.title}
+            type="button"
+            role="radio"
+            aria-checked={on}
+            onClick={() => qp.setSelectedPot(o.pot)}
+            className={cn(
+              'min-w-0 px-3 py-2 rounded-lg border text-left transition-all',
+              on
+                ? 'bg-purple-500/20 border-purple-500/40'
+                : 'bg-white/5 border-white/10 hover:border-white/25',
+            )}
+          >
+            <span className={cn('block text-sm font-bold', on ? 'text-purple-300' : 'text-white/70')} style={{ lineHeight: 1.25 }}>{o.title}</span>
+            <span className="block text-xs text-white/40" style={{ lineHeight: 1.25, marginTop: 2 }}>{o.sub}</span>
+          </button>
+        )
+      })}
+    </div>
+  )
+}
+
+// [N694] the pot table settings: entry fee, the pot, the fee, the places, the goal
+function SocialPotIdleState({ config, qp }: { config: QuickPlayConfig; qp: QuickPlayQueueState }) {
+  const tiers      = potTiers(config)
+  const currencies = safeArray<string>(config.socialCurrencies as any, ['USDT_BSC'])
+  const seats      = Number(config.socialMinPlayers ?? 4) || 4
+  const entry      = tiers.includes(qp.selectedFee) ? qp.selectedFee : (tiers[0] ?? 0)
+  const fee        = Number(config.socialPotFeePercent ?? 10)
+  const pot        = entry * seats
+  const first      = potFirstPrize(config, entry, seats)
+  const places     = potPlacesText(config.socialPotPrizeDistribution)
+  const single     = places === 'Winner takes the pot'
+
+  return (
+    <motion.div key="social-pot-idle" initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -6 }} className="space-y-4">
+      <TableTypeToggle qp={qp} />
+
+      <div>
+        <label className="block text-xs text-white/40 uppercase tracking-wider mb-1.5">
+          Entry Fee
+        </label>
+        <select
+          value={entry}
+          onChange={e => qp.setSelectedFee(Number(e.target.value))}
+          className={cn(
+            'w-full px-3 py-2 rounded-lg text-sm font-medium',
+            'bg-gray-900 border border-white/15 text-white',
+            'focus:outline-none focus:border-purple-500/50 cursor-pointer',
+          )}
+        >
+          {tiers.map(t => (
+            <option key={t} value={t} className="bg-gray-900 text-white">
+              {`${usd(t)} entry, ${single ? 'winner gets' : '1st gets'} ${usd(potFirstPrize(config, t, seats))}`}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      <CurrencyDropdown
+        currencies={currencies}
+        selected={qp.selectedCurrency}
+        onChange={qp.setSelectedCurrency}
+      />
+
+      <div className="p-3 rounded-lg bg-white/5 border border-white/10 text-xs space-y-1.5">
+        <div className="flex justify-between gap-3 text-white/60">
+          <span>Pot at a full table</span>
+          <span className="text-white font-medium">{usd(pot)} ({seats} x {usd(entry)})</span>
+        </div>
+        <div className="flex justify-between gap-3 text-white/60">
+          <span>Service fee</span>
+          <span>{fee}%</span>
+        </div>
+        <div className="flex justify-between gap-3 text-white/60">
+          <span>{single ? 'Winner gets' : '1st gets'}</span>
+          <span className="text-green-400 font-semibold">{usd(first)}</span>
+        </div>
+        {!single && (
+          <div className="flex justify-between gap-3 text-white/60">
+            <span>Places</span>
+            <span style={{ textAlign: 'right' }}>{places}</span>
+          </div>
+        )}
+        <div className="flex justify-between gap-3 text-white/60">
+          <span>Table ends</span>
+          <span>{potGoalText(config)}</span>
+        </div>
+      </div>
+
+      <div className="px-3 py-2 rounded-lg bg-yellow-500/10 border border-yellow-500/20 text-xs text-yellow-300">
+        A pot table plays to its end. You cannot leave once it starts; if you step away, your turns play on the timer.
+      </div>
+
+      <AvailableGamesBoard games={qp.availableGames} onJoin={qp.joinGame} gameId={config.gameId} />
+
+      <button type="button" onClick={qp.createGame}
+        className={cn(
+          'w-full rounded-xl py-3.5 font-sans font-bold text-sm uppercase tracking-wider',
+          'bg-gradient-to-r from-purple-500 to-pink-500',
+          'hover:from-purple-400 hover:to-pink-400',
+          'text-white shadow-lg shadow-purple-500/20',
+          'transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]',
+          'flex items-center justify-center gap-2',
+        )}
+      >
+        <Plus className="w-5 h-5" />
+        Create {usd(entry)} Pot Game
+      </button>
+    </motion.div>
+  )
+}
+
 function SocialIdleState({ config, qp }: { config: QuickPlayConfig; qp: QuickPlayQueueState }) {
+  // [N694] a pot table has its own settings
+  if (qp.selectedPot && potOffered(config)) return <SocialPotIdleState config={config} qp={qp} />
   const pointValueTiers = safeArray<number>(config.socialPointValueTiers, [0.25])
   const currencies      = safeArray<string>(config.socialCurrencies as any, ['USDT_BSC'])
 
@@ -401,6 +576,9 @@ function SocialIdleState({ config, qp }: { config: QuickPlayConfig; qp: QuickPla
 
   return (
     <motion.div key="social-idle" initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -6 }} className="space-y-4">
+
+      {/* [N694] Cash table or winner takes pot */}
+      {potOffered(config) && <TableTypeToggle qp={qp} />}
 
       {/* Game type label */}
       {config.socialGameType && (
@@ -492,7 +670,7 @@ function SocialIdleState({ config, qp }: { config: QuickPlayConfig; qp: QuickPla
       </div>
 
       {/* Live games board */}
-      <AvailableGamesBoard games={qp.availableGames} onJoin={qp.joinGame} />
+      <AvailableGamesBoard games={qp.availableGames} onJoin={qp.joinGame} gameId={config.gameId} />
 
       {/* Create Game */}
       <button type="button" onClick={qp.createGame}

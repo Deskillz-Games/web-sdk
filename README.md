@@ -1,4 +1,4 @@
-<!-- sdk-version: v3.7.5 | released: 2026-09-29 -->
+<!-- sdk-version: v3.7.7 | released: 2026-11-14 -->
 <!-- SDK 3.7.1 A2 README -->
 # Deskillz Web SDK
 

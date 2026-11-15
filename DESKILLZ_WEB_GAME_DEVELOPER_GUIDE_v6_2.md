@@ -1,21 +1,22 @@
 # DESKILLZ WEB GAME DEVELOPER GUIDE
 
-**Version:** 6.0
-**Date:** September 2026
-**Web SDK:** 3.7.0 (DeskillzBridge + @deskillz/game-ui)
+**Version:** 6.2
+**Date:** November 2026
+**Web SDK:** 3.7.7 (DeskillzBridge; @deskillz/game-ui 3.7.7)
 **API:** https://api.deskillz.games (REST `/api/v1/...`, Socket.IO on the same host)
 **Engine:** React + Vite (TypeScript)
 **Unity / Unreal:** see the README in each SDK repo (section 1.3)
 
-This guide replaces DESKILLZ_WEB_GAME_DEVELOPER_GUIDELINE v5.x. Version history
-lives in CHANGELOG.md in the web-sdk repo.
+This guide replaces DESKILLZ_WEB_GAME_DEVELOPER_GUIDELINE v5.x, v6.0 and v6.1.
+Version history lives in CHANGELOG.md in the web-sdk repo; section 0 lists what
+6.2 changed.
 
 ---
 
 ## TABLE OF CONTENTS
 
 **Part A -- Start here**
-0. What changed in 6.0
+0. What changed in 6.2
 1. Overview
 2. Get the SDK
 3. Architecture in one page
@@ -53,9 +54,63 @@ lives in CHANGELOG.md in the web-sdk repo.
 
 # PART A -- START HERE
 
-## 0. WHAT CHANGED IN 6.0
+## 0. WHAT CHANGED IN 6.2
 
-Read this if your game already runs on SDK 3.5 or 3.6.
+Read this if your game already runs on SDK 3.7.x.
+
+| Area | 6.1 / SDK 3.7.6 | Now (6.2 / SDK 3.7.7) |
+|------|-----------------|------------------------|
+| Money calls in the bridge | `deposit()`, `withdraw()`, `quoteWithdrawal()` and `cancelWithdrawal()` were still there but failed | Removed. Add funds and Withdraw buttons open deskillz.games (13.5) |
+| Deposit address | `getDepositAddress(currency)` answered 400 | `getDepositAddress('bsc' or 'tron')` returns the player's own address and the tokens credited there (13.5) |
+| Modular services | Twelve calls the server does not have | Removed: `changePassword`, `rateGame`, room `sendChat` (use the socket), `requestToJoin`, pause and resume, `getRoundHistory`, `getSessionStats`, wallet `confirmDeposit` and `requestWithdraw` |
+| `SDK_VERSION` | Still `3.7.5` | `3.7.7`, the same as the package and the release |
+| Quick play card | Every open social game showed a point value | A Winner takes pot game shows its entry fee with a Pot badge (12.1) |
+| Release zip | Listed 3.7.0 files and guide v6_0 | Section 2.1 lists what the 3.7.7 zip holds; the guide file is v6_2 |
+| Cash table hand reports (21.7) | Listed as a player call | Server only while cash tables are paused (11.5) |
+
+### 0.1 Upgrade checklist: 3.7.x -> 3.7.7
+
+1. Replace `src/sdk/DeskillzBridge.ts`, `src/bridge-types.ts`, the hooks, the
+   components and `public/deskillz-sw.js` with the 3.7.7 release copies.
+2. Remove every call to `deposit`, `withdraw`, `quoteWithdrawal`,
+   `cancelWithdrawal` and the removed service calls above; replace an in-game
+   deposit or withdraw screen with a button that opens deskillz.games (13.5).
+3. Social games: send each private hand with `match:relay_to` to its player,
+   never with `match:relay` (8.2). Only the table host sends the host events.
+4. Esport games: take the board seed from the server (7.4); stay inside your
+   score limits (7.3).
+5. Add the `<base>` block to `index.html` (4.2) and the landscape hook if your
+   play screen needs landscape (17.3); set the manifest orientation to `any`.
+6. Build the zip with `Compress-Archive` (18.1), enter a higher version code,
+   then run the stamp gate with `?t=` (18.5).
+
+### 0.2 What changed in 6.1
+
+| Area | 6.0 | 6.1 / SDK 3.7.6 |
+|------|-----|------------------------|
+| Private hands | `game:hand` over `match:relay` | Only `match:relay_to { matchId, toUserId, event, payload }`; the room relay refuses a hand (8.2) |
+| Host-only events | Any seat could send them | `game:state`, `game:hand`, `game:round-end`, `game:game-end` and `game:round-ready-state` are refused from any seat but the table host (8.2) |
+| Sender | Payload delivered as sent | The server adds `senderUserId` to every relayed object payload; trust it, never a sender field you put in (8.2) |
+| Launch | A full sign-in token in the URL also worked | Only the single-use launch token signs a player in (5.1) |
+| Game session | Same rights as the player's account | A launch session acts as a plain player and cannot withdraw, link wallets or change role (6.4) |
+| Esport scores | Any number accepted | Each game has score limits; a score above them is refused (7.3) |
+| Board seeds | Derived from the match id (public) | `GET /api/v1/matches/:matchId/seed`, seated players of a live match only (7.4) |
+| Duel 1v1 | A REST score could override the board | The server board decides; a REST score is refused (8.3) |
+| Money | In-game deposit and withdraw, a separate Vault | One Deskillz balance per currency; deposits and withdrawals happen only on deskillz.games (13.5) |
+| Currencies | Five, including `USDC_TRON` | Entries in `USDT_BSC`, `USDC_BSC`, `USDT_TRON`; `BNB` is a legacy balance only (11.6) |
+| Phones | Manifest orientation | Manifest `any`; only the play screen asks for landscape at runtime (17.3) |
+| Nested routes | Relative links resolved under the route | `index.html` anchors a `<base>` at the PWA root (4.2) |
+| Cloud Build zip | `tar -a` | `Compress-Archive -Path .\dist\*` (18.1); never `tar ... -C dist .` |
+| Cloud Build form | Version | Version and version code (18.2) |
+| Stamp gate | Open the hosted URL | Open it with `?t=<now>` so the CDN copy is skipped (18.5) |
+| Hosting | Any origin | The API answers only Deskillz origins; a copy hosted elsewhere cannot reach it (20.4) |
+| Registration | Could close after check-in opened | Must close before check-in opens (10.1) |
+| Cash tables (Sit Down) | Hands reported by the host seat | Paused; their hands are scored by the server only (11.5) |
+| Shuffles | Not covered | Seeded Fisher-Yates in anything the server reproduces, never `Array.sort` with a random comparator (25) |
+
+### 0.3 What changed in 6.0
+
+Read this if your game still runs on SDK 3.5 or 3.6.
 
 | Area | Before | Now (6.0 / SDK 3.7.0) |
 |------|--------|------------------------|
@@ -65,11 +120,11 @@ Read this if your game already runs on SDK 3.5 or 3.6.
 | Tournament lobby | Players waited on a site page | Players sit at the game table before start (`useLobbyTable`, section 10.2) |
 | Service worker | `deskillz-sw.js` precached `./` | `./` removed from precache (a folder is not a fetchable file) |
 | Auto-updater | Game-specific or missing | `useAutoUpdater` + public `latest-version` endpoint (section 14) |
-| Cloud Build zip | `Compress-Archive` | `tar -a` (Compress-Archive writes backslash paths the build worker rejects) |
+| Cloud Build zip | The project folder | The contents of `dist/` only (6.1: `Compress-Archive -Path .\dist\*`, 18.1) |
 | Before upload | Build succeeded = done | Load-test the engine chunk, then run the stamp gate after publish (18.4, 18.5) |
 | API reference tables | Several wrong paths | Regenerated from the backend (section 21) |
 
-### 0.1 Upgrade checklist: 3.6.1 -> 3.7.0
+### 0.4 Upgrade checklist: 3.6.1 -> 3.7.0
 
 Do these in order, in one commit, before the version bump:
 
@@ -82,8 +137,7 @@ Do these in order, in one commit, before the version bump:
    `VITE_SOCKET_URL=wss://api.deskillz.games`. No `/lobby` suffix: the web
    bridge opens one socket on the main namespace, which carries match, room and
    quick-play events.
-4. Replace any `Compress-Archive` line in your build notes with the `tar -a`
-   command in section 18.1.
+4. Zip the contents of `dist/` as in section 18.1.
 5. Bump `package.json` version, then build, load-test (18.4), zip, upload, stamp
    gate (18.5).
 
@@ -151,16 +205,19 @@ scores, Socket.IO on `api.deskillz.games`, and the same `/api/v1` endpoints.
 2. Unzip it next to your game. It contains:
 
 ```
-deskillz-web-sdk-3.7.0/          Copy each folder into the same place in your game
+deskillz-web-sdk-3.7.7/          Copy each folder into the same place in your game
   src/
     sdk/DeskillzBridge.ts        SDK-owned. Never edit.
     bridge-types.ts
+    entry-currencies.ts          Entry currency names and labels
     hooks/
       useLaunchDeepLink.ts       Launch contract (section 5)
+      deskillzReturn.ts          Back to Deskillz after a match
       useTournamentLobby.ts      Tournament lifecycle
       useLobbyTable.ts           Seated tournament lobby (section 10.2)
       useEnrollmentStatus.ts     Register / check-in state
       useQuickPlayQueue.ts       Quick play queue
+      minimumStack.ts            Social table minimum stack
       useAutoUpdater.ts          Update prompt (section 14)
       useHostDashboard.ts        Social host dashboard
       useSpectator.ts            Spectating
@@ -176,8 +233,10 @@ deskillz-web-sdk-3.7.0/          Copy each folder into the same place in your ga
   templates/
     index.html                   Guarded service-worker registration block
     .env.production
+  README.md
+  LICENSE
   CHANGELOG.md
-  DESKILLZ_WEB_GAME_DEVELOPER_GUIDE_v6_0.md
+  DESKILLZ_WEB_GAME_DEVELOPER_GUIDE_v6_2.md
 ```
 
 The SDK ships as **source files you copy into your game**, not as a compiled
@@ -388,6 +447,18 @@ update, because a reload on a launch page burns the single-use launch token.
 Your app decides when to show an update prompt (4.3, 5.4).
 
 ```html
+<script>
+  // Anchor relative URLs at the PWA root on a nested route (/pwa/<route>/...),
+  // the same rule as the router basename. A root open, the APK and Windows are
+  // untouched. Put this first in <head>.
+  (function () {
+    var m = /^(.*\/pwa\/).+/.exec(location.pathname);
+    if (!m) return;
+    var b = document.createElement('base');
+    b.href = location.origin + m[1];
+    document.head.insertBefore(b, document.head.firstChild);
+  })();
+</script>
 <link rel="manifest" href="./manifest.json">
 ...
 <div id="root"></div>
@@ -510,6 +581,8 @@ Then `bridge.initialize()` (in `main.tsx`, section 3.2) reads `token` from the U
   per-match score secret (section 7).
 - The token is removed from the address bar after it is read. Other
   parameters stay for your game to read (5.2).
+- Only a launch token signs a player in from a URL. A full sign-in token placed
+  in a URL is ignored.
 - A launch token expires **5 minutes** after it is issued. A failed exchange
   (expired, already used, offline) keeps any existing session; the player sees
   the normal signed-in or signed-out state. Get a fresh link with my-launch (5.3).
@@ -667,8 +740,9 @@ await bridge.logout();
   local.
 - Wallet: call `bridge.getWalletBalance()` after sign-in (returns
   `{ total, currency, balances: [{ currency, amount, usdValue }] }`). The
-  `walletUpdated` event fires each time the bridge refreshes the balance
-  (`getWalletBalance`, `deposit`, `withdraw`); show 0 until the first result.
+  `walletUpdated` event fires each time the bridge refreshes the balance; show
+  0 until the first result. Deposits and withdrawals are not done in a game
+  (13.5).
 
 ### 6.3 Resume after a crash
 
@@ -697,6 +771,24 @@ return (<>
   `onNavigate` to route inside your app instead.
 - `rejoin.recheck()` runs the check on demand (e.g. a "Resume last game"
   button); `rejoin.isChecking` is true while it runs.
+
+---
+
+### 6.4 What a launch session cannot do
+
+A session opened from a launch link is a game session. It acts as a plain
+player, whatever the account's role, and the server refuses it on:
+
+| Area | Refused |
+|------|---------|
+| Money out | `wallet/withdraw*`, `wallet/withdrawals/*` |
+| Account | `auth/*` except logout (2FA, password, wallet linking) |
+| Writes | linking or removing a wallet (`users/me/wallets`), changing the role (`users/me/role`) |
+| Areas | admin, developer, cloud-build, email, npc |
+
+The refusal message is "A game sign-in cannot do this. Please use deskillz.games
+for it." Everything a game plays with (rooms, quick play, tournaments,
+balances, the host dashboard, sockets) works as before.
 
 ---
 
@@ -741,6 +833,38 @@ Rules:
 - Never log, store or send the score secret or your API key yourself.
 - The final score is the only thing sent; keep checkpoints local.
 
+### 7.3 Score limits (esport)
+
+Deskillz sets three limits per esport game: a maximum score, a maximum score
+per second, and an allowance. A submitted score is refused with 400 "This score
+is above what the game allows" when it is above the maximum, or above
+(per-second limit x seconds since the server started the player's match) +
+allowance. This applies to tournaments, quick play, esport rooms and
+challenges. The `match:progress` display snapshot is clamped to the same
+maximum. Tell Deskillz your game's real limits when it is reviewed; a game
+without limits keeps working.
+
+### 7.4 Board seeds
+
+A board both players must share comes from the server, never from the match id:
+
+```typescript
+// src/sdk/YourGameBridge.ts
+async getBoardSeed(matchId: string): Promise<number | null> {
+  try {
+    const r = await this.http.get<{ seed?: number }>(`/api/v1/matches/${encodeURIComponent(matchId)}/seed`);
+    return typeof r?.seed === 'number' ? r.seed : null;
+  } catch { return null; }
+}
+```
+
+- Only a player seated in that live match gets the seed (403 "Not seated in
+  this match" otherwise). Both seats get the same seed.
+- Retry a few times (for example 5 tries, 1.2 s apart). If it still fails, play
+  a private random board (`crypto.getRandomValues`), never a seed anyone can
+  compute.
+- Everything built from the seed must use seeded randomness only (25).
+
 ---
 
 ## 8. REALTIME
@@ -776,13 +900,15 @@ and must follow this protocol exactly:
    delay). Give every join attempt a generation number and ignore acks from
    older attempts.
 3. **Relay** game messages: `match:relay { matchId, event, payload }`. The server
-   forwards `payload` as `event` to everyone else in the room. Only these events
-   are relayed:
+   forwards `payload` as `event` to everyone else in the room. A message for one
+   seat (a private hand) goes with
+   `match:relay_to { matchId, toUserId, event, payload }` to that seated player
+   only. Only these events are relayed:
 
 | Event | Typical use |
 |-------|-------------|
 | `game:state` | Host broadcasts the authoritative table state |
-| `game:hand` | Host sends a player their private hand |
+| `game:hand` | Host sends a player their private hand: `match:relay_to` only; `match:relay` refuses it |
 | `game:action` | A player's move to the host |
 | `game:round-end`, `game:game-end` | Host announces results |
 | `game:request-sync` | Client asks the host for the current state |
@@ -790,14 +916,18 @@ and must follow this protocol exactly:
 | `game:chat` | Table chat |
 | `game:ping`, `game:pong` | Latency check |
 
-   Any other event name is rejected.
+   Any other event name is rejected. Every relayed object payload arrives
+   with `senderUserId` set by the server: use it to know who sent a message,
+   never a sender field inside your own payload.
 4. **Leave** with `match:leave_room { matchId }` when the player exits.
 5. **Host authority.** The host is the seat whose user id equals `hostUserId`
    from my-launch or `match:launch` (5.3). Never elect a host on the client.
    The host runs the game engine and is the only sender of `game:state`,
-   `game:hand`, `game:round-end` and `game:game-end`. Other seats send
-   `game:action` and render what the host sends. Private information (hands,
-   tiles) goes only to its owner.
+   `game:hand`, `game:round-end`, `game:game-end` and
+   `game:round-ready-state`; the server refuses them from any other seat
+   ("Only the table host sends this"). Other seats send `game:action` and
+   render what the host sends. Private information (hands, tiles) goes only to
+   its owner, with `match:relay_to`.
 6. **Broadcast after the turn advances.** The host sends `game:state` only after
    the engine has moved the turn to the next seat, so every frame names the
    player who must act now.
@@ -818,7 +948,8 @@ When enabled, the game uses the board channel instead of the relay:
 `board:join`, `board:move`, `board:sync_request`, `board:leave` (client to
 server) and `board:state`, `board:start`, `board:applied`, `board:rejected`,
 `board:sync`, `board:presence`, `board:end` (server to client). Apply a move
-locally only after `board:applied`.
+locally only after `board:applied`. In a `DUEL_1V1` match the server board is
+the result: a score sent with `submitScore` is refused.
 
 Full socket event reference: section 22.
 ---
@@ -938,6 +1069,7 @@ Start                  Tables go live                      status IN_PROGRESS
 | Rule | Value |
 |------|-------|
 | Check-in window | Set per tournament, 5 to 60 minutes (default 30) |
+| Registration close | Must be before check-in opens; a schedule that overlaps is refused when the tournament is created or edited |
 | Check-in closes | `start - clamp(floor(window / 3), 1, 10)` minutes (default window: 10 minutes before start) |
 | Player who does not check in | Disqualified (`DQ_NO_SHOW`); the entry is forfeited, no refund |
 | Tournament cancelled | Entries are refunded (10.3) |
@@ -1068,8 +1200,7 @@ reach its minimum players at start). What your game sees:
 | my-launch (lobby) | `phase: 'ABORTED'`, `abortReason: 'CANCELLED'` |
 | `useLobbyTable` | `aborted === 'CANCELLED'` |
 
-Entry fees are refunded to the player's Deskillz wallet (on-chain entries
-through the escrow contract). There is no separate socket event: refresh the
+Entry fees are refunded to the player's Deskillz balance. There is no separate socket event: refresh the
 list, and let the lobby hook report the abort.
 
 ### 10.4 Esport match modes
@@ -1212,8 +1343,13 @@ return <SocialGameSettings config={config} onChange={setConfig} capabilities={ca
 ### 11.5 Cash tables
 
 Cash tables are always-open tables configured in the Developer Portal. Players
-sit down with a buy-in, play hands, and leave with their chips. Add these calls
-to your bridge subclass:
+sit down with a buy-in, play hands, and leave with their chips.
+
+**Status (6.2):** cash tables (Sit Down) are paused on the platform. Their
+hands are scored by the server only: a player's hand report is refused with
+409 "This table is scored by the server, so a player cannot report its hands".
+Quick play cash and pot tables (section 12) are where social cash play runs
+today. The calls below are kept for when cash tables return:
 
 | Action | Endpoint | Body |
 |--------|----------|------|
@@ -1233,8 +1369,10 @@ reportHand(tableId: string, body: { handNumber: number; potSize: number;
 }
 ```
 
-- Only a player seated at the table may report a hand; the host seat reports
-  once per hand.
+- Hand reports are server only while cash tables are paused (see the status
+  note above). In quick play tables and rooms only the table host reports a
+  hand, and each hand is capped per seat (for example Big 2 156 and Thirteen
+  522 points).
 - The platform applies the rake and settles the table when its end condition
   is reached.
 - Always call these through the bridge's `http` client. Never build the URL
@@ -1249,7 +1387,8 @@ import { useHostDashboard, getTierDisplay } from './hooks/useHostDashboard';
 const host = useHostDashboard();   // polls every 60 s
 // host.activeTier, host.activeTierDisplay, host.totalEarnings, host.monthlyEarnings,
 // host.pendingSettlement, host.activeRooms, host.badges, host.levelInfo
-// host.refresh(), host.verifyAge(), host.requestWithdrawal(amount, currency, walletAddress)
+// host.refresh(), host.verifyAge()
+// Host earnings are paid into the Deskillz balance; withdrawals happen on deskillz.games (13.5)
 ```
 
 Use the hook; it maps the raw dashboard response safely. Do not read
@@ -1259,13 +1398,13 @@ Currencies are always chain-qualified. Show a chain selector for USDT and USDC:
 
 | UI selection | Value sent |
 |--------------|------------|
-| BNB | `BNB` |
 | USDT on BNB Chain | `USDT_BSC` |
-| USDT on Tron | `USDT_TRON` |
 | USDC on BNB Chain | `USDC_BSC` |
-| USDC on Tron | `USDC_TRON` |
+| USDT on Tron | `USDT_TRON` |
 
-Never send plain `USDT` or `USDC`; the platform rejects them.
+Never send plain `USDT` or `USDC`; the platform rejects them. `BNB` and
+`USDC_TRON` are not entry currencies: `BNB` exists only as an older balance a
+player can withdraw on deskillz.games.
 
 ---
 
@@ -1309,6 +1448,8 @@ navigates. `onMatchStart` receives
 Hook actions: `joinQueue()` (esport), `createGame()` and `joinGame(queueKey)`
 (social), `leaveQueue()`, `resetError()`. Social open games arrive in
 `qp.availableGames`: `[{ queueKey, pointValue, currency, currentPlayers, maxPlayers, secondsRemaining, mode }]`.
+A Winner takes pot game (`mode: 'pot'`, or a pot queue key) shows its entry fee
+with a Pot badge instead of a point value per point.
 
 ### 12.2 Playing and reporting a quick play match
 
@@ -1316,6 +1457,10 @@ Hook actions: `joinQueue()` (esport), `createGame()` and `joinGame(queueKey)`
   once per player (7.1). When the result says `allScoresSubmitted`, fetch the
   outcome with `bridge.getQuickPlayMatchResults(matchId)`.
 - Synchronous play uses the match room exactly as in section 8.2.
+- Social quick play has two kinds of table: a **cash table** (a point value,
+  chips, cash out between hands; a cash out asked during a hand is paid after
+  that hand) and **Winner takes pot** (an entry; no leaving once the table
+  starts). The card shows which; the table host reports each hand (11.5).
 
 ### 12.3 Queue events
 
@@ -1381,9 +1526,14 @@ getTransactionPage(page = 1, limit = 20) {
 ```
 
 Optional filters: `type`, `status`, `currency`, `sortBy`, `sortOrder` (`asc` |
-`desc`). Common `type` values: `ENTRY_FEE`, `PRIZE_WIN`, `REFUND`, `MATCH_ENTRY`,
-`MATCH_PRIZE`, `PRIVATE_ROOM_ENTRY`, `PRIVATE_ROOM_PRIZE`, `CASH_GAME_BUYIN`,
-`CASH_GAME_CASHOUT`.
+`desc`). Common `type` values: `DEPOSIT`, `WITHDRAWAL`, `ENTRY_FEE`, `PRIZE_WIN`,
+`REFUND`, `MATCH_ENTRY`, `MATCH_PRIZE`, `PRIVATE_ROOM_ENTRY`,
+`PRIVATE_ROOM_PRIZE`, `CASH_GAME_BUYIN`, `CASH_GAME_CASHOUT`, `HOST_EARNING`,
+`PLATFORM_FEE`, `VAULT_MIGRATION_IN`.
+
+Every row carries `direction`: `1` money in, `-1` money out, `0` a record only
+(for example the fee kept from a withdrawal). `amount` is always a magnitude;
+show `direction x amount`, and leave `0` rows out of totals.
 
 ### 13.2 Leaderboards
 
@@ -1457,6 +1607,35 @@ async chooseAvatar(avatarId: string) {
   return this.getProfile();   // refreshes currentUser.avatarUrl
 }
 ```
+
+### 13.5 Deposits and withdrawals stay on deskillz.games
+
+A player has one Deskillz balance per currency. It is funded on deskillz.games
+(Add funds: the player's own deposit address on BNB Smart Chain or Tron,
+credited automatically) and emptied only there (Withdraw, to a wallet the
+player linked). A game shows balances and spends them on entries; it never
+moves money in or out.
+
+| In your game | Do |
+|--------------|----|
+| Add funds button | Open `https://deskillz.games/add-funds` |
+| Withdraw button | Open `https://deskillz.games/transactions?withdraw=1` |
+| Windows app | Use `deskillzDesktop.openExternal(url)` (20.3) |
+
+The 3.7.7 bridge has no deposit or withdraw calls (`deposit()`, `withdraw()`,
+`quoteWithdrawal()` and `cancelWithdrawal()` were removed: the hash deposit
+route is gone and a launch session is refused on withdrawals, 6.4). If you want
+to show the player's own deposit address in your game, read it:
+
+```typescript
+const addr = await bridge.getDepositAddress('tron');   // or 'bsc'
+// { chain, network, address, tokens: [{ currency, tokenContract, decimals }],
+//   minAmount, confirmations, linkedWalletOnly: false, createdAt } or null
+```
+
+Anything sent there in a listed token is credited automatically after the
+confirmations. The Add funds page on deskillz.games shows the same address with
+a QR code, so a button to it is usually enough.
 
 ---
 
@@ -1631,7 +1810,7 @@ Put it in `public/manifest.json`. Every path is relative.
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "orientation": "portrait",
+  "orientation": "any",
   "background_color": "#0A0A1A",
   "theme_color": "#00D9FF",
   "icons": [
@@ -1643,8 +1822,9 @@ Put it in `public/manifest.json`. Every path is relative.
 
 - `start_url` and `scope` must be `"./"`. An absolute `"/"` breaks install on
   iPhone and on the hosted path.
-- Set `orientation` to what your game needs (`portrait`, `landscape` or `any`).
-- If the zip has no `manifest.json`, Cloud Build generates a basic portrait one
+- Keep `orientation` at `any`. A phone asks for landscape only on the play
+  screen, at runtime (17.3); the lobby and menus work either way.
+- If the zip has no `manifest.json`, Cloud Build generates a basic one (`any`)
   from your game name; ship your own.
 
 ### 17.2 Icons and splash screens
@@ -1660,6 +1840,26 @@ Put it in `public/manifest.json`. Every path is relative.
 Cloud Build writes the portal icon to `icon.png`, `icon-192.png`, `icon-256.png`
 and `icon-512.png` at the zip root. Do not use those four file names for other
 images.
+
+### 17.3 Landscape play screen
+
+Phones play in landscape, but only the play screen asks for it. Copy the
+canonical `src/hooks/rotateToLandscape.ts` (the same file in every Deskillz
+game; ask developer support for it) and do not change it:
+
+```typescript
+// main.tsx, once at start
+import { mountRotateToLandscape } from './hooks/rotateToLandscape';
+mountRotateToLandscape('Your Game');
+
+// your play screen
+import { setLandscapeRequired } from './hooks/rotateToLandscape';
+useEffect(() => { setLandscapeRequired(true); return () => setLandscapeRequired(false); }, []);
+```
+
+While a play screen is mounted and a phone is held portrait, a full-screen card
+asks the player to turn the phone. An installed PWA or the APK locks landscape
+while it is required. Desktop windows never see the card.
 
 ---
 
@@ -1678,10 +1878,7 @@ Cloud Build turns one zip into three outputs:
 ```powershell
 # Windows (PowerShell), from your game folder
 npm run build
-cd dist
-tar -a -c -f ..\your-game-1.2.0.zip *
-cd ..
-tar -tf .\your-game-1.2.0.zip | Select-Object -First 10
+Compress-Archive -Path .\dist\* -DestinationPath .\your-game-1.2.0.zip -Force
 ```
 
 ```bash
@@ -1691,12 +1888,11 @@ npm run build
 unzip -l your-game-1.2.0.zip | head
 ```
 
-- Run each PowerShell command on its own line. The zip is written next to
-  `dist/`, never inside it.
-- The listing must show `index.html`, `deskillz-sw.js` and `assets/...` at the
-  top level, with forward slashes.
-- Do **not** use PowerShell `Compress-Archive`: it writes backslash paths that
-  Cloud Build cannot extract correctly.
+- The zip is written next to `dist/`, never inside it.
+- `index.html`, `deskillz-sw.js` and `assets/` must be at the top level of the
+  zip (`.\dist\*` zips the contents, not the folder).
+- Never use `tar ... -C dist .`: it adds a `./` entry and every build job fails
+  with "Out of bound path".
 - Do not zip the project folder; zip the contents of `dist/`.
 
 ### 18.2 Versions
@@ -1707,7 +1903,7 @@ unzip -l your-game-1.2.0.zip | head
 | Bump before you build | Change `package.json` first, then `npm run build`; the version is baked in at build time |
 | Always increase | Use semver (`1.2.0` -> `1.2.1`) |
 | A version is used up once it builds | A version that reached SUCCESS (or is still building) cannot be rebuilt for that platform. Only a FAILED or CANCELLED build frees it. Fix problems with a new version |
-| Android build code | A whole number that increases with every Android release |
+| Version code | A whole number entered with every build; it must be higher than the last build's (Android needs it to install an update) |
 
 ### 18.3 What Cloud Build does to your files
 
@@ -1760,13 +1956,14 @@ Run this in the same sitting as the upload:
    `[sw-version] Stamped deskillz-sw.js with build hash: <stamp>`. Write the
    stamp down.
 2. Load test passed (18.4).
-3. Zip built with `tar` (18.1); listing checked.
+3. Zip built with `Compress-Archive` (18.1).
 4. Developer Portal -> **Game Builds**: upload the zip, choose **All
-   Platforms**, enter the version, start the build.
+   Platforms**, enter the version and a higher version code, start the build.
 5. Wait for **SUCCESS** on PWA, Android and Windows. On FAILED, open the build
    log, fix, bump the version, rebuild.
-6. Open `https://games.deskillz.games/hosted/<gameId>/pwa/index.html`, reload
-   once, then run the stamp check (15.3) in that tab's DevTools Console. Both
+6. Open `https://games.deskillz.games/hosted/<gameId>/pwa/index.html?t=<now>`
+   (any new number, so the CDN copy is skipped), reload once, then run the
+   stamp check (15.3) in that tab's DevTools Console. Both
    `dsk2-static-...-<stamp>` and `dsk2-dynamic-...-<stamp>` must be present.
 7. Sign in, open the wallet and a tournament list, and confirm data loads
    (no 401/404 in the Network panel).
@@ -1784,18 +1981,20 @@ Developer Portal: **https://deskillz.games/developer** -> **Upload Game**.
 | 1 Credentials | Enter the game name and target platform, then **Generate**. You get the Game ID, API key and API secret. The **API secret is shown only once**: store it somewhere safe; never put it in game code |
 | 2 Basic information | Name, short and full description, genre, tags, category (**Esport** or **Social**) |
 | 3 Platform and SDK | Engine (**Web/HTML5** for this guide), game mode, min/max players |
-| 4 Web game upload | Upload the zip (18.1), choose build targets, version and build code, Android signing |
+| 4 Web game upload | Upload the zip (18.1), choose build targets, version and version code, Android signing |
 | 5 Tournament settings | Typical match duration, private rooms, host spectating |
 | 6 Assets | 512 x 512 icon, banner, video, 2-5 screenshots (16:9) |
 | 7 Review and submit | Check the summary, accept the terms, submit |
 
-The Deskillz team reviews new games (typically 1-2 business days) and emails
-you the result.
+The Deskillz team reviews every new game before it is listed. **My Games**
+shows the status (Submitted, SDK Verification, Content Review, Final Approval);
+allow up to a week.
 
 ### 19.2 Updates (Game Builds)
 
 **Game Builds** tab: upload the new zip, pick the platforms (or **All
-Platforms**), enter the new version, optionally release notes, and start. The
+Platforms**), enter the new version and a higher version code, optionally
+release notes, and start. The
 build card shows progress (queued, preparing, building, signing, uploading) and
 the log. Every successful build replaces the published version for its
 platform.
@@ -1862,6 +2061,13 @@ if (desktop?.isDesktopApp) {
 
 Other helpers: `minimize()`, `maximize()`, `close()`. Always open external
 links with `openExternal`; plain links would navigate the game window away.
+
+### 20.4 Where a game may run
+
+The API answers browser requests only from Deskillz origins: deskillz.games,
+games.deskillz.games (the hosted PWA), the Android and Windows wrappers, and
+`localhost` for development. A copy of your game hosted on another domain
+cannot reach the API. Publish through Cloud Build.
 ---
 
 # PART D -- REFERENCE
@@ -1909,6 +2115,7 @@ Responses are plain JSON (no envelope). Errors return
 |--------|------|------|----------|
 | GET | `/wallet/balances` | player | `bridge.getWalletBalance` |
 | GET | `/wallet/balances/:currency` | player | `bridge.getBalanceForCurrency` |
+| GET | `/wallet/deposit-address/:chain` (`bsc` or `tron`) | player | `bridge.getDepositAddress` |
 | GET | `/wallet/transactions?page=&limit=&type=&status=&currency=` | player | subclass (13.1) |
 | GET | `/leaderboard/game/:gameId?period=&page=&limit=` | public | `bridge.getLeaderboard` |
 | GET | `/leaderboard/global?period=&page=&limit=` | public | subclass |
@@ -1941,6 +2148,7 @@ Dispute body: `{ disputeType: 'TOURNAMENT' | 'QUICK_PLAY' | 'PRIVATE_ROOM', tour
 | GET | `/tournaments/:id/my-launch` | player | `bridge.getMyLaunch` (5.3) |
 | POST | `/tournaments/:id/score` | player | `bridge.submitScore` (7) |
 | POST | `/tournaments/matches/:matchId/result` | player (seated host) | subclass (11.1) |
+| GET | `/matches/:matchId/seed` | player (seated, live match) | subclass (7.4) |
 
 ### 21.5 Quick play
 
@@ -1981,7 +2189,7 @@ Dispute body: `{ disputeType: 'TOURNAMENT' | 'QUICK_PLAY' | 'PRIVATE_ROOM', tour
 | GET | `/persistent-cash-games/my-seat/:gameId` | player | subclass |
 | POST | `/persistent-cash-games/:configId/seat` | player | subclass |
 | GET | `/persistent-cash-games/tables/:tableId` | public | subclass |
-| POST | `/persistent-cash-games/tables/:tableId/hand-result` | player (seated) | subclass |
+| POST | `/persistent-cash-games/tables/:tableId/hand-result` | server only while paused (11.5) | none |
 | POST | `/persistent-cash-games/tables/:tableId/rebuy` | player | subclass |
 | POST | `/persistent-cash-games/tables/:tableId/leave` | player | subclass |
 
@@ -1997,7 +2205,8 @@ events are delivered only to the player they concern.
 | Event | Payload | Ack / effect |
 |-------|---------|--------------|
 | `match:join_room` | `{ matchId }` | Ack `{ success: true }` or `{ error }`; seated players only (8.2) |
-| `match:relay` | `{ matchId, event, payload }` | Forwards `payload` as `event` to the room; allowed events in 8.2 |
+| `match:relay` | `{ matchId, event, payload }` | Forwards `payload` as `event` to the room; allowed events in 8.2 (never `game:hand`) |
+| `match:relay_to` | `{ matchId, toUserId, event, payload }` | Forwards to one seated player (private hands); ack `{ error }` on refusal |
 | `match:leave_room` | `{ matchId }` | Leaves the room |
 | `match:progress` | `{ matchId, score?, board? }` | Sends a display-only progress snapshot to the room (not a score submission) |
 | `board:join`, `board:move`, `board:sync_request`, `board:leave` | see 8.3 | Server-run board only |
@@ -2010,7 +2219,7 @@ events are delivered only to the player they concern.
 | `match:launch` | Live launch payload (5.3): `matchId`, `token`, `webLink`, `deepLink`, `tournamentId`, `roundNumber`, `tableNumber`, `gameName`, `gameSlug`, `gameplayMode`, `gameRuleVariant`, `hostUserId`, `players` |
 | `match:player_joined` | `{ userId, username, timestamp }` |
 | `match:progress` | `{ odid, username, score, board, at }` (`odid` = sender's user id) |
-| `game:state`, `game:hand`, `game:action`, `game:round-end`, `game:game-end`, `game:request-sync`, `game:round-ready`, `game:round-ready-state`, `game:chat`, `game:ping`, `game:pong` | Whatever the sending seat relayed (8.2) |
+| `game:state`, `game:hand`, `game:action`, `game:round-end`, `game:game-end`, `game:request-sync`, `game:round-ready`, `game:round-ready-state`, `game:chat`, `game:ping`, `game:pong` | Whatever the sending seat relayed (8.2), with `senderUserId` added by the server |
 | `board:state`, `board:start`, `board:applied`, `board:rejected`, `board:sync`, `board:presence`, `board:end` | Server-run board (8.3) |
 
 ### 22.3 Quick play (server to client)
@@ -2019,25 +2228,13 @@ events are delivered only to the player they concern.
 |-------|--------------|---------|
 | `quick-play:searching` | `quickPlaySearching` | `{ queueKey, gameId, entryFee, playerCount, currency, position, playersInQueue }` |
 | `quick-play:filling` | `quickPlayFilling` | `{ queueKey, gameId, totalPlayers, requiredPlayers, phase }` |
-| `quick-play:npc-filling` | `quickPlayNpcFilling` | `{ queueKey, gameId, npcsAdding, totalPlayers, requiredPlayers, phase }` |
-| `quick-play:found` | `quickPlayFound` | `QuickPlayLaunchData`: `{ matchId, gameId, entryFee, currency, prizePool, players, token, deepLink, matchDurationSecs, targetScore, endsAt, rules }` (3.7.5: your own launch token is in here; launch from it) |
-| `quick-play:starting` | `quickPlayStarting` | same shape as found |
-| `quick-play:match-ending` | `quickPlayMatchEnding` | `{ matchId, reason: 'target', targetScore, deadline }` -- send your score before `deadline` |
-| `quick-play:match-failed` | `quickPlayMatchFailed` | `{ queueKey, gameId, reason }` -- entry already refunded |
+| `quick-play:found` | `quickPlayFound` | `{ matchId, gameId, entryFee, currency, players }` |
+| `quick-play:starting` | `quickPlayStarting` | `{ matchId, gameId, entryFee, currency, players }` |
+| `quick-play:match-launched` | `quickPlayMatchLaunched` | `{ matchId, matchSessionId, gameId, deepLink, token, entryFee, currency, prizePool, players }` |
 | `quick-play:score-submitted` | `quickPlayScoreSubmitted` | `{ matchId, playerId, scoresIn, totalPlayers }` |
 | `quick-play:match-completed` | `quickPlayMatchCompleted` | Final results |
 | `quick-play:lobby-update` | `quickPlayLobbyUpdate` | Social open games board |
-| `quick-play:queue-roster` | `quickPlayQueueRoster` | `{ queueKey, requiredPlayers, startsAt, meId, roster }` |
-| `quick-play:social-room-created` | `quickPlaySocialRoomCreated` | `QuickPlaySocialRoomData`: `{ roomId, roomCode, gameId, socialGameType, pointValueUsd, currency, rakePercent, rakeCapPerRound, minBuyIn, defaultBuyIn, players, token, deepLink, rules }` |
-| `quick-play:social-round-complete` | `quickPlaySocialRoundComplete` | the round result (winner, pot, rake, balances) |
-| `quick-play:social-session-ended` | `quickPlaySocialSessionEnded` | the table results (per seat: totalBuyIn, netProfitLoss, roundsPlayed) |
-| `quick-play:social-seat-out` | `quickPlaySocialSeatOut` | `{ roomId, playerId, reason }` -- a seat at 0 chips left the table |
-
-3.7.5: `quick-play:match-launched` is not sent by the server; `quickPlayMatchLaunched`
-fires from `launchQuickPlayMatch(matchId)` (own-token re-issue). Host-room frames
-(`private-room:*`, `player:seat-out`, `player:bought_in`, `rake:settled`,
-`round:completed`, `low:balance:warning`) arrive on the bridge's /lobby socket:
-`bridge.onRoomEvent(name, handler)` (or `onRealtimeEvent`, which routes them).
+| `quick-play:queue-roster` | (raw event, 12.3) | `{ queueKey, requiredPlayers, startsAt, meId, roster }` |
 
 ### 22.4 Cash tables and account (server to client)
 
@@ -2109,7 +2306,13 @@ function.
 |---------|--------------|-----|
 | Blank page, console error reading a property of `undefined` at load | Engine code reads an imported constant at module top level | Move the lookup inside a function; add the load test (18.4) |
 | Game works locally, 404s for `assets/...` when hosted | Absolute paths or missing `base: './'` | 4.3, 4.5 |
-| Cloud Build fails "Entry point not found" | Zipped the folder instead of `dist/` contents, or `Compress-Archive` | Rebuild the zip with `tar` (18.1) |
+| Cloud Build fails "Entry point not found" | Zipped the folder instead of `dist/` contents | Rebuild the zip from `.\dist\*` (18.1) |
+| Every build job fails "Out of bound path ... ./" | Zip made with `tar ... -C dist .` | Rebuild the zip with `Compress-Archive` and upload it again; if the portal refuses the version, bump it (18.1, 18.2) |
+| 400 "This score is above what the game allows" | Score over the game's limits | 7.3 |
+| 403 "Not seated in this match" on the seed | Not a seated player of a live match | 7.4 |
+| "A hand goes to its player only (match:relay_to)" | `game:hand` sent with `match:relay` | 8.2 |
+| "Only the table host sends this" | A host event sent from another seat | 8.2 |
+| "A game sign-in cannot do this. Please use deskillz.games for it." | A launch session called an account or money-out route | 6.4, 13.5 |
 | Hosted build cannot reach the API (401 everywhere, wrong game) | Fallbacks are not the literal placeholders, or the game has no active API key | 3.2, 18.3 |
 | "A build for version X already exists" | Version slot already used | Bump the version (18.2) |
 | Players keep seeing the old version | Version not bumped before build, or update prompt suppressed | 14, 15.3 |
@@ -2122,7 +2325,7 @@ function.
 | Toasts never show | No `<Toaster />` mounted | 9.1 |
 | Realtime silently does nothing | `socket.io-client` not installed | 8.1 |
 | 400 "property X should not exist" | Extra field in a request body | Send only the documented fields (21) |
-| 400 on a currency | Plain `USDT` / `USDC` | Use `USDT_BSC`, `USDT_TRON`, `USDC_BSC`, `USDC_TRON` or `BNB` (11.6) |
+| 400 on a currency | Plain `USDT` / `USDC`, or `USDC_TRON` / `BNB` | Use `USDT_BSC`, `USDC_BSC` or `USDT_TRON` (11.6) |
 | Service worker cache names not found in the stamp check | Filtering on the Game ID | Filter on the build stamp (15.3) |
 
 Debug logging: set `VITE_ENABLE_DEBUG=true` in `.env.local` (bridge logs every
@@ -2141,9 +2344,11 @@ call and socket event). Never ship a build with debug on.
 | Scores | Submit once, through the bridge; never handle the score secret yourself (7) |
 | Realtime | Acked join before relay; host from `hostUserId`; broadcast after the turn advances; resync after reconnect (8.2) |
 | Seats | Render every seat the same way; never branch on who occupies a seat (1.2) |
-| Money | Chain-qualified currencies; amounts arrive as strings; balances and results always from the API (11.6, 13.1) |
+| Money | Chain-qualified currencies; amounts arrive as strings; balances and results always from the API; deposits and withdrawals only on deskillz.games (11.6, 13.1, 13.5) |
+| Shuffles | Never shuffle with `Array.sort` and a random comparator in anything the server must reproduce: engines call the comparator a different number of times, so every later random draw shifts. Use a seeded Fisher-Yates (n - 1 draws) (7.4) |
+| Private data | Hands go with `match:relay_to`; trust `senderUserId`, never a sender field in a payload (8.2) |
 | Engine | No top-level reads of imported constants in engine modules (3.2, 18.4) |
-| Build | `base: './'`, bump version first, `tar` zip of `dist/` contents, load test, stamp gate (18) |
+| Build | `base: './'`, bump version and version code first, `Compress-Archive -Path .\dist\*`, load test, stamp gate with `?t=` (18) |
 | Cache | Never add a second service worker; fix stale versions with a new build (15) |
 | Dependencies | React 18, Tailwind scanning `src/components`, framer-motion, lucide-react, react-hot-toast, socket.io-client (9.1) |
 
@@ -2189,4 +2394,4 @@ The full list is in `tokens.css`.
 | Match room join | Seated players only |
 
 ---
-*End of DESKILLZ WEB GAME DEVELOPER GUIDE v6.0 -- Web SDK 3.7.x -- https://api.deskillz.games*
+*End of DESKILLZ WEB GAME DEVELOPER GUIDE v6.2 -- Web SDK 3.7.7 -- https://api.deskillz.games*
